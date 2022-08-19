@@ -1,0 +1,56 @@
+<div class="modal-content mosaico-modal">
+    <div class="modal-header display-flex justify-content-end">
+        <!--begin::Close-->
+        <div class="close-button-container">
+            <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="activeModal.dismiss(false)" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <!--end::Close-->
+    </div>
+
+    <div class="modal-body">
+        <div class="row mosaico-form">
+            <div class="col-12">
+                <ng-container *ngIf="!isClaimed && !claimIsConfirmed">
+                    <p class="claim-title">{{"MODALS.STAKING_TOKEN_CLAIM.MESSAGES.CLAIM_TOKEN_COST" | translate}}</p>
+                    <p  class="claim-title">{{"MODALS.STAKING_TOKEN_CLAIM.MESSAGES.ARE_YOU_SURE" | translate}}</p>
+                    <div class="claim-description">
+                        <img src="/assets/media/misc/usd-arrow.png" alt="usd-arrow icon">
+                        <p class="ms-2">{{"MODALS.STAKING_TOKEN_CLAIM.MESSAGES.FEE_COST" | translate}}</p>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="isClaimed">
+                    <p  class="claim-title">{{"MODALS.STAKING_TOKEN_CLAIM.MESSAGES.DO_YOU_WANT" | translate}}</p>
+                    <div class="claim-description">
+                        <img src="/assets/media/misc/noun-exchange.png" alt="noun-exchange icon">
+                        <p class="ms-2">{{"MODALS.STAKING_TOKEN_CLAIM.MESSAGES.YOU_WILL_RECIEVE" | translate}}</p>
+                    </div>
+                </ng-container>
+                
+                <ng-container *ngIf="claimIsConfirmed">
+                    <div class="d-flex justify-content-center align-items-center pb-5">
+                        <img src="/assets/media/misc/checkmark.png" alt="noun-exchange icon">
+                    </div>
+                    <p  class="claim-title">{{"MODALS.STAKING_TOKEN_CLAIM.MESSAGES.SUCCESSFULY_EXCHANGED" | translate}}</p>
+                    <div class="claim-description">
+                        <p class="ms-2">{{"MODALS.STAKING_TOKEN_CLAIM.MESSAGES.PLEASE_NOTE" | translate}}</p>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer modal-btn-actions" *ngIf="!claimIsConfirmed">
+        <ng-container *ngIf="!isClaimed">
+            <button type="button" class="btn btn-mosaico-primary" (click)="onClaime()">{{"MODALS.STAKING_TOKEN_CLAIM.ACTIONS.CLAIM" | translate}}</button>
+            <button type="button" class="btn btn-mosaico-primary-outline" (click)="activeModal.dismiss(false)">{{"MODALS.STAKING_TOKEN_CLAIM.ACTIONS.CANCEL" | translate}}</button>
+        </ng-container>
+
+        <ng-container *ngIf="isClaimed">
+            <button type="button" class="btn btn-mosaico-primary" (click)="onConfirm()">Yes</button>
+            <button type="button" class="btn btn-mosaico-primary-outline" (click)="goBack()">No</button>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+name: "Build/Test contracts"
+description: "Build and Test contracts for Truffle"
+
+inputs:
+  WORKDIR:
+    required: true
+    description: "Are unsecure commands allowed"
+  AZURE_CREDENTIALS:
+    required: true
+    description: "Azure Credentials to connect to"
+  APP_YAML:
+    required: true
+    description: "Path to the yaml file with k8s configuration of the app"
+  CLUSTER_NAME:
+    required: true
+    description: "Name of the k8s cluster"
+  CLUSTER_RESOURCE_GROUP:
+    required: true
+    description: "Name of the resource group where k8s cluster is deployed"
+
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+
+  # - name: Install Kubectl
+  #   uses: azure/setup-kubectl@v2.0
+  #   id: install_kubectl
+  # - uses: azure/aks-set-context@v1
+  #   name: Authorize in Kubernetes
+  #   id: authorize_aks
+  #   with:
+  #     creds: '${{ inputs.AZURE_CREDENTIALS }}'
+  #     cluster-name: ${{ inputs.CLUSTER_NAME }}
+  #     resource-group: ${{ inputs.CLUSTER_RESOURCE_GROUP }}
+  # - run: kubectl apply -f ${{inputs.APP_YAML}}
+  #   shell: bash
+  - name: Node 16.x
+    id: setupNode
+    uses: actions/setup-node@v1
+    with:
+      node-version: 16.x
+  - name: Cache node modules
+    id: cache
+    uses: actions/cache@v1
+    with:
+      path: ~/.npm
+      key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      restore-keys: |
+        ${{ runner.os }}-node-
+
+  - name: Install Truffle
+    run: npm install truffle -g
+    working-directory: ${{inputs.WORKDIR}}
+    shell: bash
+
+  - name: Install Truffle Dependencies
+    run: npm install --force
+    working-directory: ${{inputs.WORKDIR}}
+    shell: bash
+
+  - name: Compile truffle
+    run: truffle compile
+    working-directory: ${{inputs.WORKDIR}}
+    shell: bash
+    

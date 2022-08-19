@@ -1,0 +1,28 @@
+<div class="position-relative" *ngIf="toggle === true">
+  <span class="btn border border-dark btn-display-color" [style.background]="displayOldColor">
+    <span class="ms-3 span-display-color">{{displayOldColor}}</span>
+  </span>
+</div>
+
+<div class="position-relative">
+  <button class="btn border border-dark btn-display-color" #colorPickerContainer [style.background]="displayColor" [(colorPicker)]="displayColor"
+    [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-sm'" [cpCancelButton]="true"
+    [cpCancelButtonClass]="'btn btn-outline-primary btn-sm'" [cpSaveClickOutside]="false" [cpWidth]="colorPickerContainer.offsetWidth + 'px'"
+    [cpCloseClickOutside]="false" [cpAlphaChannel]="'disabled'" [cpExtraTemplate]="colorTemplate"
+    [cpPresetColors]="['#494642', '#FFFFFF']" [cpAddColorButton]="true" [cpPosition]="'bottom'"
+    (colorPickerCancel)="onEventLog('colorPickerCancel', $event)"
+    (colorPickerSelect)="onEventLog('colorPickerSelect', $event)"
+    (colorPickerOpen)="colorPickerOpenCloseEvent('colorPickerOpen')"
+    (colorPickerClose)="colorPickerOpenCloseEvent('colorPickerClose')" [cpToggle]="toggle"
+    [cpDialogDisplay]="dialogDisplay">
+    <span class="ms-3 span-display-color">{{displayColor}}</span>
+  </button>
+
+
+</div>
+
+<ng-template #colorTemplate>
+  <!-- <div class="">
+              <h3>Custom template.</h3>
+          </div> -->
+</ng-template>

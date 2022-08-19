@@ -1,0 +1,107 @@
+<div class="m-card-project" *ngIf="project">
+  <a class="card border border-hover card-border mx-auto">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <div *ngIf="project.marketplaceStatus && project.marketplaceStatus.length > 0">
+          <span class="badge rounded-pill me-3">{{('MARKETPLACE.' + project.marketplaceStatus)|translate}}</span>
+
+          <ng-container *ngIf="project.marketplaceStatus === 'PUBLIC_SALE' || project.marketplaceStatus === 'PRIVATE_SALE' || project.marketplaceStatus === 'PRE_SALE'">
+            <img src="/assets/media/marketplace/fire.svg" alt="fire" />
+          </ng-container>
+        </div>
+        <div *ngIf="!project.marketplaceStatus || project.marketplaceStatus.length === 0">
+          <span class="badge rounded-pill me-3">{{project.status}}</span>
+        </div>
+
+        <div class="d-flex align-items-center" *ngIf="project.isExchangeAvailable === true">
+          <img src="/assets/media/marketplace/check.svg" alt="check" />
+          <span class="dex ms-3">DEX</span>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-5">
+
+        <div class="card-logo m-0 mb-5">
+          <div class="symbol symbol-circle symbol-100px">
+            <div class="symbol-label fs-2" *ngIf="!project.logoUrl || project.logoUrl.length === 0">{{ project.title | slice: 0:1 }}</div>
+            <img [src]="project.logoUrl" *ngIf="project.logoUrl && project.logoUrl.length > 0" alt="Token logo: {{project.tokenName}}" class="img" />
+          </div>
+        </div>
+
+        <div class="">
+
+          <div class="title-project">{{ project.title }}</div>
+          <div class="title-token">{{ project.tokenSymbol }}</div>
+
+        </div>
+
+      </div>
+
+      <div class="description">
+        <p *ngIf="project.shortDescription">{{ project.shortDescription }}</p>
+
+      </div>
+
+      <app-sales-progress-bar
+        [softCapAmount]="softCapAmount"
+        [hardCapAmount]="hardCapAmount"
+        [raisedCapital]="raisedCapital"
+        [raisedCapitalPercentage]="raisedCapitalPercentage"
+        [numberOfBuyers]="numberOfBuyers"
+        [tokenSymbol]="tokenSymbol"
+        [raisedCapitalInUSD]="project.raisedCapitalInUSD"
+      ></app-sales-progress-bar>
+
+      <div class="d-flex align-items-center justify-content-around">
+        <div class="info-hardcap">
+          Token price:
+          <div>
+            <ng-container *ngIf="tokenPrice else noTokenPrice;">
+              {{tokenPrice| currency:'USD': 'symbol': '1.1-4'}}
+            </ng-container>
+            <ng-template #noTokenPrice>
+              -
+            </ng-template>
+          </div>
+        </div>
+        <div class="info-blockchain">
+          Blockchain:
+          <div>
+            <ng-container *ngIf="project.network else noNetwork;">
+              {{project.network}}
+            </ng-container>
+            <ng-template #noNetwork>
+              -
+            </ng-template>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-toolbar text-center">
+
+        <!-- [ngClass]="{'btn-button-variant1': showButton1 === true, 'btn-button-variant2': showButton2 === true}" -->
+        <a [routerLink]="['/', 'project', project.slug]" class="btn btn-view-details d-block text-center"
+          role="button" data-bs-toggle="button">
+
+            <ng-container *ngIf="(project.marketplaceStatus === 'PUBLIC_SALE' || project.marketplaceStatus === 'PRIVATE_SALE' || project.marketplaceStatus === 'PRE_SALE') else showViewDetails">
+              {{'BUTTONS.btn.invest_now' | translate}}
+            </ng-container>
+
+            <ng-template #showViewDetails>
+              {{'BUTTONS.btn.details' | translate}}
+            </ng-template>
+
+            <!-- <img src="/assets/media/marketplace/arrow-right-line.svg" class="arrow-right-line ms-3" alt="arrow right line" /> -->
+          <!-- </div> -->
+        </a>
+
+      </div>
+
+    </div>
+  </a>
+
+</div>
+

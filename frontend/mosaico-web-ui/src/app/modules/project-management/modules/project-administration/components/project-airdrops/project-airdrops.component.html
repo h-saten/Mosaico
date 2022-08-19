@@ -1,0 +1,79 @@
+<div class="card settings-card shadow-sm">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-lg-end justify-content-start">
+                        <button class="btn btn-mosaico-outline-secondary" (click)="createAirdropModal.open()"><i
+                                class="fa fa-plus text-dark"></i> {{ 'PROJECT_AIRDROPS.ACTION_COLUMN.CREATE_AIRDROP' | translate }}</button>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!airdrops || airdrops.length === 0">
+                    <div class="col-12 d-flex justify-content-center">
+                        <p>There are no airdrops</p>
+                    </div>
+                </div>
+                <div class="row" *ngIf="airdrops && airdrops.length > 0">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-distribution">
+                                <thead>
+                                    <tr>
+                                        <th class="col-1"></th>
+                                        <th class="col-2">{{ 'PROJECT_AIRDROPS.COLUMN_TITLES.CAMPAIGN' | translate }}</th>
+                                        <th class="col-2">{{ 'PROJECT_AIRDROPS.COLUMN_TITLES.STARTED_AT' | translate }}</th>
+                                        <th class="col-2">{{ 'PROJECT_AIRDROPS.COLUMN_TITLES.FINISHED_AT' | translate }}</th>
+                                        <th class="col-3">{{ 'PROJECT_AIRDROPS.COLUMN_TITLES.PROGRESS' | translate }}</th>
+                                        <th class="col-2">{{ 'PROJECT_AIRDROPS.COLUMN_TITLES.ACTIONS' | translate }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let a of airdrops">
+                                        <td><i class="fa fa-check text-success" *ngIf="!a.isFinished"></i><i
+                                                class="fa fa-times text-muted" *ngIf="a.isFinished"></i></td>
+                                        <td><a routerLink="{{a.id}}/participants">{{a.name}}</a></td>
+                                        <td>{{a.startDate | date : 'dd.MM.yyyy, HH:mm'}}</td>
+                                        <td>{{a.endDate | date : 'dd.MM.yyyy, HH:mm'}}</td>
+                                        <td>
+                                            <div class="d-flex flex-column w-100 me-2"
+                                                [ngbTooltip]="('PROJECT_AIRDROPS.PROGRESS_COLUMN.INCLUDED_IN_SALE' | translate) + ': ' + a.tokensPerParticipant"
+                                                style="cursor: pointer;">
+                                                <div class="d-flex flex-stack mb-2">
+                                                    <span class="me-2 fs-7 fw-bold">{{a.claimedPercentage | number:
+                                                        '1.0-6': 'en'}}% <span class="text-muted">({{a.claimedTokens}} /
+                                                            {{a.totalCap}})</span></span>
+                                                    <span *ngIf="a.countAsPurchase === true">{{ 'PROJECT_AIRDROPS.PROGRESS_COLUMN.TOKENS_PER_PERSON' | translate }}</span>
+                                                </div>
+                                                <div class="progress h-6px w-100">
+                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                        [style.width]="a.claimedPercentage+'%'"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <!-- <button class="btn btn-link btn-icon" [ngbTooltip]="'Edit campaign'"><i
+                                    class="fa fa-edit text-mosaico-secondary fs-3"></i></button> -->
+                                            <button class="btn btn-link btn-icon" (cbOnSuccess)="onCopied()"
+                                                ngxClipboard [cbContent]="getAirdropLink(a)"
+                                                [ngbTooltip]="'PROJECT_AIRDROPS.ACTION_COLUMN.COPY_LINK' | translate"><i
+                                                    class="fa fa-copy text-mosaico-secondary fs-3"></i></button>
+                                            <button class="btn btn-link btn-icon" [ngbTooltip]="'PROJECT_AIRDROPS.ACTION_COLUMN.STOP_CAMPAIGN' | translate"
+                                               (click)="confirmStopCompanyDialog.open(a)"><i
+                                                    class="fa fa-stop text-danger fs-3"></i></button>
+                                            <button class="btn btn-link btn-icon" [ngbTooltip]="'PROJECT_AIRDROPS.ACTION_COLUMN.PAY_AIRDROP' | translate"
+                                                (click)="airdropWithdrawalDialog.open(a.id)"><i
+                                                    class="far fa-money-bill-alt fs-3 text-primary"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <app-create-airdrop #createAirdropModal [projectId]="projectId" [companyId]="companyId"
+                    [tokenId]="tokenId" (closed)="refreshData()"></app-create-airdrop>
+                <lib-confirm-dialog #confirmStopCompanyDialog [title]="'PROJECT_AIRDROPS.STOP_CAMPAIGN_FORM.CONFIRM_YOUR_ACTION' | translate" [usePayload]="true"
+                    [message]="'PROJECT_AIRDROPS.STOP_CAMPAIGN_FORM.SURE_TO_STOP' | translate"
+                    (closed)="stopCampaign($event)" [submitButtonText]="'PROJECT_AIRDROPS.STOP_CAMPAIGN_FORM.ACTIONS.SUBMIT' | translate" [cancelButtonText]="'PROJECT_AIRDROPS.STOP_CAMPAIGN_FORM.ACTIONS.CANCEL' | translate">
+                </lib-confirm-dialog>
+                <app-airdrop-withdrawal [projectId]="projectId" #airdropWithdrawalDialog></app-airdrop-withdrawal> 

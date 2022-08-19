@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migrate-database-job
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: copy
+          image: busybox:1.28
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "cp /usr/mosaico/tmp/appsettings.json /usr/mosaico/config/",
+            ]
+          volumeMounts:
+            - name: appsettings-volume
+              mountPath: /usr/mosaico/tmp/
+            - name: data
+              mountPath: /usr/mosaico/config/
+      containers:
+        - name: mosaico-cli
+          image: acrmosaico.azurecr.io/mosaico-v2-cli:latest
+          command:
+            [
+              "dotnet",
+              "/usr/mosaico/Mosaico.Tools.CommandLine.dll",
+              "migrate-database",
+              "--prod",
+              "-contextName=core",
+            ]
+          securityContext:
+            runAsUser: 2001
+            readOnlyRootFilesystem: false
+          volumeMounts:
+            - name: data
+              mountPath: /usr/mosaico/config/
+          
+      volumes:
+        - name: appsettings-volume
+          configMap:
+            name: appsettings-cli
+        - name: data
+          emptyDir: {}
+      restartPolicy: Never
+  backoffLimit: 1
+

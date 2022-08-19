@@ -1,0 +1,61 @@
+name: release-push-blob
+on:
+  workflow_dispatch:
+
+
+jobs:
+  push_blob:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          # Optional, GitHub token, a Personal Access Token with `public_repo` scope if needed
+          # Required, if artifact is from a different repo
+          # Required, if repo is private a Personal Access Token with `repo` scope is needed
+          github_token: ${{secrets.REPO_ACCESS_TOKEN}}
+          # Required, workflow file name or ID
+          workflow: ci-frontend-backend.yml
+          # Optional, the status or conclusion of a completed workflow to search for
+          # Can be one of a workflow conclusion:
+          #   "failure", "success", "neutral", "cancelled", "skipped", "timed_out", "action_required"
+          # Or a workflow status:
+          #   "completed", "in_progress", "queued"
+          workflow_conclusion: completed
+          # Optional, will get head commit SHA
+          #pr: ${{github.event.pull_request.number}}
+          # Optional, no need to specify if PR is
+          commit: ${{github.event.pull_request.head.sha}}
+          # Optional, will use the branch
+          branch: main
+          # Optional, defaults to all types
+          event: push
+          # Optional, will use specified workflow run
+          #run_id: 1122334455
+          # Optional, run number from the workflow
+          #run_number: 34
+          # Optional, uploaded artifact name,
+          # will download all artifacts if not specified
+          # and extract them in respective subdirectories
+          # https://github.com/actions/download-artifact#download-all-artifacts
+          #name: artifact_name
+          # Optional, directory where to extract artifact. Defaults to the artifact name (see `name` input)
+          path: .
+          # Optional, defaults to current repo
+          repo: ${{github.repository}}
+          # Optional, check the workflow run whether it has an artifact
+          # then will get the last available artifact from previous workflow
+          # default false, just try to download from the last one
+          check_artifacts:  false
+          # Optional, search for the last workflow run whose stored an artifact named as in `name` input
+          # default false
+          search_artifacts: false
+        
+      - run: ls -l
+      - run: ls -l .
+      - uses: fixpoint/azblob-upload-artifact@v4
+        with:
+          connection-string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          name: my-artifact
+          path: .

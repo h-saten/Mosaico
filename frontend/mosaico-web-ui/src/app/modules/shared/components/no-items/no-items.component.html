@@ -1,0 +1,7 @@
+<div class="no-items__container">
+    <p class="no-items__title">{{ title | translate}}</p>
+    <P class="no-items__subtitle">{{ subTitle | translate}}</P>
+    <img src="/assets/media/marketplace/no-projects.png" alt="no-projects-icon">
+    <p class="no-items__description" [innerHTML]="description | translate"></p>
+    <button class="btn no-items__btn">{{ btnText | translate }}</button>
+</div>

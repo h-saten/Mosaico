@@ -1,0 +1,39 @@
+.text-showing {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #6B6D81;
+  margin-bottom: 16px;
+}
+
+.btn-link {
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  line-height: 16px;
+  font-size: 16px;
+
+  background: #494642;
+  border: 2px solid #494642;
+  box-sizing: border-box;
+  border-radius: 5px;
+
+  padding: 16px 24px;
+}
+
+.btn-link:hover {
+  // color: #424242;
+  // text-decoration: underline;
+  // text-decoration: none;
+}
+
+.btn-link:focus, .btn-link.focus {
+  // text-decoration: underline;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.btn-link:disabled, .btn-link.disabled {
+  color: #6c757d;
+  pointer-events: none;
+}

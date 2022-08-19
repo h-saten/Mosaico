@@ -1,0 +1,13 @@
+.meet-team-follow-us {
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 11px;
+    color: #0063F5;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+
+    @media screen and (max-width: 991px) {
+        margin-bottom: 12px;
+        text-align: center;
+    }
+}

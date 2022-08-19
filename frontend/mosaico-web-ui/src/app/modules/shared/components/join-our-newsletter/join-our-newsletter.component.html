@@ -1,0 +1,21 @@
+<div class="join_our_newsletter--wrapper">
+  <div class="join_our_newsletter--container">
+    <div class="join_our_newsletter--details">
+      <p class="subscribe-to">{{ 'JOIN_OUR_NEWSLETTER.SUBSCRIBE' | translate }}</p>
+      <p class="join_our_newsletter--title">{{ 'JOIN_OUR_NEWSLETTER.TITLE' | translate }}</p>
+      <p class="join_our_newsletter--description d-none d-lg-block mb-3" [innerHTML]="'JOIN_OUR_NEWSLETTER.SUBSCRIBING' | translate"></p>
+      <p class="join_our_newsletter--description d-none d-lg-block" [innerHTML]="'JOIN_OUR_NEWSLETTER.SUBMIT' | translate"></p>
+    </div>
+    <div class="join_our_newsletter--email-form">
+      <p class="send-email">Email</p>
+      <div >
+        <form [formGroup]="mainForm" class="d-flex gap-5 flex-column flex-sm-row" novalidate="novalidate">
+          <input class="form-control input-newsletter" type="email" name="email" formControlName="email" [placeholder]="'JOIN_OUR_NEWSLETTER.PLACEHOLDER' | translate">
+          <button class="btn btn-newsletter" [disabled]="mainForm.disabled" (click)="save()">{{ 'JOIN_OUR_NEWSLETTER.SEND' | translate }}</button>
+        </form>
+        <p class="privacy-policy-terms d-block d-lg-none mb-3" [innerHTML]="'JOIN_OUR_NEWSLETTER.SUBSCRIBING' | translate"></p>
+        <p class="privacy-policy-terms d-block d-lg-none" [innerHTML]="'JOIN_OUR_NEWSLETTER.SUBMIT' | translate"></p>
+      </div>
+    </div>
+  </div>
+</div>

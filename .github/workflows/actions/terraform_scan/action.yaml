@@ -1,0 +1,46 @@
+name: "Scan Terraform"
+description: "SonarCloud/Terrascan"
+
+inputs:
+  GITHUB_TOKEN:
+    required: true
+    description: "Azure credentials"
+  SONAR_TERRAFORM_TOKEN:
+    required: true
+    description: "Azure credentials"
+  SONAR_PROJECT_KEY:
+    required: true
+    description: "Azure credentials"
+  WORKING_DIRECTORY:
+    required: true
+    description: "Azure credentials"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      with:
+        projectBaseDir: ${{ inputs.WORKING_DIRECTORY }}
+        args: >
+          -Dsonar.projectKey=${{inputs.SONAR_PROJECT_KEY}}
+          -Dsonar.organization=sapiency-io
+          -Dsonar.verbose=true
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }} 
+        SONAR_TOKEN: ${{ inputs.SONAR_TERRAFORM_TOKEN }}
+    - name: Run Terrascan
+      id: terrascan
+      uses: accurics/terrascan-action@main
+      with:
+        iac_type: 'terraform'
+        iac_version: 'v14'
+        policy_type: 'azure'
+        only_warn: true
+        sarif_upload: false
+        #non_recursive:
+        #iac_dir:
+        #policy_path:
+        #skip_rules:
+        #config_path:

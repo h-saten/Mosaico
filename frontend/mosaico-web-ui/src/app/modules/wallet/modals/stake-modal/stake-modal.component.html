@@ -1,0 +1,106 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+
+        <div class="modal-body">
+            <div class="row mt-3 mb-3" *ngIf="showTransactionSucceeded === false && (deploying$|async) === false">
+                <div class="col-12 d-flex flex-row justify-content-end">
+                    <button class="btn btn-icon btn-sm btn-icon-close" (click)="modal.dismiss(false)" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+                </div>
+            </div>
+            <ng-container *ngIf="!isLoading && !showTransactionSucceeded && (deploying$|async) === false">
+                <form [formGroup]="form">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="fs-3 fw-bold text-center">{{'WALLET_STAKING.DISCLAIMER.STANDARD.TITLE'|translate}}</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="fs-4 text-center px-3" [innerHTML]="regulation"></p>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-12 d-flex justify-content-center ">
+                                    <span class="fs-4 text-center px-3">{{'STAKING_MODAL.CONTENT'|translate}}
+                                        <br /><strong>{{command?.balance}} {{getStakeAssetSymbol()}}</strong></span>
+                                </div>
+                            </div> -->
+                            <div class="row" *ngIf="showMetamask === true">
+                                <div class="col-12">
+                                    <div class="form-group mb-5">
+                                        <ng-select class="mosaico-select mb-5" [clearable]="false"
+                                            [ngClass]="{ 'is-invalid': isDirty('wallet') && hasErrors('wallet') }"
+                                            bindValue="key" bindLabel="name" [items]="systemWallets"
+                                            formControlName="wallet"
+                                            placeholder="{{'WALLET_PAYMENT.PLACEHOLDER'|translate}}">
+                                            <ng-template ng-label-tmp let-item="item">
+                                                <img [attr.src]="item.logoUrl" class="img-fluid" style="width: 20px;" />
+                                                {{item.name|translate}}
+                                            </ng-template>
+                                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                <img [attr.src]="item.logoUrl" class="img-fluid" style="width: 20px;" />
+                                                {{item.name|translate}}
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-check form-check-custom">
+                                        <input class="form-check-input" formControlName="accepted" type="checkbox" id="acceptedTerms"/>
+                                        <label class="form-check-label" for="acceptedTerms">
+                                            <ng-container *ngIf="termsAndConditionsUrl && termsAndConditionsUrl.length > 0; else noTermsConnected">
+                                                <span [innerHTML]="'WALLET_STAKING.FORM.ACCEPT_WITH_TERMS'|translate: {termsAndConditionsUrl}"></span>
+                                            </ng-container>
+                                            <ng-template #noTermsConnected>
+                                                {{'WALLET_STAKING.FORM.ACCEPT_WITHOUT_TERMS'|translate}}
+                                            </ng-template>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </ng-container>
+            <ng-container *ngIf="!isLoading && showTransactionSucceeded">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <img class="img-fluid" style="max-width: 250px"
+                            src="/assets/media/animations/success-payment.gif" />
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isLoading && (deploying$|async) === true">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <img class="img-fluid" style="max-width: 150px"
+                            src="/assets/media/animations/in-progress.gif" />
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="modal-footer" *ngIf="!isLoading">
+            <div class="row w-100">
+                <div class="col-12 w-100 px-0">
+                    <app-button-save *ngIf="!showTransactionSucceeded" [formInvalid]="form.invalid"
+                        [classes]="'btn btn-primary btn-mosaico-primary w-100'"
+                        [showSpinner]="(deploying$|async) === true" [buttonText]="'Confirm'" (clicked)="submit()">
+                    </app-button-save>
+                    <button *ngIf="showTransactionSucceeded" class="btn btn-primary btn-mosaico-primary w-100"
+                        (click)="modal.close(true)">{{'STAKING_MODAL.DONE'|translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

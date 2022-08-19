@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.BackgroundJobs.Hangfire\Mosaico.BackgroundJobs.Hangfire.csproj" />
+        <ProjectReference Include="..\Mosaico.Blockchain.Base\Mosaico.Blockchain.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Core.ResourceManager\Mosaico.Core.ResourceManager.csproj" />
+        <ProjectReference Include="..\Mosaico.Core\Mosaico.Core.csproj" />
+        <ProjectReference Include="..\Mosaico.CQRS.Base\Mosaico.CQRS.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.DocumentExport.Base\Mosaico.DocumentExport.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.DocumentExport.PDF\Mosaico.DocumentExport.PDF.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.ProjectManagement\Mosaico.Domain.ProjectManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Events.Base\Mosaico.Events.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Events.ProjectManagement\Mosaico.Events.ProjectManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Events.Wallet\Mosaico.Events.Wallet.csproj" />
+        <ProjectReference Include="..\Mosaico.EventSourcing.Base\Mosaico.EventSourcing.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Blockchain.Ethereum\Mosaico.Integration.Blockchain.Ethereum.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Email.Abstraction\Mosaico.Integration.Email.Abstraction.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.SignalR\Mosaico.Integration.SignalR.csproj" />
+        <ProjectReference Include="..\Mosaico.SDK.BusinessManagement\Mosaico.SDK.BusinessManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.SDK.Features\Mosaico.SDK.Features.csproj" />
+        <ProjectReference Include="..\Mosaico.SDK.Identity\Mosaico.SDK.Identity.csproj" />
+        <ProjectReference Include="..\Mosaico.SDK.Wallet\Mosaico.SDK.Wallet.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="27.2.1" />
+      <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="5.0.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Queries\Administration" />
+    </ItemGroup>
+
+</Project>

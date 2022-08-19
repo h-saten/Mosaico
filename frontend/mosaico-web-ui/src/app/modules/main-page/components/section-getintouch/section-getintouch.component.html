@@ -1,0 +1,58 @@
+<div class="section-width-full">
+  <div class="section-iwu">
+
+    <div class="row">
+
+      <div class="col-12 col-xl-6 order-1">
+        <h2 class="section-title">{{'FORM.TITLE'|translate}}</h2>
+      </div>
+      <div class="col-12 col-xl-6 order-2">
+      </div>
+
+      <div class="col-left order-3">
+        <div class="col-icons-in">
+          <div class="icon-title-list">
+            <form class="form mosaico-form" [formGroup]="form" (submit)="submit()" novalidate="novalidate">
+              <div class="form-group mb-5">
+                <input type="text" name="userName" formControlName="userName" class="form-control"
+                  placeholder="{{'FORM.NAME'|translate}}" />
+              </div>
+              <div class="form-group mb-5">
+                <input type="text" name="emailAddress" formControlName="emailAddress" class="form-control"
+                  placeholder="{{'FORM.EMAIL'|translate}}" />
+              </div>
+
+              <div class="form-group mb-5">
+                <textarea name="message" formControlName="message" style="min-height: 150px;"
+                  class="form-control" placeholder="{{'FORM.MSG'|translate}}"></textarea>
+              </div>
+              <div class="form-group mb-5">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" id="terms" formControlName="terms" class="custom-control-input me-2">
+                  <label for="terms" class="custom-control-label">
+                <span>{{'FORM.ACCEPT'|translate}}</span><a class="cursor-pointer fw-bolder" href="https://mosaico.ai/assets/pdf/Polityka_prywatnosci_09_2020.pdf"> {{'FORM.REGULATIONS'|translate}} </a>
+                <span> {{'FORM.AND'|translate}} </span><a class="cursor-pointer fw-bolder" href="https://mosaico.ai/assets/pdf/Polityka_prywatnosci_09_2020.pdf"> {{'FORM.PP'|translate}}. </a></label></div>
+              </div>
+              <div class="form-group mb-5">
+                <button appSpinnerMini [showSpinnerMini]="(sendingInProgress$ | async) === true"
+                        [disabled]="form.invalid || (sendingInProgress$ | async) === true || !formIsModified"
+                        type="submit" class="btn btn-touch w-100">
+                  {{'FORM.SND'|translate}}
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-right order-4">
+        <div class="col-img-in overflow-hidden">
+          <img src="assets/media/mainpage/woman_contact_big.png" alt="" class="img-fluid mb-n6" title="" />
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,184 @@
+.transaction-table {
+    &.table> :not(:first-child) {
+        border-top: none;
+    }
+
+    border-collapse: separate;
+    border-spacing: 0 16px;
+
+    thead {
+        tr {
+            height: 56px;
+            vertical-align: middle;
+            background: #F6F8FB;
+            border: 1px solid #DFE0EB;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+
+            th {
+                min-width: 50px;
+                height: 56px;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: center;
+                color: #000000;
+                border-right: none;
+                border-left: none;
+
+                &:first-child {
+                    border-left: 1px solid #DFE0EB;
+                }
+
+                &:last-child {
+                    border-right: 1px solid #DFE0EB;
+                }
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            margin-top: 8px;
+            border: 1px solid #DFE0EB;
+            box-sizing: border-box;
+            vertical-align: middle;
+
+            &:last-child {
+                border-bottom: 1px solid #DFE0EB !important;
+
+                td {
+                    border-bottom: 1px solid #DFE0EB !important;
+                }
+            }
+
+            td {
+                min-width: 50px;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: center;
+                color: #000000;
+                border-right: none;
+                border-left: none;
+
+                &:first-child {
+                    border-left: 1px solid #DFE0EB;
+                }
+
+                &:last-child {
+                    border-right: 1px solid #DFE0EB;
+                }
+            }
+        }
+    }
+}
+
+.token-name {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1rem;
+    color: #494642;
+}
+
+.token-symbol {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1rem;
+    color: #979797;
+}
+
+.t-date {
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    color: #979797;
+}
+
+.t-hash {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #223354;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    i {
+        color: #223354;
+        margin-left: 3px;
+        margin-top: -3px;
+        font-size: 16px;
+    }
+}
+
+.t-type {
+    color: #494642;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    i {
+        color: #494642;
+        font-size: 0.75rem;
+        margin-right: 0.3rem;
+        margin-top: 0.2rem;
+    }
+
+    &.t-type--success {
+        color: #41CF8F;
+        i {
+            color: #41CF8F;
+        }
+    }
+    &.t-type--failed {
+        color: #C40606;
+        i {
+            color: #C40606;
+        }   
+    }
+}
+
+.t-recipient {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #494642;
+    &:hover {
+        cursor: pointer;
+    }
+    i {
+        color: #494642;
+        margin-left: 3px;
+        margin-top: -3px;
+        font-size: 16px;
+    }
+}
+
+.t-friendlyName {
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+    color: #979797;
+
+    i {
+        color: #494642;
+        font-size: 0.75rem;
+        margin-right: 0.3rem;
+        margin-top: 0.2rem;
+    }
+}
+
+.t-amount {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #494642;
+    .incoming-transaction {
+        color: #41CF8F;
+    }
+    .outgoing-transaction {
+        color: #C40606;
+    }
+}
+.t-currency {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #979797;
+}

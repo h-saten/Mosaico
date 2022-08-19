@@ -1,0 +1,131 @@
+<div class="row mb-5">
+    <div class="col-12">
+        <h3 class="h4 mb-2">Social Media</h3>
+    </div>
+</div>
+<!-- <div class="row mb-3">
+    <div class="col-12">
+        <span class="fs-2hx text-dark mb-6">
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-bg-light btn-active-color-primary btn-sm" ngbDropdownToggle>
+                    {{ language?.name }}{{ " " }}
+                </button>
+                <div ngbDropdownMenu>
+                    <button ngbDropdownItem *ngFor="let l of langs" (click)="selectLanguage(l.lang)"
+                        [ngClass]="l.lang === currentLang ? 'active' : ''">
+                        {{ l.name }}
+                    </button>
+                </div>
+            </div>
+        </span>
+    </div>
+</div> -->
+<div class="row mb-5">
+    <div class="col-12">
+        <form [formGroup]="mainForm" class="form mosaico-form" novalidate="novalidate">
+            <ng-container>
+                <div class="row form-group">
+                    <div class="col-12 col-md-3 label align-items-center d-flex">
+                        {{'SOCIAL_LINKS.CARD.TELEGRAM' | translate}}
+                    </div>
+                    <div class="col-12 col-md-9 align-items-center">
+                        <input type="text" name="telegram" class="form-control" formControlName="telegram">
+                        <div *ngIf="m.telegram.errors" class="text-danger pt-2">
+                            <div *ngIf="m.telegram.errors?.pattern">{{'SOCIAL_LINKS.MESSAGE.INVALID_URL' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group mt-5">
+                    <div class="col-12 col-md-3 label align-items-center d-flex">
+                        {{'SOCIAL_LINKS.CARD.YOUTUBE' | translate}}
+                    </div>
+                    <div class="col-12 col-md-9 align-items-center">
+                        <input type="text" name="youtube" class="form-control" formControlName="youtube">
+                        <div *ngIf="m.youtube.errors" class="text-danger pt-2">
+                            <div *ngIf="m.youtube.errors?.pattern">{{'SOCIAL_LINKS.MESSAGE.INVALID_URL' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group mt-5">
+                    <div class="col-12 col-md-3 label align-items-center d-flex">
+                        {{'SOCIAL_LINKS.CARD.LINKEDIN' | translate}}
+                    </div>
+                    <div class="col-12 col-md-9 align-items-center">
+                        <input type="text" name="linkedin" class="form-control" formControlName="linkedin">
+                        <div *ngIf="m.linkedin.errors" class="text-danger pt-2">
+                            <div *ngIf="m.linkedin.errors?.pattern">{{'SOCIAL_LINKS.MESSAGE.INVALID_URL' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group mt-5">
+                    <div class="col-12 col-md-3 label align-items-center d-flex">
+                        {{'SOCIAL_LINKS.CARD.FACEBOOK' | translate}}
+                    </div>
+                    <div class="col-12 col-md-9 align-items-center">
+                        <input type="text" name="facebook" class="form-control" formControlName="facebook">
+                        <div *ngIf="m.facebook.errors" class="text-danger pt-2">
+                            <div *ngIf="m.facebook.errors?.pattern">{{'SOCIAL_LINKS.MESSAGE.INVALID_URL' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group mt-5">
+                    <div class="col-12 col-md-3 label align-items-center d-flex">
+                        {{'SOCIAL_LINKS.CARD.TWITTER' | translate}}
+                    </div>
+                    <div class="col-12 col-md-9 align-items-center">
+                        <input type="text" name="twitter" class="form-control" formControlName="twitter">
+                        <div *ngIf="m.twitter.errors" class="text-danger pt-2">
+                            <div *ngIf="m.twitter.errors?.pattern">{{'SOCIAL_LINKS.MESSAGE.INVALID_URL' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group mt-5">
+                    <div class="col-12 col-md-3 label align-items-center d-flex">
+                        {{'SOCIAL_LINKS.CARD.INSTAGRAM' | translate}}
+                    </div>
+                    <div class="col-12 col-md-9 align-items-center">
+                        <input type="text" name="instagram" class="form-control" formControlName="instagram">
+                        <div *ngIf="m.instagram.errors" class="text-danger pt-2">
+                            <div *ngIf="m.instagram.errors?.pattern">{{'SOCIAL_LINKS.MESSAGE.INVALID_URL' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group mt-5">
+                    <div class="col-12 col-md-3 label align-items-center d-flex">
+                        {{'SOCIAL_LINKS.CARD.MEDIUM' | translate}}
+                    </div>
+                    <div class="col-12 col-md-9 align-items-center">
+                        <input type="text" name="medium" class="form-control" formControlName="medium">
+                        <div *ngIf="m.medium.errors" class="text-danger pt-2">
+                            <div *ngIf="m.medium.errors?.pattern">{{'SOCIAL_LINKS.MESSAGE.INVALID_URL' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group mt-5">
+                    <div class="col-12 col-md-3 label align-items-center d-flex">
+                        {{'SOCIAL_LINKS.CARD.TIKTOK' | translate}}
+                    </div>
+                    <div class="col-12 col-md-9 align-items-center">
+                        <input type="text" name="tiktok" class="form-control" formControlName="tiktok">
+                        <div *ngIf="m.tiktok.errors" class="text-danger pt-2">
+                            <div *ngIf="m.tiktok.errors?.pattern">{{'SOCIAL_LINKS.MESSAGE.INVALID_URL' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </form>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-12">
+        <button class="btn btn-mosaico-primary" (click)="save()">Save</button>
+    </div>
+</div>

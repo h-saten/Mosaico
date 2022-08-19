@@ -1,0 +1,58 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{ 'PROJECT_AIRDROPS.PAY_AIRDROP.TITLE' | translate }}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container" *ngIf="showTransactionSucceeded === false && (deploying$|async) === false">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+                </div>
+            </div>
+            <ng-container *ngIf="!isLoading && !showTransactionSucceeded && (deploying$|async) === false">
+                <div class="row" [formGroup]="form" class="form mosaico-form">
+                    <div class="col-12 d-flex justify-content-center">
+                        <span class="fs-4 text-center" [innerHTML]="'PROJECT_AIRDROPS.PAY_AIRDROP.DESCRIPTION' | translate: { pendingTokens: pendingTokens, tokenSymbol: airdrop.tokenSymbol, pendingUsersCount: pendingUsersCount } "></span>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isLoading && showTransactionSucceeded">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <img class="img-fluid" style="max-width: 250px" src="/assets/media/animations/success-payment.gif" />
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isLoading && (deploying$|async) === true">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <img class="img-fluid" style="max-width: 150px" src="/assets/media/animations/in-progress.gif" />
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="modal-footer" *ngIf="!isLoading">
+            <div class="row w-100">
+                <div class="col-12 w-100 px-0">
+                    <app-button-save *ngIf="!showTransactionSucceeded"
+                        [classes]="'btn btn-primary btn-mosaico-primary w-100'"
+                        [formInvalid]="form.invalid"
+                        [showSpinner]="(deploying$|async) === true"
+                        [buttonText]="'PROJECT_AIRDROPS.PAY_AIRDROP.ACTION' | translate"
+                        (clicked)="submit()"
+                    ></app-button-save>
+                    <button *ngIf="showTransactionSucceeded" class="btn btn-primary btn-mosaico-primary w-100" (click)="modal.close(true)">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

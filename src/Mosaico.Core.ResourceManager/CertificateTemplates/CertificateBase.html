@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>certyfikat</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:wght@500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        body {
+            font-family: 'Poppins', 'Times New Roman', sans-serif;
+            font-size: 20px;
+            margin:0;
+            padding:0;
+            width: 100%;
+            height: 100%;
+            background: url('{{ BackgroundUrl }}');
+            background-size: 100%;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; width: 1528px; height: 100%;">
+    <div id="container" style="position: relative; box-sizing: border-box;">
+        
+        {{#ShowName}}
+            <div style="position: absolute;
+                        width: {{ NameConfiguration.Width }}px; 
+                        height: {{ NameConfiguration.Height }}px;
+                        margin-top: {{ NameConfiguration.MarginTop }}px; 
+                        margin-left: {{ NameConfiguration.MarginLeft }}px;">
+                    {{#NameConfiguration.Value}}
+                        <div style="position: relative; font-weight: {{ NameConfiguration.FontWeight }}; text-align: {{ NameConfiguration.TextAlign }};
+                                    color: {{ NameConfiguration.FontColor }};
+                                    line-height: {{ NameConfiguration.LineHeight }}px; 
+                                    padding-top: {{ NameConfiguration.PaddingTop }}px; 
+                                    font-size: {{ NameConfiguration.FontSize }}px;">
+                            {{ NameConfiguration.Value }}
+                        </div>
+                    {{/NameConfiguration.Value}}
+                    {{^NameConfiguration.Value}}
+                        <div style="position: relative; font-weight: {{ NameConfiguration.FontWeight }}; text-align: {{ NameConfiguration.TextAlign }};
+                                            color: {{ NameConfiguration.FontColor }};
+                                            line-height: {{ NameConfiguration.LineHeight }}px; 
+                                            padding-top: {{ NameConfiguration.PaddingTop }}px; 
+                                            font-size: {{ NameConfiguration.FontSize }}px;">
+                            X
+                        </div>
+                    {{/NameConfiguration.Value}}
+            </div>
+        {{/ShowName}}
+        
+        {{#ShowTokensAmount}}
+            <div style="position: absolute; font-family: 'Poppins';
+                        width: {{ TokensAmountConfiguration.Width }}px; 
+                        height: {{ TokensAmountConfiguration.Height }}px;
+                        margin-top: {{ TokensAmountConfiguration.MarginTop }}px; 
+                        margin-left: {{ TokensAmountConfiguration.MarginLeft }}px;">
+                {{#TokensAmountConfiguration.Value}}
+                <div style="position: relative; font-weight: {{ TokensAmountConfiguration.FontWeight }}; text-align: {{ TokensAmountConfiguration.TextAlign }}; font-family: 'Poppins';
+                            color: {{ TokensAmountConfiguration.FontColor }};
+                            line-height: {{ TokensAmountConfiguration.LineHeight }}px; 
+                            padding-top: {{ TokensAmountConfiguration.PaddingTop }}px; 
+                            font-size: {{ TokensAmountConfiguration.FontSize }}px;">
+                    {{ TokensAmountConfiguration.Value }}
+                </div>
+                {{/TokensAmountConfiguration.Value}}
+                {{^TokensAmountConfiguration.Value}}
+                <div style="position: relative; font-weight: {{ TokensAmountConfiguration.FontWeight }}; text-align: {{ TokensAmountConfiguration.TextAlign }}; font-family: 'Poppins';
+                            color: {{ TokensAmountConfiguration.FontColor }};
+                            line-height: {{ TokensAmountConfiguration.LineHeight }}px; 
+                            padding-top: {{ TokensAmountConfiguration.PaddingTop }}px; 
+                            font-size: {{ TokensAmountConfiguration.FontSize }}px;">
+                    X
+                </div>
+                {{/TokensAmountConfiguration.Value}}
+            </div>
+        {{/ShowTokensAmount}}
+    
+        {{#ShowDate}}
+            <div style="position: absolute; 
+                                width: {{ DateConfiguration.Width }}px; 
+                                height: {{ DateConfiguration.Height }}px;
+                                margin-top: {{ DateConfiguration.MarginTop }}px; 
+                                margin-left: {{ DateConfiguration.MarginLeft }}px;">
+                {{#DateConfiguration.Value}}
+                <div style="position: relative; font-weight: {{ DateConfiguration.FontWeight }}; text-align: {{ DateConfiguration.TextAlign }};
+                                    color: {{ DateConfiguration.FontColor }};
+                                    line-height: {{ DateConfiguration.LineHeight }}px; 
+                                    padding-top: {{ DateConfiguration.PaddingTop }}px; 
+                                    font-size: {{ DateConfiguration.FontSize }}px;">
+                    {{ DateConfiguration.Value }}
+                </div>
+                {{/DateConfiguration.Value}}
+                {{^DateConfiguration.Value}}
+                <div style="position: relative; font-weight: {{ DateConfiguration.FontWeight }}; text-align: {{ DateConfiguration.TextAlign }};
+                                    color: {{ DateConfiguration.FontColor }};
+                                    line-height: {{ DateConfiguration.LineHeight }}px; 
+                                    padding-top: {{ DateConfiguration.PaddingTop }}px; 
+                                    font-size: {{ DateConfiguration.FontSize }}px;">
+                    X
+                </div>
+                {{/DateConfiguration.Value}}
+            </div>
+        {{/ShowDate}}
+    
+        {{#ShowCode}}
+            <div style="position: absolute; 
+                                    width: {{ CodeConfiguration.Width }}px; 
+                                    height: {{ CodeConfiguration.Height }}px;
+                                    margin-top: {{ CodeConfiguration.MarginTop }}px; 
+                                    margin-left: {{ CodeConfiguration.MarginLeft }}px;">
+                {{#CodeConfiguration.Value}}
+                <div style="position: relative; font-weight: {{ CodeConfiguration.FontWeight }}; text-align: {{ CodeConfiguration.TextAlign }};
+                                        color: {{ CodeConfiguration.FontColor }};
+                                        line-height: {{ CodeConfiguration.LineHeight }}px; 
+                                        padding-top: {{ CodeConfiguration.PaddingTop }}px; 
+                                        font-size: {{ CodeConfiguration.FontSize }}px;">
+                    {{ CodeConfiguration.Value }}
+                </div>
+                {{/CodeConfiguration.Value}}
+                {{^CodeConfiguration.Value}}
+                <div style="position: relative; font-weight: {{ CodeConfiguration.FontWeight }}; text-align: {{ CodeConfiguration.TextAlign }};
+                                        color: {{ CodeConfiguration.FontColor }};
+                                        line-height: {{ CodeConfiguration.LineHeight }}px; 
+                                        padding-top: {{ CodeConfiguration.PaddingTop }}px; 
+                                        font-size: {{ CodeConfiguration.FontSize }}px;">
+                    X
+                </div>
+                {{/CodeConfiguration.Value}}
+            </div>
+        {{/ShowCode}}
+        
+        <div style="position: absolute; visibility: {{#ShowLogo}}visible{{/ShowLogo}}{{^ShowLogo}}hidden{{/ShowLogo}};
+                    width: {{ LogoConfiguration.Width }}px; 
+                    height: {{ LogoConfiguration.Height }}px;
+                    margin-top: {{ LogoConfiguration.MarginTop }}px; 
+                    margin-left: {{ LogoConfiguration.MarginLeft }}px;
+                    background: url('{{ LogoUrl }}') no-repeat;
+                    background-size: contain;
+                    box-sizing: border-box;
+                    border-radius: {{ LogoConfiguration.BorderRadius }}%;">
+        </div>
+        
+        
+    </div>
+</body>
+</html>

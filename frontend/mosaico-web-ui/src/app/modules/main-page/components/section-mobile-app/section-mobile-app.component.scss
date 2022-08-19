@@ -1,0 +1,125 @@
+.mobile-app-container {
+    display: flex;
+    align-items: center;
+    max-width: 1350px;
+    gap: 118px;
+    margin: 0 auto;
+    padding: 242px 0 173px;
+    
+    p {
+        margin: 0;
+    }
+    
+    .app-mobile-icon {
+        height: 597px;
+    }
+
+    .mobile-app-details-wrapper {
+        padding: 80px 0 160px;
+        
+        .check-out {
+            font-weight: 600;
+            font-size: 11px;
+            line-height: 11px;
+            color: #0063F5;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        
+        .mobile-app-title {
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 40px;
+            color: #434343;
+        }
+        
+        .mobile-app-description {
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 24px;
+            color: #979797;
+            margin: 40px 0;
+    
+            p {
+                margin-bottom: 16px;
+    
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+
+            .right-arrow {
+                height: 12px;
+                margin-right: 16px;
+            }
+        }
+        
+        .mobile-app-btn {
+            background: #0063F5;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 24px;
+            color: #FFFFFF;
+            padding: 12px 23px !important;
+        }
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .mobile-app-container {
+        padding: 100px 40px;
+
+        .app-mobile-icon {
+            height: 292px;
+        }
+
+        .mobile-app-details-wrapper {
+            padding: 0;
+
+            .mobile-app-title {
+                font-size: 36px;
+                line-height: 46px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-app-container {
+        flex-direction: column;
+        padding: 40px 23px 64px;
+        gap: 0;
+
+        .app-mobile-icon {
+            height: 333px;
+        }
+
+        .mobile-app-details-wrapper {
+
+            .check-out {
+                margin-bottom: 6px;
+                text-align: center;
+            }
+
+            .mobile-app-title {
+                text-align: center;
+                font-size: 24px;
+                line-height: 30px;
+            }
+
+            .mobile-app-description {
+                margin: 24px 0 16px;
+
+                p {
+                    margin-bottom: 16px;
+
+                    &:first-child {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}

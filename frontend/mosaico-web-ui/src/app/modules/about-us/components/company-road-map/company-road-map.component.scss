@@ -1,0 +1,228 @@
+p {
+    margin: 0;
+}
+
+.company_road_map {
+    &--wrapper {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 145px 20px;
+        position: relative;
+    }
+
+    &--title {
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 56px;
+        color: #434343;
+        text-align: center;
+    }
+
+    &--subtitle {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 26px;
+        color: #979797;
+        text-align: center;
+        margin: 28px 240px 66px;
+    }
+
+    &--card {
+        box-shadow: 0px 11px 50px rgba(0, 0, 0, 0.07);
+        border-radius: 16px;
+        padding: 16px;
+
+        .road-map-btn {
+            padding: 13px 24px !important;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 24px;
+            width: 100%;
+            text-align: left;
+            border: 2px solid #00A1FF !important;
+            color: #00A1FF;
+
+            &.active {
+                background: #00A1FF;
+                color: #FFFFFF;
+            }
+
+            &:first-child {
+                border: 2px solid #0063F5 !important;
+                color: #0063F5;
+
+                &.active {
+                    background: #0063F5;
+                    color: #FFFFFF;
+                }
+            }
+
+            &:last-child {
+                border: 2px solid #FF9A00 !important;
+                color: #FF9A00;
+
+                &.active {
+                    background: #FF9A00;
+                    color: #FFFFFF;
+                }
+            }
+        }
+    }
+
+    &--steps-wrapper {
+        display: grid;
+        grid-gap: 0 60px;
+        grid-template-columns: repeat(3, 1fr);
+    
+        .road-map-step {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            gap: 11px;
+            border-bottom: 1px solid #F0F0F0;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 18px;
+        }
+    
+        .right-arrow {
+            height: 9px;
+            
+            &.next-year {
+                filter: invert(43%) sepia(87%) saturate(2375%) hue-rotate(179deg) brightness(104%) contrast(105%);
+            }
+    
+            &.last-year {
+                filter: invert(61%) sepia(84%) saturate(2213%) hue-rotate(0deg) brightness(103%) contrast(104%);
+            }
+        }
+    }
+}
+
+.mat-expansion-panel  {
+    background: rgba(223, 224, 235, 0.5);
+    border-radius: 5px;
+    margin-bottom: 8px;
+    
+    @media (min-width: 991px) {
+        margin-bottom: 16px;
+    }
+
+    .mat-expansion-panel-header {
+        padding: 8px 8px 8px 24px;
+    }
+    
+    mat-expansion-panel-header.mat-focus-indicator {
+        mat-panel-title {
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 24px;
+            color: #0063F5;
+        }
+        
+        ::ng-deep.mat-expansion-indicator {
+            background: #0063F5;
+            border-radius: 5px;
+            padding: 8px 14px;
+            color: #FFFFFF;
+        }
+
+        &.next-year {
+            mat-panel-title {
+                color: #00A1FF;
+            }
+
+            ::ng-deep.mat-expansion-indicator {
+                background: #00A1FF;
+            }
+        }
+
+        &.last-year {
+            mat-panel-title {
+                color: #FF9A00;
+            }
+            
+            ::ng-deep.mat-expansion-indicator {
+                background: #FF9A00;
+            }
+        }
+    }
+
+    ::ng-deep.mat-expansion-panel-content {
+        background: #FFFFFF;
+
+        .mat-expansion-panel-body {
+            padding: 8px;
+
+            @media (min-width: 991px) {
+                padding: 25px 40px;
+            }
+
+            @media (min-width: 768px) {
+                padding: 11px;
+            }
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .company_road_map {
+        &--wrapper{
+            padding: 100px 40px;
+        }
+
+        &--title {
+            font-size: 36px;
+            line-height: 46px;
+        }
+
+        &--subtitle {
+            line-height: 24px;
+            margin: 24px 40px;
+            text-align: center;
+        }
+
+        &--card {
+            padding: 8px;
+
+            .road-map-btn {
+                font-size: 20px;
+                padding: 12px 16px !important;
+                line-height: 17px;
+            }
+        }
+
+        &--steps-wrapper {
+            grid-template-columns: none;
+
+            .road-map-step {
+                padding: 6px 0 8px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .company_road_map {
+        &--wrapper{
+            padding: 40px 25px;
+        }
+
+        &--title {
+            font-size: 24px;
+            line-height: 30px;
+        }
+
+        &--subtitle {
+            font-size: 13px;
+            line-height: 20px;
+        }
+
+        &--card {
+
+            .road-map-btn {
+                font-size: 12px;
+            }
+        }
+    }
+}

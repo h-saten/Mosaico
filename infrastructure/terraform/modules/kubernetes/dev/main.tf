@@ -1,0 +1,176 @@
+resource "azurerm_log_analytics_workspace" "log_workspace" {
+  # The WorkSpace name has to be unique across the whole of azure, not just the current subscription/tenant.
+
+  name                = "log-mosaico-${var.env}"
+  location            = var.location
+  resource_group_name = var.resource_group
+  sku                 = "PerGB2018"
+  daily_quota_gb      = 1
+  retention_in_days   = 30
+} #those 2 resource blocks could be moved to another module, but idk if necessary
+
+resource "azurerm_log_analytics_solution" "log_solution" {
+  solution_name         = "ContainerInsights" #has to be same as plan.product
+  location              = var.location
+  resource_group_name   = var.resource_group
+  workspace_resource_id = azurerm_log_analytics_workspace.log_workspace.id
+  workspace_name        = azurerm_log_analytics_workspace.log_workspace.name
+
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/ContainerInsights"
+  }
+}
+
+resource "azurerm_application_insights" "insights" {
+  name                = "appi-${var.env}"
+  location            = var.location
+  resource_group_name = var.resource_group
+  application_type    = "web"
+  workspace_id        = azurerm_log_analytics_workspace.log_workspace.id
+  daily_data_cap_in_gb = 1
+  daily_data_cap_notifications_disabled = false
+  retention_in_days = 30
+}
+
+resource "azurerm_kubernetes_cluster" "k8s" {
+  name                    = "aks-mosaico-${var.env}"
+  location                = var.location
+  resource_group_name     = var.resource_group
+  dns_prefix              = "dns-aks-${var.env}" #dns prefix to use for aks cluster
+  kubernetes_version      = "1.21.2"             #set as described, but when it is static defined, it wont auto-upgrade
+  private_cluster_enabled = true                 #access from vpn only
+  private_dns_zone_id     = "System"
+  sku_tier                = "Paid"
+  
+  # we ignore addon_profile because aks tries to kill AGIC everytime.
+  lifecycle {
+    ignore_changes = [
+      addon_profile
+    ]
+  }
+
+  default_node_pool {
+    name                  = "system"
+    node_count            = 1
+    vm_size               = "Standard_B4ms"
+    enable_node_public_ip = false
+    max_pods              = 40 #this is minimal value
+    vnet_subnet_id        = var.aks_subnet_id
+  }
+
+  addon_profile {
+
+    http_application_routing {
+      enabled = false
+    }
+
+    oms_agent {
+      enabled                    = true
+      log_analytics_workspace_id = azurerm_log_analytics_workspace.log_workspace.id
+    }
+
+    aci_connector_linux {
+      enabled = false
+    }    
+
+    # ingress_application_gateway {
+    #   enabled = true
+    #   gateway_id = var.gateway_id
+    # }
+  }
+
+  network_profile {
+    load_balancer_sku  = "Standard"
+    network_policy     = "azure"
+    network_plugin     = "azure"
+    docker_bridge_cidr = "192.168.0.1/16"
+    dns_service_ip     = "10.0.0.10"
+    service_cidr       = "10.0.0.0/16"
+  }
+
+  #=======RBAC BLOCK=======
+  role_based_access_control {
+    enabled = true
+    azure_active_directory {
+      managed                = true
+      azure_rbac_enabled     = true
+      tenant_id              = var.tenant_id
+      admin_group_object_ids = [var.dev_team_id]
+    }
+  }
+
+  identity {
+    type                      = "UserAssigned"
+    user_assigned_identity_id = var.managed_identity_id
+  }
+}
+
+resource "azurerm_role_assignment" "example" {
+  scope = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_kubernetes_cluster.k8s.node_resource_group}"
+  role_definition_name = "Reader"
+  principal_id         = var.dev_team_id
+}
+
+# Grant AKS cluster access to use AKS subnet
+resource "azurerm_role_assignment" "aks" {
+  principal_id         = var.msi_id            # Object ID
+  role_definition_name = "Network Contributor" #scope cannot be only on the subnet, it has to be on main network
+  scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/${var.virtual_network}"
+}
+
+resource "azurerm_role_assignment" "kubweb_to_acr" {
+  scope                = var.acr_id   
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id #attach acr to aks, allowing it with AcrPull
+}
+
+#https://portal.azure.com/#blade/Microsoft_AAD_IAM/ManagedAppMenuBlade/Overview/objectId/582a5bfd-3a00-4860-bc6b-623b3870c27c/appId/ede181e2-8e48-44fc-bd61-18a9fa064eff
+resource "azurerm_role_assignment" "vmss_managed_id_operator" {
+  depends_on = [
+    azurerm_kubernetes_cluster.k8s
+  ]
+  scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_kubernetes_cluster.k8s.node_resource_group}/providers/Microsoft.Compute/virtualMachineScaleSets/aks-system-19341548-vmss"  #string to vmss - MC_rg-XXXXXXX_westeurope/providers/microsoft.compute/aks-system-XXXX-vmss
+  role_definition_name = "Managed Identity Operator"
+  principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+}
+
+resource "azurerm_role_assignment" "vmss_vm_contributor" {
+  depends_on = [
+    azurerm_kubernetes_cluster.k8s
+  ]
+  scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_kubernetes_cluster.k8s.node_resource_group}/providers/Microsoft.Compute/virtualMachineScaleSets/aks-system-19341548-vmss" #UPDATE THAT MANUALLY BECAUSE IT IS DYNAMIC NAME 
+  role_definition_name = "Virtual Machine Contributor"
+  principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+} 
+
+resource "azurerm_role_assignment" "aks-agentpool3" {
+  depends_on = [
+    azurerm_kubernetes_cluster.k8s
+  ]
+   scope                = "/subscriptions/${var.subscription_id}/resourcegroups/${var.resource_group}" #check if there is need for whole resource group scope
+   role_definition_name = "Managed Identity Operator"
+   principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+ }
+
+#agent-pool 1-3 assigns proper permissions, so ad for pods will work correctly https://azure.github.io/aad-pod-identity/docs/getting-started/role-assignment/
+
+# resource "azurerm_role_assignment" "vmss_managed_id_operator" {
+#   depends_on = [
+#     azurerm_kubernetes_cluster.k8s
+#   ]
+#   scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_kubernetes_cluster.k8s.node_resource_group}/providers/Microsoft.Compute/virtualMachineScaleSets/aks-system-19341548-vmss"  #string to vmss - MC_rg-XXXXXXX_westeurope/providers/microsoft.compute/aks-system-XXXX-vmss
+#   role_definition_name = "Managed Identity Operator"
+#   principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+# }
+
+# resource "azurerm_role_assignment" "vmss_vm_contributor" {
+#   depends_on = [
+#     azurerm_kubernetes_cluster.k8s
+#   ]
+#   scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_kubernetes_cluster.k8s.node_resource_group}/providers/Microsoft.Compute/virtualMachineScaleSets/aks-system-19341548-vmss" #UPDATE THAT MANUALLY BECAUSE IT IS DYNAMIC NAME 
+#   role_definition_name = "Virtual Machine Contributor"
+#   principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity[0].object_id
+# } 
+
+#^deleted issue with vmss naming

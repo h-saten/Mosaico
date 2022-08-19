@@ -1,0 +1,73 @@
+.div-img-logo {
+  margin-top: 16px !important;
+  text-align: center;
+  width: 144px;
+  height: 144px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid #DFE0EB;
+  border-radius: 50%;
+  // padding: 24px;
+  position: relative;
+}
+
+.img-logo {
+  max-width: 113px;
+  max-height: 113px;
+  margin: 0 auto;
+}
+
+.img-icon {
+  border: 1px solid #DFE0EB;
+  border-radius: 50%;
+  padding: 5px;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background-color: #fff;
+}
+
+.title-under-default-logo {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 32px;
+  color: #494642;
+  margin-top: 16px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.form-label {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.above-benefits {
+  margin-top: 52px;
+  margin-bottom: 28px;
+  width: 100%;
+  height: 1px;
+  border: 1px solid #DFE0EB;
+}
+
+.title-benefits {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.title-under-benefits {
+  margin-top: 16px;
+  margin-bottom: 24px;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+}

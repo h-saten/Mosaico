@@ -1,0 +1,116 @@
+#used to tests only to deploy to AKS (not going through whole pipeline)
+name: cd-frontend-backend 
+on:
+  push:
+    paths:
+      - 'src/**' #backend/identity
+      - 'frontend/mosaico-web-ui/**' #frontend
+      - 'frontend/mosaico-id-ui/**' #identity frontend
+      - '.github/**'
+    branches: [ 'main', "mc/*" ]
+jobs:
+  # JOB to run change detection
+  deploy-id-dev:
+    if: always()
+    runs-on: [self-hosted,dev]
+    environment: 'dev'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 
+      # - name: Post to a Slack channel
+      #   id: slack_core_id
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   with:
+      #     channel-id: 'C0333TDS71D'
+      #     slack-message: "-------------\nWorkflow: |${{github.workflow}}| Triggered!\nCommit SHA: |${{github.sha}}|\nInitiated by: |${{github.actor}}|\n Triggered by event: |${{github.event_name}}|\n-------------"
+      #   env:
+      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Deploy ID Service to AKS
+        id: deploy_id
+        uses: ./.github/workflows/actions/aks_deployment
+        with:
+          NAMESPACE: mosaico
+          CLUSTER_NAME: aks-mosaico-dev
+          CLUSTER_RESOURCE_GROUP: rg-mosaico-dev
+          APP_SETTINGS_FOLDER_PATH: infrastructure/configurations/dev/id
+          APP_VERSION: 2.0.483
+          APP_SETTINGS_CONFIG_NAME: appsettings-id
+          APP_YAML: infrastructure/kubernetes_yamls/dev/id/backend.yaml
+          KEY_VAULT_CLIENT_SECRET: ${{secrets.KEY_VAULT_CLIENT_SECRET}}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+          IMAGE_NAME: acrmosaico.azurecr.io/mosaico-v2-identity
+          DEPLOYMENT_NAME: deployment/identity-backend
+
+
+  deploy-core-dev:
+    # needs: [ detect_changes, increment_version, backend, frontend,backup-core-id-sql,scan_terraform,terraform,build_frontend_with_config ]
+
+    if: always()
+    runs-on: [self-hosted,dev]
+    environment: 'dev'
+    steps:
+      - uses: actions/checkout@v2
+      #----------------------------DEPLOY CORE TO AKS--------------------------------
+      - name: Deploy Core Service to AKS
+        id: deploy_core
+        uses: ./.github/workflows/actions/aks_deployment
+        with:
+          NAMESPACE: mosaico
+          CLUSTER_NAME: aks-mosaico-dev
+          CLUSTER_RESOURCE_GROUP: rg-mosaico-dev
+          APP_SETTINGS_FOLDER_PATH: infrastructure/configurations/dev/core
+          APP_VERSION: 2.0.483
+          APP_SETTINGS_CONFIG_NAME: appsettings
+          APP_YAML: infrastructure/kubernetes_yamls/dev/core/backend.yaml
+          KEY_VAULT_CLIENT_SECRET: ${{secrets.KEY_VAULT_CLIENT_SECRET}}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+          IMAGE_NAME: acrmosaico.azurecr.io/mosaico-v2-api
+          DEPLOYMENT_NAME: deployment/core-backend
+
+
+
+  # build_frontend_with_config:
+  #   if: always()
+  #   # needs: [ backup-core-id-sql, scan_terraform, terraform ]
+  #   runs-on: ubuntu-latest
+  #   environment: 'dev'
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: ./.github/workflows/actions/frontend_config
+  #     id: buildFrontendConfig
+  #     with:
+  #       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+  #       OUTPUT_FOLDER: frontend-out
+  #       ANGULAR_VERSION: 12.2.12
+  #       ARTIFACT_NAME: mosaico-frontend
+  #       WORKDIR: './frontend/mosaico-web-ui'
+  #       APP_VERSION: 2.0.483
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       SONAR_FRONTEND_TOKEN: ${{ secrets.SONAR_FRONTEND_TOKEN }}
+  #       SONAR_PROJECT_KEY: 'sapiency-io_mosaicov2-frontend'
+  #       ENVIRONMENT: 'dev'
+
+  #   - name: Download artifact
+  #     uses: actions/download-artifact@v2
+
+  #   - name: Upload to Azure
+  #     uses: ./.github/workflows/actions/upload_storage_core
+  #     id: upload_blob
+  #     with:
+  #       STORAGE_CONTAINER_NAME: ${{ secrets.AZURE_STORAGE_CONTAINER_NAME }}
+  #       APP_VERSION: 2.0.483
+  #       CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+  #       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+  #       AZURE_CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientId'] }}
+  #       AZURE_CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientSecret'] }}
+  #       AZURE_TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['tenantId'] }}
+  #       STORAGE_ACCOUNT_NAME: stmosaicodev
+  #   - name: Post to a Slack channel
+  #     id: slack_core_frontend_config
+  #     uses: slackapi/slack-github-action@v1.18.0
+  #     with:
+  #       channel-id: 'C0333TDS71D'
+  #       slack-message: "Build status of [frontend_CONFIG]: ${{steps.buildPushFrontend.outcome}} !"
+  #     env:
+  #       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

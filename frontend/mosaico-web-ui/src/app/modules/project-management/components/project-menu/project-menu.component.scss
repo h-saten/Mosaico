@@ -1,0 +1,77 @@
+.project-menu {
+  text-align: center;
+  top: 54px;
+  margin-left: -15px;
+  margin-right: -15px;
+  z-index: 1;
+  background-color: #FCFCFC;
+
+  @media (min-width: 576px) {
+  }
+  @media (min-width: 992px) {
+    top: 64px;
+  }
+}
+
+.project-btn-menu {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 24px 0;
+}
+
+.btn-menu {
+  color: #494642;
+  background-color: transparent;
+  border-color: #F3F2F2;
+
+  margin-right: 8px;
+  margin-bottom: 0;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  padding: 8px 8px;
+  @media (min-width: 576px) {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 8px 8px;
+  }
+  @media (min-width: 992px) {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 8px 16px;
+  }
+}
+
+.btn-menu-end {
+  margin-right: 0;
+}
+
+// .btn-menu:hover {
+  // color: #fff;
+  // background: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+  // background-image: var(--hover-background); // this is related to appBaseColors
+// }
+
+
+// .btn-menu:active,
+.btn-menu.active, .show > .btn-menu.dropdown-toggle {
+  color: #fff;
+  background-image: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+}
+
+.btn-menu:disabled, .btn-menu.disabled {
+  color: #000;
+  background-color: #F3F2F2;
+  border-color: #F3F2F2;
+}
+
+#start {
+  margin-left: 20px;
+
+  @media (min-width: 576px) {
+    margin-left: 0;
+  }
+}

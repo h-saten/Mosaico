@@ -1,0 +1,37 @@
+general:
+  vulnerabilities:
+    #CRITICAL
+    # - CVE-2021-3918
+    #- CVE-2021-33574
+    #- CVE-2021-35942
+    #- CVE-2021-33574
+    #HIGH
+    # - CVE-2019-15847
+    # - CVE-2018-12886
+      - CVE-2022-25235
+      - CVE-2022-25236
+      - CVE-2022-24407 #SQL INJECTION
+      - CVE-2015-20107
+    # - CVE-2021-3807
+    # - CVE-2020-8116
+    # - CVE-2020-7788
+    # - CVE-2019-16776
+    # - CVE-2020-7754
+    # - CVE-2021-23343
+    # - CVE-2021-27290
+    # - CVE-2021-32803
+    # - CVE-2021-32804
+    # - CVE-2021-37701
+    # - CVE-2021-37712
+    # - CVE-2021-37713
+    # - CVE-2020-7774  
+      - CVE-2021-45960
+      - CVE-2021-46143 
+      # UPDATE - 18.0.7.2022 excluded CVEs in 18.0.7.2022 txt file
+      - CVE-2021-32840 #Sharpziplib couldnt find in dependencies, look at cve 18.0.7.2022.txt for more info
+      - GHSA-5crp-9r3c-p9vr #newtonsoft json, we have v. 13.0.1 so we are safe against this cve
+      - CVE-2018-8292 # applies to .Net 2.1/1.0/1.1/Powershell core 6.0
+
+
+  bestPracticeViolations:
+    - DKL-DI-0001     

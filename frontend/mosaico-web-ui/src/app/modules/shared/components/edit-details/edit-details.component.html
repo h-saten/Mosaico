@@ -1,0 +1,15 @@
+<div class="d-flex">
+    <button class="btn d-flex align-items-center p-0 me-8 me-sm-9" (click)="openModalEdit(); $event.stopPropagation()">
+        <div inlineSVG="/assets/media/icons/edit-pen.svg" class="edit-icon"></div>
+        <span>Edit</span>
+    </button>
+    <button class="btn d-flex align-items-center p-0 me-8 me-sm-9"
+        (click)="confirmDeleteDialog(); $event.stopPropagation()">
+        <div inlineSVG="/assets/media/icons/delete-bin.svg" class="edit-icon"></div>
+        <span>Delete</span>
+    </button>
+    <button class="btn d-flex align-items-center p-0" (click)="onHide(); $event.stopPropagation()">
+        <div inlineSVG="/assets/media/icons/hide-icon.svg" class="edit-icon"></div>
+        <span>{{ isHide ? 'Unhide' : 'Hide' }}</span>
+    </button>
+</div>

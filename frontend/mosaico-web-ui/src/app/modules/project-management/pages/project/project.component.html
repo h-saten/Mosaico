@@ -1,0 +1,62 @@
+<ng-container *ngIf="renderView | async else spinner">
+  <div>
+    <ng-container *ngIf="hideHeaderTokenPage === false">
+      <app-project-review-status></app-project-review-status>
+      <app-project-summary></app-project-summary>
+      <div class="project-menu sticky-top">
+        <div class="project-btn-menu">
+          <a class="btn btn-menu" appBaseColors [menu]="true"
+            (click)="goScrollUp('about')"> {{'PROJECT.menu.about' | translate }} </a>
+
+          <a class="btn btn-menu" appBaseColors [menu]="true"  (click)="goScrollUp('overview')">
+            {{'PROJECT.menu.overview' | translate }} </a>
+
+          <a class="btn btn-menu" appBaseColors [menu]="true" *ngIf="page && page.hasNFTs === true" (click)="goScrollUp('nfts')">
+            {{'PROJECT.menu.nfts' | translate }} </a>
+
+          <a class="btn btn-menu" appBaseColors [menu]="true"
+            *ngIf="canEdit || (page && page.hasInvestmentPackages === true)"
+            (click)="goScrollUp('packages')"> {{'PROJECT.menu.packages' | translate }} </a>
+
+          <a class="btn btn-menu" appBaseColors [menu]="true" *ngIf="canEdit || (page && page.hasArticles === true)"  (click)="goScrollUp('news')">
+            {{'PROJECT.menu.news' | translate }} </a>
+
+          <a class="btn btn-menu" appBaseColors [menu]="true" *ngIf="canEdit || (page && page.hasFAQs === true)" (click)="goScrollUp('faq')">
+            {{'PROJECT.menu.faq' | translate }} </a>
+
+          <a class="btn btn-menu" appBaseColors [menu]="true" *ngIf="canEdit || (page && page.hasReviews === true)" (click)="goScrollUp('feedback')">
+              {{'PROJECT.menu.feedback' | translate }} </a>
+
+          <a class="btn btn-menu" appBaseColors [menu]="true"
+            [routerLink]="['/','project', slug, projectPathEnum.Settings]" routerLinkActive="active" *ngIf="canEdit"
+            [routerLinkActiveOptions]="{exact: false}"> {{'PROJECT.menu.settings' | translate }} </a>
+        </div>
+      </div>
+      <app-project-about id="about"></app-project-about>
+      <app-project-overview id="overview"></app-project-overview>
+      <app-project-nfts *ngIf="page && page.hasNFTs === true" id="nfts"></app-project-nfts>
+      <app-project-packages *ngIf="canEdit || (page && page.hasInvestmentPackages === true)" id="packages"></app-project-packages>
+      <app-project-news id="news" *ngIf="canEdit || (page && page.hasArticles === true)"></app-project-news>
+      <app-page-review *ngIf="page && page.hasReviews === true" id="feedback"></app-page-review>
+      <app-project-faq *ngIf="canEdit || (page && page.hasFAQs === true)" id="faq"></app-project-faq>
+    </ng-container>
+
+    <ng-container *ngIf="hideHeaderTokenPage === true">
+      <div class="mb-4">
+        <a [routerLink]="['/', 'project', slug]" title="{{'BUY.back_to_project' | translate}}">
+          <i class="fas fa-arrow-left"></i> {{'BUY.back_to_project' | translate}}
+        </a>
+      </div>
+      <router-outlet></router-outlet>
+    </ng-container>
+
+    <ng-container *ngIf="hideHeaderTokenPage === false">
+      <app-project-footer></app-project-footer>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #spinner>
+  Loading...
+</ng-template>
+

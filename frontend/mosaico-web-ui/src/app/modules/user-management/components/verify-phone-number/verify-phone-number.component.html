@@ -1,0 +1,42 @@
+<ng-container *ngIf="!isModal">
+  <div class="card col-xxl-8 offset-lg-2">
+    <div class="card-body">
+      <div class="flex-column">
+
+        <app-phone-number-form *ngIf="phoneNumber === null" [defaultPhoneNumber]="phoneNumber ?? ''"
+          (phoneNumberAdded)="savePhoneNumber($event)">
+        </app-phone-number-form>
+
+        <app-confirmation-code-form *ngIf="phoneNumber !== null" [inProgress]="requestInProgress"
+          [phoneNumber]="phoneNumber" [userId]="userId" (codeConfirmed)="saveConfirmedCode($event)">
+        </app-confirmation-code-form>
+
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="isModal">
+  <div class="mosaico-modal">
+    <div class="modal-header">
+      <h5 class="modal-title">{{'USER_PROFILE.MODALS.PHONE_NUMBER.TITLE' | translate}}</h5>
+      <div class="close-button-container">
+        <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="verificationCanceled.emit()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="flex-column">
+
+        <app-phone-number-form *ngIf="phoneNumber === null" [defaultPhoneNumber]="phoneNumber ?? ''"
+          (phoneNumberAdded)="savePhoneNumber($event)">
+        </app-phone-number-form>
+
+        <app-confirmation-code-form *ngIf="phoneNumber !== null" [inProgress]="requestInProgress"
+          [phoneNumber]="phoneNumber" [userId]="userId" (codeConfirmed)="saveConfirmedCode($event)">
+        </app-confirmation-code-form>
+
+      </div>
+    </div>
+  </div>
+</ng-container>

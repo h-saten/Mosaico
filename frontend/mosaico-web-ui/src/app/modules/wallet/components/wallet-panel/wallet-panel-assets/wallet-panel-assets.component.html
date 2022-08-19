@@ -1,0 +1,20 @@
+
+<div class="d-flex justify-content-center align-items-center">
+  <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+</div>
+<ng-container *ngIf="!isLoading">
+  <div class="d-flex flex-row justify-content-end align-items-center div-height-24">
+    <button class="btn btn-icon" (click)="fetchAssets(true)"><i class="fas fa-sync"></i></button>
+  </div>
+  <ng-container *ngIf="tokens && tokens.length > 0">
+    <div class="d-flex flex-column gap-5 flex-md-row flex-wrap px-5 align-items-center justify-content-start mb-5">
+      <app-wallet-panel-assets-row *ngFor="let t of tokens" [token]="t"></app-wallet-panel-assets-row>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!isLoading && isLoaded && (!tokens || tokens.length === 0)">
+  <div class="d-flex justify-content-center align-items-center">
+    <h4>{{'USER_WALLET.PANEL.ASSETS.NO_ASSETS'|translate}}</h4>
+  </div>
+</ng-container>

@@ -1,0 +1,150 @@
+<div class="card settings-card shadow-sm">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex flex-row justify-content-end align-items-center">
+                            <button class="btn btn-mosaico-outline-secondary" (click)="applyFilters()"><i
+                                    class="fas fa-sync text-dark"></i>Refresh</button>
+                            <button class="btn btn-mosaico-outline-secondary" (click)="addPartnerDialog.open()"><i
+                                        class="fas fa-plus text-dark"></i>Add Partner</button>
+                            <button disabled class="btn btn-mosaico-outline-secondary"><i
+                                    class="fas fa-file-csv text-dark"></i>Export CSV</button>
+                        </div>
+                    </div>
+                </div>
+                <ng-container>
+                    <form class="form mosaico-form filter-form mb-5 shadow-xs p-3" novalidate="novalidate" [formGroup]="form">
+                        <div class="row">
+                            <div class="col-12 col-lg-3 d-flex flex-column">
+                                <div class="form-group mb-3">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" [checked]="affiliation?.isEnabled === true"
+                                          formControlName="isEnabled" id="isEnabled"
+                                        />
+                                        <label class="form-check-label" for="isEnabled">
+                                            Enable affiliate program
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" [checked]="affiliation?.includeAll === true"
+                                          formControlName="includeAll" id="includeAll"
+                                        />
+                                        <label class="form-check-label" for="includeAll">
+                                            Include all transactions <i ngbTooltip="Choose, if you would like all transactions from the same user (who buys tokens from ref link) to be rewarded. If the option is not selected only first transaction from unique user will be rewarded." class="fas fa-info-circle"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" [checked]="affiliation?.everybodyCanParticipate === true"
+                                          formControlName="everybodyCanParticipate" id="everybodyCanParticipate"
+                                        />
+                                        <label class="form-check-label" for="everybodyCanParticipate">
+                                            Allow everybody <i ngbTooltip="Every user on the platform can participate" class="fas fa-info-circle"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" [checked]="affiliation?.partnerShouldBeInvestor === true"
+                                          formControlName="partnerShouldBeInvestor" id="partnerShouldBeInvestor"
+                                        />
+                                        <label class="form-check-label" for="partnerShouldBeInvestor">
+                                            Require purchase <i ngbTooltip="Require partner to be investor in order to count his ref codes" class="fas fa-info-circle"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Reward <i role="button" class="fas fa-info-circle" ngbTooltip="Percentage from each transaction which was made by the user who used referal code"></i></label>
+                                    <div>
+                                        <div class="input-group mb-5">
+                                            <input name="rewardPercentage" type="number" min="0" max="100" formControlName="rewardPercentage" class="form-control" />
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Reward Pool <i role="button" class="fas fa-info-circle" ngbTooltip="Max amount of tokens to be distributed as reward. If the pool is exhausted, transactions are still accepted"></i></label>
+                                    <div>
+                                        <div class="input-group mb-5">
+                                            <input type="number" class="form-control" placeholder="Recipient's username" ame="rewardPool" formControlName="rewardPool"/>
+                                            <span class="input-group-text">{{token?.symbol}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex align-items-center justify-content-start">
+                                <div class="d-flex me-3"><button class="btn btn-mosaico-primary" (click)="save()">Save</button></div>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive table-responsive-xs transactions-table">
+                            <p-table [value]="partners" [lazy]="true" (onLazyLoad)="fetchPartners($event)"
+                                responsiveLayout="scroll" [paginator]="true" [rows]="pageSize"
+                                [totalRecords]="totalRecords" [loading]="isLoading"
+                                styleClass="table align-middle gs-0 gy-4">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="min-w-150px tr">Name</th>
+                                        <th class="min-w-150px tr">Status</th>
+                                        <th class="min-w-150px tr">Reward %</th>
+                                        <th class="min-w-150px tr">Transactions</th>
+                                        <th class="min-w-150px tr">Estimated reward</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowIndex="rowIndex" let-partner>
+                                    <tr role="button" (click)="toggleRow(rowIndex)"
+                                        [ngClass]="{'investor-row-selected': rowIndex === expandedRow}">
+                                        <td class="text-center">
+                                            <small [ngbTooltip]="partner.email">
+                                                <ng-container *ngIf="partner.name && partner.name.length > 0;else partnerEmail">{{partner.name}}</ng-container>
+                                                <ng-template #partnerEmail>{{partner.email}}</ng-template>
+                                            </small>
+                                        </td>
+                                        <td class="text-center">{{partner.status}}</td>
+                                        <td class="text-center">{{partner.rewardPercentage}}</td>
+                                        <td class="text-center">{{partner.transactionsCount}}</td>
+                                        <td class="text-center">{{partner.estimatedReward|number: '1.0-4'}}</td>
+                                    </tr>
+                                    <tr *ngIf="rowIndex === expandedRow">
+                                        <td colspan="5">
+                                            <ng-container *ngIf="partner.status === 'ENABLED'">
+                                                <button class="btn btn-sm btn-danger" (click)="onPartnerDisable(partner.id)">Disable</button>
+                                            </ng-container>
+                                            <ng-container *ngIf="partner.status === 'DISABLED'">
+                                                <button class="btn btn-sm btn-mosaico-primary" (click)="onPartnerEnable(partner.id)">Enable</button>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td colspan="12" class="text-center">
+                                            <h4>There are no partners</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-add-partner #addPartnerDialog [projectId]="projectId" (closed)="applyFilters()" ></app-add-partner>

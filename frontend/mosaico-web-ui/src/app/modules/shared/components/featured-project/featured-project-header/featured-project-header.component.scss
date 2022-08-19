@@ -1,0 +1,53 @@
+$primary-text-color: #494642;
+$primary-btn-color: #0063F5;
+$primary-white-color: #FFFFFF;
+$primary-disabled-color: #C0BEBE;
+
+.project-header-container {
+    padding: 16px 24px 16px 26px !important;
+    color: $primary-text-color;
+    
+    .star-icon {
+        height: 20px;
+        margin-right: 10px;
+    }
+    
+    .fire-icon {
+        height: 22px;
+    }
+
+    .clock-line-icon {
+        width: 18px;
+    }
+    
+    .project-header-title {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        color: $primary-text-color;
+        padding-right: 16px;
+    }
+    
+    .project-header-btn {
+        background: $primary-btn-color;
+        border-radius: 5px;
+        color: $primary-white-color;
+        padding: 0 8px !important;
+        height: 22px;
+        margin-right: 20px;
+
+        &.unpcoming-btn {
+            margin-right: 11px;
+        }
+
+        &.closed-btn {
+            background: $primary-disabled-color;
+        }
+    }
+    
+    .project-header-text {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+    }
+}

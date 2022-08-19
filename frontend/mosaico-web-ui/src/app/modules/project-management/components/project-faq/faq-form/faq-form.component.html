@@ -1,0 +1,39 @@
+<form class="div-form mosaico-form" [formGroup]="form" novalidate="novalidate">
+  <div class="form-group mb-7">
+      <label class="form-label fw-normal">{{'FAQ_question_name' | translate}}</label>
+      <textarea type="text" name="title" formControlName="title"
+        [ngClass]="{ 'is-invalid': isDirty('title') && hasErrors('title') }"
+        class="form-control no-resize" [rows]="titleCol"
+        placeholder="{{'FAQ_placeholder_question_name' | translate}}"
+        ></textarea>
+      <div class="invalid-feedback" *ngIf="isDirty('title') && hasErrors('title')">{{'FAQ_incorect_question_name' | translate}}</div>
+  </div>
+  <div class="form-group mb-7">
+      <label class="form-label fw-normal">{{'FAQ_answer_name' | translate}}</label>
+      <textarea type="text" name="content" formControlName="content"
+        [ngClass]="{ 'is-invalid': isDirty('content') && hasErrors('content') }"
+        class="form-control no-resize" [rows]="answerCol"
+        placeholder="{{'FAQ_placeholder_answer_name' | translate}}"></textarea>
+      <div class="invalid-feedback" *ngIf="isDirty('content') && hasErrors('content')">{{'FAQ_incorect_answer_name' | translate}}</div>
+  </div>
+
+  <div class="form-group mb-5 d-none">
+    <div class="form-check form-switch form-check-custom form-check-solid">
+      <input class="form-check-input" type="checkbox" value=""
+          id="isHidden" formControlName="isHidden" />
+      <label class="form-check-label" for="isHidden">
+        {{'FAQ_is_Faq_hidden' | translate}}
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group mb-5 d-none">
+      <label class="form-label">{{'FAQ_Edit_list' | translate}}Order</label>
+      <input type="text"
+        name="order" formControlName="order" value="1"
+        class="form-control form-control-solid"
+        placeholder="Enter order" [ngClass]="{ 'is-invalid': isDirty('order') && hasErrors('order') }" />
+      <div class="invalid-feedback" *ngIf="isDirty('order') && hasErrors('order')">Order number is invalid</div>
+  </div>
+
+</form>

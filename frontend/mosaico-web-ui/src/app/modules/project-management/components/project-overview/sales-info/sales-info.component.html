@@ -1,0 +1,75 @@
+<div class="card border-card">
+    <div class="card-header">
+      <h3 class="card-title">{{'PROJECT_OVERVIEW.SALES_INFO.TITLE'|translate}}</h3>
+      <div class="card-toolbar" *ngIf="canEdit">
+        <button type="button" class="btn btn-sm btn-active-light"
+          routerLink="settings/tokenomy">
+          {{'PROJECT_OVERVIEW.ACTIONS.EDIT'|translate}}
+        </button>
+      </div>
+      <div class="view-details" *ngIf="!canEdit">
+        {{'PROJECT_OVERVIEW.ACTIONS.VIEW_DETAILS'|translate}}
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="sales-table">
+        <div class="d-flex justify-content-between">
+          <div>
+              {{'PROJECT_OVERVIEW.SALES_INFO.TOKEN_PRICE'|translate}}
+              <a [href]="'PROJECT_OVERVIEW.LINKS.TOKEN_PRICE'| translate" target="_blank"><i role="button" class="fas fa-info-circle"></i></a>
+          </div>
+          <div>
+              <ng-container *ngIf="stage; else noData">$ {{stage.tokenPrice | number : '1.0-6': 'en'}} </ng-container>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                {{'PROJECT_OVERVIEW.SALES_INFO.MIN_INVEST'|translate}}
+                <a [href]="'PROJECT_OVERVIEW.LINKS.MIN_INVEST'| translate" target="_blank"><i role="button" class="fas fa-info-circle"></i></a>
+            </div>
+            <div>
+                <ng-container *ngIf="stage; else noData">{{stage.minimumPurchase | number: '1.0-6': 'en'}} {{tokenSymbol}}</ng-container>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                {{'PROJECT_OVERVIEW.SALES_INFO.MAX_INVEST'|translate}}
+                <a [href]="'PROJECT_OVERVIEW.LINKS.MAX_INVEST'| translate" target="_blank"><i role="button" class="fas fa-info-circle"></i></a>
+            </div>
+            <div>
+                <ng-container *ngIf="stage; else noData">{{stage.maximumPurchase | number: '1.0-6': 'en'}} {{tokenSymbol}}</ng-container>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                {{'PROJECT_OVERVIEW.SALES_INFO.SOFT_CAP'|translate}}
+                <a [href]="'PROJECT_OVERVIEW.LINKS.SOFT_CAP'| translate" target="_blank"><i role="button" class="fas fa-info-circle"></i></a>
+            </div>
+            <div>
+                <ng-container *ngIf="stage; else noData">{{softCap | number: '1.0-6': 'en'}} {{tokenSymbol}}</ng-container>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                {{'PROJECT_OVERVIEW.SALES_INFO.HARD_CAP'|translate}}
+                <a [href]="'PROJECT_OVERVIEW.LINKS.HARD_CAP'| translate" target="_blank"><i role="button" class="fas fa-info-circle"></i></a>
+            </div>
+            <div>
+                <ng-container *ngIf="stage; else noData">{{hardCap| number: '1.0-6': 'en'}} {{tokenSymbol}}</ng-container>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                {{'PROJECT_OVERVIEW.SALES_INFO.TOTAL_SUPPLY'|translate}}
+                <a [href]="'PROJECT_OVERVIEW.LINKS.TOTAL_SUPPLY'| translate" target="_blank"><i role="button" class="fas fa-info-circle"></i></a>
+            </div>
+            <div>
+                <ng-container *ngIf="stage; else noData">{{totalSupply| number: '1.0-6': 'en'}} {{tokenSymbol}}</ng-container>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<ng-template #noData>
+    <i class="fas fa-minus text-dark"></i>
+</ng-template>

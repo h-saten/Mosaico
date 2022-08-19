@@ -1,0 +1,64 @@
+<div class="card shadow-sm mt-3" id="news">
+
+  <div class="card-header"
+    [ngClass]="{'card-header-editor' : canEdit}"
+  >
+    <div class="card-title">
+      {{'PRESS_ROOM.TITLE' | translate}}
+    </div>
+
+    <ng-container *ngIf="!showSearchDetails; else showSearchingDetails">
+      <button class="btn search-btn" (click)="onShowSearchDetails()">
+        <div inlineSVG="/assets/media/icons/search-line.svg" class="search-icon"></div>
+      </button>
+      <button *ngIf="canEdit === true" class="btn plus-btn" (click)="openFormAdd()">
+        <div inlineSVG="/assets/media/marketplace/plus-line.svg" class="plus-icon"></div>
+      </button>
+    </ng-container>
+
+    <ng-template #showSearchingDetails>
+      <div class="search-field">
+        <ng-select [clearable]="false" [searchable]="false" bindValue="key" bindLabel="name"
+        [items]="socialIcons">
+          <ng-template ng-label-tmp let-item="item">
+            <span [inlineSVG]="item.url" class="svg-icon me-2"></span>
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-index="index">
+            <span [inlineSVG]="item.url" class="svg-icon me-2"></span>
+            <span class="link-name">{{ item.name }}</span>
+          </ng-template>
+        </ng-select>
+        <input type="text" placeholder="Search">
+        <img src="/assets/media/search/search-line.svg" alt="search-icon" class="search-icon">
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="card-body">
+
+    <app-spinner-container [showSpinner]="(listRequestFinished$|async) === false"></app-spinner-container>
+    <ng-container *ngIf="(listRequestFinished$|async) === true">
+      <ng-container *ngIf="!articles || articles.length === 0">
+        <p class="h4 my-4 text-center fw-normal">
+          {{'PRESS_ROOM.ARTICLE_NO_LIST' | translate}}
+        </p>
+      </ng-container>
+
+      <div *ngIf="articles && articles.length > 0;" class="pt-0 pt-sm-8 pt-lg-0 pb-2 pb-lg-0">
+        <ng-container *ngFor="let article of articles">
+          <app-project-news-card [article]="article" [projectId]="projectId" (updateArticleList)="onUpdateArticlesList()"></app-project-news-card>
+        </ng-container>
+
+        <!-- <div class="show-more-row">
+          <app-show-more-row [totalPages]="totalPages" [totalItems]="totalItems" [rowsPerPage]="rowsPerPage"
+            [currentListSize]="currentListSize" [itemsOf]="(currentListSize == 0 || (currentListSize >=4 && currentListSize <=21)) 
+            ? ('PAGES.show_more.articles_0_5_21' | translate) 
+            : currentListSize == 1 ? ('PAGES.show_more.articles_1' | translate) 
+            : ('PAGES.show_more.articles'| translate)" 
+            [showMoreName]="'PROJECT.show_more.name.articles' | translate"
+            (getListNextEvent)="loadMoreResults($event)"></app-show-more-row>
+        </div> -->
+      </div>
+    </ng-container>
+  </div>
+</div>

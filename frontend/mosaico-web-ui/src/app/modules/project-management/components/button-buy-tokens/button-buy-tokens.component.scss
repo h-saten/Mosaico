@@ -1,0 +1,39 @@
+.btn-invest  {
+
+  background-color: #0063F5;
+  color: #ffffff;
+
+  // width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  width: 220px;
+  height: 34px;
+
+  @media (min-width: 576px) {
+    width: 326px;
+    height: 40px;
+  }
+
+  @media (min-width: 992px) {
+    width: 406px;
+    height: 56px;
+  }
+
+  // hover - no hover - colors the same
+}
+
+.title-button {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+
+}
+
+.button-disabled {
+  cursor: not-allowed !important;
+  // opacity: 0.65;
+}
+
+

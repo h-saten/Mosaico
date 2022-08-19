@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card mb-5">
+            <div class="card-body">
+                <div id="kt_create_account_stepper" class="
+          stepper stepper-pills stepper-column
+          d-flex
+          flex-column flex-xl-row flex-row-fluid">
+                    <div class="
+            d-flex
+            justify-content-center
+            bg-white
+            rounded
+            justify-content-xl-start
+            flex-row-auto
+            w-100">
+                        <div class="px-6 px-lg-10 px-xxl-15 py-5 w-100">
+                            <ng-container *ngIf="(isLoading$|async) === false">
+                                <div class="row mb-5">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <img class="img-fluid" style="max-width: 250px"
+                                            src="/assets/media/animations/success-payment.gif" />
+                                    </div>
+                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <span class="fs-3">{{'PRIVATE_SALE_SUB.ENABLED'|translate}}
+                                            {{response?.title}}</span>
+                                    </div>
+                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <button class="btn btn-mosaico-primary"
+                                            routerLink="/project/{{response?.slug}}">{{'PRIVATE_SALE_SUB.ACTIONS.PURCHASE'|translate}}</button>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <div class="row" *ngIf="(isLoading$|async) === true">
+                                <div class="col-12 d-flex justify-content-center align-items-center">
+                                    <app-spinner-container [showSpinner]="(isLoading$|async) === true">
+                                    </app-spinner-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,157 @@
+p {
+    margin: 0;
+}
+
+.company_structure_card {
+
+    &--container {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 16px 85px;
+        gap: 24px;
+        background: #FFFFFF;
+        box-shadow: 0px 11px 50px rgba(0, 0, 0, 0.07);
+        border-radius: 10px;
+        position: relative;
+    }
+
+    &--info {
+        position: absolute;
+        background: #0063F5;
+        border-radius: 10px;
+        width: 225px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        top: -30px;
+        left: 37px;
+        padding: 14px 25px;
+
+        p {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 20px;
+            color: #FFFFFF;
+        }
+    }
+}
+
+.team_member {
+    &--info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 23px 16px;
+        max-width: 217px;
+    }
+
+    &--image {
+        width: 140px;
+        height: 140px;
+    }
+
+    &--name {
+        margin: 16px 0 8px;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 15px;
+        color: #434343;
+        text-align: center;
+    }
+
+    &--position {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 15px;
+        color: #979797;
+        text-align: center;
+    }
+
+    &--card {
+        width: 60%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: baseline;
+        gap: 10px;
+    }
+}
+
+.team-lead-card {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+    padding-right: 23px;  
+}
+
+@media (max-width: 992px) {
+    .company_structure_card {
+        &--container {
+            padding: 40px 85px;
+        }
+    }
+
+    .team-lead-card {
+        width: 100%;
+        justify-content: center;
+        padding-right: 0;
+    }
+
+    .team_member {
+        &--card {
+            width: 100%;
+            justify-content: space-between;
+    
+            &.card-centered {
+                justify-content: center;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .company_structure_card {
+        &--container {
+            padding: 16px 21px 33px;
+        }
+
+        &--info {
+            display: none;
+        }
+    }
+
+    .team_member {
+        &--info {
+            padding: 0;
+            max-width: 162px;
+            width: 162px;
+        }
+
+        &--image {
+            width: 120px;
+            height: 120px;
+        }
+
+        &--name {
+            font-size: 14px;
+        }
+        
+        &--position {
+            font-size: 12px;
+        }
+    }
+} 
+
+@media (max-width: 440px) {
+    .team_member {
+        &--info {
+        max-width: 114px;
+        }
+    }
+} 

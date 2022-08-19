@@ -1,0 +1,35 @@
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center my-3 flex-sm-row flex-column">
+            <div class="wallet-btn-menu d-flex justify-content-between">
+                <button class="btn btn-menu" routerLinkActive="active"
+                    routerLink="dashboard">{{'WALLET_OVERVIEW.DASHBOARD'|translate}}</button>
+                <button class="btn btn-menu" routerLinkActive="active"
+                    routerLink="affiliation">{{'WALLET_OVERVIEW.AFFILIATION'|translate}}</button>
+                <button class="btn btn-menu" routerLinkActive="active"
+                    routerLink="staking">{{'WALLET_OVERVIEW.STAKING'|translate}}</button>
+                <button class="btn btn-menu" routerLinkActive="active"
+                    routerLink="vesting">{{'WALLET_OVERVIEW.VESTING'|translate}}</button>
+            </div>
+            <div class="d-flex flex-row flex-gap-3">
+                <!-- <div class="d-flex p-2">
+                    <ng-container *ngIf="(isConnected$|async) === true">
+                        <button class="btn btn-sm btn-mosaico-primary-outline"(click)="disconnectWallet()">Disconnect: {{(walletAddress$|async)|addressType}}</button>
+                    </ng-container>
+                    <ng-container *ngIf="(isConnected$|async) === false">
+                        <button class="btn btn-sm btn-mosaico-primary-outline" (click)="connectWallet()">Connect
+                            wallet</button>
+                    </ng-container>
+                </div> -->
+                <div class="d-flex p-2 align-items-center justify-content-center">
+                    <a href="https://advisor.mosaico.ai" target="_blank" class="wallet-learn-more">
+                        <img src="/assets/media/misc/book.png" alt="book icon">
+                        <p>{{'WALLET_OVERVIEW.LEARN_MORE'|translate}}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <router-outlet></router-outlet>
+
+    </div>
+</div>

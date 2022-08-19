@@ -1,0 +1,30 @@
+<ng-container *ngIf="isLoading === false">
+  <div class="row" *ngIf="hasData === true">
+  <!-- <div class="row" *ngIf="isLoaded === true && chartOptions.series && chartOptions.series.length > 0"> -->
+      <div class="col-12">
+          <div class="chart-container-tocenomics">
+              <apx-chart
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [legend]="chartOptions.legend"
+                [responsive]="chartOptions.responsive"
+                [theme]="chartOptions.theme"
+                [labels]="chartOptions.labels"
+                [dataLabels]="chartOptions.dataLabels"
+              ></apx-chart>
+              <!--
+              [stroke]="chartOptions.stroke"
+              [title]="chartOptions.title"
+              [subtitle]="chartOptions.subtitle" -->
+          </div>
+      </div>
+  </div>
+
+  <div class="row" *ngIf="hasData === false">
+      <div class="col-12">
+          <p>{{'PROJECT_OVERVIEW.NO_TOKENOMICS_AVAILABLE'|translate}}</p>
+      </div>
+  </div>
+</ng-container>
+
+<app-spinner-container [showSpinner]="isLoading == true"></app-spinner-container>

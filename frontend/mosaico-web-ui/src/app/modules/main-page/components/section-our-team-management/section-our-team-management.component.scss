@@ -1,0 +1,180 @@
+.section-width-full {
+  background-color: #FFFFFF;
+}
+
+.section-otm {
+
+  max-width: 1320px;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+
+  padding-top: 64px;
+  padding-bottom: 80px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  @media (min-width: 576px) {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 992px) {
+    padding-top: 80px;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+}
+
+.section-title {
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+
+  font-size: 24px;
+  line-height: 24px;
+
+  text-align: left;
+  // margin-bottom: 8px;
+  margin-bottom: 48px;
+
+  @media (min-width: 576px) {
+    text-align: center;
+    font-size: 35px;
+    line-height: 30px;
+  }
+  @media (min-width: 992px) {
+    text-align: left;
+    font-size: 40px;
+    line-height: 34px;
+  }
+}
+
+.div-img-rahim {
+
+  max-width: 79%;
+  margin: 0 auto;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    text-align: right;
+    margin: 0 0 0 auto;
+    max-width: 78%;
+  }
+  @media (min-width: 992px) {
+    max-width: 78%;
+  }
+  @media (min-width: 1200px) {
+    max-width: 64%;
+  }
+
+}
+
+.img-and-name-position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.img-and-name-position-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+
+  @media (min-width: 576px) {
+    flex-direction: column;
+  }
+  @media (min-width: 768px) {
+    max-width: 200px;
+    justify-content: space-between;
+  }
+}
+
+.img-team {
+  width: 25%;
+  @media (min-width: 576px) {
+    width: 75%;
+  }
+}
+
+.name-position {
+  margin-left: 36px;
+  width: 180px;
+
+  @media (min-width: 576px) {
+    width: auto;
+    margin-left: 0;
+    margin-top: 16px;
+    text-align: center;
+  }
+}
+
+.name-rahim {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+
+  @media (min-width: 576px) {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 20px;
+  }
+}
+
+.name {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  margin-bottom: 8px;
+
+  @media (min-width: 576px) {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+  }
+}
+
+.position, .position-advisor {
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 15px;
+  margin-bottom: 0;
+}
+
+.position {
+  color: #00A1FF;
+}
+
+.position-rahim {
+  color: #FF9A00;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.desc-rahim {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+
+  color: rgba(73, 70, 66, 0.7);
+
+  @media (min-width: 576px) {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+  }
+}
+
+.icons-rahim {
+  font-size: 20px;
+  margin-bottom: 16px;
+
+  i {
+    color: #807E7B;
+  }
+}

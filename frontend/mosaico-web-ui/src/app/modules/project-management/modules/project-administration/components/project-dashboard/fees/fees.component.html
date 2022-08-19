@@ -1,0 +1,36 @@
+<ng-container *ngIf="fee">
+    <div class="card hoverable bg-white shadow-sm">
+        <div class="card-body">
+          <div class="fw-bolder fs-1 mb-2">
+            Mosaico Fee
+          </div>
+          <div class="fw-bold fs-7">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 fs-4 d-flex flex-column">
+                    <div class="d-flex flex-row justify-content-between"><span class="fw-bold me-3">{{ 'FEE.TITLE.TOTAL_FEE' | translate }} </span>  <span>{{fee.totalAmount|number: '1.0-4' | noComma}} {{fee.currency}}</span></div>
+                    <div class="d-flex flex-row justify-content-between"><span class="fw-bold me-3">{{ 'FEE.TITLE.TRANSACTION' | translate }}</span> <span>{{fee.transactionCount}}</span></div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-8">
+                    <div class="chart-cotnainer" *ngIf="isDataLoaded === true">
+                        <apx-chart
+                            [series]="diagramOptions.series"
+                            [chart]="diagramOptions.chart"
+                            [labels]="diagramOptions.labels"
+                            [legend]="diagramOptions.legend"
+                            [responsive]="diagramOptions.responsive"
+                            [theme]="diagramOptions.theme"
+                            [dataLabels]="diagramOptions.dataLabels"
+                        ></apx-chart>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex flex-row mt-5"><button class="btn btn-mosaico-primary" (click)="feeWithdrawalDialog.open()">Withdraw</button></div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</ng-container>
+<app-fee-withdrawal #feeWithdrawalDialog></app-fee-withdrawal>

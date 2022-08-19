@@ -1,0 +1,171 @@
+
+  @media (min-width: 1200px) {
+    .col-xl-my-1 {
+      flex: 0 0 auto;
+      width: 12%;
+    }
+
+    .col-xl-my-2 {
+      flex: 0 0 auto;
+      width: 18%;
+    }
+
+    .col-xl-my-3 {
+      flex: 0 0 auto;
+      width: 24%;
+    }
+
+    .col-xl-my-7 {
+      flex: 0 0 auto;
+      width: 46%;
+    }
+  }
+
+
+
+.footer-project {
+  background-color: #fff;
+
+  padding: 20px !important;
+
+  margin-left: -20px;
+  margin-right: -20px;
+  @media (min-width: 576px) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  @media (min-width: 992px) {
+    padding: 24px !important;
+  }
+}
+
+a {
+  color: #494642;
+}
+
+.symbol .symbol-label {
+  width: 56px;
+  height: 56px;
+
+  @media (min-width: 576px) {
+  }
+  @media (min-width: 768px) {
+    width: 83px;
+    height: 83px;
+  }
+  @media (min-width: 992px) {
+    width: 112px;
+    height: 112px;
+  }
+}
+
+#contact-logo-mosaico {
+  display: block;
+
+  @media (max-width:767px) {
+    margin-bottom: 16px;
+  }
+
+}
+
+.text-our-office {
+  margin-top: 16px;
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+}
+
+.text-find-us {
+  margin-top: 24px;
+
+  @media (min-width: 576px) {
+    margin-top: 16px;
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+}
+
+.text-description {
+  margin-top: 24px;
+
+  @media (min-width: 1200px) {
+    margin-top: 0;
+  }
+}
+
+
+.text-our-office p,
+.text-find-us p,
+.text-useful-info p,
+.text-description p {
+  color: #494642;
+
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+
+  margin-bottom: 8px;
+  // font-weight: 500;
+  // font-size: 12px;
+  // line-height: 14px;
+
+  @media (min-width: 576px) {
+  }
+  @media (min-width: 768px) {
+    margin-bottom: 8px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  @media (min-width: 992px) {
+    margin-bottom: 16px;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.text-our-office p.text-title,
+.text-find-us p.text-title,
+.text-useful-info p.text-title,
+.text-description p.text-title {
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+
+  // font-weight: 500;
+  // font-size: 12px;
+  // line-height: 16px;
+
+  @media (min-width: 768px) {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  @media (min-width: 992px) {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+
+  // @media (max-width:767px) {
+  //   margin-top: 16px;
+  // }
+}
+
+.text-description p.text-title {
+  margin-bottom: 16px;
+}
+
+.icon {
+  margin-right: 6px;
+}

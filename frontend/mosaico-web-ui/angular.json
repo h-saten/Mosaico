@@ -1,0 +1,377 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"cli": {
+		"analytics": false
+	},
+	"version": 1,
+	"newProjectRoot": "projects",
+	"projects": {
+		"mosaico-sample": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
+			},
+			"root": "/",
+			"sourceRoot": "src",
+			"prefix": "app",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:browser",
+					"options": {
+						"outputPath": "dist/mosaico-sample",
+						"index": "src/index.html",
+						"main": "src/main.ts",
+						"polyfills": "src/polyfills.ts",
+						"tsConfig": "tsconfig.app.json",
+						"aot": true,
+						"assets": [
+							"src/silent-refresh.html",
+							"src/favicon.ico",
+							"src/assets",
+							"src/ue_sw.js"
+						],
+						"styles": [
+							"src/styles.scss"
+						],
+						"scripts": [],
+						"allowedCommonJsDependencies": [
+							"query-string",
+							"hash.js",
+							"@walletconnect/encoding",
+							"@walletconnect/socket-transport",
+							"@walletconnect/window-metadata",
+							"@walletconnect/environment",
+							"object-path",
+							"apexcharts",
+							"clipboard.js",
+							"highlight.js"
+						]
+					},
+					"configurations": {
+						"development": {
+							"buildOptimizer": false,
+							"optimization": false,
+							"vendorChunk": true,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true
+						},
+						"dev": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.dev.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": false,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "10mb",
+									"maximumError": "12mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "6kb",
+									"maximumError": "20kb"
+								}
+							]
+						},
+						"production": {
+							"index": {
+								"input": "src/index.prod.html",
+								"output": "index.html"
+							},
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.prod.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": false,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "10mb",
+									"maximumError": "12mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "1mb",
+									"maximumError": "5mb"
+								}
+							]
+						}
+					}
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"options": {
+						"browserTarget": "mosaico-sample:build"
+					},
+					"configurations": {
+						"production": {
+							"browserTarget": "mosaico-sample:build:production"
+						},
+						"dev": {
+							"browserTarget": "mosaico-sample:build:dev"
+						},
+						"development": {
+							"browserTarget": "mosaico-sample:build:development"
+						}
+					},
+					"defaultConfiguration": "development"
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"options": {
+						"browserTarget": "mosaico-sample:build"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "src/test.ts",
+						"polyfills": "src/polyfills.ts",
+						"tsConfig": "tsconfig.spec.json",
+						"karmaConfig": "karma.conf.js",
+						"assets": [
+							"src/favicon.ico",
+							"src/assets"
+						],
+						"styles": [
+							"src/styles.scss"
+						],
+						"scripts": []
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"tsconfig.app.json",
+							"tsconfig.spec.json",
+							"e2e/tsconfig.json"
+						],
+						"exclude": [
+							"**/node_modules/**"
+						]
+					}
+				},
+				"e2e": {
+					"builder": "@angular-devkit/build-angular:protractor",
+					"options": {
+						"protractorConfig": "e2e/protractor.conf.js",
+						"devServerTarget": "mosaico-sample:serve"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "mosaico-sample:serve:production"
+						}
+					}
+				}
+			}
+		},
+		"mosaico-wallet": {
+			"projectType": "library",
+			"root": "projects/mosaico-wallet",
+			"sourceRoot": "projects/mosaico-wallet/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/mosaico-wallet/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/mosaico-wallet/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/mosaico-wallet/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/mosaico-wallet/src/test.ts",
+						"tsConfig": "projects/mosaico-wallet/tsconfig.spec.json",
+						"karmaConfig": "projects/mosaico-wallet/karma.conf.js"
+					}
+				}
+			}
+		},
+		"mosaico-base": {
+			"projectType": "library",
+			"root": "projects/mosaico-base",
+			"sourceRoot": "projects/mosaico-base/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/mosaico-base/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/mosaico-base/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/mosaico-base/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/mosaico-base/src/test.ts",
+						"tsConfig": "projects/mosaico-base/tsconfig.spec.json",
+						"karmaConfig": "projects/mosaico-base/karma.conf.js"
+					}
+				}
+			}
+		},
+		"mosaico-project": {
+			"projectType": "library",
+			"root": "projects/mosaico-project",
+			"sourceRoot": "projects/mosaico-project/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/mosaico-project/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/mosaico-project/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/mosaico-project/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/mosaico-project/src/test.ts",
+						"tsConfig": "projects/mosaico-project/tsconfig.spec.json",
+						"karmaConfig": "projects/mosaico-project/karma.conf.js"
+					}
+				}
+			}
+		},
+		"mosaico-dao": {
+			"projectType": "library",
+			"root": "projects/mosaico-dao",
+			"sourceRoot": "projects/mosaico-dao/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/mosaico-dao/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/mosaico-dao/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/mosaico-dao/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/mosaico-dao/src/test.ts",
+						"tsConfig": "projects/mosaico-dao/tsconfig.spec.json",
+						"karmaConfig": "projects/mosaico-dao/karma.conf.js"
+					}
+				}
+			}
+		},
+		"mosaico-ico": {
+			"projectType": "library",
+			"root": "projects/mosaico-ico",
+			"sourceRoot": "projects/mosaico-ico/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/mosaico-ico/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/mosaico-ico/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/mosaico-ico/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/mosaico-ico/src/test.ts",
+						"tsConfig": "projects/mosaico-ico/tsconfig.spec.json",
+						"karmaConfig": "projects/mosaico-ico/karma.conf.js"
+					}
+				}
+			}
+		},
+		"mosaico-statistics": {
+			"projectType": "library",
+			"root": "projects/mosaico-statistics",
+			"sourceRoot": "projects/mosaico-statistics/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/mosaico-statistics/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/mosaico-statistics/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/mosaico-statistics/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/mosaico-statistics/src/test.ts",
+						"tsConfig": "projects/mosaico-statistics/tsconfig.spec.json",
+						"karmaConfig": "projects/mosaico-statistics/karma.conf.js"
+					}
+				}
+			}
+		}
+	},
+	"defaultProject": "mosaico-sample"
+}

@@ -1,0 +1,57 @@
+<div class="d-flex flex-wrap justify-content-center align-items-center" *ngIf="vestings && vestings.length > 0">
+    <ng-container *ngFor="let v of vestings">
+        <div class="card vesting-wrapper">
+            <div class="d-flex">
+                <div class="symbol symbol-40px symbol-circle">
+                    <div class="symbol-label" *ngIf="v.token.logoUrl && v.token.logoUrl.length > 0" style="background-image:url({{v.token.logoUrl}})"></div>
+                    <div class="symbol-label fs-4 fw-bold text-dark" *ngIf="!v.token.logoUrl || v.token.logoUrl.length == 0">T</div>
+                </div>
+                <div class="ps-3">
+                    <p class="vesting-title">{{ v.token?.name }}</p>
+                    <p class="vesting-text">{{ v.token?.symbol }}</p>
+                </div>
+            </div>
+            <div class="row pb-3 mx-0">
+                <div class="col-6 d-flex py-5 px-0 align-items-center">
+                    <img src="/assets/media/misc/money-plus-line.png" alt="money-plus icon" class="vesting-icon">
+                    <div class="ps-4">
+                        <p class="vesting-subtitle">{{ "WALLET_VESTING.TITLES.CLAIMED" | translate }}</p>
+                        <p class="vesting-text"> {{ v.claimed | number: '1.0-6': 'en' }} {{v.token.symbol}}</p>
+                    </div>
+                </div>
+                <div class="col-6 d-flex py-5 px-0 align-items-center">
+                    <img src="/assets/media/misc/lock-line.png" alt="lock icon" class="vesting-icon">
+                    <div class="ps-4">
+                        <p class="vesting-subtitle">{{ "WALLET_VESTING.TITLES.LOCKED" | translate }}</p>
+                        <p class="vesting-text">{{ v.locked | number: '1.0-6': 'en' }} {{v.token.symbol}}</p>
+                    </div>
+                </div>
+                <div class="col-6 d-flex py-5 px-0 align-items-center">
+                    <img src="/assets/media/misc/timer-line.png" alt="timer icon" class="vesting-icon">
+                    <div class="ps-4">
+                        <p class="vesting-subtitle">{{ "WALLET_VESTING.TITLES.TOTAL_PERIOD" | translate }}</p>
+                        <p class="vesting-text">{{ v.totalPeriod | number: '1.0-0' }}</p>
+                    </div>
+                </div>
+                <div class="col-6 d-flex py-5 px-0 align-items-center">
+                    <img src="/assets/media/misc/calendar-line.png" alt="calendar icon" class="vesting-icon">
+                    <div class="ps-4">
+                        <p class="vesting-subtitle">{{ "WALLET_VESTING.TITLES.NEXT_UNLOCK" | translate }}</p>
+                        <p class="vesting-text">{{ v.nextUnlock | date }}</p>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="!v.canClaim">
+                <button class="btn btn-mosaico-primary vesting-disabled"
+                    [disabled]="true">{{ "WALLET_VESTING.ACTIONS.CLAIM" | translate }}</button>
+            </ng-container>
+            <ng-container *ngIf="v.canClaim">
+                <button class="btn btn-mosaico-primary" [disabled]="true"
+                    (click)="onClaim()">{{ "WALLET_VESTING.ACTIONS.CLAIM" | translate }} {{ v.tokensToClaim }} {{"WALLET_VESTING.ACTIONS.TOKENS" | translate }}</button>
+            </ng-container>           
+        </div>
+    </ng-container>
+</div>
+<div class="d-flex flex-wrap justify-content-center align-items-center" *ngIf="!vestings || vestings.length === 0">
+    <span class="text-muted fs-4">{{'WALLET_VESTING.NO_VESTING' | translate}}</span>
+</div>

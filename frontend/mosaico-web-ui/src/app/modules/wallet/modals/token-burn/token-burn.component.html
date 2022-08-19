@@ -1,0 +1,48 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{'TOKEN_MANAGEMENT.BURN.TITLE'|translate}}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+                        <div class="form-group mb-5">
+                            <label class="form-label">{{'TOKEN_MANAGEMENT.MINT.AMOUNT.LABEL'|translate}}</label>
+                            <input type="number" name="amount" formControlName="amount" [ngClass]="{ 'is-invalid': isDirty('amount') && hasErrors('amount') }" class="form-control" placeholder="{{'TOKEN_MANAGEMENT.MINT.AMOUNT.PLACEHOLDER'|translate}}" />
+                            <div class="invalid-feedback" *ngIf="isDirty('amount') && hasErrors('amount')">{{'TOKEN_MANAGEMENT.MINT.AMOUNT.ERROR'|translate}}</div>
+                        </div>
+                        <div class="form-group mb-5">
+                            <app-company-wallet-payment-control [companyId]="token?.companyId" [network]="token?.network"
+                                [contractName]="contractVersionToDeploy" formControlName="wallet">
+                            </app-company-wallet-payment-control>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row w-100">
+                <div class="col-12 w-100">
+                    <app-button-save
+                        [classes]="'btn btn-primary btn-mosaico-primary w-100'"
+                        [formInvalid]="form.invalid"
+                        [showSpinner]="(deploying|async) === true"
+                        [buttonText]="'TOKEN_MANAGEMENT.ACTIONS.BURN' | translate"
+                        (clicked)="save()"
+                    ></app-button-save>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

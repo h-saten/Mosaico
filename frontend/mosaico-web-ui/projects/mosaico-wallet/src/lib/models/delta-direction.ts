@@ -1,0 +1,1 @@
+export type DeltaDirection = 'HIGHER' | 'LOWER' | 'NONE';

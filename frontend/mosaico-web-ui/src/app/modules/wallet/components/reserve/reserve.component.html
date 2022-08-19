@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-distribution" [ngClass]="{'is-invalid': !service?.isValid }">
+                <tbody>
+                    <tr>
+                        <td class="col-3">
+                            <div class="d-flex flex-row align-items-center px-3">
+                                <span class="text-muted"></span>
+                                <input disabled type="text" name="reserve" class="form-control" value="Reserve" />
+                            </div>           
+                        </td>
+                        <td class="col-2">
+                            <input type="number" name="reserveTokenAmount" class="form-control" value="{{service?.reserveTokenAmount}}" disabled />
+                        </td>
+                        <td class="col-1 fs-12 fw-bold text-mosaico-secondary">{{service?.reserveTokenAmountPercentage | number : '1.2-2'}} %</td>
+                        <td class="col-2"></td>
+                        <td class="col-2"></td>
+                        <td class="col-2" *ngIf="canEdit"></td>
+                    </tr>
+                    <tr class="totalSupply">
+                        <td class="col-3">Total Supply</td>
+                        <td class="col-2">{{service?.overallSum}}</td>
+                        <td class="col-1 percentage fs-12 fw-bold text-mosaico-secondary">{{service?.overallPercentage | number : '1.2-2' }} %</td>
+                        <td class="col-2"></td>
+                        <td class="col-2"></td>
+                        <td class="col-2" *ngIf="canEdit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+{
+  "Cache": {
+    "RedisConnectionString": "localhost:6379",
+    "RedisDatabase": -1,
+    "Mappings": {}
+  },
+  "EventSourcing": {
+    "RedisConnectionString": "localhost:6379",
+    "RedisDatabase": -1,
+    "StreamName": "system_events"
+  },
+  "ServiceBus": {
+    "ConnectionString": ""
+  },
+  "Ethereum": {
+    "Endpoint": "HTTP://127.0.0.1:8545",
+    "AdminAccount": {
+      "PrivateKey": "0x7b9b4f50d30f8eba180081741226ce1deee15c8b894af500106bd36e9123a22d"
+    },
+    "Chain": "1337",
+    "AdminAccountProviderType": "CONFIGURATION"
+  },
+  "EthereumTest": {
+    "BalanceCheckAddress": "0x2D13E074156873c8A62B5896282bCcaF8426CdC6",
+    "AdminWalletAddress": "0x4d45024afdD0B862448865eAB591d35EE3952293"
+  },
+  "Blockchain": {
+    "Networks": [
+      {
+        "Name": "Ethereum",
+        "Endpoint": "HTTP://127.0.0.1:8545",
+        "AdminAccount": {
+          "PrivateKey": "0x7b9b4f50d30f8eba180081741226ce1deee15c8b894af500106bd36e9123a22d"
+        },
+        "Chain": "1337",
+        "AdminAccountProviderType": "CONFIGURATION"
+      }
+    ]
+  },
+  "EmailLabs": {
+    "Url": "https://api.emaillabs.net.pl/api",
+    "SmtpAccount": "1.mosaico.smtp",
+    "FromEmail": "noreply@mosaico.ai",
+    "DisplayName": "Mosaico",
+    "AppKey": "whatever",
+    "SecretKey": "whatever"
+  }
+}

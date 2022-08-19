@@ -1,0 +1,7 @@
+{
+    "projectName": "Mosaico.Integration.Blockchain.Ethereum",
+    "namespace": "Mosaico.Integration.Blockchain.Ethereum.Tether",
+    "lang": 0,
+    "autoCodeGen": true,
+    "projectPath": "../src/Mosaico.Integration.Blockchain.Ethereum/Tether"
+}

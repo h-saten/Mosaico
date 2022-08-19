@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.Application.ProjectManagement\Mosaico.Application.ProjectManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.ProjectManagement\Mosaico.Domain.ProjectManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.SDK.Base\Mosaico.SDK.Base.csproj" />
+    </ItemGroup>
+
+</Project>

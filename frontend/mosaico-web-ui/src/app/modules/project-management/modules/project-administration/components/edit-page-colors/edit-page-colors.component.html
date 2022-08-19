@@ -1,0 +1,38 @@
+<div class="row mb-5">
+    <div class="col-12">
+        <h3 class="h4 mb-2">Colors</h3>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <h4>{{'PROJECT_OVERVIEW.ACTIONS.TITLE_1_EDIT_COLORS'|translate}}</h4>
+                <p class="mb-5">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_1_DESC_EDIT_COLORS'|translate}}</p>
+                <app-color-edit [displayColor]="displayColor1" (pickerOpenedEvent)="pickerOpenedEvent($event)"
+                    (selectedColorEvent)="selectedColor1Event($event)"></app-color-edit>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mt-10">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_2_EDIT_COLORS'|translate}}</h4>
+                <p class="mb-5">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_2_DESC_EDIT_COLORS'|translate}}</p>
+                <app-color-edit [displayColor]="displayColor2" (pickerOpenedEvent)="pickerOpenedEvent($event)"
+                    (selectedColorEvent)="selectedColor2Event($event)"></app-color-edit>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mt-10">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_3_EDIT_COLORS'|translate}}</h4>
+                <p class="mb-5">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_3_DESC_EDIT_COLORS'|translate}}</p>
+                <app-color-edit [displayColor]="displayColor3" (pickerOpenedEvent)="pickerOpenedEvent($event)"
+                    (selectedColorEvent)="selectedColor3Event($event)"></app-color-edit>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-12">
+        <button class="btn btn-mosaico-primary" (click)="saveColors()">Save</button>
+    </div>
+</div>

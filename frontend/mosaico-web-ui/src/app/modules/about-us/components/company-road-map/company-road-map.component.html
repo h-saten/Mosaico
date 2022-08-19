@@ -1,0 +1,46 @@
+<div class="company_road_map--wrapper">
+    <div>
+        <p class="company_road_map--title" [innerHTML]="'ROADMAP.TITLE' | translate"></p>
+        <p class="company_road_map--subtitle">{{ 'ROADMAP.SUBTITLE' | translate }}</p>
+    </div>
+
+    <div class="company_road_map--card">
+        <div class="d-flex justify-content-between gap-lg-5 gap-2">
+          <ng-container *ngFor="let item of roadMaps">
+            <button class="btn road-map-btn" [class.active]="currentYear === item.year" (click)="changeYear(item.year)">{{ item.year }}</button>
+          </ng-container>
+        </div>
+
+        <div class="pt-5">
+          <mat-accordion>
+  
+            <ng-container *ngFor="let item of roadMaps">
+              <ng-container  *ngIf="currentYear === item.year" >
+                <ng-container *ngFor="let quarter of item.quarters">
+                  <mat-expansion-panel (opened)="panelOpenState = true"
+                                       (closed)="panelOpenState = false"> 
+                    <mat-expansion-panel-header [ngClass]="{'next-year': currentYear === 2023, 'last-year': currentYear === 2024}">
+                      <mat-panel-title>
+                        {{ quarter.title }}
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="company_road_map--steps-wrapper">
+                      <ng-container *ngFor="let step of quarter.steps">
+                        <div class="road-map-step">
+                          <img src="/assets/media/about-us/right-arrow.svg" alt="right-arrow" class="right-arrow" 
+                          [ngClass]="{'next-year': currentYear === 2023, 'last-year': currentYear === 2024}">
+                          <p>{{ step | translate }}</p>
+                        </div>
+                      </ng-container>
+                    </div>
+
+                  </mat-expansion-panel>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+              
+          </mat-accordion>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+
+        <div class="modal-body">
+            <div class="row mt-3 mb-3" *ngIf="showTransactionSucceeded === false && (deploying$|async) === false">
+                <div class="col-12 d-flex flex-row justify-content-end">
+                    <button class="btn btn-icon btn-sm btn-icon-close" (click)="modal.dismiss(false)" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+                </div>
+            </div>
+            <ng-container *ngIf="!isLoading && !showTransactionSucceeded && (deploying$|async) === false">
+                <div class="row mb-3">
+                    <div class="col-12 text-center">
+                        <span><i class="fas fa-exclamation-triangle"></i></span>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h5 class="fs-3 fw-bold text-center">{{'STAKING_WITHDRAW_MODAL.TITLE'|translate}}</h5>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <p class="fs-4">{{'STAKING_WITHDRAW_MODAL.CONTENT'|translate}}</p>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isLoading && showTransactionSucceeded">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <img class="img-fluid" style="max-width: 250px" src="/assets/media/animations/success-payment.gif" />
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isLoading && (deploying$|async) === true">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <img class="img-fluid" style="max-width: 150px" src="/assets/media/animations/in-progress.gif" />
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="modal-footer" *ngIf="!isLoading">
+            <div class="row w-100">
+                <div class="col-12 w-100 px-0">
+                    <app-button-save *ngIf="!showTransactionSucceeded"
+                        [classes]="'btn btn-primary btn-mosaico-primary w-100'"
+                        [showSpinner]="(deploying$|async) === true"
+                        [buttonText]="'Confirm'"
+                        (clicked)="submit()"
+                    ></app-button-save>
+                    <button *ngIf="showTransactionSucceeded" class="btn btn-primary btn-mosaico-primary w-100" (click)="modal.close(true)">{{'STAKING_WITHDRAW_MODAL.DONE'|translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

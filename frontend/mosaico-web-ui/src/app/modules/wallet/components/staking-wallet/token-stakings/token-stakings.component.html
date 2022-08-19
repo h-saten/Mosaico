@@ -1,0 +1,15 @@
+<table class="table table-row-dashed table-row-gray-500 gy-5 gs-5 mb-0">
+  <thead>
+  <tr class="fw-bold fs-6 text-gray-800">
+    <th scope="col">Quantity</th>
+    <th scope="col">Staked at</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let stake of stakings">
+    <th scope="row">{{ stake.quantity }} {{tokenSymbol}}</th>
+    <th scope="row">{{ stake.stakedAt | amDateFormat:'LL'}}</th>
+    <td>First</td>
+  </tr>
+  </tbody>
+</table>

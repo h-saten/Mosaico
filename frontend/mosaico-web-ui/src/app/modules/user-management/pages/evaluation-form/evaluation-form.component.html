@@ -1,0 +1,147 @@
+<div class="row">
+    <div class="col-12 col-md-8 offset-md-2">
+        <div class="card shadow-sm p-3 mb-5 bg-body rounded">
+            <div class="card-body" *ngIf="(isInitialLoading$|async) === true">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <app-spinner-container [showSpinner]="(isInitialLoading$|async) === true"></app-spinner-container>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" *ngIf="(isInitialLoading$|async) === false">
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h2 class="text-center form-title">{{'EVALUATION.TITLE'|translate}}</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{'EVALUATION.EXPLAINER'|translate}}</p>
+                    </div>
+                </div>
+                <form [formGroup]="form" class="form mosaico-form w-100" novalidate="novalidate">
+                    <div class="form-group mb-5 mt-5" *ngFor="let f of getControls(); let i = index" [formGroup]="f">
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="form-label">{{'EVALUATION.QUESTIONS.' + f.get('title')?.value|translate}} <a [href]="'EVALUATION.LINKS.' + f.get('title')?.value | translate" target="_blank"><i role="button" class="fas fa-info-circle text-muted fs-3"></i></a></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex flex-row">
+                                <div class="form-check form-check-custom form-check-solid mt-5 mb-5 me-5">
+                                    <input class="form-check-input" type="radio" value="true" [attr.id]="'question_yes'+i" formControlName="response"/>
+                                    <label class="form-check-label" [attr.for]="'question_yes'+i">
+                                        {{'EVALUATION.ANSWERS.YES'|translate}}
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-custom form-check-solid mt-5 mb-5">
+                                    <input class="form-check-input" type="radio" value="false" [attr.id]="'question_no'+i" formControlName="response"/>
+                                    <label class="form-check-label" [attr.for]="'question_no'+i">
+                                        {{'EVALUATION.ANSWERS.NO'|translate}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-5 text-left">
+                        <div class="col-md-12 my-1">
+                  
+                          <div class="form-check form-check-custom form-check-solid form-check-sm">
+                            <input type="checkbox"
+                              id="checkAll"
+                              name="checkAll"
+                              formControlName="checkAll"
+                              class="form-check-input"
+                              tabindex="5"
+                              (click)="checkAllCheck()"
+                            >
+                            <label class="form-check-label" for="checkAll">
+                              {{ 'EVALUATION.REGISTER.SELECT_ALL' | translate }}
+                            </label>
+                          </div>
+                  
+                        </div>
+                  
+                        <div class="col-md-12 my-1">
+                  
+                          <div class="form-check form-check-custom form-check-solid form-check-sm">
+                            <input type="checkbox"
+                              id="terms"
+                              (change)="changeConditions()"
+                              formControlName="terms"
+                              class="form-check-input"
+                              tabindex="6"
+                              [ngClass]="{ 'is-invalid' : hasError('terms') }"
+                            >
+                  
+                            <label class="form-check-label" for="terms">
+                              <span>{{ 'EVALUATION.REGISTER.READ_AND_ACCEPT' | translate }}</span>
+                              <a href="https://v1.mosaico.ai/assets/pdf/Regulamin_platformy_MOSAICO_11_2019.pdf" target="_blank" class="cursor-pointer font-weight-bold"
+                                rel="noopener"
+                              > {{ 'EVALUATION.REGISTER.REGULATIONS' | translate }}
+                              </a>
+                              <span> {{ 'EVALUATION.REGISTER.AND' | translate }} </span>
+                              <a href="https://v1.mosaico.ai/assets/pdf/Polityka_prywatnosci_09_2020.pdf" target="_blank" class="cursor-pointer font-weight-bold"
+                                rel="noopener"
+                              >
+                                {{ 'EVALUATION.REGISTER.PRIVACY_POLICY' | translate }}.
+                              </a>
+                            </label>
+                  
+                          </div>
+                          <div class="text-danger text-left ms-8" *ngIf="hasError('terms')">
+                            {{ 'EVALUATION.REGISTER.FIELD_REQUIRED' | translate }}
+                          </div>
+                  
+                        </div>
+                  
+                        <div class="col-md-12 my-1">
+                  
+                          <div class="form-check form-check-custom form-check-solid form-check-sm">
+                            <input type="checkbox"
+                              id="notForbiddenCitizenship"
+                              (change)="changeConditions()"
+                              formControlName="notForbiddenCitizenship"
+                              class="form-check-input"
+                              tabindex="7"
+                              [ngClass]="{ 'is-invalid' : hasError('notForbiddenCitizenship') }"
+                            >
+                            <label class="form-check-label" for="notForbiddenCitizenship">{{ 'EVALUATION.REGISTER.NOT_CITIZENSHIP' | translate }}</label>
+                          </div>
+                          <div class="text-danger text-left ms-8" *ngIf="hasError('notForbiddenCitizenship')">
+                            {{ 'EVALUATION.REGISTER.FIELD_REQUIRED' | translate }}
+                          </div>
+                  
+                        </div>
+                  
+                        <div class="col-md-12 my-1">
+                          <div class="form-check form-check-custom form-check-solid form-check-sm">
+                            <input type="checkbox"
+                              id="newsletterPersonalDataProcessing"
+                              (change)="changeConditions()"
+                              formControlName="newsletterPersonalDataProcessing"
+                              class="form-check-input"
+                              tabindex="7"
+                              [ngClass]="{ 'is-invalid' : hasError('newsletterPersonalDataProcessing') }">
+                            <label class="form-check-label" for="newsletterPersonalDataProcessing">
+                              {{ 'EVALUATION.REGISTER.NEWSLETTER_TERMS' | translate }}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <app-button-save
+                                [classes]="'btn btn-primary btn-mosaico-primary w-100'"
+                                [formInvalid]="form.invalid"
+                                [showSpinner]="(saving$|async) === true"
+                                [buttonText]="'EVALUATION.ACTIONS.SAVE' | translate"
+                                (clicked)="submit()"
+                            ></app-button-save>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

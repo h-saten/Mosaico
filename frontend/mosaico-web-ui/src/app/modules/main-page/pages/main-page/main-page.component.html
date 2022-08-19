@@ -1,0 +1,17 @@
+<div class="main-page-wrapper">
+    <div class="bg-1">
+        <app-section-project-carousel></app-section-project-carousel>
+        <app-section-pillars></app-section-pillars>
+    </div>
+    <div class="bg-2">
+        <app-section-platform  (activeTab)="followSteps.setActiveTab($event)"></app-section-platform>
+        <app-section-follow-steps #followSteps></app-section-follow-steps>
+        <img src="/assets/media/mainpage/transparent-triangles.png" alt="" class="img-1">
+        <app-section-wallet></app-section-wallet>
+        <img src="/assets/media/mainpage/sliced-triangle.png" alt="" class="img-2">
+    </div>
+    <app-section-meet-team></app-section-meet-team>
+    <app-section-mobile-app></app-section-mobile-app>
+    <app-join-our-newsletter></app-join-our-newsletter>
+</div>
+

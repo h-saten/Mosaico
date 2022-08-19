@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.Cache.Redis\Mosaico.Cache.Redis.csproj" />
+        <ProjectReference Include="..\Mosaico.Core.EntityFramework\Mosaico.Core.EntityFramework.csproj" />
+        <ProjectReference Include="..\Mosaico.CQRS.Base\Mosaico.CQRS.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Core.ResourceManager\Mosaico.Core.ResourceManager.csproj" />
+        <ProjectReference Include="..\Mosaico.Events.RabbitMq\Mosaico.Events.RabbitMq.csproj" />
+        <ProjectReference Include="..\Mosaico.Events.ServiceBus\Mosaico.Events.ServiceBus.csproj" />
+        <ProjectReference Include="..\Mosaico.EventSourcing.Redis\Mosaico.EventSourcing.Redis.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Blockchain.Ethereum\Mosaico.Integration.Blockchain.Ethereum.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Email.EmailLabs\Mosaico.Integration.Email.EmailLabs.csproj" />
+        <ProjectReference Include="..\Mosaico.Payments.Binance\Mosaico.Payments.Binance.csproj" />
+        <ProjectReference Include="..\Mosaico.Payments.RampNetwork\Mosaico.Payments.RampNetwork.csproj" />
+        <ProjectReference Include="..\Mosaico.Payments.Transak\Mosaico.Payments.Transak.csproj" />
+        <ProjectReference Include="..\Mosaico.Storage.AzureBlobStorage\Mosaico.Storage.AzureBlobStorage.csproj" />
+    </ItemGroup>
+
+</Project>

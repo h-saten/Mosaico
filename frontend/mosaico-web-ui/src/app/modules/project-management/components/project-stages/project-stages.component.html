@@ -1,0 +1,31 @@
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-rounded gy-7 gs-7 align-middle stages-table">
+                <thead>
+                    <tr>
+                      <th appBaseColors [headerTable]="true">{{'PROJECT_OVERVIEW.STAGES.TABLE.STAGE'|translate}}</th>
+                      <th appBaseColors [headerTable]="true">{{'PROJECT_OVERVIEW.STAGES.TABLE.START_DATE'|translate}}</th>
+                      <th appBaseColors [headerTable]="true">{{'PROJECT_OVERVIEW.STAGES.TABLE.END_DATE'|translate}}</th>
+                      <th appBaseColors [headerTable]="true">{{'PROJECT_OVERVIEW.STAGES.TABLE.TOKEN_PRICE'|translate}}</th>
+                      <th appBaseColors [headerTable]="true">{{'PROJECT_OVERVIEW.STAGES.TABLE.TOKEN_SUPPLY'|translate}}</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="stages && stages.length > 0">
+                    <tr *ngFor="let s of stages">
+                        <td>{{s.name}}</td>
+                        <td>{{s.startDate | date : 'dd.MM.yyyy, HH:mm'}}</td>
+                        <td>{{s.endDate | date : 'dd.MM.yyyy, HH:mm'}}</td>
+                        <td>${{s.tokenPrice | number : '1.0-6': 'en'}}</td>
+                        <td>{{s.tokensSupply| number : '1.0-6': 'en'}}</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="!stages || stages.length === 0">
+                    <tr>
+                        <td colspan="5">{{'PROJECT_OVERVIEW.STAGES.TABLE.NO_STAGES'|translate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

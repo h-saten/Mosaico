@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row" *ngIf="isLoading">
+            <div class="col-12 d-flex justify-content-center">
+                <i class="fas fa-spinner fa-spin fs-1 text-warning"></i>
+            </div>
+        </div>
+        <div class="row" *ngIf="!isLoading">
+            <div class="col-12 d-flex justify-content-center">
+                <i class="fas fa-check fs-1 text-success"></i>
+            </div>
+        </div>
+    </div>
+</div>

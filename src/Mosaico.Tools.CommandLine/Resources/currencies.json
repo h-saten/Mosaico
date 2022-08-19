@@ -1,0 +1,87 @@
+﻿[
+  {
+    "name": "Tether",
+    "symbol": "USDT",
+    "network": "Polygon",
+    "address": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    "logoUrl": "/assets/media/svg/crypto/usdt.svg",
+    "decimals": 6
+  },
+  {
+    "name": "USD Coin",
+    "symbol": "USDC",
+    "network": "Polygon",
+    "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "logoUrl": "/assets/media/svg/crypto/usdc.svg",
+    "decimals": 6
+  },
+  {
+    "name": "Tether",
+    "symbol": "USDT",
+    "network": "Rinkeby",
+    "address": "0xD92E713d051C37EbB2561803a3b5FBAbc4962431",
+    "logoUrl": "/assets/media/svg/crypto/usdt.svg",
+    "decimals": 6
+  },
+  {
+    "name": "Tether",
+    "symbol": "USDT",
+    "network": "Mumbai",
+    "address": "0xA02f6adc7926efeBBd59Fd43A84f4E0c0c91e832",
+    "logoUrl": "/assets/media/svg/crypto/usdt.svg",
+    "decimals": 6
+  },
+  {
+    "name": "Ethereum",
+    "symbol": "ETH",
+    "network": "Rinkeby",
+    "address": "",
+    "logoUrl": "/assets/media/svg/crypto/eth.svg",
+    "decimals": 18,
+    "IsNative": true
+  },
+  {
+    "name": "Ethereum",
+    "symbol": "ETH",
+    "network": "Ethereum",
+    "address": "",
+    "logoUrl": "/assets/media/svg/crypto/eth.svg",
+    "decimals": 18,
+    "IsNative": true
+  },
+  {
+    "name": "Matic",
+    "symbol": "MATIC",
+    "network": "Polygon",
+    "address": "",
+    "logoUrl": "/assets/media/svg/crypto/matic.svg",
+    "decimals": 18,
+    "IsNative": true
+  },
+  {
+    "name": "Matic",
+    "symbol": "MATIC",
+    "network": "Mumbai",
+    "address": "",
+    "logoUrl": "/assets/media/svg/crypto/matic.svg",
+    "decimals": 18,
+    "IsNative": true
+  },
+  {
+    "name": "Mosaico",
+    "symbol": "MOS",
+    "network": "Polygon",
+    "address": "0x0E4AeE1513Cf05b97fAFFf860fC291324B604F8a",
+    "logoUrl": "/assets/media/svg/crypto/mos.svg",
+    "decimals": 18,
+    "IsNative": false
+  },
+  {
+    "name": "MosaicoUSD",
+    "symbol": "MUSD",
+    "network": "Polygon",
+    "address": "0xcbB59A5fBCCAB037B4cF4d3Ac4a753a55295D8B6",
+    "logoUrl": "/assets/media/svg/crypto/usdt.svg",
+    "decimals": 6
+  }
+]

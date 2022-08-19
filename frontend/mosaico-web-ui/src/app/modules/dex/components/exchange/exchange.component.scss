@@ -1,0 +1,160 @@
+.exchange-wrapper {
+    max-width: 465px;
+    margin: 95px auto;
+    padding: 24px !important;
+    position: relative;
+
+    p {
+        margin: 0;
+    }
+
+    .exchange-item {
+        border: 1px solid #DFE0EB;
+        border-radius: 10px;
+        padding: 24px;
+        position: relative;
+
+        &.exchange-action-arrow::after {
+            content: '';
+            background-image: url('/assets/media/misc/arrow-exchange.png');
+            background-repeat: no-repeat;
+            padding: 16px;
+            left: 46%;
+            position: absolute;
+            bottom: -22px;
+            z-index: 1;
+        }
+
+        .exchange-balance {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 18px;
+            color: #979797;
+        }
+
+        .select-wrapper {
+            .ng-select {
+                width: 132px;
+            }
+        
+            ::ng-deep.ng-select {
+                &.ng-select-single .ng-select-container {
+                    height: 40px;
+                    border: 1px solid #0063F5;
+                    border-radius: 8px;
+    
+                    .ng-value-container .ng-placeholder,
+                    .ng-value {
+                        font-weight: 500;
+                        font-size: 15px;
+                        line-height: 20px;
+                        color: #0063F5;
+                    }
+                }
+    
+                .ng-arrow-wrapper {
+                    height: 23px;
+                    background-image: url('/assets/media/misc/chevron-down-line.png');
+                    background-repeat: no-repeat;
+
+                    .ng-arrow {
+                        display: none;   
+                    } 
+                }
+
+                .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+                    font-weight: 500;
+                    font-size: 15px;
+                    line-height: 20px;
+                    color: #0063F5;  
+                }
+            }
+
+            .ng-select-opened ::ng-deep .ng-arrow-wrapper {
+                transform: rotateX(180deg);
+            }
+        }
+
+        .exchange-details-title {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+            color: #494642;
+        }
+    }
+
+    .exchange-arrow {
+        position: absolute;
+        width: 32px;
+        top: 37%;
+        left: 45%;
+    }
+
+    .exchange-details {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+        color: #494642;
+    }
+
+    .exchange-description {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 28px;
+        color: #494642;
+    }
+
+    .confirm-img {
+        width: 24px;
+    }
+
+    .confirm-currency {
+        color: #0063F5;
+    }
+
+    .confirm-description {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: #979797;
+    }
+
+    .confirm-process {
+        width: 124px;
+        height: 124px;
+    }
+
+    .warning-icon {
+        width: 112px;
+        height: 97px;
+    }
+
+    .checkmark-icon {
+        width: 110px;
+    }
+
+    .auth-code {
+        border: 1px solid #DFE0EB;
+        border-radius: 10px;
+        width: 80px;
+        height: 80px;
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .exchange-btn {
+        background: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+        border-radius: 8px;
+        color: #FFFFFF;
+        border: none;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 18px;
+
+        &.cancel-btn {
+            color: #0063F5;
+            background: transparent;
+            border: 1px solid #0063F5;
+        }
+    }
+}

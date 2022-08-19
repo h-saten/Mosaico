@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mosaico.Integration.Email.Abstraction\Mosaico.Integration.Email.Abstraction.csproj" />
+      <ProjectReference Include="..\Mosaico.Storage.Base\Mosaico.Storage.Base.csproj" />
+    </ItemGroup>
+
+</Project>

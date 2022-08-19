@@ -1,0 +1,38 @@
+<div>
+  <h3 class="title-projects">
+    {{'MENU.MARKETPLACE' | translate}}
+  </h3>
+  <app-menu-projects
+    (statusEvent)="updateStatusFilter($event)"
+    (searchEvent)="updateSearchText($event)"
+  ></app-menu-projects>
+</div>
+<app-spinner-container [showSpinner]="!projectsRequestFinished"></app-spinner-container>
+<app-featured-project [isFirst]="true" *ngIf="projects[0] && projects[0].isFeatured === true" [project]="projects[0]"></app-featured-project>
+<ng-container *ngIf="projectsRequestFinished">
+  <ng-container *ngIf="projects.length > 0; else noResult">
+    <div class="d-flex flex-wrap flex-stack justify-content-between">
+      <ng-container *ngFor="let project of projects; first as first">
+        <app-featured-project [isFirst]="false" *ngIf="!first || projects[0].isFeatured === false" [isProjectItem]="true" [project]="project" class="w-100 project-max-width"></app-featured-project>
+      </ng-container>
+    </div>
+    <div class="show-more-row">
+      <app-show-more-row
+        [totalPages] = "totalPages"
+        [totalItems] = "totalItems"
+        [rowsPerPage] = "rowsPerPage"
+        [currentListSize] = "currentListSize"
+        [showMoreName]="'PAGES.show_more.name.projects' | translate"
+        [itemsOf]="'PAGES.show_more.name.projects_of' | translate"
+        (getListNextEvent)="loadMoreResults($event)"
+      ></app-show-more-row>
+    </div>
+  </ng-container>
+
+  <ng-template #noResult>
+    <p *ngIf="projects.length === 0" class="h6 my-4 ml-0 ml-md-4">
+      {{'NO_PROJECTS' | translate}}
+    </p>
+  </ng-template>
+
+</ng-container>

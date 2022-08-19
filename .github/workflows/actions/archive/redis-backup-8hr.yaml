@@ -1,0 +1,28 @@
+# .github/workflows/scheduled-builds.yml
+name: Backup Redis every 8H
+
+on:
+  schedule:
+    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    - cron: "*/15 * * * *"
+jobs:
+  redis-backup-dev:
+    name: Backup Redis Dev Database
+    runs-on: ubuntu-latest
+    env:
+      HOST: api.redislabs.com/v1 
+      ACCOUNT_KEY: ${{secrets.REDISLABS_ACCOUNT_KEY}}
+      SECRET_KEY_DEV: ${{secrets.REDISLABS_SECRET_KEY_DEV}} 
+      SUBSCRIPTION_ID_DEV: ${{secrets.REDISLABS_SUBSCRIPTION_ID_DEV}}
+      DATABASE_ID_DEV: ${{secrets.REDISLABS_DATABASE_ID_DEV}}
+    steps:
+      - name: cURL request to backup dev
+        # Hit the webhook endpoint to rebuild  from the "main" branch
+        run: |
+         curl -s -X POST "https://api.redislabs.com/v1/subscriptions/${{secrets.REDISLABS_SUBSCRIPTION_ID_DEV}}/databases/${{secrets.REDISLABS_DATABASE_ID_DEV}}/backup" \
+          --header "Content-Type: application/json" \
+          -H "accept: application/json" \
+          -H "x-api-key: ${{secrets.REDISLABS_ACCOUNT_KEY}}" \
+          -H "x-api-secret-key: ${{secrets.REDISLABS_SECRET_KEY_DEV}} " \
+          -H "periodicBackupPath: abs://:${{secrets.STORAGE_ACCOUNT_ACCESS_KEY_DEV}}@${{secrets.STORAGE_ACCOUNT_NAME_DEV}}/backups-redis"
+          -- data {}

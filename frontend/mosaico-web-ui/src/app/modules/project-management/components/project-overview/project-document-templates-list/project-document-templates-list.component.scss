@@ -1,0 +1,125 @@
+.cards {
+  margin-top: 0;
+  margin-left: -3px;
+  margin-right: -3px;
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.div-card {
+  width: 33.3%;
+  @media (min-width: 768px) {
+    width: auto;
+  }
+}
+
+.card {
+    height: 100%;
+    padding: 12px 8px 8px 8px !important;
+
+    margin-bottom: 4px;
+    margin-left: 3px;
+    margin-right: 3px;
+
+    border-radius: 10px;
+    align-items: center;
+
+    @media (min-width: 768px) {
+      width: auto;
+      align-items: normal;
+      margin-left: 0;
+      margin-right: 0;
+      padding: 16px !important;
+    }
+
+    .card-body {
+      display: flex;
+      align-items: center;
+
+      @media (min-width: 768px) {
+        display: block;
+      }
+
+        &:hover {
+            cursor: pointer;
+        }
+        .card-icon {
+          i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background-color: #494642;
+            font-size: 18px;
+            color: white;
+          }
+        }
+        .card-icon-title {
+          color: #494642;
+
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 16px;
+          margin-top: 8px;
+
+          @media (min-width: 768px) {
+            margin-top: 0;
+          }
+          @media (min-width: 992px) {
+            font-size: 14px;
+            line-height: 24px;
+            font-weight: 500;
+          }
+
+        }
+        .card-icon-action {
+          i {
+              color: #C0BEBE;
+              font-size: 18px;
+          }
+        }
+    }
+    .white-space-normal {
+      white-space: normal;
+    }
+}
+.dropdown-toggle::after {
+    display: none;
+}
+.document-edit-menu {
+    border: 1px solid #DFE0EB;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 16px;
+    .title {
+      color: #494642;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .upload-button {
+      position: relative;
+      i {
+          float: right;
+          color: #494642;
+          font-size: 16px;
+          position: absolute;
+          top: 21px;
+          right: 8px;
+      }
+      font-size: 16px;
+      line-height: 24px;
+      color: #494642;
+    }
+    .dropdown-divider {
+      width: 100%;
+      height: 1px;
+      background-color: #DFE0EB;
+    }
+}

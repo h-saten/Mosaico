@@ -1,0 +1,41 @@
+<main role="main">
+
+  <section class="login common-img-bg">
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="card-block auth-body mx-auto" [ngClass]="addClass">
+
+          <div class="auth-box">
+
+            <div class="col-12 auth-box-header">
+              <div class="row mt-2 d-flex align-items-center">
+                <div class="col-9">
+                  <h1 class="auth-box-title">{{ title | translate }}</h1>
+                </div>
+                <div class="col-3">
+                  <app-language-selector></app-language-selector>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-center py-5">
+                <a href="{{urlReturn}}" rel="noopener"><img src="assets/images/logo_new.svg" alt="logo_mosaico"></a>
+              </div>
+            </div>
+
+            <div class="col-12 auth-box-content">
+              <router-outlet></router-outlet>
+            </div>
+
+          </div><!-- /.auth-box -->
+
+        </div><!-- /.card-block -->
+
+      </div> <!-- /.row -->
+
+      <app-data-administration-info *ngIf="dataAdministrationInfo"></app-data-administration-info>
+
+    </div> <!-- /.container-fluid -->
+  </section>
+
+</main>

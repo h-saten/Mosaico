@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mosaico.Domain.Statistics\Mosaico.Domain.Statistics.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.Base\Mosaico.Events.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.Wallet\Mosaico.Events.Wallet.csproj" />
+      <ProjectReference Include="..\Mosaico.SDK.ProjectManagement\Mosaico.SDK.ProjectManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Analytics.GoogleAnalytics\Mosaico.Analytics.GoogleAnalytics.csproj" />
+      <ProjectReference Include="..\Mosaico.Application.ProjectManagement\Mosaico.Application.ProjectManagement.csproj" />
+    </ItemGroup>
+
+</Project>

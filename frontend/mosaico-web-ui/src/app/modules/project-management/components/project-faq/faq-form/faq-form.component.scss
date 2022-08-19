@@ -1,0 +1,11 @@
+.div-form {
+    max-width: none;
+
+    &.mosaico-form .form-control {
+        height: auto;
+    }
+
+    textarea.no-resize {
+        resize: none;
+    }
+}

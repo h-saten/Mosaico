@@ -1,0 +1,16 @@
+<table class="table gs-7 gy-7 gx-7" *ngIf="withdrawals && withdrawals.length > 0">
+  <thead>
+  <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+    <th>Token symbol</th>
+    <th>Tokens amount</th>
+    <th>Date</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let w of withdrawals">
+    <td class="align-middle">{{w.tokenSymbol}}</td>
+    <td class="align-middle">{{w.quantity}}</td>
+    <td class="align-middle">{{w.date | amDateFormat:'LL'}}</td>
+  </tr>
+  </tbody>
+</table>

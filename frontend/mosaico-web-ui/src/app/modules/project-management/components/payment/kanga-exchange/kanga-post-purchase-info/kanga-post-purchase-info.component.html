@@ -1,0 +1,46 @@
+<ng-template #content let-modal>
+  <div class="modal-content mosaico-modal">
+    <div class="modal-header">
+      <h5 class="modal-title">{{'CHECKOUT.kanga.redirect_title'|translate}}</h5>
+
+      <!--begin::Close-->
+      <div class="close-button-container">
+        <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)"
+          aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <!--end::Close-->
+    </div>
+
+    <div class="modal-body">
+      <div class="row" *ngIf="isRedirectionActive === true">
+        <div class="col-12 d-flex justify-content-center">
+          <app-spinner-container [showSpinner]="true"></app-spinner-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ng-container *ngIf="isRedirectionActive; else emailProcessInfo">
+            <p [innerHTML]="'CHECKOUT.kanga.redirect_info'|translate: {externalSystemName}"></p>
+          </ng-container>
+          <ng-template #emailProcessInfo>
+            <p [innerHTML]="'CHECKOUT.kanga.email_info'|translate"></p>
+          </ng-template>
+        </div>
+      </div>
+      <div class="row mt-5" *ngIf="isRedirectionActive === true">
+        <div class="col-12 d-flex justify-content-center">
+          <p class="fw-bold fs-2" [innerHTML]="'CHECKOUT.kanga.countdown'|translate: {countdown}"></p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" *ngIf="isRedirectionActive === false">
+      <div class="row w-100">
+        <div class="col-12 w-100">
+          <button class="btn btn-primary btn-mosaico-primary w-100" (click)="done()">{{'CHECKOUT.kanga.email_done'|translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

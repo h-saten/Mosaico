@@ -1,0 +1,57 @@
+<div class="card mb-5 shadow-sm" *ngIf="(partners && partners.length > 0) || canEdit">
+  <div class="card-header justify-content-center align-items-center">
+      <div class="card-title me-3">
+          {{"PROJECT_PARTNER.TITLE" | translate}}
+      </div>
+  </div>
+
+  <div class="card-body">
+      <div class="row">
+          <div class="col-sm-4 col-md-2 col-lg-2 text-center mt-8" *ngFor="let partner of partners; let i = index">
+            <div class="symbol symbol-circle symbol-100px">
+                <label style="right: 0; top: 0;"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow position-absolute btn-partner-edit"
+                  *ngIf="canEdit"
+                  (click)="editPartner(partner)"
+                  ngbTooltip="{{'PROJECT_PARTNER.EDIT' | translate}}"
+                >
+                  <i class="bi bi-pencil-fill fs-7"></i>
+                </label>
+                <label style="right: 0; bottom: 0"
+                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow position-absolute btn-partner-edit"
+                  *ngIf="canEdit"
+                  ngbTooltip="{{'PROJECT_PARTNER.DELETE' | translate}}"
+                  (click)="deletePartner(partner.id)"
+                >
+                  <i class="fas fa-trash-alt text-danger"></i>
+                </label>
+                <div class="symbol-label"
+                  [style.background-image]="'url(' + (partner.photoUrl ? partner.photoUrl : 'assets/media/avatars/blank.png') + ')'">
+                </div>
+            </div>
+            <div class="pt-3 text-muted fw-bold">{{partner.name}}</div>
+            <div class="text-muted">{{partner.position}}</div>
+            <div class="mt-3">
+              <a *ngIf="partner.facebook && partner.facebook.length > 0" href="{{partner.facebook}}" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-facebook fs-4 me-2"></i>
+              </a>
+              <a *ngIf="partner.linkedIn && partner.linkedIn.length > 0" href="{{partner.linkedIn}}" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-linkedin fs-4 me-2"></i>
+              </a>
+              <a *ngIf="partner.twitter && partner.twitter.length > 0" href="{{partner.twitter}}" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-twitter fs-4"></i>
+              </a>
+            </div>
+            <div class="mt-3 d-flex flex-row align-items-center justify-content-center" *ngIf="canEdit">
+              <button class="btn btn-sm btn-icon" ngbTooltip="{{'PROJECT_PARTNER.MOVE_LEFT' | translate}}" *ngIf="i > 0" (click)="moveLeft(partner, i)"><i class="fas fa-chevron-left"></i></button>
+              <button class="btn btn-sm btn-icon" ngbTooltip="{{'PROJECT_PARTNER.MOVE_RIGHT' | translate}}" *ngIf="i >= 0 && i != partners.length - 1" (click)="moveRight(partner, i)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+      </div>
+      <div class="row" *ngIf="canEdit">
+        <div class="col-12 d-flex justify-content-center">
+          <button class="btn btn-mosaico-primary-outline" (click)="addNewPartner()">{{"PROJECT_PARTNER.ADD" | translate}} <i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+  </div>
+</div>

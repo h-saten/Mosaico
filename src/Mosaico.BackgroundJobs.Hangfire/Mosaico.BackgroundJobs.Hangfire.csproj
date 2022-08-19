@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mosaico.BackgroundJobs.Base\Mosaico.BackgroundJobs.Base.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Hangfire.AspNetCore" Version="1.7.28" />
+      <PackageReference Include="HangFire.Autofac" Version="2.3.1" />
+      <PackageReference Include="Hangfire.Dashboard.Basic.Authentication" Version="5.0.0" />
+      <PackageReference Include="Hangfire.SqlServer" Version="1.7.28" />
+    </ItemGroup>
+
+</Project>

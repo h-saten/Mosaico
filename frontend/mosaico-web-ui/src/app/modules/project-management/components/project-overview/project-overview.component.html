@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-12 col-md-8 col-lg-9">
+
+      <div class="card shadow-sm description-sales-features-card">
+        <div class="card-body">
+          <div class="d-block d-md-none">
+            <app-right-site [variant]="'under-description'"></app-right-site>
+          </div>
+
+          <div class="row sales-features-card">
+              <div class="col-12 col-lg-6">
+                  <app-sales-info></app-sales-info>
+              </div>
+              <div class="col-12 col-lg-6 features-card">
+                  <app-project-features></app-project-features>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm tokenomics-card">
+          <div class="card-header">
+            <h3 class="card-title">{{'PROJECT_OVERVIEW.TOKENOMICS.TITLE'|translate}}</h3>
+            <a class="card-link" [href]="'PROJECT_OVERVIEW.LINKS.TOKENOMICS'| translate" target="_blank"><i role="button" class="fas fa-info-circle"></i></a>
+          </div>
+          <div class="card-body">
+            <app-project-tokenomics></app-project-tokenomics>
+          </div>
+      </div>
+
+    </div>
+
+    <div class="d-none d-md-block d-lg-block col-12 col-md-4 col-lg-3">
+      <app-right-site [variant]="'right-side'"></app-right-site>
+    </div>
+
+    <div class="col-12">
+        <div class="card shadow-sm stages-card">
+            <div class="card-header"
+            >
+                <h3 class="card-title">{{'PROJECT_OVERVIEW.STAGES.TITLE'|translate}}</h3>
+                <a class="card-link" [href]="'PROJECT_OVERVIEW.LINKS.STAGES'| translate" target="_blank"><i role="button" class="fas fa-info-circle"></i></a>
+                <div class="card-toolbar" *ngIf="canEdit">
+                    <button type="button" class="btn btn-sm btn-active-light"
+                        routerLink="settings/campaign">
+                        {{'PROJECT_OVERVIEW.ACTIONS.EDIT'|translate}}
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <app-project-stages></app-project-stages>
+            </div>
+        </div>
+    </div>
+</div>

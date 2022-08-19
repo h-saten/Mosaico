@@ -1,0 +1,114 @@
+<ng-container *ngIf="items && items.length > 0">
+    <div class="pt-3 pb-8">
+        <swiper #swiperRef slidesPerView="auto" [spaceBetween]="16">
+            <ng-template swiperSlide *ngFor="let i of items">
+                <div class="staking-panel-active-card mt-3">
+                    <div class="d-flex staking-active-header">
+                        <img [attr.src]="i.token.logoUrl" class="vector-icon" alt="icon vector">
+                        <div class="staking-active-title ps-5">
+                            <p>{{i.token.name}}</p>
+                            <p>{{i.token.symbol}}</p>
+                        </div>
+                    </div>
+                    <div class="pt-9">
+                        <p class="staking-active-info-title">{{'WALLET_STAKING.PANEL.ACTIVE.PAID_WALLET' | translate}}</p>
+                        <ng-container *ngIf="i.walletType === 'MOSAICO_WALLET'">
+                            <div class="d-flex staking-active-info-description">
+                                <img src="/assets/media/logos/mosaico_sygnet.png" alt="icon money"  style="height: 15px"> 
+                                <p></p>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="i.walletType === 'METAMASK'">
+                            <div class="d-flex staking-active-info-description">
+                                <img src="/assets/media/icons/metamask.svg" alt="icon money"  style="height: 15px">
+                                <p>{{i.wallet|addressType}}</p>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="pt-3">
+                        <p class="staking-active-info-title">{{'WALLET_STAKING.PANEL.ACTIVE.TITLE.NEXT_REWARD' | translate}}</p>
+                        <div class="d-flex pb-5 staking-active-info-date">
+                            <div class="date-details">
+                                <div>{{getDaysLeft(i)}}</div>
+                                <p class="mt-2 text-center">Day</p>
+                            </div>
+                            <span class="green-dots">:</span>
+                            <div class="date-details">
+                                <div>{{getHoursLeft(i)}}</div>
+                                <p class="mt-2 text-center">Hours</p>
+                            </div>
+                            <span class="green-dots">:</span>
+                            <div class="date-details">
+                                <div>{{getMinutesLeft(i)}}</div>
+                                <p class="mt-2 text-center">Minutes</p>
+                            </div>
+                            <span class="green-dots">:</span>
+                            <div class="date-details">
+                                <div>{{getSecondsLeft(i)}}</div>
+                                <p class="mt-2 text-center">Seconds</p>
+                            </div>
+                        </div>
+                        <p class="staking-active-info-title">{{'WALLET_STAKING.PANEL.ACTIVE.TITLE.ESTIMATED_REWARD' | translate}}</p>
+                        <div class="d-flex staking-active-info-description align-items-center" *ngIf="i.estimatedRewardInUSD >= 0">
+                            <img src="/assets/media/misc/pouch.png" alt="icon pouch"> 
+                            <p>{{i.estimatedRewardInUSD|number: '1.0-6'}} USDT</p>
+                        </div>
+                    </div>
+                    <div class="pt-9">
+                        <p class="staking-active-info-title">{{'WALLET_STAKING.PANEL.ACTIVE.TITLE.STAKED_VALUE' | translate}}</p>
+                        <div class="d-flex staking-active-info-description">
+                            <img src="/assets/media/misc/money.png" alt="icon money"  style="height: 15px"> 
+                            <p>{{i.balance|number: '1.0-6'}} {{i.token.symbol}}</p>
+                        </div>
+                    </div>
+                    <div class="pt-9" *ngIf="i.estimatedAPR > 0">
+                        <p class="staking-active-info-title">APR</p>
+                        <!-- <div class="d-flex staking-active-info-description">
+                            <img src="/assets/media/misc/coin.png" alt="icon coin"> 
+                            <p>56.98 KND</p>
+                            <p>26.98 USD</p>
+                        </div> -->
+                        <div class="d-flex staking-active-info-description pt-3">
+                            <img src="/assets/media/misc/percent.png" alt="icon percent" style="height: 15px"> 
+                            <p>{{i.estimatedAPR | number: '1.0-2'}}</p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <!-- <div class="py-9">
+                        <p class="staking-active-info-title">Staked period</p>
+                        <div class="d-flex staking-active-info-description">
+                            <img src="/assets/media/misc/hourglass.png"> 
+                            <p>6 Months</p>
+                            <p></p>
+                        </div>
+                    </div> -->
+                    <!-- <div class="d-flex pb-9">
+                        <div class="blue-circle"></div>
+                        <div class="blue-line"></div>
+                        <div class="blue-circle"></div>
+                        <div class="blue-line not-claimed"></div>
+                        <div class="blue-circle not-claimed"></div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <button class="btn btn-mosaico-primary mt-5 w-100" (click)="withdrawModal.open(i)">{{'WALLET_STAKING.PANEL.ACTIVE.ACTIONS.WITHDRAW' | translate}}</button>
+
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <button class="btn btn-mosaico-primary-outline mt-5 w-100" [disabled]="i.walletType === 'METAMASK'" (click)="claimModal.open(i)">{{'WALLET_STAKING.PANEL.ACTIVE.ACTIONS.CLAIM_TOKENS' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </swiper>
+    </div>
+    <div class="staking-panel-active-view-all">
+        {{'WALLET_STAKING.VIEW_ALL' | translate}}
+    </div>
+</ng-container>
+
+<div class="d-flex justify-content-center flex-wrap pt-3 pb-8" *ngIf="!items || items.length === 0">
+    <span class="text-muted fs-4">{{'WALLET_STAKING.PANEL.ACTIVE.NO_TOKENS' | translate}}</span>
+</div>
+<app-withdraw-modal #withdrawModal></app-withdraw-modal>
+<app-claim-modal #claimModal></app-claim-modal>

@@ -1,0 +1,95 @@
+name: "Deploy application to K8S"
+description: "Deploy application to K8S"
+
+inputs:
+  NAMESPACE: 
+    required: true
+    description: "k8s namespace to operatate within"
+  CLUSTER_NAME:
+    required: true
+    description: "Name of the k8s cluster"
+  CLUSTER_RESOURCE_GROUP:
+    required: true
+    description: "Name of the resource group where k8s cluster is deployed"
+  APP_SETTINGS_FOLDER_PATH:
+    required: true
+    description: "Folder where initial appsettings are located (within the repo)"
+  APP_VERSION:
+    required: true
+    description: "Current version of the application which is getting deployed"
+  APP_SETTINGS_CONFIG_NAME:
+    required: true
+    description: "ConfigMap name which will have appsettings from APP_SETTINGS_FOLDER_PATH"
+  AZURE_CREDENTIALS:
+    required: true
+    description: "Azure Credentials to connect to"
+  APP_YAML:
+    required: true
+    description: "Path to the yaml file with k8s configuration of the app"
+  KEY_VAULT_CLIENT_SECRET:
+    required: true
+    description: "Client Secret of a service principal which will be placed in app settings"
+  IMAGE_NAME:
+    required: true
+    description: "Name of the image to apply to the container without a tag (avoid 'latest')"
+  DEPLOYMENT_NAME:
+    required: true
+    description: "Name of the deployment in app.yaml"
+
+runs:
+  using: "composite"
+  steps:
+
+  - name: Install Kubectl
+    uses: azure/setup-kubectl@v2.0
+    id: install_kubectl
+
+  - name: Update Key Vault Secret
+    uses: bluwy/substitute-string-action@v1
+    id: update_key_vault_secret
+    with:
+      _input-file: "${{inputs.APP_SETTINGS_FOLDER_PATH}}/appsettings.json"
+      _format-key: '{{key}}'
+      KEY_VAULT_CLIENT_SECRET: ${{inputs.KEY_VAULT_CLIENT_SECRET}}
+      _output-file: "${{inputs.APP_SETTINGS_FOLDER_PATH}}/appsettings.json"
+
+  - uses: azure/aks-set-context@v1
+    name: Authorize in Kubernetes
+    id: authorize_aks
+    with:
+      creds: '${{ inputs.AZURE_CREDENTIALS }}'
+      cluster-name: ${{ inputs.CLUSTER_NAME }}
+      resource-group: ${{ inputs.CLUSTER_RESOURCE_GROUP }}
+
+  - name: Create Or Update Namespace
+    id: create_update_namespace
+    shell: bash
+    run: |
+      kubectl create namespace ${{ inputs.NAMESPACE }} --dry-run=client -o json | kubectl apply -f -
+
+  - name: Create Or Update ConfigMap
+    id: create_update_configmap
+    shell: bash
+    run: |
+      kubectl create configmap ${{inputs.APP_SETTINGS_CONFIG_NAME}} -n ${{inputs.NAMESPACE}} --from-file=${{inputs.APP_SETTINGS_FOLDER_PATH}} --dry-run=client -o yaml | kubectl apply -n ${{inputs.NAMESPACE}} -f -
+  
+  - name: Create backup copy of configmap
+    id: create_backup_copy
+    shell: bash
+    run: |
+      kubectl create configmap ${{inputs.APP_SETTINGS_CONFIG_NAME}}-${{inputs.APP_VERSION}} -n ${{inputs.NAMESPACE}} --from-file=${{inputs.APP_SETTINGS_FOLDER_PATH}} --dry-run=client -o yaml | kubectl apply -n ${{inputs.NAMESPACE}} -f -
+
+  - name: Deploy Application
+    id: deploy_app
+    uses: azure/k8s-deploy@v1
+    with:
+      manifests: |
+        ${{inputs.APP_YAML}}
+      namespace: ${{inputs.NAMESPACE}}
+      images: '${{inputs.IMAGE_NAME}}:latest' #<- change from ${{inputs.APP_VERSION}} to latest
+
+  - name: Rollout
+    id: rollout
+    shell: bash
+    run: |
+      kubectl rollout restart ${{inputs.DEPLOYMENT_NAME}} -n ${{inputs.NAMESPACE}}

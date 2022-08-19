@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-between project-header-container">
+    <div class="d-flex align-items-center">
+        <ng-container *ngIf="project">
+            <ng-container [ngSwitch]="project.marketplaceStatus">
+                <ng-container *ngSwitchCase="projectStatus.PublicSale">
+                    <ng-container *ngTemplateOutlet="activeSaleTmp; context: {$implicit: project}"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="projectStatus.PrivateSale">
+                    <ng-container *ngTemplateOutlet="activeSaleTmp; context: {$implicit: project}"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="projectStatus.PreSale">
+                    <ng-container *ngTemplateOutlet="activeSaleTmp; context: {$implicit: project}"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="projectStatus.Upcoming">
+                    <ng-container *ngTemplateOutlet="upcomingTmp; context: {$implicit: project}"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <ng-container *ngTemplateOutlet="otherStatusTmp; context: {$implicit: project}"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>        
+    </div>
+    <div>
+        <img src="/assets/media/marketplace/like-action.png" alt="like-action" *ngIf="project.likedByUser === true">
+        <img src="/assets/media/marketplace/like-reg.png" role="button" (click)="like()" alt="like-reg" *ngIf="project.likedByUser === false">
+        <span class="project-header-text ms-3">{{project.likeCount}}</span>
+    </div>
+</div>
+<ng-template #activeSaleTmp let-project>
+    <img src="/assets/media/marketplace/star.png" alt="star icon" *ngIf="project.isFeatured" class="star-icon"/>
+    <span class="project-header-title d-none d-lg-block" *ngIf="project.isFeatured && isFirst">{{'PROJECT.FEATURED'|translate}}</span>
+    <button class="btn btn-sm project-header-btn project-header-text">{{('MARKETPLACE.' + project.marketplaceStatus)|translate}}</button>
+    <img src="/assets/media/marketplace/fire.png" alt="fire" class="fire-icon"/>
+</ng-template>
+<ng-template #upcomingTmp let-project>
+    <button class="btn btn-sm project-header-btn project-header-text unpcoming-btn">{{('MARKETPLACE.' + project.marketplaceStatus)|translate}}</button>
+    <img src="/assets/media/marketplace/clock-line.png" alt="clock-line" class="clock-line-icon">
+    <span *ngIf="project.activeStage?.startDate" class="project-header-text ms-2">{{project.activeStage?.startDate| date : 'dd.MM.yyyy'}}</span>
+</ng-template>
+<ng-template #otherStatusTmp let-project>
+    <button class="btn btn-sm project-header-btn project-header-text closed-btn">{{('MARKETPLACE.' + project.marketplaceStatus)|translate}}</button>
+</ng-template>

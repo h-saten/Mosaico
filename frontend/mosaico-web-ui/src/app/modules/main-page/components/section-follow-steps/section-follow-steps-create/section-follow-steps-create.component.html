@@ -1,0 +1,92 @@
+<div class="follow-steps-conatiner flex-column flex-lg-row">
+    <div class="follow-steps-cards-wrapper d-none d-sm-flex">
+        <div class="d-flex flex-column">
+            <ng-container *ngFor="let step of createSteps | slice:0:3; last as last">
+                <div class="follow-steps-card-wrapper d-flex flex-column align-items-center">
+                    <div class="follow-steps-card d-flex d-lg-block left-side">
+                        <img class="step-icon" [src]="step.icon" alt="step-icon">
+                        <div>
+                            <p class="step-title">{{ step.title | translate }}</p>
+                            <p class="step-description">{{ step.description | translate }}</p>
+                            <a class="d-flex cursor-pointer" [routerLink]="step.link" [fragment]="step.currenStep < 3 ? 'contact-our-team' : null">
+                                <p class="steps-card-action">{{ step.action | translate }}</p>
+                                <img src="/assets/media/misc/chevron-down-line.png" alt="arrow-right" class="arrow-right">
+                            </a>
+                        </div>
+                        <div class="d-none d-lg-flex card-number">{{ step.currenStep }}</div>
+                    </div>
+                    <div class="d-none d-lg-flex after-card-dots" [class.arrow-down]="!last">
+                        <ng-container *ngFor="let dot of dotsSmallArray | slice:0:3">
+                            <div class="dots"></div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="d-none d-lg-flex justify-content-between flex-row bottom-dots">
+                <ng-container *ngFor="let dot of dotsSmallArray">
+                    <div class="dots"></div>
+                </ng-container>
+            </div>
+        </div>
+    
+        <div class="d-none d-lg-flex justify-content-between flex-column px-19">
+            <ng-container *ngFor="let dot of dotsArray">
+                <div class="dots"></div>
+            </ng-container>
+        </div>
+
+    </div>
+
+    <div class="follow-steps-cards-wrapper d-none d-sm-flex flex-column">
+        <div class="d-none d-lg-flex justify-content-between flex-row top-dots">
+            <ng-container *ngFor="let dot of dotsSmallArray">
+                <div class="dots"></div>
+            </ng-container> 
+        </div>
+        <div>
+            <ng-container *ngFor="let step of createSteps | slice:3:6; first as first">
+                <div class="follow-steps-card-wrapper d-flex flex-column align-items-center">
+                    <div class="d-none d-lg-flex after-card-dots card-arrow-donw" [class.top-arrow]="first">
+                        <ng-container *ngFor="let dot of dotsSmallArray | slice:0:3">
+                            <div class="dots"></div>
+                        </ng-container>
+                    </div>
+                    <div class="follow-steps-card d-flex d-lg-block right-side">
+                        <img class="step-icon" [src]="step.icon" alt="step-icon">
+                        <div>
+                            <p class="step-title">{{ step.title | translate }}</p>
+                            <p class="step-description">{{ step.description | translate }}</p>
+                            <a class="d-flex cursor-pointer" [routerLink]="step.link" [fragment]="step.currenStep < 3 ? 'contact-our-team' : null">
+                                <p class="steps-card-action">{{ step.action | translate }}</p>
+                                <img src="/assets/media/misc/chevron-down-line.png" alt="arrow-right" class="arrow-right">
+                            </a>
+                        </div>
+                        <div class="d-none d-lg-flex card-number">{{ step.currenStep }}</div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="follow-steps-cards-wrapper d-block d-sm-none">
+        <div>
+            <swiper [config]="config">
+              <ng-template swiperSlide *ngFor="let item of createSteps">
+                <div class="shadow-sm step-card">
+                    <img [src]="item.icon" alt="step-icon" class="step-icon">
+                    <div>
+                        <p class="step-title">{{ item.title | translate }}</p>
+                        <p class="step-description">{{ item.description | translate }}</p>
+                        <div class="d-flex justify-content-between">
+                            <a class="d-flex" [routerLink]="item.link" [fragment]="item.currenStep < 3 ? 'contact-our-team' : null">
+                                <p class="steps-card-action">{{ item.action | translate }}</p>
+                                <img src="/assets/media/misc/chevron-down-line.png" alt="arrow-right" class="arrow-right">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+              </ng-template>
+            </swiper>
+        </div>
+    </div>
+</div>

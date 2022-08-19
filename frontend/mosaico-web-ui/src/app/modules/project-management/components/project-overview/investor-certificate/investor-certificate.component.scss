@@ -1,0 +1,37 @@
+.card {
+    padding: 16px !important;
+
+    margin-top: 4px;
+
+    .card-body {
+        &:hover {
+            cursor: pointer;
+        }
+        .card-icon {
+          i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background-color: #494642;
+            font-size: 18px;
+            color: white;
+          }
+        }
+        .card-icon-title {
+            color: #494642;
+            font-size: 14px;
+            line-height: 24px;
+            font-weight: 500;
+        }
+        .card-icon-action {
+            i {
+                color: #C0BEBE;
+                font-size: 18px;
+            }
+        }
+    }
+}

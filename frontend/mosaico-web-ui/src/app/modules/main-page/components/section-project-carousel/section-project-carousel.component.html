@@ -1,0 +1,20 @@
+<div class="section-project-carousel-container">
+    <app-section-intro></app-section-intro>
+    <div class="project-carousel-content">
+        <div class="project-carousel-wrapper">
+            <swiper [config]="config" (slideChange)="onSlideChange()">
+                <ng-template swiperSlide *ngFor="let project of projects">
+                    <app-featured-project [isOverlapOpen]="overlappedProjectId === project.id" [project]="project"
+                        [isProjectItem]="true" [isLandingPage]="true" (showProjectCard)="onShowProjectCard($event)">
+                    </app-featured-project>
+                </ng-template>
+            </swiper>
+        </div>
+
+        <div class="d-block d-sm-none mt-btn-invest position-relative" [class.showButton]="!overlappedProjectId">
+            <div class="project-button-invest">
+                <a [routerLink]="['/', 'projects']" class="btn btn-invest shadow">{{'INTRO.b_invest' | translate}}</a>
+            </div>
+        </div>
+    </div>
+</div>

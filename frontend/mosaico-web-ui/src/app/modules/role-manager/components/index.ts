@@ -1,0 +1,1 @@
+export * from "./restricted-area/restricted-area.component";

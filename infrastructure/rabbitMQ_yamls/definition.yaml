@@ -1,0 +1,17 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  labels:
+    app: rabbitmq
+  namespace: rabbitmq
+
+  name: rabbitmq
+spec:
+  service:
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    type: LoadBalancer
+  replicas: 1
+  persistence:
+    storageClassName: default
+    storage: 8Gi

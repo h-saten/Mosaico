@@ -1,0 +1,26 @@
+<div class="section-wallet-container">
+    <div class="section-wallet-header">
+        <ul>
+            <swiper [config]="config">
+                <ng-template swiperSlide *ngFor="let wallet of walletContent; index as index">
+                    <li (click)="changeTab(index)"><a [class.active]="index === currentHeader">{{ wallet.title | translate }}</a></li>
+                </ng-template>
+            </swiper>
+        </ul>
+    </div>
+
+    <ng-container *ngFor="let wallet of walletContent; index as index">
+        <div class="section-wallet-item-container" *ngIf="currentHeader === index">
+            <img [src]="wallet.img" alt="landing-page-icon" class="landing-page-icon">
+            <div class="section-wallet-item-wrapper">
+                <p class="section-wallet-item-title">{{ wallet.title | translate }}</p>
+                <p class="section-wallet-item-description">{{ wallet.description | translate }}</p>
+                <div class="d-flex gap-7 justify-content-center justify-content-lg-start">
+                    <a [href]="[wallet.link | translate]" target="_blank" class="btn section-wallet-item-btn">{{ wallet.action | translate }}</a>
+                    <a *ngIf="wallet.action_2" [routerLink]="[wallet.link_2]" class="btn section-wallet-item-btn">{{ wallet.action_2 | translate }}</a>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    
+</div>

@@ -1,0 +1,63 @@
+<div class="card mx-auto position-relative">
+  <div class="d-flex flex-row justify-content-center justify-content-lg-end" *ngIf="canEdit === true">
+      <button
+        class="btn btn-icon btn-sm me-3"
+        (click)="openModalEdit(row.id)">
+        <i class="far fa-edit"></i>
+      </button>
+      <button class="btn btn-icon btn-sm" (click)="confirmDeleteDialog.open(row.id)">
+        <i class="far fa-trash-alt"></i>
+      </button>
+  </div>
+
+  <div class="card-body">
+    <div class="div-img-logo">
+      <figure>
+        <img *ngIf="row.logoUrl; else noLogo"
+          class="img-fluid img-logo"
+          [src]="row.logoUrl"
+          alt="" />
+        <ng-template #noLogo>
+          <img
+          class="img-fluid img-logo"
+          src="/assets/media/tokenpage/benefit-img-default.svg"
+          alt="" />
+        </ng-template>
+      </figure>
+    </div>
+
+    <h4 class="title">{{ title }} </h4>
+
+    <div class="text-left">
+      <ul>
+        <ng-container *ngFor="let item of benefits">
+          <li class="h6" *ngIf="item">
+            {{ item }}
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="card-footer text-center">
+    <h3 class="price">
+      {{row.tokenAmount.toLocaleString()}} {{tokenSymbol}}
+    </h3>
+
+    <div class="div-button-invest">
+      <button [routerLink]="['/project', projectId, projectPathEnum.Fund]" [queryParams]="{amount: row.tokenAmount}" [disabled]="!canInvest" appBaseColors [button]="true" class="btn mb-3 button-invest">
+        {{'PROJECT.packages.btn.select' | translate}}
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<lib-confirm-dialog
+    #confirmDeleteDialog
+    title="{{'AUTH.GENERAL.DELETE_ACCOUNT.TITLE' | translate }}"
+    message="{{'AUTH_GENERAL_DELETE_ACCOUNT_QUESTION' | translate }}"
+    [usePayload]="true"
+    (closed)="delete($event)">
+</lib-confirm-dialog>

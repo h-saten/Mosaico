@@ -1,0 +1,18 @@
+.header-row {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    border-bottom: 1px solid #DFE0EB;
+}
+
+.card-header {
+    padding-left: 0;
+
+    .card-title {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 32px;
+        color: #494642;
+    }
+}

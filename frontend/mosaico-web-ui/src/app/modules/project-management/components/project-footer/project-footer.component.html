@@ -1,0 +1,53 @@
+<div class="card footer-project shadow-sm mt-3" *ngIf="company">
+  <div class="card-body">
+    <div class="d-flex flex-column justify-content-between">
+
+      <div class="row">
+
+        <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-my-1 text-start">
+          <a id="contact-company-project" [routerLink]="['/', 'dao', company.id]" title="{{company.companyName}}">
+            <div class="symbol symbol-company symbol-circle">
+              <div class="symbol-label" *ngIf="company.logoUrl && company.logoUrl.length > 0"
+                style="background-image:url({{company.logoUrl}})">
+              </div>
+              <div class="symbol-label fs-4 fw-bold text-dark" *ngIf="!company.logoUrl || company.logoUrl.length == 0">
+                {{company.companyName | slice: 0:1}}
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-5 col-lg-5 col-xl-my-2 text-start">
+          <div class="text-our-office">
+            <p class="text-title">{{company.companyName}}</p>
+            <p>{{company.street}}</p>
+            <p>{{company.postalCode}}</p>
+            <p>VAT: {{company.vatId}}</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-5 col-lg-5 col-xl-my-3 text-start">
+          <div class="text-find-us">
+            <p class="text-title">{{'FOOTER.CONTACTS' | translate}}</p>
+            <p>
+              <img src="/assets/media/tokenpage/phone-line.svg" alt="icon phone" class="icon">
+              {{company?.phoneNumber}}
+            </p>
+            <p>
+              <img src="/assets/media/tokenpage/mail-line.svg" alt="icon mail" class="icon">
+              {{company?.email}}</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-my-7 text-start" *ngIf="company?.companyDescription">
+          <div class="text-description">
+            <p class="text-title">{{'FOOTER.DESCRIPTION' | translate}}</p>
+            <p>{{company?.companyDescription}}</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

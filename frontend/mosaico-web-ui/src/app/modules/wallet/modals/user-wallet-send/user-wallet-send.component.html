@@ -1,0 +1,100 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{'MODALS.WALLET_SEND.TITLE'|translate}}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container" *ngIf="showTransactionSucceeded === false && (deploying$|async) === false">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+                </div>
+            </div>
+            <ng-container *ngIf="!isLoading && !showTransactionSucceeded && (deploying$|async) === false">
+                <div class="row" [formGroup]="form" class="form mosaico-form">
+                    <div class="form-group mb-5">
+                        <label class="form-label">{{'MODALS.WALLET_SEND.FORM.TOKEN.LABEL'|translate}}</label>
+                        <ng-select appAutofocus class="mosaico-select" [items]="tokens" [searchable]="true" bindLabel="symbol" bindValue="id" formControlName="tokenId" placeholder="{{'MODALS.WALLET_SEND.FORM.TOKEN.PLACEHOLDER'|translate}}">
+                            <ng-template ng-label-tmp let-item="item">
+                                <div>
+                                    <div class="symbol symbol-25px symbol-circle me-3">
+                                        <img [src]="item.logoUrl" alt=""/>
+                                    </div>
+                                    <span>{{item.name|translate}} <small class="text-muted">({{item.symbol}})</small></span>
+                                </div>
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                <div>
+                                    <div class="symbol symbol-25px symbol-circle me-3">
+                                        <img [src]="item.logoUrl" alt=""/>
+                                    </div>
+                                    <span>{{item.name|translate}} <small class="text-muted">({{item.symbol}})</small></span>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                        <div class="invalid-feedback" *ngIf="isDirty('tokenId') && hasErrors('tokenId')">{{'MODALS.WALLET_SEND.FORM.TOKEN.INVALID'|translate}}</div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label class="form-label">{{'MODALS.WALLET_SEND.FORM.ADDRESS.LABEL'|translate}}</label>
+                        <input type="text" name="address" formControlName="address" [ngClass]="{ 'is-invalid': isDirty('address') && hasErrors('address') }" class="form-control" placeholder="{{'MODALS.WALLET_SEND.FORM.ADDRESS.PLACEHOLDER'|translate}}" />
+                        <div class="invalid-feedback" *ngIf="isDirty('address') && hasErrors('address')">{{'MODALS.WALLET_SEND.FORM.ADDRESS.INVALID'|translate}}</div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label class="form-label">{{'MODALS.WALLET_SEND.FORM.AMOUNT.LABEL'|translate}}</label>
+                        <div class="w-100">
+                            <p-inputNumber locale="en-US" formControlName="amount" name="amount" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="6" styleClass="w-100" class="w-100 d-block" inputStyleClass="form-control w-100" placeholder="{{'MODALS.WALLET_SEND.FORM.AMOUNT.PLACEHOLDER'|translate}}">
+                            </p-inputNumber>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="isDirty('amount') && hasErrors('amount')">{{'MODALS.WALLET_SEND.FORM.AMOUNT.INVALID'|translate}}</div>
+                    </div>
+                    <div class="form-group mb-5" *ngIf="selectedToken">
+                        <div class="row">
+                            <div class="col-6 fw-bold text-mosaico-secondary">
+                                {{'MODALS.WALLET_SEND.FORM.CURRENT_BALANCE'|translate}}:
+                            </div>
+                            <div class="col-6 fw-bold text-mosaico-secondary">
+                                <p class="text-end">{{selectedToken?.balance | number : '1.0-6': 'en'}} {{selectedToken?.symbol}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isLoading && showTransactionSucceeded">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <img class="img-fluid" style="max-width: 250px" src="/assets/media/animations/success-payment.gif" />
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!isLoading && (deploying$|async) === true">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <img class="img-fluid" style="max-width: 150px" src="/assets/media/animations/in-progress.gif" />
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="modal-footer" *ngIf="!isLoading">
+            <div class="row w-100">
+                <div class="col-12 w-100 px-0">
+                    <app-button-save *ngIf="!showTransactionSucceeded"
+                        [classes]="'btn btn-primary btn-mosaico-primary w-100'"
+                        [formInvalid]="form.invalid"
+                        [showSpinner]="(deploying$|async) === true"
+                        [buttonText]="'MODALS.WALLET_SEND.ACTIONS.SEND' | translate"
+                        (clicked)="submit()"
+                    ></app-button-save>
+                    <button *ngIf="showTransactionSucceeded" class="btn btn-primary btn-mosaico-primary w-100" (click)="modal.close(true)">{{'MODALS.WALLET_SEND.ACTIONS.CLOSE' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-xl-stretch mb5 mb-xl-8">
+            <!-- begin::Header -->
+            <div class="card-header align-items-center border-0 mt-4">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="fw-bolder text-dark">{{'MENU_ADMIN.DAO' | translate}}</span>
+                </h3>
+            </div>
+            <!-- end::Header -->
+            <!-- begin::Body -->
+            <div class="card-body pt-3">
+                <!-- begin::Item -->
+                <div class="d-flex align-items-sm-center mb-7" *ngFor="let ver of verifications">
+                    <!-- begin::Symbol -->
+                    <div class="symbol symbol-60px symbol-2by3 me-4">
+                        <img class="symbol-label" [src]="'/assets/media/svg/brand-logos/plurk.svg'" />
+                    </div>
+                    <!-- end::Symbol -->
+                    <!-- begin::Content -->
+                    <div class="d-flex flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
+                        <!-- begin::Title -->
+                        
+                        <div class="flex-grow-1 my-lg-0 my-2 me-2">
+                            <a routerLink="/dao/{{ver.companyId}}"
+                            class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                            {{ver.companyName}}
+                                
+                            </a>
+                            
+                            <a href="{{ver.companyRegistrationUrl}}" class="text-muted fw-bold d-block pt-1">
+                                Company registration</a>
+                                <a href="{{ver.companyAddressUrl}}" class="text-muted fw-bold d-block pt-1">
+                                    Company address</a>
+
+                        </div>
+                        <div class="menu-item me-lg-1">
+                            <a class="menu-link py-3 bg-success">
+                                <span (click)="approveCompany(ver.companyId)" class="menu-title text-light">Approve</span>
+                            </a>
+                          </div>
+                        <!-- end::Title -->
+                    </div>
+                    <!-- end::Content -->
+                </div>
+                <!-- end::Item -->
+            </div>
+            <!-- end::Body -->
+        </div>
+    </div>
+</div>
+

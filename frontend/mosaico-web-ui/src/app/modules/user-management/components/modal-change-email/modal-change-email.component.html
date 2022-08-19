@@ -1,0 +1,72 @@
+<ng-container *ngIf="!isModal">
+<div class="card card-xl-stretch col-xxl-8 offset-lg-2">
+  <div class="card-body pt-3">
+    <div class="row align-items-center profile-header">
+      <div class="flex-column">
+        <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+          <div class="form-group mb-5">
+            <label class="form-label">{{'USERPROFILE.key.email' | translate}}</label>
+            <input type="text" name="email" formControlName="email"
+              [ngClass]="{ 'is-invalid': isDirty('email') && hasErrors('email') }" class="form-control"
+              placeholder="{{'USERPROFILE.key.email.placeholder' | translate}}" />
+            <div class="invalid-feedback" *ngIf="isDirty('email') && hasErrors('email')">{{'EDIT_PROFILE.invalid.email' | translate}}</div>
+          </div>
+          <div class="form-group mb-5">
+            <label class="form-label">{{'AUTH.INPUT.PASSWORD' | translate}}</label>
+            <input type="password" name="password" formControlName="password"
+              [ngClass]="{ 'is-invalid': isDirty('password') && hasErrors('password') }"
+              class="form-control" placeholder="{{'USERPROFILE.key.current.password.placeholder' | translate}}" />
+            <div class="invalid-feedback" *ngIf="isDirty('password') && hasErrors('password')">{{'USERPROFILE.key.current.password.placeholder' | translate}}</div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer ps-0 pb-0">
+    <button type="button" [disabled]="form.disabled" (click)="save()" class="btn btn-mosaico-primary me-5">
+      {{'BUTTONS.btn.save' | translate}}
+    </button>
+  </div>
+</div>
+</ng-container>
+<ng-container *ngIf="isModal">
+  <div class="mosaico-modal">
+    <div class="modal-header">
+      <h5 class="modal-title">{{'USER_PROFILE.MODALS.CHANGE_EMAIL.TITLE' | translate}}</h5>
+      <div class="close-button-container">
+        <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="changeCanceled.emit()" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="flex-column">
+        <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+          <div class="form-group mb-5">
+            <label class="form-label">{{'USERPROFILE.key.email' | translate}}</label>
+            <input type="text" name="email" formControlName="email"
+              [ngClass]="{ 'is-invalid': isDirty('email') && hasErrors('email') }" class="form-control"
+              placeholder="{{'USERPROFILE.key.email.placeholder' | translate}}" />
+            <div class="invalid-feedback" *ngIf="isDirty('email') && hasErrors('email')">{{'EDIT_PROFILE.invalid.email' | translate}}</div>
+          </div>
+          <div class="form-group mb-5">
+            <label class="form-label">{{'AUTH.INPUT.PASSWORD' | translate}}</label>
+            <input type="password" name="password" formControlName="password"
+              [ngClass]="{ 'is-invalid': isDirty('password') && hasErrors('password') }"
+              class="form-control" placeholder="{{'USERPROFILE.key.current.password.placeholder' | translate}}" />
+            <div class="invalid-feedback" *ngIf="isDirty('password') && hasErrors('password')">{{'USERPROFILE.key.current.password.placeholder' | translate}}</div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="row">
+        <div class="col-12 w-100">
+          <button type="button" [disabled]="form.disabled" (click)="save()" class="btn btn-mosaico-primary me-5">
+            {{'BUTTONS.btn.save' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

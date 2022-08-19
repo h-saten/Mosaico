@@ -1,0 +1,72 @@
+<div class="modal-content">
+
+  <form class="mosaico-form" [formGroup]="form" novalidate="novalidate">
+
+    <div *ngIf="currentFormMode === FormModeEnum.Add" class="d-flex align-items-center justify-content-between pt-7 px-7">
+      <div></div>
+      <div class="article-title">Add new article</div>
+      <div class="btn btn-icon btn-sm btn-active-light-primary btn-close ms-2" (click)="activeModal.dismiss(false)" aria-label="Close"></div>
+    </div>
+
+    <div class="px-5 pt-5 px-lg-7 pt-lg-7 pb-0 position-relative">
+      <div *ngIf="currentFormMode === FormModeEnum.Edit" class="btn btn-icon btn-sm btn-active-light-primary btn-close close-modal ms-2" (click)="activeModal.dismiss(false)" aria-label="Close">
+      </div>
+
+      <div class="d-flex align-items-center flex-sm-row flex-column pt-7 pt-sm-0">
+        <div class="form-group position-relative w-100 w-sm-auto">
+          <ng-container *ngIf="currentFormMode === FormModeEnum.Add">
+            <label class="form-label">{{'PRESS_ROOM.IMG_VISIBLE' | translate}}</label>
+            <br>
+          </ng-container> 
+          <span>
+            <ng-container *ngIf="coverPictureUrl; else blankImageTempl;">
+              <img class="article-cover-picture" [class.article-add-img]="currentFormMode === FormModeEnum.Add" [src]="coverPictureUrl" alt="article cover" />
+            </ng-container>
+            <ng-template #blankImageTempl>
+              <input readonly placeholder="Add article image " class="article-cover-picture article-img-blank" [class.article-add-img]="currentFormMode === FormModeEnum.Add">
+            </ng-template>
+            <div inlineSVG="/assets/media/tokenpage/camera-line.svg" class="camera-icon" (click)="openCoverEditing()"></div>
+          </span>
+        </div>
+
+        <div class="form-group pt-5 pt-sm-0 ps-sm-7 ps-0 w-100 position-relative">
+          <label class="form-label">{{'PRESS_ROOM.TEXT_VISIBLE' | translate}}</label>
+          <br>
+          <textarea type="text" name="visibleText" rows="3" formControlName="visibleText"
+            [ngClass]="{ 'is-invalid': isDirty('visibleText') && hasErrors('visibleText') }"
+            class="form-control visible-textarea" (input)="textAreaChange()" placeholder="Add article name here"
+            maxlength="124"></textarea>
+          <span class="textarea-counter">{{textAreaCount}}/124</span>
+          <div class="invalid-feedback mt-0" *ngIf="isDirty('visibleText') && hasErrors('visibleText')">
+            {{'PRESS_ROOM.INCORRECT_TEXT_VISIBLE' | translate}}</div>
+        </div>
+      </div>
+
+      <div class="form-group py-lg-8 pt-sm-4 pb-sm-8 py-5">
+        <label class="form-label">{{'PRESS_ROOM.ARTICLE_LINK' | translate}}</label>
+        <br>
+        <input type="text" name="title" formControlName="link"
+          [ngClass]="{ 'is-invalid': isDirty('link') && hasErrors('link') }" class="form-control link-text" placeholder="Add link here" />
+        <div class="invalid-feedback" *ngIf="isDirty('link') && hasErrors('link')">
+          {{'PRESS_ROOM.INCORRECT_ARTICLE_LINK' | translate}}</div>
+      </div>
+
+    </div>
+
+    <div class="px-5 pb-5 px-lg-7 pb-lg-7">
+
+      <button type="button" class="btn-faq" aria-label="Close" [disabled]="form.disabled" (click)="save()"
+        appBaseColors [button]="true" [menu]="true">
+        {{'BUTTONS.btn.save' | translate}}
+      </button>
+
+      <button type="button" class="btn-faq btn-cancel ms-5" aria-label="Close" (click)="activeModal.dismiss(false)"
+        appBaseColors [textColor]="true" [button]="true">
+        {{'BUTTONS.btn.cancel' | translate}}
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

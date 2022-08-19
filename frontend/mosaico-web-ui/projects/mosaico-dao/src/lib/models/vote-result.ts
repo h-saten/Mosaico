@@ -1,0 +1,1 @@
+export type VoteResult = 'For' | 'Against' | 'Abstain';

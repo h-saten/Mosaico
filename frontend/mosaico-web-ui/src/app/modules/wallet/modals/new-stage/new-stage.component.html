@@ -1,0 +1,128 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title" *ngIf="!isEdit">New stage</h5>
+            <h5 class="modal-title" *ngIf="isEdit">Stage</h5>
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-5">
+                                    <label class="form-label required">Name</label>
+                                    <input type="string" name="name" formControlName="name" class="form-control"
+                                        [ngClass]="{ 'is-invalid': isDirty('name') && hasErrors('name') }"
+                                        placeholder="Enter the name of the stage" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('name') && hasErrors('name')">
+                                        Invalid name
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group mb-5">
+                                    <label
+                                        class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.MIN_PURCHASE.LABEL'|translate}}</label>
+                                    <input type="number" name="minimumPurchase"
+                                        formControlName="minimumPurchase"
+                                        [ngClass]="{ 'is-invalid': isDirty('minimumPurchase') && hasErrors('minimumPurchase') }"
+                                        class="form-control "
+                                        placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.MIN_PURCHASE.PLACEHOLDER'|translate}}" />
+                                    <div class="invalid-feedback"
+                                        *ngIf="isDirty('minimumPurchase') && hasErrors('minimumPurchase')">
+                                        {{'MODALS.CAMPAIGN_EDITOR.FORM.MIN_PURCHASE.ERROR'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group mb-5">
+                                    <label for="maximumPurchase"
+                                        class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.MAX_PURCHASE.LABEL'|translate}}</label>
+                                    <input type="number" name="maximumPurchase"
+                                        formControlName="maximumPurchase" class="form-control "
+                                        [ngClass]="{ 'is-invalid': isDirty('maximumPurchase') && hasErrors('maximumPurchase') }"
+                                        placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.MAX_PURCHASE.PLACEHOLDER'|translate}}" />
+                                    <div class="invalid-feedback"
+                                        *ngIf="isDirty('maximumPurchase') && hasErrors('maximumPurchase')">
+                                        {{'MODALS.CAMPAIGN_EDITOR.FORM.MAX_PURCHASE.ERROR'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group mb-5">
+                                    <label
+                                        class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.START_DATE.LABEL'|translate}}</label>
+                                    <p-calendar name="startDate" formControlName="startDate" [showTime]="true" [hourFormat]="'24'" [readonlyInput]="true"
+                                        inputId="startDate" [showIcon]="true" [styleClass]="'w-100'" [showButtonBar]="true"
+                                        [inputStyleClass]="'form-control'" [placeholder]="'MODALS.CAMPAIGN_EDITOR.FORM.START_DATE.PLACEHOLDER'|translate">
+                                    </p-calendar>
+                                    <!-- <input type="datetime-local" name="startDate" formControlName="startDate"
+                                        [ngClass]="{ 'is-invalid': isDirty('startDate') && hasErrors('startDate') }"
+                                        class="form-control "
+                                        placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.START_DATE.PLACEHOLDER'|translate}}" /> -->
+                                    <div class="invalid-feedback"
+                                     *ngIf="isDirty('startDate') && hasErrors('startDate')">
+                                        {{'MODALS.CAMPAIGN_EDITOR.FORM.START_DATE.ERROR'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group mb-5">
+                                    <label
+                                        class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.END_DATE.LABEL'|translate}}</label>
+                                    <p-calendar name="endDate" formControlName="endDate" [showTime]="true" [hourFormat]="'24'" [readonlyInput]="true"
+                                        inputId="endDate" [showIcon]="true" [styleClass]="'w-100'" [showButtonBar]="true"
+                                        [inputStyleClass]="'form-control'" [placeholder]="'MODALS.CAMPAIGN_EDITOR.FORM.END_DATE.PLACEHOLDER'|translate">
+                                    </p-calendar>
+                                    <!-- <input type="datetime-local" name="endDate" formControlName="endDate"
+                                        [ngClass]="{ 'is-invalid': isDirty('endDate') && hasErrors('endDate') }"
+                                        class="form-control "
+                                        placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.END_DATE.PLACEHOLDER'|translate}}" /> -->
+                                    <div class="invalid-feedback"
+                                        *ngIf="isDirty('endDate') && hasErrors('endDate')">
+                                        {{'MODALS.CAMPAIGN_EDITOR.FORM.END_DATE.ERROR'|translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="ms-2">
+                                    <div class="form-check form-switch form-check-custom form-check-solid">
+                                        <input class="form-check-input" type="checkbox" value="" id="isPrivate"
+                                            formControlName="isPrivate" />
+                                        <label class="form-check-label" for="isPrivate">
+                                            {{'MODALS.CAMPAIGN_EDITOR.FORM.PRIVATE_SALE.LABEL'|translate}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 w-100">
+                    <button type="button" [disabled]="(isLoading$|async) === true" class="btn btn-primary btn-mosaico-primary w-100" (click)="save()"> 
+                        <ng-container *ngIf="!isEdit">Create</ng-container>
+                        <ng-container *ngIf="isEdit">Save</ng-container>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

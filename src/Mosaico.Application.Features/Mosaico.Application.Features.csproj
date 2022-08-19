@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mosaico.Blockchain.Base\Mosaico.Blockchain.Base.csproj" />
+    <ProjectReference Include="..\Mosaico.CQRS.Base\Mosaico.CQRS.Base.csproj" />
+    <ProjectReference Include="..\Mosaico.Domain.Features\Mosaico.Domain.Features.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.Base\Mosaico.Events.Base.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.Features\Mosaico.Events.Features.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.Wallet\Mosaico.Events.Wallet.csproj" />
+    <ProjectReference Include="..\Mosaico.EventSourcing.Base\Mosaico.EventSourcing.Base.csproj" />
+    <ProjectReference Include="..\Mosaico.Integration.Blockchain.Ethereum\Mosaico.Integration.Blockchain.Ethereum.csproj" />
+    <ProjectReference Include="..\Mosaico.SDK.Identity\Mosaico.SDK.Identity.csproj" />
+    <ProjectReference Include="..\Mosaico.SDK.Wallet\Mosaico.SDK.Wallet.csproj" />
+  </ItemGroup>
+
+</Project>

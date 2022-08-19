@@ -1,0 +1,20 @@
+
+<div class="card hoverable bg-white shadow-sm h-100">
+  <div class="card-body my-3">
+    <span class="card-title fw-bolder fs-1 mb-3 d-block">{{ 'DASHBOARD.TOP_INVESTORS.title' | translate }}</span>
+    <div class="row">
+      <div class="col-12 mt-3 d-flex flex-row justify-content-between align-items-center" *ngFor="let investor of investors">
+        <div class="d-flex flex-row">
+          <div class="symbol symbol-25px symbol-circle me-3">
+            <div class="symbol-label fw-bold text-success">P</div>
+          </div>
+          <div class="d-flex text-dark me-3">{{ investor.name }} </div>
+        </div>
+
+        <div>
+          <div class="d-flex text-end text-dark fw-bold">{{ investor.investedAmount | number : '1.2-2' }} USDT</div>
+        </div>
+      </div>
+    </div><!--/.row-->
+  </div>
+</div>

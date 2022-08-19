@@ -1,0 +1,8 @@
+<div class="card shadow-sm mb-8 d-flex flex-column justify-content-between" *ngIf="project" [class.show-item]="isLandingPage && isOverlapOpen">
+    
+    <app-featured-project-header [isFirst]="isFirst" [isProjectItem]="isProjectItem" [project]="project" *ngIf="isOverlapOpen"></app-featured-project-header>
+
+    <app-featured-project-details [isProjectItem]="isProjectItem" [project]="project" [isLandingPage]="isLandingPage"></app-featured-project-details>
+    
+    <app-featured-project-footer [isProjectItem]="isProjectItem" [project]="project" [isLandingPage]="isLandingPage" *ngIf="isOverlapOpen"></app-featured-project-footer>
+</div>

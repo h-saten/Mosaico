@@ -1,0 +1,64 @@
+<div class="row" *ngIf="company">
+    <div class="col-12 col-md-4 d-flex flex-column">
+        <div><span class="footer-section--title">{{'COMPANY_INFO_CARD.CONTACTS_TITLE'|translate}}</span></div>
+        <div *ngIf="company.email && company.email.length > 0" class="footer-section--info mt-6">{{company.email}}</div>
+        <div *ngIf="company.phoneNumber && company.phoneNumber.length > 0" class="footer-section--info mt-6">
+            {{company.phoneNumber}}</div>
+    </div>
+    <div class="col-12 col-md-4 d-flex flex-column">
+        <div><span class="footer-section--title">{{'COMPANY_INFO_CARD.OFFICE_TITLE'|translate}}</span></div>
+        <div *ngIf="company.country && company.country.length > 0" class="footer-section--info mt-6">{{company.street}}
+            {{company.postalCode}} {{company.country}}</div>
+        <div *ngIf="company.vatId && company.vatId.length > 0" class="footer-section--info mt-6">
+            {{'COMPANY_INFO_CARD.TAX_ID'|translate}}: {{company.vatId}}</div>
+    </div>
+    <div class="col-12 col-md-4 d-flex flex-column" *ngIf="!noLinkFound">
+        <div><span class="footer-section--title">{{'COMPANY_INFO_CARD.SOCIAL_TITLE'|translate}}</span></div>
+        <div class="d-flex flex-row mt-6">
+            <div class="mt-5 mt-sm-0">
+                <div class="social-icon" *ngIf="links?.telegram">
+                    <a href="{{links.telegram}}" title="Telegram"
+                        id="contact-fa-telegram-en" class="text-dark" target="_blank" rel="nofollow noopener">
+                        <i class="fab fa-telegram-plane fa-lg fa-fw"></i>
+                    </a>
+                </div>
+                <div class="social-icon" *ngIf="links?.youtube">
+                    <a href="{{links.youtube}}" title="YouTube"
+                        id="contact-fa-yt" class="text-dark" target="_blank" rel="nofollow noopener">
+                        <i class="fab fa-youtube fa-lg fa-fw"></i>
+                    </a>
+                </div>
+                <div class="social-icon" *ngIf="links?.linkedIn">
+                    <a href="{{links.linkedIn}}" title="LinkedIn" id="contact-fa-linkedin"
+                        class="text-dark" target="_blank" rel="nofollow noopener">
+                        <i class="fab fa-linkedin-in fa-lg fa-fw"></i>
+                    </a>
+                </div>
+                <div class="social-icon" *ngIf="links?.facebook">
+                    <a href="{{links.facebook}}" title="Facebook" id="contact-fa-fb" class="text-dark"
+                        target="_blank" rel="nofollow noopener">
+                        <i class="fab fa-facebook-f fa-lg fa-fw"></i>
+                    </a>
+                </div>
+                <div class="social-icon" *ngIf="links?.twitter">
+                    <a href="{{links.twitter}}" title="Twitter" id="contact-fa-twitter" class="text-dark"
+                        target="_blank" rel="nofollow noopener">
+                        <i class="fab fa-twitter fa-lg fa-fw"></i>
+                    </a>
+                </div>
+                <div class="social-icon" *ngIf="links?.instagram">
+                    <a href="{{links.instagram}}" title="Instagram" id="contact-fa-instagram"
+                        class="text-dark" target="_blank" rel="nofollow noopener">
+                        <i class="fab fa-instagram fa-lg fa-fw"></i>
+                    </a>
+                </div>
+                <div class="social-icon" *ngIf="links?.medium">
+                    <a href="{{links.medium}}" title="Medium" id="contact-fa-medium" class="text-dark"
+                        target="_blank" rel="nofollow noopener">
+                        <i class="fab fa-medium fa-lg fa-fw"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

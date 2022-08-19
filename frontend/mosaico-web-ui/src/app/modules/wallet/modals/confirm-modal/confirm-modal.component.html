@@ -1,0 +1,30 @@
+<ng-template #content let-modal>
+	<div class="modal-content mosaico-modal">
+		<div class="modal-header justify-content-end pb-5">
+            
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark btn-close" (click)="modal.dismiss(false)" aria-label="Close">
+                </button>
+            </div>
+            <!--end::Close-->
+
+		</div>
+
+        <h5 class="confirm-dialog__title">{{title|translate}}</h5>
+
+		<div class="modal-body pb-0">
+			<ng-container *ngIf="displayMode === 'message'">
+				<p class="confirm-dialog__msg">{{message|translate}}</p>
+			</ng-container>
+			<ng-container *ngIf="displayMode === 'content'">
+				<ng-container *ngTemplateOutlet="modalContent"></ng-container>
+			</ng-container>
+		</div>
+
+		<div class="modal-footer border-top-0 pb-10 justify-content-center">
+      		<button type="button" [ngClass]="submitBtnClass" (click)="submit()" appBaseColors [button]="projectMainColor" [menu]="projectMainColor">{{submitButtonText}}</button>
+			<button type="button" [ngClass]="cancelBtnClass" (click)="modal.dismiss(false)" appBaseColors [textColor]="projectMainColor" [button]="projectMainColor">{{cancelButtonText}}</button>
+		</div>
+	</div>
+</ng-template>

@@ -1,0 +1,28 @@
+<div class="modal-content mosaico-modal">
+    <div class="modal-header">
+        <h5 class="modal-title">{{'MODALS.PROJECT_ARTICLE_PHOTO_UPLOAD.TITLE'|translate}}</h5>
+        <!--begin::Close-->
+        <div class="close-button-container">
+            <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" [disabled]="isLoading" (click)="modalService.dismiss(false)" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <!--end::Close-->
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <app-image-cropper-local [isRemovable]="false" [currentImgUrl]="currentImgUrl" [addPhotoText]="'MODALS.PROJECT_ARTICLE_PHOTO_UPLOAD.ACTIONS.ADD'|translate"
+                    [changePhotoText]="'MODALS.PROJECT_ARTICLE_PHOTO_UPLOAD.ACTIONS.CHANGE'|translate" [currentFormMode]="currentFormMode"
+                    [aspectRatio]="1 / 1" [roundCropper]="true" [containWithinAspectRatio]="false" [imageCropperClass]="[]">
+                </app-image-cropper-local>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-mosaico-primary" [disabled]="isLoading"
+            (click)="submit()">{{'MODALS.PROJECT_ARTICLE_PHOTO_UPLOAD.ACTIONS.SAVE'|translate}}</button>
+        <button type="button" class="btn btn-mosaico-primary-outline"
+            (click)="modalService.dismiss(false)" [disabled]="isLoading">{{'MODALS.PROJECT_ARTICLE_PHOTO_UPLOAD.ACTIONS.CANCEL'|translate}}</button>
+    </div>
+</div>

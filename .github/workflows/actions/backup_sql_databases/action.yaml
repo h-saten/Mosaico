@@ -1,0 +1,102 @@
+name: backup_sql_databases
+description: creates backups of core and identity databases in azure blob storage
+inputs:
+  AZURE_CREDENTIALS:
+    required: true
+    description: "Service Principal credentials"
+  SQL_SERVER:
+    required: true
+    description: "Name of SQL Server"
+  CORE_SQL_DB:
+    required: true
+    description: "Name of Core SQL database"
+  ID_SQL_DB:
+    required: true
+    description: "Name of ID SQL database"
+  STORAGE_ACCOUNT_NAME:
+    required: true
+    description: "Name of the Storage Account where backup will be available"
+  STORAGE_CONTAINER_NAME:
+    required: true
+    default: "backups"
+    description: "name of the container where backup will be stored"
+  APP_VERSION:
+    required: true
+    description: "Current version of the application"
+  RESOURCE_GROUP:
+    required: true
+    description: "Current version of the application"
+  SQL_ADMIN_PASSWORD:
+    required: true
+    description: "Current version of the application"
+  SQL_ADMIN_LOGIN:
+    required: true
+    description: "Current version of the application"
+  STORAGE_CONTAINER_URI:
+    required: true
+    description: "Current version of the application"
+  AZURE_BACKUP_CONTAINER_NAME:
+    required: true
+    description: "Current version of the application"
+  AZURE_CLIENT_ID:
+    required: true
+    description: "Current version of the application"
+  AZURE_CLIENT_SECRET:
+    required: true
+    description: "Current version of the application"
+  AZURE_TENANT_ID:
+    required: true
+    description: "Current version of the application"
+  CONNECTION_STRING:
+    required: true
+    description: "connection string to storage"
+  SUBSCRIPTION_ID:
+    required: true
+    description: "subscription id of azure"
+
+runs:
+  using: "composite"
+  steps:
+
+  - name: login to az
+    shell: bash
+    run: |
+      az login --service-principal -u ${{ inputs.AZURE_CLIENT_ID }} -p ${{ inputs.AZURE_CLIENT_SECRET }} --tenant ${{ inputs.AZURE_TENANT_ID }}
+
+  - name: Azure Login
+    uses: azure/login@v1
+    with:
+      creds: ${{ inputs.AZURE_CREDENTIALS }}
+      allow-no-subscriptions: true
+  - name: Get Current Time
+    id: current_time
+    uses: nanzm/get-time-action@v1.1
+    with:
+      timeZone: 1
+      format: 'YYYYMMDDHHmmss'
+  - name: Get Future Time
+    id: future_time
+    uses: nanzm/get-time-action@v1.1
+    with:
+      timeZone: 2
+      format: 'YYYY-MM-DDTHH:mm:ss'
+
+  - name: Backup ID and CORE
+    shell: pwsh
+    run: |
+      az config set extension.use_dynamic_install=yes_without_prompt
+      $env:sastokenCORE = $(az storage blob generate-sas --account-name "${{inputs.STORAGE_ACCOUNT_NAME}}" -c "${{inputs.STORAGE_CONTAINER_NAME}}" -n "CORE_${{steps.current_time.outputs.time}}_${{inputs.APP_VERSION}}.bacpac" --permissions "rw" --expiry "${{steps.future_time.outputs.time}}Z" --connection-string "${{ inputs.CONNECTION_STRING }}")
+      az sql db export -s "${{ inputs.SQL_SERVER }}" -n "${{ inputs.CORE_SQL_DB }}" -g "${{ inputs.RESOURCE_GROUP }}" -p "${{ inputs.SQL_ADMIN_PASSWORD }}" -u "${{ inputs.SQL_ADMIN_LOGIN }}" --storage-key $env:sastokenCORE --storage-key-type SharedAccessKey --storage-uri "${{ inputs.STORAGE_CONTAINER_URI }}/backups/CORE_${{steps.current_time.outputs.time}}_${{ inputs.APP_VERSION }}.bacpac" --subscription "${{ inputs.SUBSCRIPTION_ID }}"
+      
+      az storage blob delete -c "${{inputs.STORAGE_CONTAINER_NAME}}" -n "CORE_LATEST.bacpac" --connection-string "${{ inputs.CONNECTION_STRING }}"
+      $env:sastokenCORE_LATEST = $(az storage blob generate-sas --account-name "${{inputs.STORAGE_ACCOUNT_NAME}}" -c "${{inputs.STORAGE_CONTAINER_NAME}}" -n "CORE_LATEST.bacpac" --permissions "rw" --expiry "${{steps.future_time.outputs.time}}Z" --connection-string "${{ inputs.CONNECTION_STRING }}")
+      az sql db export -s "${{ inputs.SQL_SERVER }}" -n "${{ inputs.CORE_SQL_DB }}" -g "${{ inputs.RESOURCE_GROUP }}" -p "${{ inputs.SQL_ADMIN_PASSWORD }}" -u "${{ inputs.SQL_ADMIN_LOGIN }}" --storage-key $env:sastokenCORE_LATEST --storage-key-type SharedAccessKey --storage-uri "${{ inputs.STORAGE_CONTAINER_URI }}/backups/CORE_LATEST.bacpac" --subscription "${{ inputs.SUBSCRIPTION_ID }}"
+
+
+      $env:sastokenID = $(az storage blob generate-sas --account-name "${{inputs.STORAGE_ACCOUNT_NAME}}" -c "${{inputs.STORAGE_CONTAINER_NAME}}" -n "IDENTITY_${{steps.current_time.outputs.time}}_${{inputs.APP_VERSION}}.bacpac" --permissions "rw" --expiry "${{steps.future_time.outputs.time}}Z" --connection-string "${{ inputs.CONNECTION_STRING }}")
+      az sql db export -s "${{ inputs.SQL_SERVER }}" -n "${{ inputs.ID_SQL_DB }}" -g "${{ inputs.RESOURCE_GROUP }}" -p "${{ inputs.SQL_ADMIN_PASSWORD }}" -u "${{ inputs.SQL_ADMIN_LOGIN }}" --storage-key $env:sastokenID --storage-key-type SharedAccessKey --storage-uri "${{ inputs.STORAGE_CONTAINER_URI }}/backups/IDENTITY_${{steps.current_time.outputs.time}}_${{ inputs.APP_VERSION }}.bacpac" --subscription "${{ inputs.SUBSCRIPTION_ID }}"
+      
+
+      az storage blob delete -c "${{inputs.STORAGE_CONTAINER_NAME}}" -n "IDENTITY_LATEST.bacpac" --connection-string "${{ inputs.CONNECTION_STRING }}"
+      $env:sastokenIDENTITY_LATEST = $(az storage blob generate-sas --account-name "${{inputs.STORAGE_ACCOUNT_NAME}}" -c "${{inputs.STORAGE_CONTAINER_NAME}}" -n "IDENTITY_LATEST.bacpac" --permissions "rw" --expiry "${{steps.future_time.outputs.time}}Z" --connection-string "${{ inputs.CONNECTION_STRING }}")
+      az sql db export -s ${{ inputs.SQL_SERVER }}"" -n "${{ inputs.ID_SQL_DB }}" -g "${{ inputs.RESOURCE_GROUP }}" -p "${{ inputs.SQL_ADMIN_PASSWORD }}" -u "${{ inputs.SQL_ADMIN_LOGIN }}" --storage-key $env:sastokenIDENTITY_LATEST --storage-key-type SharedAccessKey --storage-uri "${{ inputs.STORAGE_CONTAINER_URI }}/backups/IDENTITY_LATEST.bacpac" --subscription "${{ inputs.SUBSCRIPTION_ID }}"

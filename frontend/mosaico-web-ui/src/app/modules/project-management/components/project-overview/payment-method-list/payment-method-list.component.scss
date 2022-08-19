@@ -1,0 +1,32 @@
+.payment-method-title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #D0D1D2;
+}
+.payment-method {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    color: #11263C;
+    position: relative;
+
+    i {
+        position: absolute;
+        right: 5px;
+        top: 3px;
+        cursor: pointer;
+    }
+}
+.card {
+    padding: 16px !important;
+
+    .card-body {
+      .card-icon-action {
+          i {
+              color: #C0BEBE;
+              font-size: 18px;
+          }
+      }
+    }
+}

@@ -1,0 +1,122 @@
+p {
+    margin: 0;
+}
+
+.follow-steps-container {
+    z-index: 2;
+    position: relative;
+
+    .follow-steps-title {
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 48px;
+        color: #434343;
+    }
+    
+    .follow-steps-subtitle {
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 11px;
+        color: #0063F5;
+    }
+    
+    .nav-tabs {
+        border-bottom: none;
+        justify-content: center;
+        gap: 40px;
+    
+        .nav-link {
+            border: 2px solid #0063F5;
+            border-radius: 5px;
+            background: #FFFFFF;
+            padding: 13px 24px;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 24px;
+            color: #0063F5;
+            width: 450px;
+            position: relative;
+
+            &.active {
+                background: #0063F5;
+                color: #FFFFFF;
+                font-weight: 700;
+                font-size: 24px;
+
+                &::after {
+                    position: absolute;
+                    content: "";
+                    bottom: -31px;
+                    left: calc(50% - 15px);
+                    border-top: 15px solid #0063F5;
+                    border-bottom: 15px solid transparent;
+                    border-left: 15px solid transparent;
+                    border-right: 15px solid transparent;
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 991px) {
+    .follow-steps-container {
+        padding: 100px 40px;
+        
+        .follow-steps-subtitle  {
+            margin-bottom: 10px;
+
+        }
+        .nav-tabs {
+            .nav-link {
+                padding: 8px;
+                width: 319px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .follow-steps-container {
+        .nav-tabs {
+            gap: 24px;
+            .nav-link {
+                width: 300px;
+            }
+        }
+    
+        .follow-steps-title {
+            font-size: 36px;
+            line-height: 46px;
+        }
+    }
+}
+@media screen and (max-width: 576px) {
+    .follow-steps-container {
+        padding: 64px 23px 0;
+        background: #F9F9F9;
+        
+        .nav-tabs {
+            gap: 16px;
+
+            .nav-link, .nav-link.active {
+                width: 155px;
+                text-align: center;
+                font-size: 16px;
+                line-height: 20px;
+            }
+        }
+    
+        .follow-steps-title {
+            font-size: 24px;
+            line-height: 30px;
+        }
+    }
+
+}
+
+@media screen and (max-width: 391px) {
+    .follow-steps-container {
+        padding: 64px 0 0;
+    }
+}

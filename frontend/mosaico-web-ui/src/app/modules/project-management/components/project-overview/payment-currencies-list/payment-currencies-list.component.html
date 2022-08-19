@@ -1,0 +1,37 @@
+<div class="card shadow-sm" *ngIf="paymentCurrencies && paymentCurrencies.length > 0">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+                <div class="d-flex flex-row w-100 align-items-center mt-5 pb-5 justify-content-between" *ngFor="let currency of paymentCurrencies; let i = index"
+                    [ngClass]="{'border-bottom': i !== (paymentCurrencies?.length - 1)}">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="d-flex me-5">
+                            <div class="symbol symbol-35px symbol-circle">
+                                <div class="symbol-label border" [ngStyle]="{'background-image': 'url(' + currency.logoUrl + ') ', 'background-size': 'contain'}"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <div class="d-flex payment-method-title">{{'PROJECT.PAYMENT_CURRENCY.TITLE' | translate }}</div>
+                            <div class="d-flex payment-method">{{currency.name}} ({{currency.symbol}})</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center" *ngIf="canEdit">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" id="{{currency.symbol}}"
+                                   [(ngModel)]="currency.isEnabled"
+                                   [disabled]="requestInProgress || currency.isNativeChainCurrency"
+                                   (change)="togglePaymentCurrencyAvailability(currency.id)"
+                              appBaseColors [switch]="true"
+                            />
+                            <label class="form-check-label" for="{{currency.symbol}}"></label>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center" *ngIf="!canEdit">
+                        <div class="card-icon-action"><i class="fas fa-check-circle" [ngClass]="{'text-success': currency.isEnabled || currency.isNativeChainCurrency}"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

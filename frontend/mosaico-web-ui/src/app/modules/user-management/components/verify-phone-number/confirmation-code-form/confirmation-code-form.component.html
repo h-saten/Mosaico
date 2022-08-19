@@ -1,0 +1,52 @@
+<div class="col-12">
+  <p>
+    {{'VERIFY_PHONE.security.message' | translate}}
+  </p>
+</div>
+
+<div class="col-12" *ngIf="!codeSendingRequestInProgress && !codeSendingRequestError">
+
+  <p *ngIf="codeValidityInSeconds > 0">
+    {{'VERIFY_PHONE.code.expire' | translate}} <strong>{{ codeValidityInSeconds }}</strong> {{'VERIFY_PHONE.code.seconds' | translate}}.
+  </p>
+
+  <div *ngIf="codeValidityInSeconds <= 0 && !codeSendingAttemptsLimitReached">
+    <button type="button" class="btn btn-lg btn-mosaico-outline-secondary ms-3"
+            appSpinnerMini [showSpinnerMini]="codeSendingRequestInProgress && !inProgress && !confirmationInProgress"
+            [disabled]="codeSendingRequestInProgress || codeSendingAttemptsLimitReached"
+            (click)="generateVerificationCode()">
+            {{'VERIFY_PHONE.code.send.newcode' | translate}}
+    </button>
+  </div>
+
+  <p class="alert alert-danger" *ngIf="codeSendingAttemptsLimitReached">
+    {{'VERIFY_PHONE.code.limit.reached'}}
+  </p>
+</div>
+
+<div class="col-12" *ngIf="!codeSendingRequestInProgress && codeSendingRequestError">
+  <p class="alert alert-danger" *ngIf="codeSendingAttemptsLimitReached">
+    {{'VERIFY_PHONE.code.unexpected.error' | translate}}
+    {{'VERIFY_PHONE.code.try.again' | translate}}
+  </p>
+</div>
+
+<div class="mt-5">
+  <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+    <div class="form-group mb-5">
+      <label class="form-label">{{'VERIFY_PHONE.code.confirmation' | translate}}</label>
+      <input type="text" name="confirmationCode" formControlName="confirmationCode" [ngClass]="{ 'is-invalid': isDirty('confirmationCode') && hasErrors('confirmationCode') }"
+             class="form-control" placeholder="{{'VERIFY_PHONE.code.confirmation.placeholder' | translate}}" />
+      <div class="invalid-feedback" *ngIf="isDirty('confirmationCode') && hasErrors('confirmationCode')">{{'VERIFY_PHONE.code.confirmation.invalid' | translate}}</div>
+    </div>
+
+    <div class="d-flex justify-content-start mt-5 pt-5">
+        <button type="button" class="btn btn-mosaico-primary ms-3"
+                appSpinnerMini [showSpinnerMini]="inProgress || confirmationInProgress"
+                [disabled]="form.invalid || inProgress || confirmationInProgress"
+                (click)="save()">
+          {{'BUTTONS.btn.confirm' | translate}}
+        </button>
+    </div>
+  </form>
+</div>

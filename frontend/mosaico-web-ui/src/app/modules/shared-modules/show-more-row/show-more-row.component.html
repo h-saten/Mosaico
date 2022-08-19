@@ -1,0 +1,35 @@
+<div class="text-center mb-5 pb-5">
+
+  <app-spinner-container [showSpinner]="nextPageLoading === true"></app-spinner-container>
+
+  <!-- totalPages: {{totalPages}}<br />
+  currentPageNumber: {{currentPageNumber}}<br />
+
+  totalItems: {{totalItems}}<br />
+  totalItemsLeft: {{totalItemsLeft}}<br />
+  currentListSize: {{currentListSize}}<br />
+
+  rowsPerPage: {{rowsPerPage}}<br /> -->
+
+
+  <!-- showMoreTo: {{showMoreTo}}<br />
+  showMoreFrom: {{showMoreFrom}}<br /> -->
+
+  <div class="text-showing">
+    {{ 'PAGES.show_more.showing' | translate}} {{currentListSize}} {{itemsOf}} {{totalItems}}
+  </div>
+
+  <ng-container *ngIf="(totalPages > currentPageNumber) && nextPageLoading === false">
+
+    <button
+      (click)="getListNext((currentPageNumber * rowsPerPage))"
+      class="btn btn-mosaico-primary"
+    >
+      <!-- {{ 'show_more.show_more' | translate }} {{ 'show_more.from' | translate }} {{showMoreFrom}} {{ 'show_more.to' | translate }} {{showMoreTo}} -->
+      {{ 'PAGES.show_more.show_more' | translate: { name: showMoreName } }}
+    </button>
+
+  </ng-container>
+
+
+</div>

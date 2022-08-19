@@ -1,0 +1,94 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">Enable staking</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+                        <div class="form-group mb-5">
+                            <label class="form-label required">Token</label>
+                            <ng-select class="mosaico-select" [clearable]="false"
+                                [ngClass]="{ 'is-invalid': isDirty('tokenId') && hasErrors('tokenId') }" bindValue="id"
+                                bindLabel="name" [items]="tokens" formControlName="tokenId"
+                                placeholder="Choose the token">
+                                <ng-template ng-label-tmp let-item="item">
+                                    {{item.name|translate}} <span class="text-muted">({{item.symbol}})</span>
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                    {{item.name|translate}} <span class="text-muted">({{item.symbol}})</span>
+                                </ng-template>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngIf="isDirty('tokenId') && hasErrors('tokenId')">
+                                Invalid token
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label required">Max reward</label>
+                                    <input type="number" name="maxReward" formControlName="maxReward" class="form-control"
+                                        [ngClass]="{ 'is-invalid': isDirty('maxReward') && hasErrors('maxReward') }"
+                                        placeholder="Enter the max reward individual can get" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('maxReward') && hasErrors('maxReward')">
+                                        Invalid reward
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label required">Max participants</label>
+                                    <input type="number" name="maxParticipants" formControlName="maxParticipants" class="form-control"
+                                        [ngClass]="{ 'is-invalid': isDirty('maxParticipants') && hasErrors('maxParticipants') }"
+                                        placeholder="Enter the max number of participants" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('maxParticipants') && hasErrors('maxParticipants')">
+                                        Invalid participants
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label required">Reward cycle</label>
+                                    <input type="datetime" name="rewardCycle" formControlName="rewardCycle" class="form-control"
+                                        [ngClass]="{ 'is-invalid': isDirty('rewardCycle') && hasErrors('rewardCycle') }"
+                                        placeholder="Enter number of days to distribute the reward" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('rewardCycle') && hasErrors('rewardCycle')">
+                                        Invalid cycle
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label required">Cycle limit</label>
+                                    <input type="datetime" name="cycleSpendingLimit" formControlName="cycleSpendingLimit" class="form-control"
+                                        [ngClass]="{ 'is-invalid': isDirty('cycleSpendingLimit') && hasErrors('cycleSpendingLimit') }"
+                                        placeholder="Enter max amount of tokens to spend during reward cycle" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('cycleSpendingLimit') && hasErrors('cycleSpendingLimit')">
+                                        Invalid cycle limit
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-mosaico-primary" (click)="submit()">Enable</button>
+        </div>
+    </div>
+</ng-template>

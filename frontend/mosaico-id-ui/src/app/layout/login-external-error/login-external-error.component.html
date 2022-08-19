@@ -1,0 +1,22 @@
+<app-spinner-container [showSpinner]="!dataLoaded"></app-spinner-container>
+
+<div *ngIf="dataLoaded">
+  <div>
+    <ng-container *ngIf="provider != null; else noProvider">
+      <p class="text-danger">{{ 'auth.login.external.error_with_provider' | translate }} {{provider}}.</p>
+    </ng-container>
+    <ng-template #noProvider>
+      <p class="text-danger">{{ 'auth.login.external.error' | translate }}.</p>
+    </ng-template>
+  </div>
+
+  <p *ngIf="knownError">{{ getKnownErrorDescription(knownError) }}.</p>
+  <p *ngIf="otherError">{{ otherError }}</p>
+
+  <div class="mt-4">
+    <p class="text-left">
+      <a [routerLink]="['/auth/login']" rel="noopener"> << {{ 'auth.forgot.back_login' | translate }}</a>
+    </p>
+  </div>
+
+</div>

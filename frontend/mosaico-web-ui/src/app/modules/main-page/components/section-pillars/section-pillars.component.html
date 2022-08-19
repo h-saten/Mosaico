@@ -1,0 +1,21 @@
+<div class="section-pillars-wrapper">
+    <div class="pillars-text-wrapper">
+        <p class="pillars-text title-mosaico">3 pillars</p>
+        <p class="pillars-text">New DEFInition of investment</p>
+    </div>
+    <div class="section-pillars-container">
+        <ng-container *ngFor="let pil of pillars">
+            <div class="card shadow-sm section-pillars">
+                <div class="d-flex justify-content-between pb-9 pb-lg-14 pb-md-0">
+                    <img [src]="pil.img" alt="pillar-img" class="pillar-img">
+                    <p class="pillars-token-symbol symbol-left">{{ pil.tokenSymbol }}</p>
+                </div>
+                <div>
+                    <p class="pillar-title">{{ pil.title | translate }}</p>
+                    <p class="pillar-description">{{ pil.description | translate }}</p>
+                </div>
+                <p class="pillars-token-symbol symbol-right">{{ pil.tokenSymbol }}</p>
+            </div>
+        </ng-container>
+    </div>
+</div>

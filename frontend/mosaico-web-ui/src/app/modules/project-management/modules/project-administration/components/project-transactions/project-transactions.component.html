@@ -1,0 +1,231 @@
+<div class="card settings-card shadow-sm">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex flex-row justify-content-end align-items-center">
+                            <button class="btn btn-mosaico-outline-secondary" (click)="applyFilters()"><i
+                                    class="fas fa-sync text-dark"></i>{{ 'TRANSACTIONS.ACTIONS.REFRESH' | translate }}</button>
+                            <button class="btn btn-mosaico-outline-secondary" (click)="showFilters = !showFilters"><i
+                                    *ngIf="showFilters === false" class="fas fa-eye text-dark"></i><i
+                                    *ngIf="showFilters === true" class="fas fa-eye-slash text-dark"></i>{{ 'TRANSACTIONS.ACTIONS.FILTERS' | translate }}</button>
+                            <button class="btn btn-mosaico-outline-secondary" (click)="onExportCsv()"><i
+                                    class="fas fa-file-csv text-dark"></i>{{ 'TRANSACTIONS.ACTIONS.EXPORT_CSV' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="showFilters === true">
+                    <form class="form mosaico-form filter-form mb-5 shadow-xs p-3" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Correlation ID</label>
+                                    <div>
+                                        <input name="correlationId" type="text" [(ngModel)]="filterCorrelationId" class="form-control w-100" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">{{'FILTER_FORM.TIME_RANGE' | translate}}</label>
+                                    <div>
+                                        <p-calendar name="timeRangeInput" [(ngModel)]="filteredTimeRange"
+                                            selectionMode="range" [readonlyInput]="true" inputId="range"
+                                            [showIcon]="true" [styleClass]="'w-100'" [showButtonBar]="true"
+                                            [inputStyleClass]="'form-control w-100'"
+                                            [placeholder]="'FILTER_FORM.CHOOSE_TIMEFRAME' | translate">
+                                        </p-calendar>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Status</label>
+                                    <div>
+                                        <ng-select name="statusInput" [multiple]="true" [(ngModel)]="filteredStatuses"
+                                            class="mosaico-select" [closeOnSelect]="false" [items]="transactionStatuses"
+                                            [placeholder]="'FILTER_FORM.CHOOSE_STATUSES' | translate"></ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Processor</label>
+                                    <div>
+                                        <ng-select name="processorInput" [multiple]="true"
+                                            [(ngModel)]="filteredPaymentMethod" class="mosaico-select"
+                                            [closeOnSelect]="false" [items]="paymentMethods"
+                                            [placeholder]="'FILTER_FORM.CHOOSE_PAYMENT_METHODS' | translate">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-center justify-content-start">
+                                <div class="d-flex me-3"><button class="btn btn-mosaico-primary" (click)="applyFilters()">{{'FILTER_FORM.APPLY' |
+                                    translate}}</button></div>
+                                <div class="d-flex"><button class="btn btn-sm btn-link" (click)="clearFilters()">{{'FILTER_FORM.CLEAR' |
+                                    translate}}</button></div>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive table-responsive-xs transactions-table">
+                            <p-table [value]="transaction" [lazy]="true" (onLazyLoad)="fetchTransactions($event)"
+                                responsiveLayout="scroll" [paginator]="true" [rows]="pageSize"
+                                [totalRecords]="totalRecords" [loading]="isLoading"
+                                styleClass="table align-middle gs-0 gy-4">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="min-w-150px tr">Id</th>
+                                        <th class="min-w-150px tr">
+                                            {{'PROJECT_SETTINGS.TRANSACTIONS.TABLE.COLUMNS.USER_NAME'|translate}}</th>
+                                        <th class="min-w-150px tr">Qty</th>
+                                        <th class="min-w-150px tr"> {{'PROJECT_SETTINGS.TRANSACTIONS.TABLE.COLUMNS.PAID'|translate}}</th>
+                                        <th class="min-w-150px tr">
+                                            {{'PROJECT_SETTINGS.TRANSACTIONS.TABLE.COLUMNS.TRAN_ID'|translate}}</th>
+                                        <th class="min-w-150px tr">
+                                            {{'PROJECT_SETTINGS.TRANSACTIONS.TABLE.COLUMNS.PURCHASE_DATE'|translate}}
+                                        </th>
+                                        <th class="min-w-150px tr">
+                                            {{'PROJECT_SETTINGS.TRANSACTIONS.TABLE.COLUMNS.SOURCE'|translate}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowIndex="rowIndex" let-transaction>
+                                    <tr role="button" (click)="toggleRow(rowIndex)"
+                                        [ngClass]="{'investor-row-selected': rowIndex === expandedRow}">
+                                        <td class="text-center">
+                                            <small>{{transaction.correlationId}}</small>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="d-flex justify-content-start flex-column">
+                                                    <span class="text-dark  text-hover-primary" role="button"
+                                                        (click)="investorCardDialog.open({projectId: projectId, userId: transaction.userId})">
+                                                        {{transaction.userName}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="d-flex justify-content-start flex-column">
+                                                    <span class="text-dark  text-hover-primary">
+                                                        {{transaction.tokenAmount|number: '1.0-6':'en'}}
+                                                        {{transaction.tokenSymbol}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="d-flex justify-content-start flex-column">
+                                                    <span class="text-dark  text-hover-primary">
+                                                        {{transaction.payedAmount|number: '1.0-6':'en'}}
+                                                        {{transaction.currency}}
+                                                        ({{transaction.payedInUSD| number: '1.0-6':'en'}})
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div
+                                                class="d-flex align-items-center justify-content-center flex-column w-100 me-2">
+                                                <div class="d-flex flex-stack mb-2">
+                                                    <a class=" text-hover-primary cursor-pointer"
+                                                        (click)="redirectToEtherscan(transaction.tranHash)">
+                                                        <i class="fas fa-check-circle text-success"
+                                                            *ngIf="transaction.status === 'CONFIRMED'"></i>
+                                                        <i class="fas fa-hourglass-half text-primary"
+                                                            *ngIf="transaction.status === 'PENDING'"></i>
+                                                        <i class="fas fa-times text-danger"
+                                                            *ngIf="transaction.status === 'FAILED'"></i>
+                                                        {{transaction.tranHash | addressType}}
+                                                    </a>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <span *ngIf="transaction.status === 'CONFIRMED'"
+                                                        class="text-success">{{transaction.status}}</span>
+                                                    <span role="button" *ngIf="transaction.status !== 'CONFIRMED'"
+                                                        placement="top"
+                                                        [ngbTooltip]="transaction.failureReason">{{transaction.status}}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div
+                                                class="d-flex align-items-center justify-content-center flex-column w-100 me-2">
+                                                <a class="text-dark  text-hover-primary d-block ">
+                                                    {{transaction.purchasedDate | date}} <br />
+                                                </a>
+                                                <span class="text-muted fw-bold d-block">
+                                                    {{transaction.purchasedDate | date:'hh:mm:ss a'}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div
+                                                class="d-flex align-items-center justify-content-center flex-column w-100 me-2">
+                                                <span class="text-dark  text-hover-primary d-block">
+                                                    {{transaction.source}}
+                                                </span>
+                                                <span>
+                                                    {{transaction.paymentMethod}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="rowIndex === expandedRow">
+                                        <td colspan="7">
+                                            <div class="d-flex w-100 px-5">
+                                                <span class="text-muted fw-bold d-block">
+                                                    <button class="btn btn-sm btn-danger"
+                                                        (click)="confirmBankTransfer.open(transaction.transactionId)"
+                                                        *ngIf="transaction.source === 'BANK_TRANSFER' && (transaction.status === 'PENDING' || transaction.status === 'EXPIRED')">Confirm transaction</button>
+                                                </span>
+                                            </div>
+                                            <div class="row mb-5">
+                                                <div class="col-12 px-10">
+                                                    <h3>Fees</h3>
+                                                    <app-transaction-fee-manager [salesAgents]="agents" [transaction]="transaction"></app-transaction-fee-manager>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 px-10">
+                                                    <h3>Blockchain operations</h3>
+                                                    <app-transaction-operations [transactionId]="transaction.transactionId"></app-transaction-operations>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="transaction.externalLink && transaction.externalLink.length > 0">
+                                                <div class="col-12">
+                                                    <a href="{{transaction.externalLink}}" target="_blank"rel="nofollow noopener">Payment Processor Response</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td colspan="12" class="text-center">
+                                            <h4>{{'PROJECT_SETTINGS.TRANSACTIONS.NO_TRANSACTIONS'|translate}}</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+                <app-investor-card #investorCardDialog></app-investor-card>
+                <app-confirm-bank-transfer [projectId]="projectId" #confirmBankTransfer></app-confirm-bank-transfer>
+            </div>
+        </div>
+    </div>
+</div>

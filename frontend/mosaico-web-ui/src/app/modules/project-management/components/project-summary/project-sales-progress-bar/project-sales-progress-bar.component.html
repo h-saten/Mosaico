@@ -1,0 +1,79 @@
+<div class="card-bar">
+
+  <div class="text-center">
+    <h4 class="bar-title">{{'PROJECT.bar.title' | translate}}</h4>
+  </div>
+
+  <div class="sales-progress">
+    <div class="d-flex justify-content-between">
+      <div class="percent-sale" appBaseColors [textColor]="true">{{raisedCapitalInUSD|currency:'USD':'symbol': '1.0-0': 'en'}} ({{ softCapRaisedCapitalPercentage|number: '1.0-2': 'en' }}%)</div>
+      <div class="percent-sale" appBaseColors [textColor]="true">{{isSoftCapAchieved ? "HARD CAP" : "SOFT CAP"}}</div>
+    </div>
+
+    <div class="progress-main-box">
+      <div class="progress"></div>
+
+      <div class="progress-bar"
+        [style.background]="colorOfProgressBar"
+        [style.width.%]="raisedCapitalPercentage"
+        role="progressbar"
+        [attr.aria-valuenow]="raisedCapitalPercentage"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        appBaseColors [progressBar]="true"
+      ></div>
+    </div>
+  </div>
+
+  <div class="bar-info d-flex flex-wrap">
+
+    <div class="bar-info-col text-center">
+      <div class="bar-info-col-inside">
+        <div class="bar-info-col-title1">{{numberOfBuyers|number: '1.0-0' | noComma }}</div>
+        <div class="bar-info-col-title2">{{'PROJECT.bar.col.1' | translate}}
+          <a class="fw-bolder fs-6 text-gray-800 ms-2 text-hover-primary cursor-pointer" [href]="'PROJECT.investors.link' | translate" target="_blank">
+            <img src="/assets/media/marketplace/noun-information.svg" alt="Information about Number of buyers" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-info-col text-center">
+      <div class="bar-info-col-inside">
+        <div class="bar-info-col-title1">{{raisedCapitalInUSD|currency:'USD':'symbol': '1.0-2': 'en' }}</div>
+        <div class="bar-info-col-title3">{{raisedCapital|number: '1.0-2': 'en'}} {{tokenSymbol}}</div>
+        <div class="bar-info-col-title2">{{'PROJECT.bar.col.2' | translate}}
+          <a class="fw-bolder fs-6 text-gray-800 ms-2 text-hover-primary cursor-pointer"
+            [href]="'PROJECT.sold_tokens.link' | translate" target="_blank">
+            <img src="/assets/media/marketplace/noun-information.svg" alt="Information about Total" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-info-col text-center">
+      <div class="bar-info-col-inside">
+        <div class="bar-info-col-title1">{{softCapAmount|currency:'USD':'symbol': '1.0-2': 'en' }}</div>
+        <div class="bar-info-col-title3">{{softCapTokens|number: '1.0-2': 'en'}} {{tokenSymbol}}</div>
+        <div class="bar-info-col-title2">{{'PROJECT.bar.col.3' | translate}}
+          <a class="fw-bolder fs-6 text-gray-800 ms-2 text-hover-primary cursor-pointer"
+            [href]="'PROJECT.soft_cap.link' | translate" target="_blank">
+            <img src="/assets/media/marketplace/noun-information.svg" alt="Information about Soft cap" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bar-info-col text-center">
+      <div class="bar-info-col-inside">
+        <div class="bar-info-col-title1">{{ hardCapAmount |currency:'USD':'symbol': '1.0-2': 'en' }}</div>
+        <div class="bar-info-col-title3">{{ hardCapTokens|number: '1.0-2': 'en'}} {{tokenSymbol}}</div>
+        <div class="bar-info-col-title2">{{'PROJECT.bar.col.4' | translate}}
+          <a class="fw-bolder fs-6 text-gray-800 ms-2 text-hover-primary cursor-pointer" [href]="'PROJECT.hard_cap.link' | translate" target="_blank">
+            <img src="/assets/media/marketplace/noun-information.svg" alt="Information about Hard cap" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

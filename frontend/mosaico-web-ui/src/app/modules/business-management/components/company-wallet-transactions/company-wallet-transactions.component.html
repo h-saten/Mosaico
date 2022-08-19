@@ -1,0 +1,134 @@
+<div class="row mt-5" *ngIf="isLoading">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+    </div>
+</div>
+<ng-container *ngIf="!isLoading">
+    <div class="row">
+        <div class="col-12 d-flex flex-row justify-content-end align-items-center">
+            <button class="btn btn-icon btn-sm" (click)="loadTransactions(true)"><i
+                    class="fas fa-sync"></i></button>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="table-responsive table-responsive-xs">
+                <table class="table align-middle gs-0 gy-4 transaction-table">
+                    <thead>
+                        <tr>
+                            <th class="min-w-150px">{{'COMPANY_WALLET.TRANSACTIONS.TABLE.TOKEN'|translate}}</th>
+                            <th class="min-w-150px">{{'COMPANY_WALLET.TRANSACTIONS.TABLE.HASH'|translate}}</th>
+                            <th class="min-w-150px">{{'COMPANY_WALLET.TRANSACTIONS.TABLE.SOURCE'|translate}}</th>
+                            <th class="min-w-150px">{{'COMPANY_WALLET.TRANSACTIONS.TABLE.AMOUNT'|translate}}</th>
+                            <th class="min-w-150px">{{'COMPANY_WALLET.TRANSACTIONS.TABLE.DESTINATION'|translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="transactions && transactions.length > 0">
+                            <tr *ngFor="let t of transactions">
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-row">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <div class="d-flex justify-content-center align-items-center me-5">
+                                                <div class="symbol symbol-35px symbol-circle">
+                                                    <div class="symbol-label fs-4 fw-bold text-dark"
+                                                        *ngIf="!t.token?.logoUrl || t.token.logoUrl?.length == 0">T</div>
+                                                    <div class="symbol-label"
+                                                        *ngIf="t.token?.logoUrl && t.token.logoUrl?.length > 0"
+                                                        style="background-image:url({{t.token.logoUrl}})"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-items-center flex-column">
+                                            <div class="d-flex flex-row">
+                                                <div class="token-name me-3">{{t.token?.name}} </div>
+                                                <div class="token-symbol">{{t.token?.symbol}}</div>
+                                            </div>
+                                            <div class="d-flex t-date">{{t.finishedAt | amDateFormat:'LLL'}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                        <div class="d-flex t-hash" ngxClipboard [cbContent]="t.transactionHash"
+                                            [ngbTooltip]="'COMPANY_WALLET.SUMMARY.COPY_HINT'|translate"
+                                            [placement]="'top'">
+                                            {{t.transactionHash | addressType}} <i class="far fa-clipboard"></i>
+                                        </div>
+                                        <div class="d-flex t-type t-type--success mt-3" *ngIf="t.status === 'CONFIRMED'">
+                                            <i class="fas fa-check-circle"></i> {{t.transactionType}}
+                                        </div>
+                                        <div class="d-flex t-type mt-3" *ngIf="t.status === 'PENDING' || t.status === 'CANCELED'">
+                                            <i class="fas fa-circle"></i> {{t.transactionType}}
+                                        </div>
+                                        <div class="d-flex t-type t-type--failed mt-3" *ngIf="t.status === 'FAILED'" [ngbTooltip]="t.failureReason" placement="top">
+                                            <i class="fas fa-exclamation-circle"></i> {{t.transactionType}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                        <div class="d-flex t-recipient" ngxClipboard [cbContent]="t.from"
+                                            [ngbTooltip]="'COMPANY_WALLET.SUMMARY.COPY_HINT'|translate"
+                                            [placement]="'top'">
+                                            {{t.from | addressType}} <i class="far fa-clipboard"></i>
+                                        </div>
+                                        <div class="d-flex t-friendlyName mt-3">
+                                            {{t.fromDisplayName}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                        <div class="d-flex t-amount">
+                                            <ng-container *ngIf="t.transactionDirection === 'INCOMING'">
+                                                <span class="incoming-transaction">+ {{t.tokenAmount | number: '1.0-6': 'en'}} {{t.token?.symbol}}</span>
+                                            </ng-container>
+                                            <ng-container *ngIf="t.transactionDirection === 'OUTGOING'">
+                                                <span  class="outgoing-transaction">- {{t.tokenAmount | number: '1.0-6': 'en'}} {{t.token?.symbol}}</span>
+                                            </ng-container>
+                                        </div>
+                                        <div class="d-flex t-currency mt-3" *ngIf="t.payedAmount && t.payedAmount > 0">
+                                            {{t.payedAmount | number: '1.0-2': 'en'}} {{t.currency}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                        <div class="d-flex t-recipient" ngxClipboard [cbContent]="t.to"
+                                            [ngbTooltip]="'COMPANY_WALLET.SUMMARY.COPY_HINT'|translate"
+                                            [placement]="'top'">
+                                            {{t.to | addressType}} <i class="far fa-clipboard"></i>
+                                        </div>
+                                        <div class="d-flex t-friendlyName mt-3">
+                                            {{t.toDisplayName}}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!transactions || transactions.length === 0">
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <h4>{{'COMPANY_WALLET.TRANSACTIONS.NO_TRANSACTIONS'|translate}}</h4>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="!isLoading && transactions && transactions.length > 0 && totalCount > transactions.length">
+        <div class="row mt-5" *ngIf="isLoadingMore">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <app-spinner-container [showSpinner]="isLoadingMore"></app-spinner-container>
+            </div>
+        </div>
+        <div class="row mt-5" *ngIf="!isLoadingMore">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <button class="btn btn-lg btn-mosaico-primary-outline" (click)="loadMore()">{{'COMPANY_WALLET.TRANSACTIONS.ACTIONS.LOAD_MORE'|translate}}</button>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>

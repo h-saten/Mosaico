@@ -1,0 +1,159 @@
+<div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-basic-info-edit></app-basic-info-edit>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-project-short-description></app-project-short-description>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-edit-social-media></app-edit-social-media>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-edit-page-colors></app-edit-page-colors>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-edit-project-cover></app-edit-project-cover>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-visibility-edit></app-visibility-edit>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12">
+                <h3 class="h4 mb-2">{{'PAGE_INTRO.PAGE_FORM_Title'|translate}}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row mt-5 mb-20">
+          <div class="col-12">
+            <form [formGroup]="mainForm" class="form mosaico-form" novalidate="novalidate">
+              <ng-container>
+                <div class="row form-group mt-5">
+                  <div class="col-12 col-md-3 label align-items-center d-flex">
+                    <span class="h6"> {{'PAGE_INTRO.PAGE_FORM_VIDEO_URL'|translate}} </span>
+                  </div>
+                  <div class="col-12 col-md-6 align-items-center">
+                    <input type="text" name="videoExternalLink" class="form-control"
+                      formControlName="videoExternalLink">
+                  </div>
+                  <div class="col-12 col-md-3 align-items-center"
+                    *ngIf="pageIntroVideos && pageIntroVideos.videoExternalLink">
+                    <button class="btn btn-lg btn-mosaico-primary"
+                      (click)="showExternalLinkVideo($event)">{{'PAGE_INTRO.PAGE_BUTTON.SHOW'|translate}}</button>
+                  </div>
+                </div>
+                <div class="row form-group mt-5">
+                  <div class="col-12 col-md-3 label align-items-center d-flex">
+                    <span class="h6"> {{'PAGE_INTRO.PAGE_FORM_UPLOAD_VIDEO'|translate}} </span>
+                  </div>
+                  <div class="col-12 col-md-6 align-items-center">
+                    <input style="display:none" (change)="getFile($event)" name="videoFile" formControlName="videoFile"
+                      type="file" accept=".mp4" #documentFile>
+                    <button (click)="documentFile.click()"
+                      class="btn btn-active-light w-40 upload-button">{{'PAGE_INTRO.PAGE_BUTTON.UPLOAD'|translate}} <i
+                        class="fas fa-arrow-up"></i></button>
+                  </div>
+                  <div class="col-12 col-md-3 align-items-center" *ngIf="pageIntroVideos && pageIntroVideos.videoUrl">
+                    <button class="btn btn-lg btn-mosaico-primary"
+                      (click)="showUploadedVideo($event)">{{'PAGE_INTRO.PAGE_BUTTON.SHOW'|translate}}</button>
+                  </div>
+                </div>
+                <div class="row form-group mt-5">
+                  <div class="col-12 col-md-3 label align-items-center d-flex">
+                    <span class="h6"> {{'PAGE_INTRO.PAGE_FORM_DISAPLY_UPLOADED_VIDEO'|translate}} </span>
+                  </div>
+                  <div class="col-12 col-md-2 align-items-center">
+                    <div class="form-check form-switch form-check-custom form-check-solid">
+                      <input class="form-check-input" name="showLocalVideo" formControlName="showLocalVideo"
+                        type="checkbox" id="chkShowLocalVideo" [checked]="m.showLocalVideo.value" [disabled]="false"
+                        appBaseColors [switch]="true" />
+                      <label class="form-check-label" for="chkShowLocalVideo"></label>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <app-button-save (clicked)="save()" [classes]="'btn btn-lg btn-mosaico-primary'"
+              [buttonId]="'btn-save-video-popup'" [buttonText]="'PAGE_INTRO.PAGE_BUTTON.SAVE'|translate">
+            </app-button-save>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card settings-card shadow-sm mb-5">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <app-edit-project-fee></app-edit-project-fee>
+      </div>
+    </div>
+  </div>
+</div>

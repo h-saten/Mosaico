@@ -1,0 +1,5 @@
+index,first_name,last_name,password_hash_function,recovery_email,org_unit_path,groups_list
+1,Pan,Tadeusz,MD5,michalczaja2282@gmail.com,/,all-sapiency
+2,Zbigniew,Brzęczyszczykiewicz,MD5,michalczaja2292@gmail.com,/Mosaico,all-copernic;all-sapiency;all-mosaico
+3,Użytkownik,Testowy,MD5,czajsonino@gmail.com,/Toscanizzacione,all-mosaico
+4,Jacek,Rząsa,MD5,michalczaja@student.agh.edu.pl,/Mosaico,all-mosaico;all-copernic

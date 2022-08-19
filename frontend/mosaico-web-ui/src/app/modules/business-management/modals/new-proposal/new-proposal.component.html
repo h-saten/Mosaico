@@ -1,0 +1,69 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{'MODALS.NEW_PROPOSAL.TITLE'|translate}}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" [disabled]="isSubmitting$|async"
+                    (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <ng-container>
+                <div class="row mosaico-form" [formGroup]="form">
+                    <div class="form-group mb-5">
+                        <label class="form-label">{{'MODALS.NEW_PROPOSAL.FORM.TITLE.LABEL'|translate}}</label>
+                        <input type="text" name="title" formControlName="title"
+                            [ngClass]="{ 'is-invalid': isDirty('title') && hasErrors('title') }" class="form-control"
+                            placeholder="{{'MODALS.NEW_PROPOSAL.FORM.TITLE.PLACEHOLDER'|translate}}" />
+                        <div class="invalid-feedback" *ngIf="isDirty('title') && hasErrors('title')">
+                            {{'MODALS.NEW_PROPOSAL.FORM.TITLE.ERROR'|translate}}</div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label class="form-label">{{'MODALS.NEW_PROPOSAL.FORM.DESCRIPTION.LABEL'|translate}}</label>
+                        <textarea name="description" formControlName="description" style="min-height: 150px;"
+                            [ngClass]="{ 'is-invalid': isDirty('description') && hasErrors('description') }"
+                            class="form-control"
+                            placeholder="{{'MODALS.NEW_PROPOSAL.FORM.DESCRIPTION.PLACEHOLDER'|translate}}"></textarea>
+                        <div class="invalid-feedback" *ngIf="isDirty('description') && hasErrors('description')">
+                            {{'MODALS.NEW_PROPOSAL.FORM.DESCRIPTION.ERROR'|translate}}</div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label class="form-label">{{'MODALS.NEW_PROPOSAL.FORM.TOKEN.LABEL'|translate}}</label>
+                        <ng-select appAutofocus class="mosaico-select" [items]="tokens" bindLabel="symbol"
+                            bindValue="id" [searchable]="true" formControlName="tokenId"
+                            placeholder="{{'MODALS.NEW_PROPOSAL.FORM.TOKEN.PLACEHOLDER'|translate}}">
+                        </ng-select>
+                        <div class="invalid-feedback" *ngIf="isDirty('tokenId') && hasErrors('tokenId')">
+                            {{'MODALS.NEW_PROPOSAL.FORM.TOKEN.ERROR'|translate}}</div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label class="form-label">{{'MODALS.NEW_PROPOSAL.FORM.QUORUM.LABEL'|translate}}</label>
+                        <input type="number" name="quorumThreshold" formControlName="quorumThreshold"
+                            [ngClass]="{ 'is-invalid': isDirty('quorumThreshold') && hasErrors('quorumThreshold') }" class="form-control"
+                            placeholder="{{'MODALS.NEW_PROPOSAL.FORM.QUORUM.PLACEHOLDER'|translate}}" />
+                        <div class="invalid-feedback" *ngIf="isDirty('quorumThreshold') && hasErrors('quorumThreshold')">
+                            {{'MODALS.NEW_PROPOSAL.FORM.QUORUM.ERROR'|translate}}</div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="modal-footer">
+            <div class="row w-100">
+                <div class="col-12 w-100 px-0">
+                    <app-button-save
+                        [classes]="'btn btn-mosaico-primary w-100'"
+                        [showSpinner]="(isSubmitting$|async) === true"
+                        [buttonText]="'MODALS.NEW_PROPOSAL.ACTIONS.CREATE' | translate"
+                        (clicked)="submit()"
+                    ></app-button-save>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

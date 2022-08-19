@@ -1,0 +1,189 @@
+.follow-steps-conatiner {
+    padding: 135px 0 270px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    p {
+        margin: 0;
+    }
+    
+    .follow-steps-card {
+        background: #FFFFFF;
+        border-radius: 8px;
+        box-shadow: 0px 11px 50px rgba(0, 0, 0, 0.07);
+        padding: 24px 40px;
+        position: relative;
+        max-width: 515px;
+
+        .card-number {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            box-shadow: 0px 11px 50px rgb(0 0 0 / 7%);
+            display: flex;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 36px;
+            color: #434343;
+            align-items: center;
+            top: -20px;
+            left: calc(50% - 20px);
+        }
+    }
+
+    .step-title {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        color: #434343;
+        margin: 16px 0;
+    }
+
+    .step-description {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 20px;
+        color: rgba(73, 70, 66, 0.7);
+        margin-bottom: 16px;
+    }
+
+    .steps-card-action {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 24px;
+        color: #0063F5;  
+    }
+
+    .arrow-right {
+        transform: rotate(-90deg);
+        margin-left: 5px;
+    }
+
+    .dots {
+        width: 7px;
+        height: 7px;
+        background: #FF9A00;
+        border-radius: 50%;
+    }
+
+    .bottom-dots {
+        padding-left: calc(50% - 3.5px);
+        margin-right: -48px;
+    }
+
+    .top-dots {
+        padding-right: calc(50% - 3.5px);
+        margin-left: -48px;
+    }
+
+    .after-card-dots {
+        margin: -2.5px 0 7px;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+
+        &.top-arrow {
+            margin-top: -7px;
+        }
+        
+        &.arrow-down {
+            padding-bottom: 40px;
+            position: relative;
+       
+            &::after {
+                position: absolute;
+                content: "";
+                bottom: 11px;
+                left: calc(50% - 10px);
+                border-top: 15px solid #FF9A00;
+                border-bottom: 10px solid transparent;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+            }
+        }
+
+        &.card-arrow-donw {
+            position: relative;
+            padding-bottom: 40px;
+
+            &::before {
+                position: absolute;
+                content: "";
+                bottom: 11px;
+                left: calc(50% - 10px);
+                border-top: 15px solid #FF9A00;
+                border-bottom: 10px solid transparent;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 991px){ 
+    .follow-steps-conatiner {
+        padding: 56px 0 251px;
+
+        .follow-steps-cards-wrapper {
+            max-width: 857px;
+
+            .follow-steps-card-wrapper:not(:last-child) {
+                margin-bottom: 18px;
+            }
+        }
+
+        .follow-steps-card {
+            max-width: none;
+            padding: 40px 24px;
+            box-shadow: 0 0.1rem 1rem 0.25rem rgb(0 0 0 / 5%) !important;
+        }
+
+        .step-icon {
+            height: 100px;
+            width: 100px;
+            margin-right: 40px;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .follow-steps-conatiner {
+        padding: 56px 0 0;
+        display: block;
+
+        .follow-steps-cards-wrapper {
+            
+            .step-card {
+                min-height: 453px;
+                max-width: 309px;
+                padding: 20px 40px 20px 20px !important;
+                margin-bottom: 64px !important;
+    
+                .step-title {
+                    margin: 20px 0 12px;
+                }
+    
+                .step-description {
+                    margin: 12px 0;
+                }
+            }
+
+            ::ng-deep .swiper-slide {
+                min-width: 309px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 391px) {
+    .follow-steps-cards-wrapper {
+        .step-card {
+            padding-right: 20px;
+        } 
+    }
+}

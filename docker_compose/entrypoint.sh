@@ -1,0 +1,1 @@
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Mosaico2021! -d master -Q "CREATE DATABASE Mosaico" & /opt/mssql/bin/sqlservr

@@ -1,0 +1,111 @@
+<!-- <app-coming-soon-page></app-coming-soon-page> -->
+<div class="card-header">
+  <div class="card-title">{{'KYB.KNOW_YOUR_BUSINESS' | translate}}</div>
+</div>
+<div class="card-body">
+  <div class="row mt-5">
+    <div class="col-12">
+      <form [formGroup]="mainForm" class="form mosaico-form" novalidate="novalidate">
+        <ng-container *ngIf="!readOnly; else previewFiles">
+            <div class="row form-group">
+              <div class="col-12 col-md-6 label align-items-center d-flex">
+                 {{'KYB.PLEASE_UPLOAD_REGISTRATION' | translate}}
+              </div>
+              <div class="col-12 col-md-6 align-items-center d-flex">
+                <input [attr.disabled]="readOnly ? '' : null" type="file" name="companyRegistration"
+                  accept=".png, .jpg, .jpeg .pdf" class="form-control"
+                  (change)="saveCompanyRegistration($event)">
+              </div>              
+            </div>
+            <div class="row form-group mt-5">
+              <div class="col-12 col-md-6 label align-items-center d-flex">
+                {{'KYB.PLEASE_UPLOAD_ADDRESS' | translate}}
+              </div>
+              <div class="col-12 col-md-6 align-items-center d-flex">
+                <input [attr.disabled]="readOnly ? '' : null" type="file" name="companyAddress"
+                  accept=".png, .jpg, .jpeg .pdf" class="form-control"
+                  (change)="saveCompanyAddress($event)">
+              </div>              
+            </div>
+        </ng-container>
+
+        <ng-template #previewFiles>
+          <div class="flex-row-fluid align-items-center flex-wrap my-lg-0 me-2">
+            &nbsp;
+            <div class="card-header">
+              <label class="btn">{{'KYB.COMPANY_REGISTRATION' | translate}}</label>
+              <div class="menu-item me-lg-1">
+                <a href="{{mainForm.value.companyRegistration}}" class="menu-link py-3 bg-success">
+                  <span class="menu-title text-light">{{'KYB.DOWNLOAD_COMPANY_REGISTRATION' | translate}}</span>
+                </a>
+              </div>
+            </div>
+            &nbsp;
+            <div class="card-header">
+              <label class="btn">{{'KYB.COMPANY_ADDRESS' | translate}}</label>
+
+              <div class="menu-item me-lg-1">
+                <a href="{{mainForm.value.companyAddress}}" class="menu-link py-3 bg-success">
+                  <span class="menu-title text-light">{{'KYB.DOWNLOAD_COMPANY_ADDRESS' | translate}}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <div class="card-header">
+          <div class="card-title">{{'KYB.SHAREHOLDERS' | translate}}</div>
+        </div>
+        <ng-container *ngFor="let content of getContentsControls(mainForm); let i = index" [formGroup]="content">
+          <div class="row mt-5 mb-5">
+            <div class="col-12 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+              <div class="d-flex flex-row w-100 me-3">
+                <div class="form-group w-100">
+                  <label for="fullName">{{'KYB.FULL_NAME' | translate}}</label>
+                  <input [attr.disabled]="readOnly ? '' : null" type="text" name="fullName"
+                    formControlName="fullName" class="form-control"
+                    placeholder="Enter shareholder's name" />
+                </div>
+              </div>
+              <div class="d-flex flex-row w-100 me-3">
+                <div class="form-group w-100">
+                  <label for="email">{{'KYB.EMAIL' | translate}}</label>
+                  <input [attr.disabled]="readOnly ? '' : null" type="text" name="email"
+                    formControlName="email" class="form-control"
+                    placeholder="Enter email" />
+                </div>
+              </div>
+              <div class="d-flex flex-row w-100 me-3">
+                <div class="form-group w-100">
+                  <label for="share">{{'KYB.PERCENT_SHARE' | translate}}</label>
+                  <input [attr.disabled]="readOnly ? '' : null" type="number" name="share"
+                    formControlName="share" class="form-control"
+                    placeholder="Enter percent share" />
+                </div>
+              </div>
+              <div class="d-flex flex-row" *ngIf="!readOnly">
+                <div class="form-group">
+                  <div class="menu-item me-lg-1">
+                    <button class="btn btn-sm btn-icon mt-5" ngbTooltip="Delete row" (click)="deleteRow(i)"><i class="fa fa-trash text-danger"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+    </div>
+  </div>
+  <div class="row mb-5 mt-5" *ngIf="!readOnly">
+    <div class="col-12">
+      <button class="btn btn-mosaico-outline-secondary" (click)="addContent()">{{'KYB.ADD_SHAREHOLDER' | translate}} <i
+          class="fa fa-plus ms-2"></i></button>
+    </div>
+  </div>
+  <div *ngIf="!readOnly" class="row">
+    <div class="col-12">
+      <button type="submit" (click)="save()" class="btn btn-lg btn-mosaico-primary">
+        {{'KYB.SUBMIT_DATA' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

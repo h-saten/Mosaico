@@ -1,0 +1,19 @@
+<ng-container *ngIf="balance">
+  <div class="row py-2" *ngFor="let token of balance.tokens | slice:0:3; index as i; ">
+    <div class="col-12">
+      <div class="d-flex align-items-center mb-2 px-8">
+        <div class="symbol symbol-25px me-5">
+          <div class="symbol-label" *ngIf="token.logoUrl && token.logoUrl.length > 0"
+            style="background-image:url({{token.logoUrl}})"></div>
+          <div class="symbol-label fs-4 fw-bold text-dark" *ngIf="!token.logoUrl || token.logoUrl.length == 0">
+            {{token.symbol|slice:0:1}}</div>
+        </div>
+        <div class="flex-grow-1">
+          <span class="text-dark fw-bold text-hover-primary fs-3">
+            {{token.symbol}} {{token.balance | number: '1.2-4': 'en'}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

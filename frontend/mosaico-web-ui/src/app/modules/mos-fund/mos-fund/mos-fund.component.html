@@ -1,0 +1,111 @@
+<div class="row" *ngIf="!isLoaded">
+  <div class="col-12 d-flex justify-content-center align-items-center">
+    <app-spinner-container [showSpinner]="true"></app-spinner-container>
+  </div>
+</div>
+<ng-container *ngIf="isLoaded">
+  <div class="row col-12 m-0">
+    <div class="col-md-6 col-xl-4 mb-5">
+      <div class="card card-xl-stretch mb5 border-0 bg-transparent shadow-none">
+        <div class="card-header d-flex justify-content-between align-items-center p-0 border-0 min-h-30px"></div>
+        <div class="card-body pt-3 text-center mt-10">
+          <img class="w-50px" src="/assets/media/logos/mosaico_sygnet.png">
+          <div class="row">
+            <p class="fs-2 mt-4 fw-bold">{{'MOSFUND.fund.value' | translate}}</p>
+          </div>
+
+          <div class="row text-center">
+            <h2 class="display-6">{{totalValue|currency:'USD':'symbol': '1.0-0'}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4 mb-5">
+      <div class="card card-xl-stretch mb5 border border-secodary border-2">
+        <div class="card-header d-flex justify-content-center align-items-center p-0 border-0 min-h-30px mx-auto">
+          <div [inlineSVG]="'/assets/media/svg/mos-fund/fund.svg'"></div>
+        </div>
+        <div class="card-body py-3">
+          <div class="row mb-4 text-center">
+            <p class="fs-1 mt-4 mb-2">{{'MOSFUND.fund.raised' | translate}}</p>
+            <h2>{{counters['TOTAL_GATHERED_CAPITAL'] | currency:'USD': 'symbol': '1.0-0'}}</h2>
+          </div>
+          <div class="row mt-8 fs-3">
+            <div class="col-6 float-start pe-3">
+              {{'MOSFUND.projects' | translate}} <span class="fw-bold">{{32|number}}</span>
+            </div>
+            <div class="col-6 float-start ps-3 text-end">
+              {{'MOSFUND.investors' | translate}} <span class="fw-bold">{{counters['TOTAL_INVESTORS'] | number:
+                '1.0-0'}}</span>
+            </div>
+          </div>
+          <div class="text-center mt-10 border-top pt-10 text-muted fs-4" *ngIf="lastUpdatedAt && lastUpdatedAt.length > 0">
+            <i class="fas fa-stopwatch"></i>
+            {{'MOSFUND.last.updated' | translate}} {{lastUpdatedAt | amLocale:culture | amCalendar  }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4 mb-5">
+      <div class="card card-xl-stretch mb5 border border-secodary border-2" *ngIf="mosToken">
+        <div class="card-header d-flex justify-content-between align-items-center p-0 border-0 min-h-30px">
+          <p class="card-title align-items-start m-0">
+            <img [attr.src]="mosToken.logo" /> <span class="p-1 fs-2 ms-3 fw-bolder">{{mosToken.tokenSymbol}} <small class="text-muted">{{mosToken.latestPrice|currency:'USD':'symbol': '1.0-4'}}</small></span>
+          </p>
+        </div>
+        <div class="card-body pt-3">
+
+          <div id="chart">
+            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+              [stroke]="chartOptions.stroke" [dataLabels]="chartOptions.dataLabels" [yaxis]="chartOptions.yaxis"
+              [labels]="chartOptions.labels" [legend]="chartOptions.legend" [title]="chartOptions.title"
+              [subtitle]="chartOptions.subtitle"></apx-chart>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row col-12 m-0" *ngIf="portfolio && portfolio.length > 0 && isLoaded">
+    <h1 class="text-center p-8">{{'MOSFUND.mos.portfolio' | translate}}</h1>
+    <div class="col-md-6 col-xl-6 mb-5" *ngFor="let project of portfolio">
+      <div class="card card-xl-stretch mb5 border border-secodary border-2">
+        <div class="card-header d-flex justify-content-between align-items-center flex-row p-0 border-0 min-h-30px">
+          <div class="symbol symbol-circle symbol-100px shadow-sm">
+            <div class="symbol-label fs-2" *ngIf="!project.logo || project.logo.length === 0">
+              {{project.tokenSymbol|slice:0:3}}</div>
+            <div class="symbol-label" *ngIf="project.logo && project.logo.length > 0"
+              style="background-image:url({{project.logo}})">
+            </div>
+          </div>
+          <div>
+            <p class="m-0 fs-2 bg-info p-4 rounded">
+              {{'MOSFUND.mos.owns' | translate}}: <span class="fw-bold">{{project.amount}}
+                {{project.tokenSymbol}}</span> <br>
+              {{'MOSFUND.current.value' | translate}}: <span class="fw-bold">{{project.totalValue |
+                currency:'USD':'symbol': '1.0-2' }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="card-body pt-3">
+          <div class="row">
+            <p class="display-6 mt-8">{{project.tokenName}}</p>
+            <p class="fs-1 mt-4 mb-2">{{'MOSFUND.token.symbol' | translate}} {{project.tokenSymbol}}</p>
+            <p class="fs-2 mt-0 mb-2">{{'MOSFUND.token.price' | translate}} {{project.latestPrice |
+              currency:'USD':'symbol': '1.0-4'}} </p>
+            <p class="fs-2 mt-0" *ngIf="project.isStakingEnabled === true">{{'MOSFUND.staking' | translate}}: <span
+                class="text-success">ON</span></p>
+            <p class="fs-2 mt-0" *ngIf="project.isStakingEnabled === false">{{'MOSFUND.staking' | translate}}: <span
+                class="text-muted">OFF</span></p>
+          </div>
+          <div class="d-block row" *ngIf="project.records && project.records.length > 0">
+            <apx-chart [series]="chartSeries[project.tokenSymbol]" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+              [stroke]="chartOptions.stroke" [dataLabels]="chartOptions.dataLabels" [yaxis]="chartOptions.yaxis"
+              [labels]="chartLabels[project.tokenSymbol]" [legend]="chartOptions.legend" [title]="chartOptions.title"
+              [subtitle]="chartOptions.subtitle"></apx-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

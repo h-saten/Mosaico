@@ -1,0 +1,136 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{ "CREATE_AIRDROP.FORM.TITLE" | translate }}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" [disabled]="isLoading$|async"
+                    (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row" *ngIf="isLoading$|async">
+                <div class="col-12">
+                    <app-spinner-container [showSpinner]="true"></app-spinner-container>
+                </div>
+            </div>
+            <div class="row" *ngIf="!(isLoading$|async)">
+                <div class="col-12">
+                    <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+                        <div class="form-group mb-5">
+                            <label class="form-label required">{{ "CREATE_AIRDROP.FORM.LABELS.NAME" | translate }}</label>
+                            <input type="text" name="name" formControlName="name" class="form-control"
+                                [ngClass]="{ 'is-invalid': isDirty('name') && hasErrors('name') }"
+                                [placeholder]="'CREATE_AIRDROP.FORM.PLACEHOLDERS.CHOOSE_NAME' | translate" />
+                            <div class="invalid-feedback" *ngIf="isDirty('name') && hasErrors('name')">
+                                {{ 'CREATE_AIRDROP.FORM.VALIDATORS.INVALID_CAMPAIGN_NAME' | translate }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label required">{{ "CREATE_AIRDROP.FORM.LABELS.START_DATE" | translate }}</label>
+                                    <p-calendar name="startDate" formControlName="startDate" [readonlyInput]="true"
+                                        [styleClass]="'w-100'" inputId="startDate" [showIcon]="true"
+                                        [showButtonBar]="true" [showTime]="true" [hourFormat]="'24'"
+                                        [inputStyleClass]="'form-control w-100'" [placeholder]="'CREATE_AIRDROP.FORM.PLACEHOLDERS.CHOOSE_TIME' | translate">
+                                    </p-calendar>
+                                    <div class="invalid-feedback"
+                                        *ngIf="isDirty('startDate') && hasErrors('startDate')">Start date is invalid
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label required">{{ "CREATE_AIRDROP.FORM.LABELS.END_DATE" | translate }}</label>
+                                    <p-calendar name="endDate" formControlName="endDate" [readonlyInput]="true"
+                                        [styleClass]="'w-100'" inputId="endDate" [showIcon]="true"
+                                        [showButtonBar]="true" [showTime]="true" [hourFormat]="'24'"
+                                        [inputStyleClass]="'form-control w-100'" [placeholder]="'CREATE_AIRDROP.FORM.PLACEHOLDERS.CHOOSE_TIME' | translate">
+                                    </p-calendar>
+                                    <div class="invalid-feedback" *ngIf="isDirty('endDate') && hasErrors('endDate')">End
+                                        date is invalid</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5">
+                            <div class="form-group mb-5">
+                                <label for="name" class="form-label required">{{ "CREATE_AIRDROP.FORM.LABELS.TOTAL_TOKEN" | translate }}</label>
+                                <div class="input-group mb-5">
+                                    <input type="number" name="totalCap" formControlName="totalCap"
+                                        [ngClass]="{ 'is-invalid': isDirty('totalCap') && hasErrors('totalCap') }"
+                                        class="form-control"
+                                        [placeholder]="'CREATE_AIRDROP.FORM.PLACEHOLDERS.ENTER_AMOUNT' | translate" />
+                                    <span class="input-group-text">/ {{tokenBalance | number: '1.0-6': 'en'}}</span>
+                                    <div class="invalid-feedback" *ngIf="isDirty('totalCap') && hasErrors('totalCap')">
+                                        {{ 'CREATE_AIRDROP.FORM.VALIDATORS.INVALID_TOKEN_SUPPLY' | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5">
+                            <div class="form-group mb-5">
+                                <label for="name" class="form-label required">{{ "CREATE_AIRDROP.FORM.LABELS.MAX_WITHDRAW" | translate }}</label>
+                                <div class="input-group mb-5">
+                                    <input type="number" name="tokensPerParticipant"
+                                        formControlName="tokensPerParticipant"
+                                        [ngClass]="{ 'is-invalid': isDirty('tokensPerParticipant') && hasErrors('tokensPerParticipant') }"
+                                        class="form-control"
+                                        [placeholder]="'CREATE_AIRDROP.FORM.PLACEHOLDERS.ENTER_TOKENS_AMOUNT' | translate"/>
+                                    <span class="input-group-text">/ person</span>
+                                    <div class="invalid-feedback"
+                                        *ngIf="isDirty('tokensPerParticipant') && hasErrors('tokensPerParticipant')">
+                                        {{ 'CREATE_AIRDROP.FORM.VALIDATORS.INVALID_TOKEN_AMOUNT' | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5 me-4">
+                            <div class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input" type="checkbox" value="true" id="isOpened"
+                                    formControlName="isOpened" />
+                                <label class="form-check-label" for="isOpened">
+                                    {{ "CREATE_AIRDROP.FORM.RADIO_BUTTONS.PUBLIC" | translate }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5 me-4">
+                            <div class="form-check form-switch form-check-custom form-check-solid">
+                                <input class="form-check-input" type="checkbox" value="false" id="countAsPurchase"
+                                    formControlName="countAsPurchase" />
+                                <label class="form-check-label" for="countAsPurchase">
+                                    {{ "CREATE_AIRDROP.FORM.RADIO_BUTTONS.PURCHASE_COUNT" | translate }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5" *ngIf="displayStageControl === true">
+                            <label class="form-label required">Stage</label>
+                            <ng-select class="mosaico-select" [clearable]="false" [searchable]="false"
+                              [ngClass]="{ 'is-invalid': isDirty('stageId') && hasErrors('stageId') }" bindValue="id" bindLabel="name"
+                              [items]="stages" formControlName="stageId" placeholder="Choose project stage">
+                              <ng-template ng-label-tmp let-item="item">
+                                {{item.name|translate}} <span class="text-muted">${{item.tokenPrice|number: '1.0-4'}}</span>
+                              </ng-template>
+                              <ng-template ng-option-tmp let-item="item" let-index="index">
+                                {{item.name|translate}} <span class="text-muted">${{item.tokenPrice|number: '1.0-4'}}</span>
+                              </ng-template>
+                            </ng-select>
+                            <div class="invalid-feedback" *ngIf="isDirty('stageId') && hasErrors('stageId')">Invalid stage</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row" *ngIf="!(isLoading$|async)">
+                <div class="col-12 d-flex justify-content-center">
+                    <button class="btn btn-mosaico-primary w-100" (click)="save()"
+                        [disabled]="isSaving$|async">{{ "CREATE_AIRDROP.FORM.ACTIONS.CREATE" | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

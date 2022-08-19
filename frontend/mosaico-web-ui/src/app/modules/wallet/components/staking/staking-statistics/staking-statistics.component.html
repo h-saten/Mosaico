@@ -1,0 +1,48 @@
+<div class="card total-staking flex-md-row flex-column h-100">
+    <div class="col-12 col-md-5 d-flex flex-column justify-content-start">
+        <div>
+            <div class="total-staking-title">{{'WALLET_STAKING.STATISTICS.TITLE.ACTIVE_STAKING' | translate}}<i
+                    [ngbTooltip]="" [placement]="'top'" class="fas fa-info-circle"></i></div>
+            <div class="total-staking-amount d-flex pb-11">
+                <p>{{(stats?.activeStaking ?? 0)|number: '1.0-2'}} USD</p>
+                <!-- <div class="red-triangle"></div>
+                <p>0.0%</p> -->
+            </div>
+        </div>
+        <div>
+            <div class="total-staking-title">{{'WALLET_STAKING.STATISTICS.TITLE.REWARD_CLAIMED' | translate}}<i
+                    [ngbTooltip]="'USER_WALLET.OVERVIEW.STAKING.COPY_HINT'|translate" [placement]="'top'"
+                    class="fas fa-info-circle"></i></div>
+            <div class="total-staking-amount d-flex">
+                <p>{{(stats?.rewardClaimed ?? 0)|number: '1.0-2'}} USD</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-7 pt-8 pt-md-0">
+        <div class="row h-100 w-100">
+            <div class="col-12 d-flex flex-column justify-content-center">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-center align-items-center chart-container">
+                                <img class="img-fluid" src="/assets/media/misc/staking_no_data.png" />
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-12">
+                                <div class="chart-container">
+                                    <apx-chart [series]="diagramOptions.series" [chart]="diagramOptions.chart"
+                                        [xaxis]="diagramOptions.xaxis" [yaxis]="diagramOptions.yaxis"
+                                        [stroke]="diagramOptions.stroke" [tooltip]="diagramOptions.tooltip"
+                                        [dataLabels]="diagramOptions.dataLabels" [theme]="diagramOptions.theme"
+                                        [legend]="diagramOptions.legend">
+                                    </apx-chart>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

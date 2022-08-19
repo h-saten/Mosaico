@@ -1,0 +1,59 @@
+<div class="card shadow-sm">
+  <div class="card-header card-header-stretch">
+    <h3 class="card-title">Your stakings</h3>
+    <div class="card-toolbar">
+      <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab"
+             [ngClass]="activeClass('staking_stakes')"
+             (click)="setTab('staking_stakes')">Stakings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab"
+             [ngClass]="activeClass('staking_withdrawals')"
+             (click)="setTab('staking_withdrawals')">Withdrawals</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade" id="staking_stakes" [ngClass]="activeClass('staking_stakes')" role="tabpanel">
+
+        <table class="table gs-7 gy-7 gx-7" *ngIf="stakings && stakings.length > 0">
+          <thead>
+          <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+            <th>Token</th>
+            <th>Staked tokens</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let s of stakings; index as idx">
+          <tr>
+            <td class="align-middle">{{s.tokenSymbol}}</td>
+            <td class="align-middle">{{s.quantity}}</td>
+            <td class="align-end">
+              <button class="btn btn-secondary btn-sm me-3" (click)="withdraw(s.stakingId)">Withdraw</button>
+              <button class="btn btn-secondary btn-sm me-3" (click)="showStakingTransactionDetails(idx)">Transactions list</button>
+            </td>
+          </tr>
+          <tr *ngIf="idx === detailsRowIndex">
+            <td colspan="3">
+              <app-token-stakings [stakingId]="s.stakingId"></app-token-stakings>
+            </td>
+          </tr>
+          </ng-container>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="tab-pane fade" id="staking_withdrawals" [ngClass]="activeClass('staking_withdrawals')" role="tabpanel">
+        <app-staking-withdrawals></app-staking-withdrawals>
+      </div>
+
+    </div>
+  </div>
+</div>
+

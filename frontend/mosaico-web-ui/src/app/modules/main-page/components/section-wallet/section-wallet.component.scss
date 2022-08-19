@@ -1,0 +1,161 @@
+
+.section-wallet-container {
+    max-width: 1324px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+
+    p, ul {
+        margin: 0;
+    }
+    
+    .section-wallet-header {
+        ul {        
+            li {
+                padding-bottom: 62px;
+        
+                a {
+                    font-weight: 700;
+                    font-size: 48px;
+                    line-height: 40px;
+                    color: #DFE0EB;
+                    cursor: pointer;
+                    white-space: nowrap;
+            
+                    &.active {
+                        background: linear-gradient(94.16deg, #0063F5 0%, #00A1FF 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+                }
+            }
+        
+            ::ng-deep {
+                .swiper-pagination {
+                    text-align: left;
+                    z-index: 0;
+            
+                    .swiper-pagination-bullet {
+                        background: #80B1FA;
+                    }
+                    
+                    .swiper-pagination-bullet-active {
+                        background: #0063F5;
+                    }
+                }
+            }
+        }
+    }
+    
+    .section-wallet-item-container {
+        display: flex;
+        gap: 76px;
+        padding: 38px 0 146px;
+    
+        .landing-page-icon {
+            height: 530px;
+        }
+    
+        .section-wallet-item-wrapper {
+            max-width: 461px;
+            padding: 124px 0;
+            
+            .section-wallet-item-title {
+                font-weight: 700;
+                font-size: 24px;
+                line-height: 24px;
+                color: #434343;
+            }
+            
+            .section-wallet-item-description {
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 24px;
+                color: #979797;
+                margin: 24px 0 36px;
+            }
+            
+            .section-wallet-item-btn {
+                background: #0063F5;
+                border-radius: 5px;
+                font-weight: 600;
+                font-size: 15px;
+                line-height: 24px;
+                color: #FFFFFF;
+                padding: 12px 23px;
+            }
+        }
+    } 
+}
+
+@media screen and (max-width: 991px) {
+    .section-wallet-container {
+
+        .section-wallet-header {
+
+            ul li a {
+                font-size: 36px;
+                line-height: 40px;
+            }
+        }
+
+        .section-wallet-item-container {
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            padding-bottom: 124px;
+
+            .landing-page-icon {
+                height: 425px;
+            }
+
+            .section-wallet-item-wrapper {
+                text-align: center;
+                padding: 0;
+
+                .section-wallet-item-description {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 576px) {
+    .section-wallet-container {
+        padding: 42px 25px;
+
+        .section-wallet-header {
+            ul li {
+                padding-bottom: 43px;
+
+                a {
+                    font-size: 24px;
+                }
+            }
+
+            ::ng-deep {
+                .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+                    bottom: 18px;
+                }
+            }
+        }
+
+        .section-wallet-item-container {
+            padding: 21px 0 36px;
+
+            .landing-page-icon {
+                width: 244px;
+                height: 214px;
+            }
+
+            .section-wallet-item-wrapper {
+                .section-wallet-item-description {
+                    margin: 20px 0 40px;
+                }
+            }
+        }
+    }
+}
+

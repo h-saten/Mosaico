@@ -1,0 +1,33 @@
+<div class="row mt-5" *ngIf="isLoading$|async">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="true"></app-spinner-container>
+    </div>
+</div>
+<div class="row" *ngIf="isDataLoaded && !(isLoading$|async)">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table mosaico-table mosaico-table--primary-header mosaico-table--no-row-border">
+                <thead>
+                    <tr>
+                        <th class="col-2">Title</th>
+                        <th class="col-2">Investors</th>
+                        <th class="col-2">Total Supply</th>
+                        <th class="col-2">Claimed</th>
+                        <th class="col-2">Status</th>
+                        <th class="col-2" *ngIf="canEdit">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!vestings || vestings.length === 0">
+                        <td colspan="6" class="text-center">There are no vestings</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="isDataLoaded">
+    <div class="col-12">
+        <button class="btn text-dark" disabled><i class="fa fa-plus text-dark"></i> Create new</button>
+    </div>
+</div>

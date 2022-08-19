@@ -1,0 +1,9 @@
+<ng-container *ngIf="renderView | async">
+  <app-company-overview></app-company-overview>
+  <app-company-menu [slug]="company?.slug"></app-company-menu>
+  <ng-container *ngIf="company">
+    <router-outlet></router-outlet>
+  </ng-container>
+</ng-container>
+
+<app-spinner-container [showSpinner]="!(renderView|async)"></app-spinner-container>

@@ -1,0 +1,19 @@
+<div class="follow-steps-container" id="createProjects">
+    <div class="text-center pb-1">
+        <p class="follow-steps-title mb-5" innerHTML="{{ 'FS.main_title' | translate }}"></p>
+        <p class="follow-steps-subtitle d-none d-sm-block">{{ 'FS.subtitle' | translate}}</p>
+    </div>
+    <div class="pt-8">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
+            <li [ngbNavItem]="0">
+                <a ngbNavLink>{{ 'FS.title_1' | translate}}</a>
+                <ng-template ngbNavContent><app-section-follow-steps-invest></app-section-follow-steps-invest></ng-template>
+            </li>
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>{{ 'FS.title_2' | translate}}</a>
+                <ng-template ngbNavContent><app-section-follow-steps-create></app-section-follow-steps-create></ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav"></div>
+    </div>
+</div>

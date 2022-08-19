@@ -1,0 +1,67 @@
+
+<!-- EDIT TEAMS Modal-->
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12" style="display: flex; justify-content: center;">
+                <h4>{{'PROJECT_TEAM.TITLE' | translate}}</h4>
+                <button type="button" (click)="activeModal.close()" class="btn btn-light btn-icon close-btn"
+                    aria-label="Close">
+                    <i class="bi bi-x fs-2"></i>
+                </button>
+
+            </div>
+        </div>
+        <div class="row my-10">
+            <div class="col-sm-12 col-md-12 col-lg-8">
+              {{'PROJECT_TEAM.SUBTITLE' | translate}}
+
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 text-right">
+                <button type="button" class="btn btn-primary rounded-pill" (click)="addNewMember()"> <i
+                        class="bi bi-plus-circle-fill"></i> {{'PROJECT_TEAM.ADD' | translate}}</button>
+            </div>
+        </div>
+        <div class="members-list">
+            <div class="member-item" *ngFor="let member of team; let i = index">
+                <div class="d-flex">
+                    <div class="symbol symbol-circle symbol-150px mx-15">
+                        <div class="symbol-label"
+                        [style.background-image]="'url(' + (member.photoUrl ? member.photoUrl : 'assets/media/avatars/blank.png') + ')'">
+                        </div>
+                    </div>
+                    <div class="member-details">
+                        <div class="text-left">
+                            <p>{{member.name}}</p>
+                            <p>{{member.position}}</p>
+                            <div class="social-icons text-muted">
+                                <a href="{{member.facebook}}" class="btn btn-link btn-icon ms-2" target="_blank"> <i class="bi bi-facebook"></i></a>
+                                <a href="{{member.twitter}}" class="btn btn-link btn-icon" target="_blank"> <i class="bi bi-twitter"></i></a>
+                                <a href="{{member.linkedin}}" class="btn btn-link btn-icon" target="_blank"> <i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div ngbDropdown class="d-inline-block">
+                            <button class="btn btn-light btn-sm" id="dropdownBasic1" ngbDropdownToggle> <i
+                                    class="bi bi-three-dots-vertical"></i></button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem *ngIf="i >=0 && i != team.length-1"
+                                    (click)="moveDownOnce(member, i)">
+                                    <i class="bi bi-arrow-down fs-2"></i> &nbsp; {{'FORM.move.down' | translate}}</button>
+                                <button ngbDropdownItem *ngIf="i > 0" (click)="moveUpOnce(member, i)">
+                                  <i class="bi bi-arrow-up fs-2"></i> &nbsp; {{'FORM.move.up' | translate}}</button>
+                                <button ngbDropdownItem (click)="editMember(member)"><i
+                                        class="bi bi-pencil-square fs-2"></i> &nbsp; Edit</button>
+                                <button ngbDropdownItem  (click)="deleteMember(member.id)" ><i class="bi bi-trash fs-2"></i> &nbsp; {{'FORM.delete' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light rounded-pill" (click)="activeModal.close()">{{'PROJECT_TEAM.BTN_CLOSE' | translate}}</button>
+    </div>

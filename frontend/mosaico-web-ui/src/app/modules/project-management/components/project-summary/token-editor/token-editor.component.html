@@ -1,0 +1,24 @@
+<div ngbDropdown class="d-inline-block shadow-sm token-selector">
+  <button class="btn btn-light symbol-token" id="tokenSelector" ngbDropdownToggle>
+    <ng-container *ngIf="token; else selectTokenTmpl">
+      {{token.symbol}}
+    </ng-container>
+  </button>
+  <div ngbDropdownMenu aria-labelledby="tokenSelector" class="shadow-sm">
+    <button ngbDropdownItem (click)="selectToken(t.id)" *ngFor="let t of availableTokens">
+      {{t.symbol}}
+    </button>
+    <button ngbDropdownItem (click)="newTokenWindow.open()">
+      <i class="fa fa-plus"></i> {{'PROJECT_OVERVIEW.ACTIONS.NEW_TOKEN'|translate}}
+    </button>
+  </div>
+</div>
+
+<ng-template #selectTokenTmpl>
+  {{'PROJECT_OVERVIEW.FORM.TOKEN.LABEL'|translate}}
+</ng-template>
+<app-new-token #newTokenWindow
+  [companyId]="companyId"
+  [projectId]="projectId"
+  (closed)="onTokenCreated($event)"
+></app-new-token>

@@ -1,0 +1,39 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{ 'FEE.WITHDRAW.WITHDRAW_FEE' | translate }}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+                        <div class="form-group mb-5">
+                            <div class="form-group mb-5">
+                                <label class="form-label">{{ 'FEE.WITHDRAW.WALLET' | translate }}</label>
+                                <input type="text" name="walletAddress" formControlName="walletAddress" [ngClass]="{ 'is-invalid': isDirty('walletAddress') && hasErrors('walletAddress') }" class="form-control" [placeholder]="'FEE.WITHDRAW.ENTER_WALLET_ADDRESS' | translate"/>
+                                <div class="invalid-feedback" *ngIf="isDirty('walletAddress') && hasErrors('walletAddress')">Wallet is invalid</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row w-100">
+                <div class="col-12 w-100">
+                    <button class="btn btn-primary btn-mosaico-primary w-100" (click)="confirm()" [disabled]="form.invalid">{{ 'FEE.WITHDRAW.CONFIRM' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

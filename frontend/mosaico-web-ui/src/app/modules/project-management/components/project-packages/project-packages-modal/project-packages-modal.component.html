@@ -1,0 +1,73 @@
+<!-- <ng-template #content let-modal> -->
+  <div class="modal-content">
+    <div class="modal-header">
+
+      <h5 class="modal-title">
+        <ng-container *ngIf="currentFormMode === FormModeEnum.Add">
+          {{'PACKAGES_Add_new_package' | translate}}
+        </ng-container>
+        <ng-container *ngIf="currentFormMode === FormModeEnum.Edit">
+          {{'PACKAGES_Edit_package' | translate}}
+        </ng-container>
+
+        <span class="fs-2hx text-dark mb-6">
+          <div *ngIf="canEdit && !editEnabled" ngbDropdown class="d-inline-block">
+            <button class="btn btn-bg-light btn-active-color-primary btn-sm" ngbDropdownToggle>
+              {{ language?.name }}{{ " " }}
+            </button>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem *ngFor="let l of langs" (click)="selectLanguage(l.lang)"
+              [ngClass]="l.lang === currentLang ? 'active' : ''">
+                {{ l.name }}
+              </button>
+            </div>
+          </div>
+        </span>
+
+      </h5>
+
+      <!-- [disabled]="isEditingIsInProgress === true || dataSavingRequestInProgress === true" -->
+      <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="activeModal.dismiss(false)"
+          aria-label="Close">
+          <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <app-project-packages-form
+        #componentForm
+        [currentFormMode]="currentFormMode"
+        [projectId]="projectId"
+        [pageId]="pageId"
+        [packageId]="packageId"
+        [currentLang]="currentLang"
+        (saveEvent)="saveEventFromForm($event)"
+        (cancelEvent)="cancelEventFromForm($event)"
+      ></app-project-packages-form>
+    </div>
+
+    <div class="modal-footer">
+
+      <div class="modal-footer-panel-buttons">
+        <!-- [disabled]="isEditingIsInProgress === true || dataSavingRequestInProgress === true" -->
+
+        <app-button-save
+          [buttonId]="'btn-save-modal-profile'"
+          [formInvalid]="componentForm.isEditingIsInProgress === true"
+          [showSpinner]="componentForm.dataSavingRequestInProgress === true"
+          [buttonText]="'BUTTONS.btn.save' | translate"
+          (clicked)="componentForm.save()"
+        ></app-button-save>
+
+        <button type="button" class="btn btn-outline-primary ms-7" (click)="activeModal.dismiss(false)">
+          {{'BUTTONS.btn.cancel' | translate}}
+        </button>
+      </div>
+
+    </div>
+  </div>
+<!-- </ng-template> -->
+
+
+
+

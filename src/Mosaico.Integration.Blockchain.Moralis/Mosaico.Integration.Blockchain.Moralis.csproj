@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="RestSharp" Version="106.15.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mosaico.Base\Mosaico.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Blockchain.Base\Mosaico.Blockchain.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Integration.Blockchain.Ethereum\Mosaico.Integration.Blockchain.Ethereum.csproj" />
+    </ItemGroup>
+
+</Project>

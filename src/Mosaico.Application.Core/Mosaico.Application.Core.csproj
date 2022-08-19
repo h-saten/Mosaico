@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mosaico.Core\Mosaico.Core.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.Identity\Mosaico.Events.Identity.csproj" />
+      <ProjectReference Include="..\Mosaico.Integration.UserCom\Mosaico.Integration.UserCom.csproj" />
+    </ItemGroup>
+
+</Project>

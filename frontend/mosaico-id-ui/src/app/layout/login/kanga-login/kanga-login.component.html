@@ -1,0 +1,15 @@
+<p>Logowanie za pomocą Kanga.Exchange</p>
+<p *ngIf="!loginError"><span class="pl-2"><i class="fa fa-spinner fa-spin"></i></span></p>
+
+<div class="row py-1" *ngIf="loginError">
+  <div class="col-md-12">
+    <div class="alert alert-danger show" role="alert">
+      <span>{{ 'auth.login.external.error' | translate }}</span>
+    </div>
+  </div>
+
+  <p class="text-inverse text-left py-2">
+    <a [routerLink]="['/auth/login']" rel="noopener"> << {{ 'auth.forgot.back_login' | translate }}</a>
+  </p>
+
+</div>

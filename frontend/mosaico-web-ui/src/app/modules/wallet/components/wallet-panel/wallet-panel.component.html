@@ -1,0 +1,15 @@
+<div class="card wallet-items-card shadow-sm">
+    <div class="card-body">
+            <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                <li ngbNavItem>
+                    <a ngbNavLink>{{'USER_WALLET.PANEL.ASSETS.TITLE'|translate}}</a>
+                    <ng-template ngbNavContent><app-wallet-panel-assets></app-wallet-panel-assets></ng-template>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink>{{'USER_WALLET.PANEL.TRANSACTIONS.TITLE'|translate}}</a>
+                    <ng-template ngbNavContent><app-wallet-panel-transactions></app-wallet-panel-transactions></ng-template>
+                </li>
+            </ul>
+        <div [ngbNavOutlet]="nav"></div>
+    </div>
+</div>

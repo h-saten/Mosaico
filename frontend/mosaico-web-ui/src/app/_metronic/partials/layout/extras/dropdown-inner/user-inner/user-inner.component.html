@@ -1,0 +1,60 @@
+<ng-container *ngIf="(isAuthorized$ | async) && user">
+  <div class="menu-item px-3">
+    <div class="menu-content text-truncate d-flex align-items-center px-5">
+      <div class="d-flex flex-column">
+        <div class="fw-bolder d-flex align-items-center fs-5">
+          {{user?.firstName}} {{user?.lastName}}
+        </div>
+        <a class="fw-bold text-muted text-hover-primary fs-7 cursor-pointer">
+          {{user?.email}}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="separator my-2"></div>
+
+  <div class="menu-item px-5">
+    <a routerLink="/user/profile" class="menu-link px-5">
+      {{'USER_CONTEXT_MENU.my.profile'|translate}}
+    </a>
+  </div>
+
+  <div class="menu-item px-5">
+    <a class="menu-link px-5 cursor-pointer" routerLink="/projects/my" >
+      <span class="menu-text">{{'USER_CONTEXT_MENU.my.projects'|translate}}</span>
+      <span class="menu-badge">
+        <ng-container *ngIf="counters; else noCounterTmpl">
+          <span class="badge badge-light-danger badge-circle fw-bolder fs-7">{{counters['projects']}}</span>
+        </ng-container>
+      </span>
+    </a>
+  </div>
+
+   <div class="menu-item px-5">
+    <a class="menu-link px-5 cursor-pointer" routerLink="/dao/my" >
+      <span class="menu-text">{{'USER_CONTEXT_MENU.my.companies'|translate}}</span>
+      <span class="menu-badge">
+        <ng-container *ngIf="counters; else noCounterTmpl">
+          <span class="badge badge-light-danger badge-circle fw-bolder fs-7">{{counters['companies']}}</span>
+        </ng-container>
+      </span>
+    </a>
+  </div>
+
+  <div class="menu-item px-5">
+    <a routerLink="/wallet/operations" class="menu-link px-5 cursor-pointer">
+      <span class="menu-text">{{'USER_CONTEXT_MENU.my.operations'|translate}}</span>
+    </a>
+  </div>
+
+  <div class="separator my-2"></div>
+
+  <div class="menu-item px-5">
+    <a (click)="logout()" class="menu-link px-5 cursor-pointer"> {{'BUTTONS.btn.sign_out'|translate}} </a>
+  </div>
+</ng-container>
+
+<ng-template #noCounterTmpl>
+  <span class="badge badge-light-danger badge-circle fw-bolder fs-7">0</span>
+</ng-template>

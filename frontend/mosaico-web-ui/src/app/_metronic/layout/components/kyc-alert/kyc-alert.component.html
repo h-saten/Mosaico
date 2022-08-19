@@ -1,0 +1,19 @@
+<!--begin::Alert-->
+<div class="alert bg-danger d-flex flex-column flex-sm-row p-5 mb-10" *ngIf="!(isVerified$|async) && (isAuthorized$|async) && !isKycPage">
+    <!--begin::Icon-->
+    <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0" [inlineSVG]="'/assets/media/icons/duotune/general/gen049.svg'"></span>
+    <!--end::Icon-->
+
+    <!--begin::Wrapper-->
+    <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+        <!--begin::Title-->
+        <h4 class="mb-2 text-light">KYC is not completed</h4>
+        <!--end::Title-->
+
+        <!--begin::Content-->
+        <span>To continue using our service you must complete Know Your Customer process and prove your identity. <a [routerLink]="['/user/kyc']"> Start KYC</a> </span>
+        <!--end::Content-->
+    </div>
+    <!--end::Wrapper-->
+</div>
+<!--end::Alert-->

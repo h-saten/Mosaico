@@ -1,0 +1,18 @@
+
+<ng-container *ngIf="buttonActive === true">
+  <a routerLink="buy" class="btn-invest btn btn-flex" appBaseColors [button]="true">
+    <ng-template [ngTemplateOutlet]="middleOfButton"></ng-template>
+  </a>
+</ng-container>
+
+<ng-container *ngIf="buttonActive === false">
+  <button (click)="loginIfUnauthorized()"  type="button" class="btn-invest btn btn-flex" [ngClass]="{'button-disabled': isAuthorized}" appBaseColors [button]="true">
+      <ng-template [ngTemplateOutlet]="middleOfButton"></ng-template>
+  </button>
+</ng-container>
+
+<ng-template #middleOfButton>
+  <span class="d-flex align-items-start">
+    <span class="title-button">{{'BUTTONS.btn.invest_now' | translate}}</span>
+  </span>
+</ng-template>

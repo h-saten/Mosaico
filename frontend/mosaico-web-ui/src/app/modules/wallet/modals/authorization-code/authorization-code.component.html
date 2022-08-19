@@ -1,0 +1,37 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">Authorization</h5>
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" [disabled]="(isLoading$|async) === true" (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row" *ngIf="(isLoading$|async) === true">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <app-spinner-container [showSpinner]="(isLoading$|async) === true"></app-spinner-container>
+                </div>
+            </div>
+            <div class="row" *ngIf="(isLoading$|async) === false">
+                <div class="col-12">
+                    <div class="input-group address">
+                        <input type="text" class="form-control" disabled value="{{code}}" aria-describedby="basic-addon2" />
+                        <span class="input-group-text" id="basic-addon2" (cbOnSuccess)="onCopied()" ngxClipboard [cbContent]="code"> <i [ngbTooltip]="'Copy'" [placement]="'top'" class="far fa-clipboard"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row w-100">
+                <div class="col-12 w-100">
+                    <button class="btn btn-primary btn-mosaico-primary w-100" (click)="modal.dismiss(false)">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

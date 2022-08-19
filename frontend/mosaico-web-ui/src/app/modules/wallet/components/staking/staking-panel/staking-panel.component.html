@@ -1,0 +1,18 @@
+<div class="card staking-panel-items-card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                <li ngbNavItem>
+                    <a ngbNavLink class="ps-0">{{'WALLET_STAKING.PANEL.TITLE.ACTIVE' | translate}}</a>
+                    <ng-template ngbNavContent><app-staking-panel-active></app-staking-panel-active></ng-template>
+                </li>
+                <!-- <li ngbNavItem>
+                    <a ngbNavLink class="ps-0">{{'WALLET_STAKING.PANEL.TITLE.STAKING_HISTORY' | translate}}</a>
+                    <ng-template ngbNavContent><app-staking-panel-history></app-staking-panel-history></ng-template>
+                </li> -->
+            </ul>
+            <!-- <img src="/assets/media/search/search-line.svg" alt="icon search"> -->
+        </div>
+        <div [ngbNavOutlet]="nav"></div>
+    </div>
+</div>

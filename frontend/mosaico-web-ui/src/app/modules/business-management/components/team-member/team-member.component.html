@@ -1,0 +1,87 @@
+<div class="card-header align-items-center">
+    <div class="card-title">
+        {{ 'MEMBERS.INVITATIONS' | translate }}
+    </div>
+    <div class="card-toolbar" *ngIf="canEdit">
+        <!-- <button type="button" class="btn btn-sm btn-mosaico-outline-secondary" disabled
+            (click)="addNewCompanyMemberDialog.open()">
+            Add new member
+        </button> -->
+    </div>
+</div>
+<div class="card-body">
+    <div class="row" *ngIf="!team || team.length === 0">
+        <div class="col-12">
+            No members
+        </div>
+    </div>
+    <div class="row" *ngIf="team && team.length > 0">
+        <div class="col-12 d-flex flex-column">
+            <div class="d-flex flex-row w-100 mt-5 pb-5 header-row">
+                <div class="d-flex w-100 align-items-center me-3">
+                    Email
+                </div>
+                <div class="d-flex w-100 align-items-center me-3 justify-content-center">
+                    {{ 'MEMBERS.STATUS' | translate }}
+                </div>
+                <div class="d-flex w-100 align-items-center me-3 px-3">
+                    {{ 'MEMBERS.ROLE' | translate }}
+                </div>
+                <div class="d-flex w-100 align-items-center me-3 justify-content-center">
+                    {{ 'MEMBERS.EXPIRATION' | translate }}
+                </div>
+                <div class="d-flex w-100 justify-content-center align-items-center justify-content-end">
+                    {{ 'MEMBERS.ACTIONS' | translate }}
+                </div>
+            </div>
+            <div class="d-flex flex-row w-100 mt-5" *ngFor="let inv of team; let i = index">
+                <div class="d-flex w-100 align-items-center me-3">
+                    {{inv.email}}
+                </div>
+                <div class="d-flex w-100 align-items-center me-3 justify-content-center">
+                    <div *ngIf="inv.isAccepted === true;then acceptedTemplate; else notAccepted"></div>
+                </div>
+                <div class="d-flex w-100 align-items-center me-3 px-3">
+                    <ng-select *ngIf="canEdit" class="mosaico-select w-100" [clearable]="false" bindValue="key"
+                        bindLabel="value" [items]="companyRoles | keyvalue" [(ngModel)]="inv.role" [searchable]="false"
+                        placeholder="Choose role"  (change)="confirmRoleChangeDialog.open(inv)">
+                    </ng-select>
+                    <label *ngIf="!canEdit">{{inv.role}}</label>
+                </div>
+                <div class="d-flex w-100 align-items-center me-3 justify-content-center">
+                    {{inv.isExpired === true ? 'Expired' : 'Pending'}}
+                </div>
+                <div class="d-flex w-100 justify-content-center align-items-center justify-content-end">
+                    <button *ngIf="canEdit && inv.isExpired && !inv.isAccepted" class="btn btn-mosaico-primary btn-sm me-3"
+                        (click)="resendInvitation(inv.id)">Resend</button>
+                    <button *ngIf="canEdit" class="btn btn-mosaico-primary btn-sm me-3"
+                        (click)="confirmDeleteDialog.open(inv.id)">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<lib-confirm-dialog #confirmDeleteDialog title="Confirm the action"
+    message="Are you sure you want to delete users from the company?" [usePayload]="true"
+    (closed)="removeInvitation($event)"></lib-confirm-dialog>
+<lib-confirm-dialog #confirmRoleChangeDialog title="Confirm the action"
+    message="Are you sure you want to change users role?" [usePayload]="true" (closed)="changeUserRole($event)">
+</lib-confirm-dialog>
+<app-new-company-member #addNewCompanyMemberDialog (closed)="createTeamMember($event)"></app-new-company-member>
+
+<ng-template #acceptedTemplate>
+    <span class="text-success">Accepted</span>
+</ng-template>
+
+<ng-template #notAccepted>
+    <span class="text-muted">Waiting</span>
+</ng-template>
+
+<ng-template #ownerTemplate>
+    <h4><span class="badge badge-primary">Owner</span></h4>
+</ng-template>
+<ng-template #memberTemplate>
+    <h4><span class="badge badge-success">Member</span></h4>
+</ng-template>

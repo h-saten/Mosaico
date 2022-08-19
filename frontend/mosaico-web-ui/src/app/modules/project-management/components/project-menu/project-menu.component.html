@@ -1,0 +1,69 @@
+<div class="project-menu sticky-top">
+  <div class="project-btn-menu">
+    <a class="btn btn-menu" appBaseColors [menu]="true"
+      [routerLink]="['/','project', slug]"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      [fragment]="'about'"
+      id="about"
+      (click)="goScrollUp('about')"
+      > {{'PROJECT.menu.about' | translate }} </a>
+
+    <a class="btn btn-menu" appBaseColors [menu]="true"
+      [routerLink]="['/', 'project', slug, projectPathEnum.Overview]"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      [fragment]="'start'"
+      id="start"
+      (click)="goScrollUp('start')"
+    > {{'PROJECT.menu.overview' | translate }} </a>
+    
+    <a class="btn btn-menu" appBaseColors [menu]="true" *ngIf="page && page.hasNFTs === true"
+      [routerLink]="['/','project', slug, projectPathEnum.NFTs]"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      [fragment]="'nfts'"
+      id="nfts"
+      (click)="goScrollUp('nfts')"
+      > {{'PROJECT.menu.nfts' | translate }} </a>
+
+    <a class="btn btn-menu" appBaseColors [menu]="true" *ngIf="canEdit || (page && page.hasInvestmentPackages === true)"
+      [routerLink]="['/','project', slug, projectPathEnum.Packages]"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      [fragment]="'packages'"
+      id="packages"
+      (click)="goScrollUp('packages')"
+    > {{'PROJECT.menu.packages' | translate }} </a>
+
+    <a class="btn btn-menu" appBaseColors [menu]="true" *ngIf="canEdit || (page && page.hasArticles === true)"
+      [routerLink]="['/','project', slug, projectPathEnum.News]"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      [fragment]="'news'"
+      id="news"
+      (click)="goScrollUp('news')"
+    > {{'PROJECT.menu.news' | translate }} </a>
+
+    <a class="btn btn-menu" appBaseColors [menu]="true" *ngIf="canEdit || (page && page.hasFAQs === true)"
+      [routerLink]="['/','project', slug, projectPathEnum.Faq]"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      [fragment]="'faq'"
+      id="faq"
+      (click)="goScrollUp('faq')"
+    > {{'PROJECT.menu.faq' | translate }} </a>
+
+    <a class="btn btn-menu" appBaseColors [menu]="true"
+      [routerLink]="['/','project', slug, projectPathEnum.Settings]"
+      routerLinkActive="active"
+      *ngIf="canEdit"
+      [routerLinkActiveOptions]="{exact: false}"
+      id="settings"
+      > {{'PROJECT.menu.settings' | translate }} </a>
+      <!-- (click)="goDown2('targetGreen3')" -->
+
+  </div>
+
+</div>
+

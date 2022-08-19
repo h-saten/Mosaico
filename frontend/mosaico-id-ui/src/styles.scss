@@ -1,0 +1,320 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+$primary-color:#25256B;
+$primary:#25256B;
+
+// #212529
+
+$info-color:#BEBEBE;
+$info:#BEBEBE;
+
+/* import the necessary Bootstrap files */
+// @import "~bootstrap/_functions";
+// @import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/functions";
+// @import "node_modules/bootstrap/scss/functions.scss";
+@import "~bootstrap/scss/variables";
+// @import "node_modules/bootstrap/scss/variables.scss";
+@import "~bootstrap/scss/mixins";
+// @import "node_modules/bootstrap/scss/mixins.scss";
+
+/* -------begin customization-------- */
+
+/* simply assign the value */
+// $body-bg: #eeeeee;
+
+/* use a variable to override primary */
+$theme-colors: (
+  primary2: $gray-800
+);
+/* -------end customization-------- */
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html, body { height: 100%; }
+body {
+  margin     : 0;
+  font-family: 'Lato', "Helvetica Neue", sans-serif;
+  font-size: .875em;
+  color: #222;
+}
+
+.iti {
+  width: 100% !important;
+}
+
+.invalid-feedback-color {
+  color: #dc3545;
+}
+
+.exclamation-mark-icon {
+  mask: url(assets/icon/exclamation_mark.svg);
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  mask-size: cover;
+  fill: #dc3545;
+  stroke: #dc3545;
+}
+
+
+.signup-card.auth-body {
+  max-width: 600px;
+}
+
+.login-card.auth-body {
+  width: 450px;
+}
+
+.auth-box {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 20px;
+}
+
+.text-dark {
+  color: #2b3d51 !important;
+}
+
+.input-group {
+  margin-bottom: 1.25em;
+}
+
+.form-control {
+  font-size: 14px;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+}
+
+a {
+  font-size: 13px;
+  color: #222;
+}
+
+.register-text {
+  font-size: 20px;
+  color: #00a1ff;
+}
+
+/* aby moduł z rejestracją i logowaniem przeiwjał się */
+
+.error-400, .error-403, .error-404, .error-500, .error-503, .login {
+  align-items: center;
+  background-color: #2196f3;
+  display: flex;
+  justify-content : center !important;
+  height: 100%;
+  position        : inherit !important;
+  // position: fixed;
+  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+// dwa kody - strona logowania - angular oraz podsumowanie transakcji z dotpay
+
+.common-img-bg, body {
+    background: #FBFBFB;
+}
+
+.bg-primary {
+  background-color: #FBFBFB;align-items: center;
+}
+
+.btn {
+  text-transform: initial; // aby wyrazy od drugiego miały małe literki - bo teraz mają duże
+  border-radius: 5px;
+}
+
+.btn-md {
+  padding: 10px 16px;
+  font-size: 15px;
+  line-height: 23px;
+}
+
+input, button
+{
+  border-radius: 6px !important;
+}
+
+// przycisk kiedy nie jest dostępny
+.btn-primary:disabled {
+	color           : #fff;
+	background-color: #C2C2C2;
+	border-color    : #C2C2C2;
+	cursor          : default;
+}
+
+// cien
+.auth-box {
+    //box-shadow: 0 2px 8px -2px #B1B0B0;
+  border: 1px solid #dbdbdb;
+}
+
+/* aby nie było na sztywno marginesu na górze */
+.login .container-fluid {
+    margin-top: inherit !important;
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center; // to chyba nie potrzebne
+	/* height: 100px; */
+}
+
+/* aby kwadraciki checkoboxy były szare */
+.cr {
+    border: 2px solid #E9E9E9!important;
+}
+
+
+
+@media only screen and (max-width: 992px) {
+
+    .error-500,
+    .error-503,
+    .error-404,
+    .error-400,
+    .error-403,
+    .login {
+        display: flex !important;
+	}
+
+
+	.auth-body .text-center img {
+		display: inline-block;
+
+		text-align: center;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+
+  .common-img-bg, body {
+    background: #fff;
+  }
+
+  .login {
+    align-items: start;
+  }
+
+  .auth-box {
+    margin-top: 0;
+    border: 0;
+  }
+
+}
+
+.auth-box .auth-box-header h1.auth-box-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #8e8e8e;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+.btn-primary-custom {
+  font-size: 20px;
+  border: solid 1px #dbdbdb;
+  background: linear-gradient(to right, #00a1ff 18%, #0063f5 86%);
+  color: white;
+  font-weight: bold;
+  transition: all 0.5s;
+}
+
+.btn-primary-custom[disabled] {
+  background: #B4B4B4;
+  opacity: 1;
+}
+
+.btn-primary-custom:hover {
+  color: #fff;
+}
+
+.password-field {
+  z-index: 10;
+}
+
+.password-field + .inner-icon.password-toggle-icon {
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  top: 8px;
+  right: 15px;
+  margin-top: 0;
+  z-index: 11;
+}
+
+.password-field + .inner-icon.password-toggle-icon.is-invalid {
+  bottom: 6px;
+  right: 15px;
+}
+
+form .form-control.is-invalid {
+  background-image: none;
+}
+
+.auth-box-content p {
+  font-size: 18px;
+}
+
+.btn-facebook, .btn-google {
+  background: transparent;
+  border: 1px solid #dbdbdb;
+
+  .social-login-icon {
+    font-size: 21px;
+    color: #385285;
+  }
+  span {
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #385285;
+  }
+}
+
+.btn-google {
+  .google-icon {
+    max-width: 20px;
+  }
+}
+
+p.line-text {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #dbdbdb;
+  line-height: 0.1em;
+  margin: 10px 0 10px;
+  font-size: 1rem;
+}
+
+.line-text span {
+  background: #FFFFFF;
+  padding:0 12px;
+  color: #dbdbdb;
+}
+
+.font-size-20 {
+  font-size: 20px;
+}
+
+.register-text {
+  font-size: 20px;
+  color: #00a1ff;
+}
+
+.pointer {
+  cursor: pointer;
+}

@@ -1,0 +1,44 @@
+.main-page-wrapper {
+    background: #FFFFFF;
+
+    .bg-1 {
+        background-image: url('/assets/media/mainpage/triangles-background.png');
+        background-repeat: no-repeat;
+        background-size: auto;
+        background-position: bottom;
+    }
+
+    .bg-2 {
+        position: relative;
+
+        .img-1 {
+            position: absolute;
+            height: 1000px;
+            top: 17%;
+            left: -20%;
+        }
+
+        .img-2 {
+            position: absolute;
+            height: 800px;
+            bottom: 18%;
+            right: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .main-page-wrapper .bg-2 {
+        .img-1 {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-page-wrapper .bg-2 {
+        .img-2 {
+            display: none;
+        }
+    }
+}

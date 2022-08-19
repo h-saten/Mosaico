@@ -1,0 +1,65 @@
+<div class="mt-5">
+  <ng-container *ngIf="!canEdit">
+      <div class="card shadow-sm mb-5" *ngFor="let ex of tokenExchanges">
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-12 d-flex flex-row align-items-center justify-content-between" (click)="navigateToExchange(ex.externalExchange)">
+                      <div class="d-flex flex-row align-items-center">
+                          <div class="symbol symbol-35px me-5">
+                              <div class="symbol-label" *ngIf="ex.externalExchange.logoUrl && ex.externalExchange.logoUrl.length > 0" style="background-image:url({{ex.externalExchange.logoUrl}})"></div>
+                              <div class="symbol-label fs-2 fw-bold text-success" *ngIf="!ex.externalExchange.logoUrl || ex.externalExchange.logoUrl.length === 0">{{ex.externalExchange.type}}</div>
+                          </div>
+                          <div class="card-icon-title">{{ex.externalExchange.name}}</div>
+                      </div>
+                      <div class="d-flex flex-row">
+                          <div class="card-icon-action"><i class="fas fa-external-link-alt"></i></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+  </ng-container>
+
+  <ng-container *ngIf="canEdit">
+      <ng-container *ngIf="!tokenId || tokenId.length === 0">
+          <div class="card shadow-sm mb-5">
+              <div class="card-body">
+                  <p>{{'PROJECT_OVERVIEW.EXCHANGES.NO_TOKEN'|translate}}</p>
+              </div>
+          </div>
+      </ng-container>
+      <ng-container *ngIf="tokenId && tokenId.length > 0">
+          <div class="card shadow-sm mb-5" *ngFor="let ex of exchanges">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-12 d-flex flex-row align-items-center justify-content-between">
+                          <div class="d-flex flex-row align-items-center">
+                              <div class="symbol symbol-35px me-5">
+                                  <div class="symbol-label" *ngIf="ex.logoUrl && ex.logoUrl.length > 0" style="background-image:url({{ex.logoUrl}})"></div>
+                                  <div class="symbol-label fs-2 fw-bold text-success" *ngIf="!ex.logoUrl || ex.logoUrl.length === 0">{{ex.type}}</div>
+                              </div>
+                              <div class="d-flex flex-column justify-content-start">
+                                  <div class="d-flex align-items-center exchange-type">
+                                      {{ex.type}}
+                                  </div>
+                                  <div class="d-flex card-icon-title exchange-name">{{ex.name}}</div>
+                              </div>
+                          </div>
+                          <div class="d-flex flex-row">
+                              <div class="form-check form-switch form-check-custom form-check-solid">
+                                  <input class="form-check-input" type="checkbox"
+                                    [disabled]="isLoading" [checked]="isEnabled(ex.id)"
+                                    (change)="toggleExchange(ex.id)" id="{{ex.name}}"
+                                    appBaseColors [switch]="true"
+                                  />
+                                  <label class="form-check-label" for="{{ex.name}}"></label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </ng-container>
+  </ng-container>
+
+</div>

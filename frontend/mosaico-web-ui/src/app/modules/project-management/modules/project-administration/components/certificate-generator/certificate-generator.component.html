@@ -1,0 +1,42 @@
+<div class="card settings-card shadow-sm">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-9">
+                <h3 class="h4 mb-2">{{'investors.certificate_generator.title' | translate}}</h3>
+              </div>
+              <div class="col-3 d-flex justify-content-end">
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-bg-light btn-active-color-primary btn-sm" ngbDropdownToggle>{{ language.name
+                    }}{{ " " }}</button>
+                  <div ngbDropdownMenu>
+                    <button ngbDropdownItem *ngFor="let l of langs" (click)="selectLanguage(l.lang)"
+                      [ngClass]="l.lang === language.lang ? 'active' : ''">{{ l.name }}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+
+        <div *ngIf="configurationRequestFinalized">
+          <p *ngIf="!tokenSymbol" class="alert alert-warning">Token have to be added to project.</p>
+        </div>
+
+        <ng-container *ngIf="canShowEditor">
+          <app-certificate-editor [config]="certificateConfig" [logoUrl]="logoUrl" [tokenSymbol]="tokenSymbol"
+            [certificatePreview]="certificatePdf" [projectId]="projectId" [language]="language"
+            (configurationChanged)="saveNewConfiguration($event)"
+            (sendingCertificationToggled)="toggleSendingConfiguration($event)"
+            (backgroundImageUpdated)="saveNewBackgroundImage($event)"
+            (exampleCertificateRequested)="generateExampleCertificate()">
+          </app-certificate-editor>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

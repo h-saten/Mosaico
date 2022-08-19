@@ -1,0 +1,108 @@
+admin:
+  access_log_path: /tmp/admin_access.log
+  address:
+    socket_address:
+      protocol: TCP
+      address: 0.0.0.0
+      port_value: 9901
+static_resources:
+  listeners:
+  - name: listener_0
+    address:
+      socket_address:
+        protocol: TCP
+        address: 0.0.0.0
+        port_value: 10000
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress_http
+          access_log:
+          - name: envoy.access_loggers.stdout
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
+          http_filters:
+          - name: envoy.filters.http.router
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: local_service
+              domains: ["*"]
+              routes:
+              - match:
+                  prefix: "/core/hubs/"
+                route:
+                  prefix_rewrite: '/hubs/'
+                  cluster: core_service
+                  timeout: "0s"
+                  idle_timeout: "0s"
+              - match:
+                  prefix: "/core/swagger"
+                route:
+                  cluster: core_service
+              - match:
+                  prefix: "/core/"
+                route:
+                  prefix_rewrite: '/'
+                  cluster: core_service
+              - match:
+                  prefix: "/id/hubs"
+                route:
+                  prefix_rewrite: '/hubs/'
+                  cluster: id_service
+                  timeout: "0s"
+                  idle_timeout: "0s"
+              - match:
+                  prefix: "/id/swagger"
+                route:
+                  cluster: id_service
+              - match:
+                  prefix: "/id/"
+                route:
+                  prefix_rewrite: '/'
+                  cluster: id_service
+      transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+          common_tls_context:
+            tls_certificates:
+            - certificate_chain: {filename: "/etc/ssl/certs/https.crt"}
+              private_key: {filename: "/etc/ssl/certs/key.pem"}
+  clusters:
+  - name: core_service
+    type: LOGICAL_DNS
+    # Comment out the following line to test on v6 networks
+    dns_lookup_family: V4_ONLY
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: core_service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: host.docker.internal
+                port_value: 5001
+    transport_socket:
+      name: envoy.transport_sockets.tls
+      typed_config:
+        "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+        sni: localhost
+  - name: id_service
+    type: LOGICAL_DNS
+    # Comment out the following line to test on v6 networks
+    dns_lookup_family: V4_ONLY
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: id_service
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: host.docker.internal
+                port_value: 4333
+  

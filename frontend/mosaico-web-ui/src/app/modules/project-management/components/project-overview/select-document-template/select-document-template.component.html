@@ -1,0 +1,44 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">Select the document template</h5>
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="row" [formGroup]="form">
+                <div class="col-12">
+                    <div class="form-group mb-5">
+                        <label class="form-label">Document type</label>
+                        <select name="type" formControlName="type" class="form-select  form-control-solid">
+                            <option value="" selected disabled>Select a document type</option>
+                            <option *ngFor="let dt of documentTypes" [value]="dt.key">
+                                {{dt.title}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group mb-5">
+                        <label class="form-label">Language</label>
+                        <select name="language" formControlName="language" class="form-select  form-control-solid">
+                            <option value="" selected disabled>Select a language</option>
+                            <option *ngFor="let lang of documentLanguageKeys" [value]="lang">
+                                {{documentLanguages[lang]}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="modal.dismiss(false)">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="submit()">Create</button>
+        </div>
+    </div>
+</ng-template>

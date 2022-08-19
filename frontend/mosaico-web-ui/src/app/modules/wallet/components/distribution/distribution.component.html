@@ -1,0 +1,92 @@
+<div class="row mt-5" *ngIf="!isDataLoaded">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="!isDataLoaded"></app-spinner-container>
+    </div>
+</div>
+<div class="row" [formGroup]="form" *ngIf="isDataLoaded">
+    <div class="col-12">
+        <div class="row" *ngIf="!service.isValid">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <p class="fw-bold fs-4 text-danger"><i class="fas fa-exclamation-triangle text-danger fs-2"></i>
+                    {{'DISTRIBUTION.INVALID_TABLE'|translate}}</p>
+            </div>
+        </div>
+        <div class="row" *ngIf="token?.vault">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table mosaico-table mosaico-table--primary-header" [ngClass]="{'is-invalid': !service.isValid }">
+                        <thead>
+                            <tr>
+                                <th class="col-3">Name</th>
+                                <th class="col-2">Initial balance</th>
+                                <th class="col-1">%</th>
+                                <th class="col-4">Current Balance</th>
+                                <th class="col-2" *ngIf="canEdit">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let a of distributionGroups.controls; let groupIndex = index"
+                                [formGroup]="getGroupForm(groupIndex)">
+                                <td
+                                    [ngClass]="{ 'is-invalid': isDirty('tokenDistributions.'+groupIndex+'.name') && hasErrors('tokenDistributions.'+groupIndex+'.name') }">
+                                    <div class="d-flex flex-row align-items-center px-3">
+                                        <span class="text-muted">{{groupIndex + 1 }}. </span>
+                                        <input type="text" name="name" formControlName="name" class="form-control"
+                                            placeholder="Group name" />
+                                    </div>
+                                </td>
+                                <td
+                                    [ngClass]="{ 'is-invalid': isDirty('tokenDistributions.'+groupIndex+'.tokenAmount') && hasErrors('tokenDistributions.'+groupIndex+'.tokenAmount') }">
+                                    <input type="number" name="tokenAmount" formControlName="tokenAmount"
+                                        class="form-control" placeholder="Amount of tokens" />
+                                </td>
+                                <td class="fs-12 fw-bold text-mosaico-secondary"><span
+                                        ngbTooltip="Percentage of total supply">{{a.get('percent')?.value}} % </span>
+                                </td>
+                                <td><span>{{service.tokenDistribution[groupIndex]?.balance ?? 0 | number:
+                                        '1.0-6': 'en'}}</span></td>
+                                <td *ngIf="canEdit">
+                                    <button class="btn btn-sm btn-icon btn-delete"
+                                        (click)="vaultSendDialog.open(service.tokenDistribution[groupIndex].id)"
+                                        *ngIf="service.tokenDistribution[groupIndex]?.blocked === true"
+                                        ngbTooltip="Send tokens" [disabled]="(isLoading$|async) === true">
+                                        <i class="fas fa-comment-dollar text-success"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-icon btn-delete"
+                                        (click)="depositCreationDialog.open(service.tokenDistribution[groupIndex].id)"
+                                        *ngIf="service.tokenDistribution[groupIndex]?.blocked === false"
+                                        ngbTooltip="Deploy" [disabled]="(isLoading$|async) === true">
+                                        <i class="fas fa-file-signature text-dark"></i>
+                                    </button>
+                                    <!-- <button class="btn btn-sm btn-icon btn-delete" ngbTooltip="Deposit" [disabled]="(isLoading$|async) === true"><i class="fas fa-plus-square text-success"></i></button>
+                                    <button class="btn btn-sm btn-icon btn-delete" ngbTooltip="Withdraw" [disabled]="(isLoading$|async) === true"><i class="fas fa-minus-square text-danger"></i></button> -->
+                                    <button class="btn btn-sm btn-icon btn-delete" ngbTooltip="Delete row"
+                                        [disabled]="(isLoading$|async) === true || service.tokenDistribution[groupIndex]?.blocked === true"
+                                        (click)="deleteGroup(groupIndex)"><i class="far fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="add-row-title" *ngIf="canEdit">
+                                <td colspan="6">
+                                    <button class="btn btn-sm btn-mosaico-primary me-3"
+                                        [disabled]="(isLoading$|async) === true"
+                                        (click)="saveDistribution()">Save</button>
+                                    <button class="btn btn-sm btn-add" [disabled]="(isLoading$|async) === true"
+                                        (click)="addGroup()">Add row <i class="fa fa-plus"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!token.vault || !token.vault?.id || token.vault.id.length === 0">
+            <div class="col-12">
+                <app-missing-vault [token]="token" (vaultDeployed)="onVaultDeployed($event)"></app-missing-vault>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-vault-deposit-creation #depositCreationDialog [token]="token" (closed)="onDepositCreated($event)">
+</app-vault-deposit-creation>
+<app-vault-send-tokens #vaultSendDialog [token]="token" (closed)="onTokensSent($event)"></app-vault-send-tokens>

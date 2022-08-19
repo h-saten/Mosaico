@@ -1,0 +1,120 @@
+<div class="card-info d-flex flex-wrap justify-content-around align-items-center">
+
+  <div class="card-info-col text-center">
+    <div class="card-info-col-inside icons">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/noun-alarm.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvg]="true"
+      ></span>
+      <div class="card-info-col-title1">
+        {{'PROJECT.info.col.start' | translate}}
+      </div>
+      <div class="card-info-col-title2">
+        <ng-container *ngIf="startDate; else noStartDate;">
+          <ng-container *ngIf="showPolishDate == false">
+            <span class="date-day">
+              {{startDate | date : 'dd MMMM yyyy,' }}
+            </span>
+            <span class="date-time">
+              {{startDate | date : 'HH:mm'}} CET
+            </span>
+          </ng-container>
+          <ng-container *ngIf="showPolishDate == true">
+            {{startDate | myDatePl }} CET
+          </ng-container>
+        </ng-container>
+        <ng-template #noStartDate>&nbsp;</ng-template>
+      </div>
+    </div>
+
+    <div class="card-line-row">
+      <div class="line-horizontal"></div>
+    </div>
+  </div>
+
+  <div class="card-line-col">
+    <div class="line"></div>
+  </div>
+
+  <div class="card-info-col text-center">
+    <div class="card-info-col-inside icons">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/noun-finish2.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvg]="true"
+      ></span>
+      <div class="card-info-col-title1">
+        {{'PROJECT.info.col.end' | translate}}
+      </div>
+      <div class="card-info-col-title2">
+        <ng-container *ngIf="endDate; else noEndDate;">
+          <ng-container *ngIf="showPolishDate == false">
+            <!-- {{endDate | date : 'dd MMMM yyyy, HH:mm' }} CET -->
+            <span class="date-day">
+              {{endDate | date : 'dd MMMM yyyy,' }}
+            </span>
+            <span class="date-time">
+              {{endDate | date : 'HH:mm'}} CET
+            </span>
+          </ng-container>
+          <ng-container *ngIf="showPolishDate == true">
+            {{endDate | myDatePl }} CET
+          </ng-container>
+        </ng-container>
+        <ng-template #noEndDate>&nbsp;</ng-template>
+      </div>
+    </div>
+
+    <div class="card-line-row">
+      <div class="line-horizontal"></div>
+    </div>
+  </div>
+
+  <div class="card-line-col-middle">
+    <div class="line"></div>
+  </div>
+
+  <div class="card-info-col text-center">
+    <div class="card-info-col-inside icons">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/noun-blockchain.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvg]="true"
+      ></span>
+      <div class="card-info-col-title1">
+        {{'PROJECT.info.col.blockchain' | translate}}
+      </div>
+      <div class="card-info-col-title2">
+        <ng-container *ngIf="token; else noToken;">
+          {{token.network}}
+        </ng-container>
+        <ng-template #noToken>&nbsp;</ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-line-col">
+    <div class="line"></div>
+  </div>
+
+  <div class="card-info-col text-center">
+    <div class="card-info-col-inside icons">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/noun-money3.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvg]="true"
+      ></span>
+      <div class="card-info-col-title1">
+        {{'PROJECT.info.col.token_price' | translate}}
+      </div>
+      <div class="card-info-col-title2">
+        <ng-container *ngIf="tokenPrice; else noToken;">
+          ${{ tokenPrice | number : '1.0-6': 'en' }}
+        </ng-container>
+        <ng-template #noTokenPrice>&nbsp;</ng-template>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,31 @@
+.footer-section--title {
+    color: #494642;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.footer-section--info {
+    color: #494642;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.social-icon {
+    transition: all 0.3s ease 0s;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    display: inline-block;
+    a {
+        i {
+            color: #494642;
+        }
+    }
+    &:hover {
+        transform: scale(1.4);
+        a {
+            color: #262268;
+
+        }
+    }
+}

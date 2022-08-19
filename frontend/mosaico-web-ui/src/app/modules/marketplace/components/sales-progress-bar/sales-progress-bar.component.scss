@@ -1,0 +1,53 @@
+.sales-progress {
+
+  margin-bottom: 24px;
+
+}
+
+.number-tokens-sale, .number-tokens-hardcap {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: #979797;
+}
+
+
+.progress-main-box {
+  position: relative;
+  z-index: auto;
+  height: 8px;
+}
+
+.progress {
+  height: 8px;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+}
+
+.progress-bar {
+  color: rgba(22, 22, 22, 0.2);
+  font-weight: bold;
+
+  background: #161616;
+
+  position: absolute;
+  z-index: 30;
+  height: 8px;
+  border-radius: 1rem;
+}
+
+.progress-number {
+  position: absolute;
+  bottom: 9px;
+  // left: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.percent-sale {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #494642;
+}

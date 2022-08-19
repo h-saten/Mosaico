@@ -1,0 +1,13 @@
+{
+  "name": "mosaico-dao",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^12.2.0",
+    "@angular/core": "^12.2.0",
+    "mosaico-base": "0.0.1",
+    "mosaico-project": "0.0.1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

@@ -1,0 +1,23 @@
+.vesting-items-card {
+    border-radius: 10px;
+    padding: 24px !important;
+
+    margin-top: 24px;
+    @media (min-width: 768px) {
+      margin-top: 32px;
+    }
+
+    .wallet-overview-section {
+        padding: 16px 24px !important;
+
+        &.section-border {
+            border-bottom: 1px solid #DFE0EB;
+            border-right: none;
+
+            @media (min-width: 768px) {
+                border-right: 1px solid #DFE0EB;
+                border-bottom: none;
+            }
+        }
+    }
+}

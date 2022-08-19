@@ -1,0 +1,1 @@
+export type GetKPIResponse = { [key: string]: number };

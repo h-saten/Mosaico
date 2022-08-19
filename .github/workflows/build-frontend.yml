@@ -1,0 +1,24 @@
+name: build-frontend
+on:
+  pull_request:
+    paths:
+      - 'frontend/mosaico-web-ui/**'
+    branches: [ 'main' ]
+defaults:
+  run:
+    working-directory: './frontend/mosaico-web-ui'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+        - uses: ./.github/workflows/actions/build_frontend
+          id: buildFrontend
+          with:
+            RUNNER_OS: ${{ runner.os }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            SONAR_FRONTEND_TOKEN: ${{ secrets.SONAR_FRONTEND_TOKEN }}
+            WORKING_DIRECTORY: './frontend/mosaico-web-ui'
+            SONAR_PROJECT_KEY: 'sapiency-io_mosaicov2-frontend'
+  
+    

@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="row " *ngIf="!balanceDistributionHasData">
+            <div class="col-12 d-flex justify-content-center align-items-center chart-container">
+                <img src="/assets/media/misc/wallet_no_distribution.png" style="max-width: 250px" />
+            </div>
+        </div>
+        <div class="row" *ngIf="balanceDistributionHasData">
+            <div class="col-12 d-flex flex-column justify-content-center">
+                <div class="chart-cotnainer">
+                    <apx-chart [series]="diagramOptions2.series" [chart]="diagramOptions2.chart"
+                        [labels]="diagramOptions2.labels" [legend]="diagramOptions2.legend"
+                        [responsive]="diagramOptions2.responsive" [theme]="diagramOptions2.theme"
+                        [dataLabels]="diagramOptions2.dataLabels"></apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="row" *ngIf="!historyHasData">
+            <div class="col-12 d-flex justify-content-center align-items-center chart-container">
+                <img src="/assets/media/misc/wallet_no_data.png" style="max-width: 250px" />
+            </div>
+        </div>
+        <div class="row" *ngIf="historyHasData">
+            <div class="col-12 d-flex flex-column justify-content-center">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="chart-cotnainer">
+                            <apx-chart [series]="diagramOptions.series" [chart]="diagramOptions.chart"
+                                [xaxis]="diagramOptions.xaxis" [stroke]="diagramOptions.stroke"
+                                [tooltip]="diagramOptions.tooltip" [dataLabels]="diagramOptions.dataLabels"
+                                [theme]="diagramOptions.theme" [legend]="diagramOptions.legend"></apx-chart>
+                        </div>
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </div>
+</div>

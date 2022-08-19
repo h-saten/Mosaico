@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mosaico.Core.EntityFramework\Mosaico.Core.EntityFramework.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Base\Mosaico.Domain.Base.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="5.2.4" />
+      <PackageReference Include="Duende.IdentityServer.Storage" Version="5.2.4" />
+      <PackageReference Include="IdentityModel" Version="5.2.0" />
+      <PackageReference Include="libphonenumber-csharp" Version="8.12.38" />
+      <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.15.0" />
+      <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.0" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
+    </ItemGroup>
+
+</Project>

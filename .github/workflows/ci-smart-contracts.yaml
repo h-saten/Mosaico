@@ -1,0 +1,42 @@
+# name: ci-smart-contracts
+# on:
+#   push:
+#     paths:
+#       - 'smart_contracts/**' #backend/identity
+#       - '.github/**'
+#     branches: [ 'main', 'mc/*' ]
+# for debug^
+on:
+  pull_request:
+    paths:
+      - 'smart_contracts/**'
+    branches: [ 'main' ]
+  
+jobs:
+  build_truffle_test_contracts-dev:
+    runs-on: [self-hosted, dev]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/ci_contracts_test_truffle
+      id: buildTestTruffle
+      with:
+        WORKDIR: './smart_contracts'
+        CLUSTER_NAME: aks-mosaico-dev
+        CLUSTER_RESOURCE_GROUP: rg-mosaico-dev
+        AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+        APP_YAML: infrastructure/kubernetes_yamls/dev/ganache.yml
+        NETWORK: pipeline_dev
+  build_truffle_test_contracts-prod:
+    runs-on: [self-hosted, prod]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/ci_contracts_test_truffle
+      id: buildTestTruffle
+      with:
+        WORKDIR: './smart_contracts'
+        CLUSTER_NAME: aks-mosaico-prod
+        CLUSTER_RESOURCE_GROUP: rg-mosaico-prod
+        AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS_PROD}}
+        APP_YAML: infrastructure/kubernetes_yamls/prod/ganache.yml
+        NETWORK: pipeline_prod
+

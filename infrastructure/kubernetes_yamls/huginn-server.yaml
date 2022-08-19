@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: huginn-server-env-vars
+  labels:
+    app: huginn
+data:
+  DATABASE_ADAPTER: postgresql
+  DATABASE_HOST: huginn-db
+  DATABASE_PORT: "5432"
+  INVITATION_CODE: some_invite_code
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: huginn-server
+  labels:
+    app: huginn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod-label: huginn-server-pod
+  template:
+    metadata:
+      labels:
+        pod-label: huginn-server-pod
+    spec:
+      containers:
+      - name: huginn
+        image: huginn/huginn:b915466f432a275fa1fd4f599650ea7f3009fd8f
+        envFrom:
+        - configMapRef:
+            name: huginn-server-env-vars
+        - secretRef:
+            name: huginn-server-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: huginn-server
+  labels:
+    app: huginn
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  selector:
+    pod-label: huginn-server-pod
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: LoadBalancer
+  loadBalancerIP: 172.17.15.250

@@ -1,0 +1,49 @@
+<div class="row mb-6" *ngIf="companies.length ! == 0">
+    <div class="col-12">
+        <div class="d-flex justify-content-sm-center position-relative align-items-center justify-content-start">
+            <div class="d-flex justify-content-center">
+                <h3 class="title-companies">
+                    {{'COMPANIES.MY.TITLE' | translate}}
+                </h3>
+            </div>
+            <div class="position-absolute end-0">
+                <button routerLink="/dao/create" class="btn btn-mosaico-primary-outline">{{'COMPANIES.MY.ACTIONS.CREATE' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex flex-wrap flex-stack list-companies">
+            <div class="card company-card shadow-sm me-5 mt-5" *ngFor="let p of companies">
+                <div class="card-body d-flex flex-column justify-content-around">
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <div class="symbol symbol-100px symbol-circle">
+                                <div class="symbol-label" *ngIf="p.logoUrl && p.logoUrl.length > 0"
+                                  style="background-image:url({{p.logoUrl}})"></div>
+                                <div class="symbol-label fs-4 fw-bold text-dark"
+                                  *ngIf="!p.logoUrl || p.logoUrl.length == 0">DAO</div>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="mt-5"><h5 class="card-title m-0"><a routerLink="/dao/{{p.slug}}">{{p.companyName}} <i *ngIf="p.isApproved" class="fas fa-check-circle"></i></a></h5></div>
+                    <div class="mt-6 d-flex justify-content-center">
+                        <button routerLink="/dao/{{p.slug}}" class="btn btn-mosaico-primary btn-sm w-100 me-3">{{'COMPANIES.MY.ACTIONS.DETAILS'|translate}}</button>
+                        <button routerLink="/dao/{{p.slug}}/wallet" class="btn btn-mosaico-primary-outline btn-sm w-100">{{'COMPANIES.MY.ACTIONS.WALLET'|translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="!isLoading && (!companies || companies.length === 0)">
+                <app-no-items [title]="'DAO'" [subTitle]="'COMPANIES.MY.NO_COMPANIES'" [btnText]="'COMPANIES.MY.ACTIONS.CREATE'"
+                    [description]="'COMPANIES.MY.DESCRIPTION'">
+                </app-no-items>
+            </ng-container>
+        </div>
+    </div>
+</div>

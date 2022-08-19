@@ -1,0 +1,17 @@
+.btn {
+    span {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      color: #979797;
+      margin-left: 8px;
+      
+      @media (min-width: 576px) {
+        margin-left: 11px;
+      }
+    }
+
+    .edit-icon {
+        color: #0063F5;
+    }
+}

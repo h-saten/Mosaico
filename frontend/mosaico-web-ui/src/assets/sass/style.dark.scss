@@ -1,0 +1,24 @@
+//
+// Theme style
+//
+
+// Mode
+$mode: dark;
+
+// Initialize
+@import "init";
+
+// Components
+@import "./core/components/components";
+@import "components/components";
+
+// Layout
+@import "layout/layout";
+
+// Angular vendors
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~prism-themes/themes/prism-shades-of-purple.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "~animate.css/animate.css";
+@import "./core/vendors/plugins/prismjs";
+@import "./core/vendors/plugins/formvalidation";

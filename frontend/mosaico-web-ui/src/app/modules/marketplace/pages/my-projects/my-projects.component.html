@@ -1,0 +1,48 @@
+<div class="text-center" *ngIf="projects.length > 0">
+  <h3 class="title-projects">
+    {{'MARKETPLACE.title.my-projects' | translate}}
+  </h3>
+</div>
+
+<app-spinner-container [showSpinner]="!projectsRequestFinished"></app-spinner-container>
+<ng-container *ngIf="projectsRequestFinished">
+  <ng-container *ngIf="projects.length > 0; else noResult">
+    <div class="d-flex flex-wrap flex-stack list-projects">
+      <ng-container *ngFor="let project of projects">
+        <app-card-projects
+          [project]="project"
+          [class]="'card-projects'"
+        ></app-card-projects>
+      </ng-container>
+    </div>
+    <!-- totalPages: {{totalPages}}<br />
+    totalItems: {{totalItems}}<br />
+    rowsPerPage: {{rowsPerPage}}<br />
+    currentListSize: {{currentListSize}}<br /> -->
+
+    <div class="show-more-row">
+
+      <app-show-more-row
+        [totalPages] = "totalPages"
+        [totalItems] = "totalItems"
+        [rowsPerPage] = "rowsPerPage"
+        [currentListSize] = "currentListSize"
+        [showMoreName]="'PAGES.show_more.name.projects' | translate"
+        [itemsOf]="'PAGES.show_more.name.projects_of' | translate"
+        (getListNextEvent)="loadMoreResults($event)"
+      ></app-show-more-row>
+
+    </div>
+
+  </ng-container>
+
+  <ng-template #noResult>
+
+    <p *ngIf="projects.length === 0" class="h6 my-4 ml-0 ml-md-4">
+      <app-no-items [title]="'MARKETPLACE.title.my-projects'" [subTitle]="'NO_PROJECTS'" [btnText]="'MARKETPLACE.btn-text'"
+        [description]="'MARKETPLACE.description'"
+      ></app-no-items>
+    </p>
+  </ng-template>
+
+</ng-container>

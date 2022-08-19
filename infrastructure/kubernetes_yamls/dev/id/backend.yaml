@@ -1,0 +1,98 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: mosaico
+  labels:
+    name: mosaico
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-backend
+  labels:
+    app: identity-backend
+  namespace: mosaico
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-backend
+  template:
+    metadata:
+      labels:
+        app: identity-backend
+    spec:
+      initContainers:
+        - name: copy
+          image: busybox:1.28
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "cp /usr/mosaico/tmp/appsettings.json /usr/mosaico/config/",
+            ]
+          volumeMounts:
+            - name: appsettings-volume
+              mountPath: /usr/mosaico/tmp/
+            - name: data
+              mountPath: /usr/mosaico/config/
+      containers:
+      - name: mosaico-v2-identity
+        image: acrmosaico.azurecr.io/mosaico-v2-identity:latest
+        imagePullPolicy: Always
+        securityContext:
+          runAsUser: 2001
+          readOnlyRootFilesystem: false
+        env:
+        - name: ASPNETCORE_URLS
+          value: "http://+:8080"
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /api/healthz
+            port: 8080
+          periodSeconds: 60
+          timeoutSeconds: 180
+        volumeMounts:
+          - name: data
+            mountPath: /usr/mosaico/config/
+      volumes:
+      - name: appsettings-volume
+        configMap:
+          name: appsettings-id
+      - name: data
+        emptyDir: {}
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: identity-backend-service
+#   namespace: mosaico
+#   annotations:
+#     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+# spec:
+#   selector:
+#     app: identity-backend
+#   ports:
+#     - port: 80
+#       targetPort: 8080
+#   type: LoadBalancer
+#   loadBalancerIP: 172.17.15.254
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-backend-service
+  namespace: mosaico
+  # annotations:
+  #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  selector:
+    app: identity-backend
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer
+  # loadBalancerIP: 172.19.15.254
+

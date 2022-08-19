@@ -1,0 +1,82 @@
+<!-- <div class="row mt-5">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="true"></app-spinner-container>
+    </div>
+</div> -->
+<div class="row mt-5" *ngIf="!token?.projects || token?.projects?.length === 0">
+    <div class="col-12 d-flex justify-content-center align-items-center"
+        >
+        <p class="fs-3 fw-bold">There no projects</p>
+    </div>
+</div>
+<div class="row" [formGroup]="form" *ngIf="token?.projects && token?.projects?.length > 0">
+    <div class="col-12">
+        <div class="row" *ngIf="!service.isValid">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <p class="fw-bold fs-4 text-danger"><i class="fas fa-exclamation-triangle text-danger fs-2"></i> Table is invalid</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table mosaico-table mosaico-table--primary-header" [ngClass]="{'is-invalid': !service.isValid }">
+                        <thead>
+                            <tr>
+                                <th class="col-3">Name</th>
+                                <th class="col-2">Token amount</th>
+                                <th class="col-1">%</th>
+                                <th class="col-2">Token Price ($)</th>
+                                <th class="col-2">Hard cap ($)</th>
+                                <th class="col-2" *ngIf="canEdit">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let p of token.projects; let projectIndex = index">
+                                <tr class="project-title">
+                                    <td colspan="6">
+                                        Project: {{p.title}}
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="projectStagesControls[p.id] && projectStagesControls[p.id].length > 0">
+                                    <tr *ngFor="let a of projectStagesControls[p.id].controls; let stageIndex = index" [formGroup]="getStageForm(p.id, stageIndex)">
+                                        <td>
+                                            <div class="d-flex flex-row align-items-center px-3">
+                                                <span class="text-muted">{{stageIndex + 1 }}. </span>
+                                                <input type="text" name="name" formControlName="name" class="form-control" placeholder="Group name" />
+                                            </div>                                    
+                                        </td>
+                                        <td>
+                                            <input type="number" name="tokenAmount" formControlName="tokenAmount" class="form-control" placeholder="Amount of tokens" />
+                                        </td>
+                                        <td class="fs-12 fw-bold text-mosaico-secondary"><span ngbTooltip="Percentage of total supply">{{a.get('percent')?.value}} % </span></td>
+                                        <td>
+                                            <input step="0.1" type="number" name="tokenPrice" formControlName="tokenPrice" class="form-control" placeholder="Token price" />
+                                        </td>
+                                        <td>{{a.get('totalValue')?.value | number : '1.2-2'}}</td>
+                                        <td *ngIf="canEdit">
+                                            <button class="btn btn-sm btn-icon btn-delete" *ngIf="service.stages[p.id][stageIndex].id && service.stages[p.id][stageIndex].type !== 'Public'" ngbTooltip="Get authorization code" [disabled]="(isLoading$|async) === true" (click)="stageAuthCodeDialog.open(service.stages[p.id][stageIndex].id)"><i class="fas fa-link"></i></button>                                        
+                                            <!-- <button class="btn btn-sm btn-icon btn-delete" *ngIf="service.stages[p.id][stageIndex].id" ngbTooltip="Deploy stage" [disabled]="(isLoading$|async) === true" (click)="deployStageDialog.open()"><i class="fas fa-file-signature"></i></button>  -->
+                                            <button class="btn btn-sm btn-icon btn-delete" ngbTooltip="Edit stage" [disabled]="(isLoading$|async) === true" (click)="newStageDialog.open(service.stages[p.id][stageIndex])"><i class="far fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-icon btn-delete" ngbTooltip="Delete stage" [disabled]="(isLoading$|async) === true" (click)="deleteStage(p.id, stageIndex)"><i class="far fa-trash-alt"></i></button>
+                                            <app-authorization-code #stageAuthCodeDialog [projectId]="p.id"></app-authorization-code>
+                                            <app-stage-deployment #deployStageDialog [projectId]="p.id" [token]="token" [stageId]="service.stages[p.id][stageIndex]?.id"></app-stage-deployment>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                    <tr class="add-row-title" *ngIf="canEdit">
+                                        <td colspan="6">
+                                            <button class="btn btn-sm btn-mosaico-primary me-3" [disabled]="!service.isValid || (isLoading$|async) === true" (click)="saveStages(p.id)">Save</button>
+                                            <button class="btn btn-sm btn-add" [disabled]="(isLoading$|async) === true" (click)="newStageDialog.open()">Add stage <i class="fa fa-plus"></i></button>
+                                            <!-- <button class="btn btn-sm btn-add" [disabled]="(isLoading$|async) === true" (click)="crowdsaleDeploymentDialog.open()">Deploy Smart Contract</button> -->
+                                            <app-crowdsale-deployment #crowdsaleDeploymentDialog [projectId]="p.id" [token]="token"></app-crowdsale-deployment>
+                                        </td>
+                                    </tr>
+                                    <app-new-stage #newStageDialog [id]="p.id" (onCreated)="addStage(p.id, $event)"></app-new-stage>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

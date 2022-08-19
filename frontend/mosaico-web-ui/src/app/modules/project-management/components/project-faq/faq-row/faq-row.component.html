@@ -1,0 +1,44 @@
+<!-- [id]="'row-' + i" -->
+<div
+  class="row-faq"
+  [ngClass]="expandedRow[i]"
+  [class.hide]="isHide"
+  (click)="showHideDescription(i)"
+  appBaseColors [border]="true" [isHighLightedBg]="showDescription[i]"
+>
+  <div class="d-flex justify-content-between align-items-center row-row">
+
+    <div class="d-flex align-items-center">
+      <h3 class="title">{{title}}</h3>
+    </div>
+
+    <span class="icon" *ngIf="showDescription[i] === false || showDescription[i] === undefined">
+      <div [inlineSVG]="'/assets/media/marketplace/plus-line.svg'" [class.hide-icon]="isHide" appBaseColors [isSvg]="true"></div>
+    </span>
+    <span class="icon" *ngIf="showDescription[i] === true">
+      <div [inlineSVG]="'/assets/media/marketplace/minus-line.svg'" [class.hide-icon]="isHide" appBaseColors [isSvg]="true"></div>
+    </span>
+  </div>
+
+  <ng-container *ngIf="showDescription[i] === true">
+    <p class="description">
+      {{description}}
+    </p>
+  
+    <app-edit-details *ngIf="canEdit === true" (isHidden)="onHide($event)" [id]="row.id" (openModal)="openModalEdit(row.id)" 
+      (confirmDelete)="confirmDeleteDialog.open(row.id)"></app-edit-details>
+  </ng-container>
+
+</div>
+
+<app-confirm-modal
+  #confirmDeleteDialog
+  title="{{'FAQ_delete_title' | translate }}"
+  message="{{'FAQ_delete_description' | translate }}"
+  submitButtonText="Delete"
+  submitBtnClass="btn-faq"
+  cancelBtnClass="btn-faq btn-cancel ms-8"
+  [projectMainColor]="true"
+  [usePayload]="true"
+  (closed)="delete($event)">
+</app-confirm-modal>

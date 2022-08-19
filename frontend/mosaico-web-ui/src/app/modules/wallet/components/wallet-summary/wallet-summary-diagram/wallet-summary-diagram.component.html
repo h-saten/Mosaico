@@ -1,0 +1,33 @@
+<div class="row h-100 w-100" *ngIf="!isLoaded">
+    <div class="col-12 d-flex justify-content-center align-items-center chart-container">
+        <app-spinner-container [showSpinner]="true"></app-spinner-container>
+    </div>
+</div>
+<div class="row h-100 w-100" *ngIf="isLoaded && !hasData">
+    <div class="col-12 d-flex justify-content-center align-items-center chart-container">
+        <img src="/assets/media/misc/wallet_no_distribution.png" style="max-width: 250px" />
+    </div>
+</div>
+<div class="row h-100 w-100" *ngIf="isLoaded && hasData">
+    <div class="col-12 d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="chart-container">
+                            <apx-chart
+                            [series]="diagramOptions.series"
+                            [chart]="diagramOptions.chart"
+                            [labels]="diagramOptions.labels"
+                            [legend]="diagramOptions.legend"
+                            [responsive]="diagramOptions.responsive"
+                            [theme]="diagramOptions.theme"
+                            [dataLabels]="diagramOptions.dataLabels"
+                        ></apx-chart>
+                        </div>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+</div>

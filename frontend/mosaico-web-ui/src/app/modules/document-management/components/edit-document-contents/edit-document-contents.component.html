@@ -1,0 +1,38 @@
+<div class="mb-5">
+  <div class="flex-column">
+    <form [formGroup]="mainForm" class="form mosaico-form" novalidate="novalidate">
+      <ng-container *ngFor="let content of getContentsControls(mainForm); let i = index" [formGroup]="content">
+        <div class="row mb-5">
+          <div class="col-12">
+            <div class="input-group" *ngIf="!content.value.id; else previewContent">
+              <select name="language" formControlName="language" class="form-select  form-control-solid">
+                <option value="" selected disabled>Select a language</option>
+                <option *ngFor="let lang of documentLanguageKeys" [value]="lang">
+                  {{documentLanguages[lang]}}
+                </option>
+              </select>
+              <input type="file" name="file" accept="application/pdf" class="form-control form-control-solid"
+                     (change)="saveFile($event, content)">
+              <button [disabled]="mainForm.disabled" class="btn btn-success btn-sm ms-3"
+                      (click)="saveContent(content, i)">
+                <img src="/assets/media/icons/duotune/general/gen043.svg" alt="Save Content">
+              </button>
+            </div>
+            <ng-template #previewContent>
+              <div class="input-group">
+                <input type="text" readonly name="language" class="form-control form-control-solid"
+                       [value]="documentLanguages[content.value.language]">
+                <button class="btn btn-secondary btn-sm ms-3"
+                        (click)="documentViewer.open(content.value.documentAddress)">View Document</button>
+                <button class="btn btn-danger btn-sm ms-3" (click)="deleteContent(content, i)">
+                  <img src="/assets/media/icons/duotune/general/gen027.svg" alt="Delete Content">
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+</div>
+<app-document-viewer #documentViewer [documentTitle]="documentTitle"></app-document-viewer>

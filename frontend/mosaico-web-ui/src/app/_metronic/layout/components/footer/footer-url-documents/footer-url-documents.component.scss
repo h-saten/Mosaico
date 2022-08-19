@@ -1,0 +1,54 @@
+
+.text-url-documents {
+  margin: 16px auto 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @media (min-width: 576px) {
+    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  a {
+    color: #434343;
+    padding: 8px 0;
+
+    display: inline-block;
+
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+
+    @media (min-width: 576px) {
+      display: block;
+
+      font-weight: 500;
+      line-height: 20px;
+    }
+  }
+
+  a:hover,
+  a:focus {
+    color: #434343;
+  }
+}
+
+.line {
+  border: 1px solid #434343;
+  background: #434343;
+  margin-left: 16px;
+  margin-right: 16px;
+  height: 21px;
+
+  @media (min-width: 991px) {
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+}
+
+.br-line {
+  display: block;
+}

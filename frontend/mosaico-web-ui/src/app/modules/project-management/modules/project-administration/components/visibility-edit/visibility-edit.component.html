@@ -1,0 +1,17 @@
+<div class="row mb-5">
+    <div class="col-12">
+        <h3 class="h4 mb-2">Visibility</h3>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-12" [formGroup]="form">
+        <div class="form-check form-switch form-check-custom form-check-solid">
+            <input class="form-check-input" type="checkbox" [checked]="currentProject?.isPublic === true"
+              formControlName="isPublic" id="isPublic"
+            />
+            <label class="form-check-label" for="isPublic" [ngbTooltip]="'Allow project to be accessible via its link. Ignored when project is approved and listed on marketplace'" [placement]="'top'">
+                Enable access via link <i class="fas fa-info-circle"></i>
+            </label>
+        </div>
+    </div>
+</div>

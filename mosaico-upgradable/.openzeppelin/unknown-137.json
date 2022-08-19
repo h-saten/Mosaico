@@ -1,0 +1,246 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x342dDaE9a7aE59ddE4958946D7d3bbbB45cb6d23",
+    "txHash": "0xc045fb6e3d6f4909f88f3df4511d01d77d9efd85e222e04277cc79d8846ea493"
+  },
+  "proxies": [
+    {
+      "address": "0x0E4AeE1513Cf05b97fAFFf860fC291324B604F8a",
+      "txHash": "0x2ae07b04feafa86ca3fb889229631586cb6d1cdcf3708230c2737a10cea4108c",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "4d5ceb45fc3be80ab23d45ab0740d9a1ca7c60b469d0618fbdc269cb110da946": {
+      "address": "0x2C925C3B1c1929b9da4894024fF233a24c2c9c6F",
+      "txHash": "0x94f9c04da8cf6d86e3626b6bd64f465207187c34f5250057cc4bcbbaff380d0a",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_uint8",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:278",
+            "retypedFrom": "bool"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:283"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:386"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:390"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:455"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "_paused",
+            "type": "t_bool",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:469"
+          },
+          {
+            "contract": "PausableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:542"
+          },
+          {
+            "contract": "EIP712Upgradeable",
+            "label": "_HASHED_NAME",
+            "type": "t_bytes32",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:890"
+          },
+          {
+            "contract": "EIP712Upgradeable",
+            "label": "_HASHED_VERSION",
+            "type": "t_bytes32",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:891"
+          },
+          {
+            "contract": "EIP712Upgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:978"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_PERMIT_TYPEHASH_DEPRECATED_SLOT",
+            "type": "t_bytes32",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:987"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_nonces",
+            "type": "t_mapping(t_address,t_struct(Counter)938_storage)",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:989"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "balances",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:990"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_allowances",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:991"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_isExcludedFromFee",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:992"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_banned",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:993"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_totalSupply",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:996"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_tFeeTotal",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:997"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_name",
+            "type": "t_string_storage",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:999"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_symbol",
+            "type": "t_string_storage",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1000"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_decimals",
+            "type": "t_uint8",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1001"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "feeManager",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1003"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_burnFee",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1005"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_bountyFee",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1007"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "bountyWallet",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1008"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_ventureFee",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1010"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "ventureWallet",
+            "type": "t_address",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1011"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "_maxTxAmount",
+            "type": "t_uint256",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1013"
+          },
+          {
+            "contract": "MosaicoUpgradable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "..\\project:\\contracts\\MosaicoUpgradable.sol:1377"
+          }
+        ],
+        "types": {
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_mapping(t_address,t_struct(Counter)938_storage)": {
+            "label": "mapping(address => struct CountersUpgradeable.Counter)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(Counter)938_storage": {
+            "label": "struct CountersUpgradeable.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    }
+  }
+}

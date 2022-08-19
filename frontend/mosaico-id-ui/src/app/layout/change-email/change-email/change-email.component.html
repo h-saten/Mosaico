@@ -1,0 +1,16 @@
+<ng-container>
+  <p [hidden]="emailChangeRequestFinished">{{ 'auth.change_email.form_info' | translate }}</p>
+  <p [hidden]="emailChangeRequestFinished">{{ 'auth.change_email.waiting' | translate }}</p>
+  <p *ngIf="emailSuccess">{{'auth.change_email.success_text' | translate}}</p>
+  <p *ngIf="emailError">{{'auth.change_email.error_text' | translate}}</p>
+
+</ng-container>
+
+
+
+<ng-template ngIf="emailSuccess">
+
+  <a class="btn btn-primary-custom btn-block" [routerLink]="['/auth/login']" rel="noopener">{{ 'auth.change_email.usedForm2' | translate }}</a>
+
+</ng-template>
+

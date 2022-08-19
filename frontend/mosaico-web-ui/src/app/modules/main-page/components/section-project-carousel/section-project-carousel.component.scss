@@ -1,0 +1,94 @@
+.section-project-carousel-container {
+    .project-carousel-content {
+        position: relative;
+
+        .showButton {
+            z-index: 2;
+        }
+    }
+    
+    .project-carousel-wrapper {
+        top: 0;
+        display: flex;
+        padding-top: 0;
+    
+        @media screen and (min-width: 991px) {
+            padding: 80px 0 140px;
+        }
+        
+        @media screen and (min-width: 576px) {
+            position: static;
+            padding-top: 10px;
+        }
+    }
+    
+    .swiper {
+        padding: 105px 0 89px;
+        
+        @media screen and (min-width: 991px) {
+            padding-bottom: 94px;
+        }
+    
+        @media screen and (min-width: 576px) {
+            padding: 94px 0 160px;
+        }
+    }
+    
+    .project-button-invest {
+        padding-bottom: 70px;
+        display: flex;
+        justify-content: center;
+    
+        .btn-invest {
+            background: linear-gradient(94.16deg, #0063F5 0%, #00A1FF 100%);
+            border-radius: 5px;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 24px;
+            width: 213px;
+            color: #FFFFFF;
+        }
+    }
+    
+    ::ng-deep {
+        .swiper-slide {
+            min-width: 336px;
+            position: relative;
+
+            @media (max-width: 575px) {
+                min-width: 270px;
+            }
+        }
+    
+        .swiper-pagination {
+            z-index: 0;
+    
+            .swiper-pagination-bullet {
+                background: #80B1FA;
+            }
+            
+            .swiper-pagination-bullet-active {
+                background: #0063F5;
+            }
+        }
+    
+        .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+            bottom: 83px;
+    
+            @media screen and (min-width: 991px) {
+                bottom: 48px;
+            }
+    
+            @media screen and (min-width: 576px) {
+                bottom: 94px;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .mt-btn-invest {
+        margin-top: -45px;
+    }
+}

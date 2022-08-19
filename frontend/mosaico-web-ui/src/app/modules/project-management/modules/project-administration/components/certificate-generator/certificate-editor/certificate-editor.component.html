@@ -1,0 +1,387 @@
+<section id="section-buy-order-issuer" class="pt-4">
+
+  <div class="container mt-5">
+
+    <div class="row">
+
+      <div class="col-12 my-3">
+        <div class="form-group">
+
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="certificateDate"
+                   (ngModelChange)="editCertificateSendingConfiguration()"
+                   [(ngModel)]="config.sendCertificateToInvestor" />
+            <label class="form-check-label" for="certificateDate">{{'issuer.certificate.send_certificate_field' | translate}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <p>{{'investors.certificate_generator.background_info' |translate}}</p>
+        <p>
+          <input type="file" (change)="selectFile($event)">
+        </p>
+      </div>
+
+      <div class="col-12">
+        <button (click)="saveBackground()" class="btn btn-primary" [disabled]="!canUploadNewBackground">
+          {{'investors.certificate_generator.save_background' | translate}}
+        </button>
+      </div>
+
+      <p class="col-12 alert alert-info mt-4 mb-2">{{'investors.certificate_generator.info' | translate}}
+        {{'investors.certificate_generator.scale' | translate}} {{ scale | number : '1.2-2' }}
+      </p>
+
+      <div class="certificate-playground-container col-12 m-0 p-0" style="border: 1px solid black;">
+        <div #certificatePlayground class="certificate-playground"
+            [ngStyle]="{
+            position: 'relative',
+            width: '100%',
+            visibility: !configurationLoaded && initConfigurationLoaded ? 'visible' : 'hidden',
+            boxSizing: 'border-box',
+            height: certificateContainerHeight + 'px',
+            background: certificateBackgroundUrl ? 'url(\'' + certificateBackgroundUrl + '\') no-repeat center/contain' : 'white'}">
+
+          <ng-container *ngIf="!configurationLoaded && initConfigurationLoaded">
+
+            <div *ngIf="investorName.enabled"
+                  cdkDrag
+                  [cdkDragFreeDragPosition]="{x: investorName.marginLeft, y: investorName.marginTop}"
+                  cdkDragBoundary=".certificate-playground"
+                  (cdkDragEnded)="moveElement($event, investorName)"
+                  (click)="changeTab(1)"
+                  style="position: absolute; box-sizing: border-box; display: flex; align-items: center; height: auto"
+                  [style.border]="this.showInPreviewMode ? 0 : '1px dotted black'"
+                  [style.width.px]="investorName.width"
+                  [style.height.px]="investorName.height">
+                <span style="width: 100%; height: auto;"
+                      [style.color]="investorName.fontColor"
+                      [style.fontWeight]="investorName.textBold ? 'bold' : 'normal'"
+                      [style.textAlign]="investorName.textAlign.toLowerCase()"
+                      [style.fontSize.px]="investorName.fontSizePx">John Doe</span>
+              </div>
+
+              <div *ngIf="tokensAmount.enabled"
+                  cdkDrag
+                  [cdkDragFreeDragPosition]="{x: tokensAmount.marginLeft, y: tokensAmount.marginTop}"
+                  cdkDragBoundary=".certificate-playground"
+                  (cdkDragEnded)="moveElement($event, tokensAmount)"
+                  (click)="changeTab(2)"
+                  style="position: absolute; box-sizing: border-box; display: flex; align-items: center; height: auto;"
+                  [style.border]="this.showInPreviewMode ? 0 : '1px dotted black'"
+                  [style.width.px]="tokensAmount.width"
+                  [style.height.px]="tokensAmount.height">
+                <span style="width: 100%; height: auto;"
+                      [style.color]="tokensAmount.fontColor"
+                      [style.fontWeight]="tokensAmount.textBold ? 'bold' : 'normal'"
+                      [style.textAlign]="tokensAmount.textAlign.toLowerCase()"
+                      [style.fontSize.px]="tokensAmount.fontSizePx"><span>134.67</span><span *ngIf="tokensAmount.attachTicker"> {{ tokenSymbol }}</span></span>
+              </div>
+
+              <div *ngIf="certificateDate.enabled"
+                  cdkDrag
+                  [cdkDragFreeDragPosition]="{x: certificateDate.marginLeft, y: certificateDate.marginTop}"
+                  cdkDragBoundary=".certificate-playground"
+                  (cdkDragEnded)="moveElement($event, certificateDate)"
+                  (click)="changeTab(3)"
+                  style="position: absolute; box-sizing: border-box;
+                          display: flex; align-items: center;"
+                  [style.border]="this.showInPreviewMode ? 0 : '1px dotted black'"
+                  [style.width.px]="certificateDate.width"
+                  [style.height.px]="certificateDate.height">
+                <span style="width: 100%; height: auto;"
+                      [style.color]="certificateDate.fontColor"
+                      [style.fontWeight]="certificateDate.textBold ? 'bold' : 'normal'"
+                      [style.textAlign]="certificateDate.textAlign.toLowerCase()"
+                      [style.fontSize.px]="certificateDate.fontSizePx">{{ currentDate | date : 'd.MM.y' }}</span>
+              </div>
+
+              <div *ngIf="certificateNumber.enabled"
+                  cdkDrag
+                  [cdkDragFreeDragPosition]="{x: certificateNumber.marginLeft, y: certificateNumber.marginTop}"
+                  cdkDragBoundary=".certificate-playground"
+                  (cdkDragEnded)="moveElement($event, certificateNumber)"
+                  (click)="changeTab(4)"
+                  style="position: absolute; box-sizing: border-box;
+                          display: flex; align-items: center;"
+                  [style.border]="this.showInPreviewMode ? 0 : '1px dotted black'"
+                  [style.width.px]="certificateNumber.width"
+                  [style.height.px]="certificateNumber.height">
+                <span style="width: 100%; height: auto;"
+                      [style.color]="certificateNumber.fontColor"
+                      [style.fontWeight]="certificateNumber.textBold ? 'bold' : 'normal'"
+                      [style.textAlign]="certificateNumber.textAlign.toLowerCase()"
+                      [style.fontSize.px]="certificateNumber.fontSizePx">000001/30</span>
+              </div>
+
+              <div *ngIf="logoBlock.enabled"
+                  cdkDrag
+                  [cdkDragFreeDragPosition]="{x: logoBlock.marginLeft, y: logoBlock.marginTop}"
+                  cdkDragBoundary=".certificate-playground"
+                  (cdkDragEnded)="moveElement($event, logoBlock)"
+                  (click)="changeTab(5)"
+                  style="position: absolute; box-sizing: border-box;
+                          display: flex; align-items: center;"
+                  [style.width.px]="logoBlock.width"
+                  [style.background]="logoUrl ? 'url(' + logoUrl + ') no-repeat center/cover' : 'white'"
+                  [style.borderRadius]="logoBlock.isRounded ? '50%' : '0'"
+                  [style.height.px]="logoBlock.height">
+              </div>
+
+          </ng-container>
+
+        </div>
+      </div>
+
+      <ng-container *ngIf="!configurationLoaded && initConfigurationLoaded">
+
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" (navChange)="onNavChange($event)" class="nav-tabs mt-10">
+
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>{{'investors.certificate_generator.name' | translate}}</a>
+            <ng-template ngbNavContent>
+              <div class="row pt-5">
+                <div class="form-group col-12">
+                  <ng-template *ngTemplateOutlet="enabled; context: {data: investorName}"></ng-template>
+                </div>
+
+                <ng-template *ngTemplateOutlet="font; context: {data: investorName}"></ng-template>
+
+                <ng-template *ngTemplateOutlet="marginWidrthHeight; context: {data: investorName}"></ng-template>
+
+                <div class="col-6">
+                  <button type="button" (click)="centerElement(investorName)" class="btn btn-secondary">{{'investors.certificate_generator.center_element' | translate}}</button>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>{{'investors.certificate_generator.tokens' | translate}}</a>
+            <ng-template ngbNavContent>
+              <div class="row pt-5">
+                <div class="form-group col-6">
+                  <ng-template *ngTemplateOutlet="enabled; context: {data: tokensAmount}"></ng-template>
+                </div>
+                <div class="form-group col-6">
+                  <ng-template *ngTemplateOutlet="attachTicker; context: {data: tokensAmount}"></ng-template>
+                </div>
+
+                <ng-template *ngTemplateOutlet="font; context: {data: tokensAmount}"></ng-template>
+
+                <ng-template *ngTemplateOutlet="marginWidrthHeight; context: {data: tokensAmount}"></ng-template>
+
+                <div class="col-6">
+                  <button type="button" (click)="centerElement(tokensAmount)" class="btn btn-secondary">{{'investors.certificate_generator.center_element' | translate}}</button>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>{{'investors.certificate_generator.date' | translate}}</a>
+            <ng-template ngbNavContent>
+
+              <div class="row pt-5">
+                <div class="form-group col-12">
+                  <ng-template *ngTemplateOutlet="enabled; context: {data: certificateDate}"></ng-template>
+                </div>
+
+                <ng-template *ngTemplateOutlet="font; context: {data: certificateDate}"></ng-template>
+
+                <ng-template *ngTemplateOutlet="marginWidrthHeight; context: {data: certificateDate}"></ng-template>
+
+                <div class="col-6">
+                  <button type="button" (click)="centerElement(certificateDate)" class="btn btn-secondary">{{'investors.certificate_generator.center_element' | translate}}</button>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="4">
+            <a ngbNavLink>{{'investors.certificate_generator.number' | translate}}</a>
+            <ng-template ngbNavContent>
+              <div class="row pt-5">
+
+                <div class="form-group col-12">
+                  <ng-template *ngTemplateOutlet="enabled; context: {data: certificateNumber}"></ng-template>
+                </div>
+
+                <ng-template *ngTemplateOutlet="font; context: {data: certificateNumber}"></ng-template>
+
+                <ng-template *ngTemplateOutlet="marginWidrthHeight; context: {data: certificateNumber}"></ng-template>
+
+                <div class="col-6">
+                  <button type="button" (click)="centerElement(certificateNumber)" class="btn btn-secondary">{{'investors.certificate_generator.center_element' | translate}}</button>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="5">
+            <a ngbNavLink>Logo</a>
+            <ng-template ngbNavContent>
+              <div class="row pt-5">
+
+                <div class="form-group col-6">
+                  <ng-template *ngTemplateOutlet="enabled; context: {data: logoBlock}"></ng-template>
+                </div>
+                <div class="form-group col-6">
+                  <ng-template *ngTemplateOutlet="rounded; context: {data: logoBlock}"></ng-template>
+                </div>
+
+                <ng-template *ngTemplateOutlet="marginWidrthHeight; context: {data: logoBlock}"></ng-template>
+
+                <div class="col-6">
+                  <button type="button" (click)="centerElement(logoBlock)" class="btn btn-secondary">{{'investors.certificate_generator.center_element' | translate}}</button>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2 mb-10"></div>
+      </ng-container>
+
+      <div class="mt-4">
+        <hr />
+
+        <div class="form-check form-switch mb-2">
+          <input class="form-check-input" type="checkbox" id="showInPreviewMode" [(ngModel)]="showInPreviewMode" />
+          <label class="form-check-label" for="showInPreviewMode">
+            {{'investors.certificate_generator.view_module' | translate}}
+          </label>
+        </div>
+
+        <button (click)="saveConfiguration()" class="btn btn-primary my-2 me-2"
+                appSpinnerMini [showSpinnerMini]="saveConfigurationInProgress"
+                [disabled]="saveConfigurationInProgress || requestInProgress">
+          <span>{{'investors.certificate_generator.save_configuration' | translate}}</span>
+        </button>
+
+        <button class="btn btn-primary my-2"
+                (click)="generatePdfPreview()"
+                appSpinnerMini [showSpinnerMini]="certificatePreviewInProgress"
+                [disabled]="certificatePreviewInProgress || requestInProgress">
+          <span>{{'investors.certificate_generator.pdf_generator' | translate}}</span>
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<ng-template #enabled let-data="data">
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" id="enabled" [(ngModel)]="data.enabled" />
+    <label class="form-check-label" for="enabled">{{'investors.certificate_generator.on' | translate}}</label>
+  </div>
+</ng-template>
+
+<ng-template #attachTicker let-data="data">
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" id="attachTicker"
+    [(ngModel)]="data.attachTicker" />
+    <label class="form-check-label" for="attachTicker">{{'investors.certificate_generator.token_shortcut' | translate}}</label>
+  </div>
+</ng-template>
+
+<ng-template #rounded let-data="data">
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" id="rounded" [(ngModel)]="data.rounded" />
+    <label class="form-check-label" for="rounded">{{'investors.certificate_generator.rounded_corners' | translate}}</label>
+  </div>
+</ng-template>
+
+<ng-template #textAlign let-data="data">
+  <div>
+    <label class="form-label">{{'investors.certificate_generator.text_alignment' | translate}}</label>
+    <select class="form-select" [(ngModel)]="data.textAlign" aria-label="'investors.certificate_generator.text_alignment' | translate">
+      <option></option>
+      <option [value]="'LEFT'">{{'investors.certificate_generator.left' | translate}}</option>
+      <option [value]="'CENTER'">{{'investors.certificate_generator.center' | translate}}</option>
+      <option [value]="'RIGHT'">{{'investors.certificate_generator.right' | translate}}</option>
+    </select>
+  </div>
+</ng-template>
+
+<ng-template #textBold let-data="data">
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" id="textBold" [(ngModel)]="data.textBold" />
+    <label class="form-check-label" for="textBold">{{'investors.certificate_generator.bold' | translate}}</label>
+  </div>
+</ng-template>
+
+<ng-template #fontSize let-data="data">
+  <div>
+    <label for="fontSize" class="form-label">{{'investors.certificate_generator.font_size' | translate}}</label>
+    <input type="number" class="form-control"
+          id="fontSize"
+          [(ngModel)]="data.fontSizePx"
+          placeholder="" />
+  </div>
+</ng-template>
+
+<ng-template #fontColor let-data="data">
+  <div>
+    <label for="fontColor" class="form-label">{{'investors.certificate_generator.text_color' | translate}}</label>
+    <input type="color" class="form-control form-control-color"
+          id="fontColor"
+          [(ngModel)]="data.fontColor"
+          placeholder="" />
+  </div>
+</ng-template>
+
+<ng-template #font let-data="data">
+  <div class="row">
+    <div class="form-group col-6">
+      <ng-template *ngTemplateOutlet="textAlign; context: {data: data}"></ng-template>
+    </div>
+    <div class="form-group col-6">
+      <ng-template *ngTemplateOutlet="fontSize; context: {data: data}"></ng-template>
+    </div>
+    <div class="form-group col-6">
+      <ng-template *ngTemplateOutlet="fontColor; context: {data: data}"></ng-template>
+    </div>
+    <div class="form-group d-flex align-items-center col-6">
+      <ng-template *ngTemplateOutlet="textBold; context: {data: data}"></ng-template>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #marginWidrthHeight let-data="data">
+  <div class="row">
+    <div class="form-group col-6">
+      <label for="marginTop" class="form-label">{{'investors.certificate_generator.upper_spacing' | translate}}</label>
+      <input type="number" class="form-control"
+        id="marginTop"
+        [(ngModel)]="data.marginTop"
+        placeholder="" />
+    </div>
+    <div class="form-group col-6">
+      <label for="marginLeft" class="form-label">{{'investors.certificate_generator.left_spacing' | translate}}</label>
+      <input type="number" class="form-control"
+        id="marginLeft"
+        [(ngModel)]="data.marginLeft"
+        placeholder="" />
+    </div>
+    <div class="form-group col-6">
+      <label for="width" class="form-label">{{'investors.certificate_generator.width' | translate}}</label>
+      <input type="number" class="form-control"
+        id="width"
+        [(ngModel)]="data.width"
+        placeholder="" />
+    </div>
+    <div class="form-group col-6">
+      <label for="height" class="form-label">{{'investors.certificate_generator.height' | translate}}</label>
+      <input type="number" class="form-control"
+        id="height"
+        [(ngModel)]="data.height"
+        placeholder="" />
+    </div>
+  </div>
+</ng-template>

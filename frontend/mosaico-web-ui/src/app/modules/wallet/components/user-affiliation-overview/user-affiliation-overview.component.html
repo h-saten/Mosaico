@@ -1,0 +1,92 @@
+<div class="row mt-3 mb-5">
+    <div class="col-12">
+        <div class="card shadow-sm rounded">
+            <div class="card-header">
+                <h3 class="card-title">Your individual code</h3>
+            </div>
+            <div class="card-body p-0">
+                <app-spinner-container [showSpinner]="(isLoading$|async) === true"></app-spinner-container>
+                <div class="row mt-5" *ngIf="(isLoading$|async) === false">
+                    <div class="col-12">
+                        <ng-container *ngIf="accessCode && accessCode.length > 0; else noAccessCode">
+                            <div class="row">
+                                <div class="col-12 d-flex flex-column justify-content-center align-items-center mb-3">
+                                    <div class="d-flex access-code-box">
+                                        {{accessCode}} <i ngxClipboard (cbOnSuccess)="onCopied()" [cbContent]="accessCode" [ngbTooltip]="'Copy code'" role="button" class="fa fa-copy"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <div class="col-12 d-flex flex-column justify-content-center align-items-center mb-3">
+                                        <div class="d-flex access-link-box">
+                                            {{accessCodeLink}} <i ngxClipboard (cbOnSuccess)="onCopied()" [cbContent]="accessCodeLink" [ngbTooltip]="'Copy link'" role="button" class="fa fa-copy"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card shadow-sm rounded">
+            <div class="card-header">
+                <h3 class="card-title">Comission</h3>
+            </div>
+            <div class="card-body p-0">
+                <app-spinner-container [showSpinner]="(isLoading$|async) === true"></app-spinner-container>
+                <div class="row" *ngIf="(isLoading$|async) === false">
+                    <div class="col-12">
+                        <ng-container *ngIf="projects && projects.length > 0; else noComissions">
+                            <div class="table-responsive table-responsive-xs airdrop-paticipants-table">
+                                <p-table [value]="projects" responsiveLayout="scroll" [paginator]="false"
+                                    styleClass="table table-distribution align-middle gs-0 gy-4">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th class="col-1">Project</th>
+                                            <th class="col-2">Transactions</th>
+                                            <th class="col-2">Estimated reward</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowIndex="rowIndex" let-p>
+                                        <tr>
+                                            <td>
+                                                {{p.projectTitle}}
+                                            </td>
+                                            <td>
+                                                {{p.transactionsCount}}
+                                            </td>
+                                            <td>
+                                                {{p.estimatedReward|number: '1.0-2'}} {{p.token?.symbol}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #noAccessCode>
+    <div class="row">
+        <div class="col-12 d-flex align-items-center flex-column">
+            <p>Your code is currently unavailable</p>
+        </div>
+    </div>
+</ng-template>
+<ng-template #noComissions>
+    <div class="row">
+        <div class="col-12 d-flex align-items-center flex-column">
+            <p>No comissions</p>
+        </div>
+    </div>
+</ng-template>

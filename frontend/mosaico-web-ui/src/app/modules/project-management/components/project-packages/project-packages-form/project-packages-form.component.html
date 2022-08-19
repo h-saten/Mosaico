@@ -1,0 +1,99 @@
+
+  <app-image-cropper-local
+    [currentImgUrl]="packageUrlLogo"
+    [addPhotoText]="'PACKAGE_addPhotoText' | translate"
+    [changePhotoText]="'PACKAGE_changePhotoText' | translate"
+    [currentFormMode]="currentFormMode"
+    [aspectRatio]="1 / 1"
+    [roundCropper]="true"
+    [blankImage]="'/assets/media/tokenpage/benefit-img-default-edit.svg'"
+    (editingIsInProgressEvent)="editingIsInProgress($event)"
+    (editingCancelEvent)="editingCancel()"
+    [imageCropperClass]="['size-scaling-photo-ip']"
+  ></app-image-cropper-local>
+    <!-- [resizeToWidth]="600" -->
+
+  <!-- <div class="div-img-logo">
+
+    <figure>
+      <img *ngIf="packageUrlLogo; else noLogo"
+        class="img-fluid img-logo"
+        [src]="packageUrlLogo"
+        alt="" />
+
+      <ng-template #noLogo>
+        <img
+        class="img-fluid img-logo"
+        src="/assets/media/tokenpage/benefit-img-default-edit.svg"
+        alt="" />
+      </ng-template>
+
+    </figure>
+
+    <img src="/assets/media/tokenpage/camera-line.svg" class="img-fluid img-icon" alt="" />
+  </div> -->
+
+  <div class="title-under-default-logo">
+    {{'INFO_UNDER_IMAGE' | translate}}
+  </div>
+
+  <form class="div-form mosaico-form" [formGroup]="form" novalidate="novalidate">
+    <div class="form-group mb-5">
+        <label class="form-label">{{'PACKAGE_package_name' | translate}}</label>
+        <input type="text" name="title" formControlName="title" [ngClass]="{ 'is-invalid': isDirty('title') && hasErrors('title') }"
+            class="form-control" placeholder="{{'PACKAGE_placeholder_package_name' | translate}}" />
+        <div class="invalid-feedback" *ngIf="isDirty('title') && hasErrors('title')">{{'PACKAGE_incorect_package_name' | translate}}</div>
+    </div>
+    <div class="form-group mb-5">
+        <label class="form-label">{{'PACKAGE_tokens_amount' | translate}}</label>
+        <input type="number" name="tokenAmount" formControlName="tokenAmount" [ngClass]="{ 'is-invalid': isDirty('tokenAmount') && hasErrors('tokenAmount') }"
+            class="form-control" placeholder="{{'PACKAGE_placeholder_tokens_amount' | translate}}" />
+        <div class="invalid-feedback" *ngIf="isDirty('tokenAmount') && hasErrors('tokenAmount')">{{'PACKAGE_incorect_tokens_amount' | translate}}</div>
+    </div>
+
+    <hr class="above-benefits" />
+
+    <div class="title-benefits">
+      {{'PACKAGE_benefits_title' | translate}}
+    </div>
+
+    <div class="title-under-benefits">
+      *{{'PACKAGE_benefits_title_info' | translate}}
+    </div>
+
+    <div class="form-group mb-5">
+      <label class="form-label">{{'PACKAGE_benefit_1' | translate}}</label>
+      <textarea type="text" name="benefit" formControlName="benefit1" [ngClass]="{ 'is-invalid': isDirty('benefit1') && hasErrors('benefit1') }"
+          class="form-control" placeholder="{{'PACKAGE_placeholder_benefit_1' | translate}}"></textarea>
+      <div class="invalid-feedback" *ngIf="isDirty('benefit1') && hasErrors('benefit1')">{{'PACKAGE_incorect_benefit' | translate}}</div>
+    </div>
+
+    <div class="form-group mb-5">
+      <label class="form-label">{{'PACKAGE_benefit_2' | translate}}</label>
+      <textarea type="text" name="benefit2" formControlName="benefit2" [ngClass]="{ 'is-invalid': isDirty('benefit2') && hasErrors('benefit2') }"
+          class="form-control" placeholder="{{'PACKAGE_placeholder_benefit_2' | translate}}"></textarea>
+      <div class="invalid-feedback" *ngIf="isDirty('benefit2') && hasErrors('benefit2')">{{'PACKAGE_incorect_benefit' | translate}}</div>
+    </div>
+
+    <div class="form-group mb-5">
+      <label class="form-label">{{'PACKAGE_benefit_3' | translate}}</label>
+      <textarea type="text" name="benefit3" formControlName="benefit3" [ngClass]="{ 'is-invalid': isDirty('benefit3') && hasErrors('benefit3') }"
+          class="form-control" placeholder="{{'PACKAGE_placeholder_benefit_3' | translate}}"></textarea>
+      <div class="invalid-feedback" *ngIf="isDirty('benefit3') && hasErrors('benefit3')">{{'PACKAGE_incorect_benefit' | translate}}</div>
+    </div>
+
+    <div class="form-group mb-5">
+      <label class="form-label">{{'PACKAGE_benefit_4' | translate}}</label>
+      <textarea type="text" name="benefit4" formControlName="benefit4" [ngClass]="{ 'is-invalid': isDirty('benefit4') && hasErrors('benefit4') }"
+          class="form-control" placeholder="{{'PACKAGE_placeholder_benefit_4' | translate}}"></textarea>
+      <div class="invalid-feedback" *ngIf="isDirty('benefit4') && hasErrors('benefit4')">{{'PACKAGE_incorect_benefit' | translate}}</div>
+    </div>
+
+    <div class="form-group mb-5">
+      <label class="form-label">{{'PACKAGE_benefit_5' | translate}}</label>
+      <textarea type="text" name="benefit5" formControlName="benefit5" [ngClass]="{ 'is-invalid': isDirty('benefit5') && hasErrors('benefit5') }"
+          class="form-control" placeholder="{{'PACKAGE_placeholder_benefit_5' | translate}}"></textarea>
+      <div class="invalid-feedback" *ngIf="isDirty('benefit5') && hasErrors('benefit5')">{{'PACKAGE_incorect_benefit' | translate}}</div>
+    </div>
+
+</form>

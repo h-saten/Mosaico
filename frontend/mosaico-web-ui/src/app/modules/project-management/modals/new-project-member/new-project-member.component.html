@@ -1,0 +1,32 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{'PROJECT_TEAM.ADD' | translate}}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row mosaico-form" [formGroup]="form">
+                <div class="col-12">
+                    <div class="form-group mb-5">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" formControlName="email" [ngClass]="{ 'is-invalid': isDirty('email') && hasErrors('email') }" class="form-control" placeholder="{{'PROJECT_TEAM.EMAIL_ENTER' | translate }}" />
+                        <div class="invalid-feedback" *ngIf="isDirty('email') && hasErrors('email')">Invalid email</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-mosaico-primary" (click)="submit()">{{'PROJECT_TEAM.BTN_CREATE' | translate}}</button>
+            <button type="button" class="btn btn-mosaico-primary-outline" (click)="modal.dismiss(false)">{{'PROJECT_TEAM.BTN_CANCEL' | translate}}</button>
+        </div>
+    </div>
+</ng-template>

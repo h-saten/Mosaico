@@ -1,0 +1,92 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">New vesting</h5>
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+                        <div class="form-group mb-5">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="name" formControlName="name" [ngClass]="{ 'is-invalid': isDirty('name') && hasErrors('name') }" class="form-control" placeholder="Partner name" />
+                            <div class="invalid-feedback" *ngIf="isDirty('name') && hasErrors('name')">Name is invalid</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Wallet</label>
+                                    <input type="text" name="walletAddress" formControlName="walletAddress" [ngClass]="{ 'is-invalid': isDirty('walletAddress') && hasErrors('walletAddress') }" class="form-control" placeholder="0x916145..." />
+                                    <div class="invalid-feedback" *ngIf="isDirty('walletAddress') && hasErrors('walletAddress')">Wallet is invalid</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Starting date</label>
+                                    <p-calendar name="startsAt" formControlName="startsAt" [showTime]="true" [hourFormat]="'24'" [readonlyInput]="true"
+                                                inputId="startsAt" [showIcon]="true" [styleClass]="'w-100'" [showButtonBar]="true"
+                                                [inputStyleClass]="'form-control'" [placeholder]="'Choose the start date'">
+                                    </p-calendar>
+                                    <div class="invalid-feedback" *ngIf="isDirty('startsAt') && hasErrors('startsAt')">Start date is invalid</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Total supply</label>
+                                    <input type="number" name="tokenAmount" formControlName="tokenAmount" [ngClass]="{ 'is-invalid': isDirty('tokenAmount') && hasErrors('tokenAmount') }" class="form-control" placeholder="100" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('tokenAmount') && hasErrors('tokenAmount')">Token amount is invalid</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Immediate payment (%)</label>
+                                    <input type="number" name="immediatePay" formControlName="immediatePay" [ngClass]="{ 'is-invalid': isDirty('immediatePay') && hasErrors('immediatePay') }" class="form-control" placeholder="10" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('immediatePay') && hasErrors('immediatePay')">Start date is invalid</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Duration (days)</label>
+                                    <input type="number" name="numberOfDays" formControlName="numberOfDays" [ngClass]="{ 'is-invalid': isDirty('numberOfDays') && hasErrors('numberOfDays') }" class="form-control" placeholder="90" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('numberOfDays') && hasErrors('numberOfDays')">Duration is invalid</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Claims</label>
+                                    <input type="number" name="amountOfClaims" formControlName="amountOfClaims" [ngClass]="{ 'is-invalid': isDirty('amountOfClaims') && hasErrors('amountOfClaims') }" class="form-control" placeholder="3" />
+                                    <div class="invalid-feedback" *ngIf="isDirty('amountOfClaims') && hasErrors('amountOfClaims')">Claims is invalid</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5">
+                            <app-company-wallet-payment-control [companyId]="token?.companyId" [network]="token?.network"
+                                [contractName]="contractVersionToDeploy" formControlName="wallet">
+                            </app-company-wallet-payment-control>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row w-100">
+                <div class="col-12 w-100">
+                    <app-button-save [classes]="'btn btn-primary btn-mosaico-primary w-100'" [formInvalid]="form.invalid"
+                        [showSpinner]="(deploying|async) === true"
+                        [buttonText]="'Add'" (clicked)="save()">
+                    </app-button-save>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,21 @@
+<ng-container *ngIf="showAlertCookie === true">
+
+  <div id="cookiealert" class="alert card text-center cookie-alert mb-0">
+
+    <h6>{{ 'COOKIES.cookies_information.title' | translate }}</h6>
+
+    <p>
+      {{ 'COOKIES.cookies_information.description' | translate }}
+      <a target="_blank" rel="noopener" class="btn-link"
+        href="https://mosaico.ai/assets/pdf/Polityka_prywatnosci_09_2020.pdf">
+        {{ 'COOKIES.cookies_information.privacy_policy' | translate }}
+      </a>.
+    </p>
+
+    <div>
+      <button class="btn btn-mosaico-primary btn-sm" (click)="setCookie()">{{ 'COOKIES.cookies_information.allow' | translate }}</button>
+      <button class="btn btn-mosaico-primary btn-sm ms-5" (click)="setCookie()">{{ 'COOKIES.cookies_information.decline' | translate }}</button>
+    </div>
+  </div>
+
+</ng-container>

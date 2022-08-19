@@ -1,0 +1,277 @@
+.card {
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-origin: padding-box;
+  background-clip: border-box;
+
+  border: 0;
+  padding: 0 !important;
+  // margin-left: -20px;
+  // margin-right: -20px;
+  // margin-top: -20px;
+
+  @media (min-width: 576px) {
+    border: 1px solid #F3F2F2;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+  }
+
+  @media (min-width: 992px) {
+  }
+}
+
+
+.div-btn-status {
+  color: #FFFFFF;
+
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+
+
+  // font-size: 32px;
+  // line-height: 40px;
+  // font-weight: 500;
+}
+
+::ng-deep .svg-icon.svg-icon-28 {
+  svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.logo-token-and-title-company {
+  margin-top: 8px;
+
+  @media (min-width: 576px) {
+    margin-top: 8px; // 32px all - 24px padding card
+  }
+
+  @media (min-width: 992px) {
+    margin-top: 8px; // 48px all - 32px padding card
+  }
+
+}
+
+.symbol-label {
+
+  width: 32px;
+  height: 32px;
+
+  @media (min-width: 992px) {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.title-company {
+  display: flex;
+  align-items: center;
+
+  color: #fff;
+
+  margin-left: 14px;
+
+  // margin-top: 16px;
+  // margin-bottom: 16px;
+
+  // font-weight: 500;
+  // font-size: 16px;
+  // line-height: 20px;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+
+  @media (min-width: 576px) {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+
+    // margin-bottom: 32px;
+  }
+
+  @media (min-width: 992px) {
+    // margin-top: 20px;
+    // margin-bottom: 32px;
+
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -0.01em;
+  }
+}
+
+.div-dao {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+
+  padding: 2px 9px;
+  margin-left: 8px;
+
+  // border: 2px solid #FFFFFF;
+  border-style: solid;
+  border-width: 2px;
+  box-sizing: border-box;
+  border-radius: 24px;
+}
+
+.card .card-body {
+  background-color: #494642;
+  color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 0%;
+  @media (min-width: 992px) {
+    height: 624px;
+    width: 100%;
+  }
+}
+
+.project-summary {
+  background: rgba(73, 70, 66, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 16px 16px;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+
+  @media (min-width: 576px) {
+    padding: 24px 24px !important;
+    width: 345px;
+  }
+
+  @media (min-width: 992px) {
+    padding: 32px 32px !important;
+    width: 442px;
+  }
+}
+
+.img {
+  width: 112px;
+  height: 112px;
+  border-radius: 50% !important;
+}
+
+.icons-list {
+  // @media (max-width: 767.98px) {
+  margin-bottom: 32px;
+  // }
+}
+
+
+.btn-cover-photo-edit,
+.btn-edit-main-colors {
+  background: #F8F8F8;
+  border: 1px solid #DFE0EB;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  color: #979797;
+
+  i {
+    color: #494642;
+  }
+}
+
+.button-invest {
+
+  width: 220px;
+  margin-bottom: 16px;
+  height: 34px;
+
+  @media (min-width: 576px) {
+    width: 326px;
+    height: 40px;
+  }
+
+  @media (min-width: 992px) {
+    width: 406px;
+    height: 56px;
+  }
+}
+
+.button-all {
+
+  width: 100%;
+
+  margin-top: 24px;
+
+  @media (min-width: 576px) {
+    // width: 326px;
+  }
+
+  @media (min-width: 992px) {
+    // width: 406px;
+  }
+}
+
+.t-long-cover {
+  display: none;
+
+  @media (min-width: 390px) {
+    display: inline-block;
+  }
+}
+
+.t-short-cover {
+  display: inline-block;
+
+  @media (min-width: 390px) {
+    display: none;
+  }
+}
+
+.t-long-colors {
+  display: none;
+
+  @media (min-width: 420px) {
+    display: inline-block;
+  }
+}
+
+.t-short-colors {
+  display: inline-block;
+
+  @media (min-width: 420px) {
+    display: none;
+  }
+}
+
+.symbol-token, .symbol-token-edit {
+  background-color: transparent;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  @media (min-width: 576px) {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 4px 16px;
+  }
+  @media (min-width: 992px) {
+    padding: 12px 16px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    height: 42px;
+  }
+}
+
+.symbol-token-edit {
+  @media (min-width: 992px) {
+    padding: 4px 16px;
+  }
+}
+.fire-icon {
+  height: 22px;
+}

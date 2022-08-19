@@ -1,0 +1,87 @@
+
+.div-title-project-and-symbol {
+  @media (min-width: 576px) {
+  }
+
+  @media (min-width: 992px) {
+  }
+}
+
+.div-title-project {
+  // color: #fff;
+  // width: min-content;
+  position: relative;
+  width: auto;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 28px;
+
+
+  max-width: 220px;
+  @media (min-width: 360px) {
+    max-width: 245px;
+  }
+  @media (min-width: 400px) {
+    max-width: 260px;
+  }
+  @media (min-width: 576px) {
+    max-width: 460px;
+  }
+
+  @media (min-width: 992px) {
+    letter-spacing: -0.02em;
+
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 64px;
+  }
+}
+
+.title-project-can-edit {
+
+  display: block;
+
+  @media (min-width: 576px) {
+    display: unset;
+  }
+}
+
+
+.div-symbol-token {
+  display: inline-block;
+
+  // width: 90px;
+  // @media (min-width: 576px) {
+  //   width: 55px;
+  // }
+  @media (min-width: 992px) {
+  }
+}
+
+.div-symbol-token-editor {
+  width: auto;
+}
+
+.symbol-token-and-bell {
+  display: inline-block;
+}
+
+.extra-top {
+  top: -10px;
+}
+
+.extra-top-can-edit {
+  @media (min-width: 576px) {
+    top: -10px;
+  }
+}
+
+.symbol-token-and-bell-in {
+
+  @media (min-width: 576px) {
+    top: -14px;
+    position: relative;
+  }
+
+}
+

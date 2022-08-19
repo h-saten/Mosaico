@@ -1,0 +1,171 @@
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card shadow-sm p-3 mb-5 bg-body rounded">
+            <div class="card-body" *ngIf="isInitialLoading">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <app-spinner-container [showSpinner]="isInitialLoading"></app-spinner-container>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" *ngIf="!isInitialLoading">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center form-title">{{'COMPANY_EDIT.TITLE'|translate}}</h2>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12 d-flex flex-column align-items-center">
+                        <form [formGroup]="form" class="form mosaico-form w-100" novalidate="novalidate">
+                            <div class="form-group mb-5 mt-5">
+                                <label class="form-label required">{{'COMPANY_EDIT.FORM.NAME.LABEL'|translate}}</label>
+                                <input name="companyName" formControlName="companyName" class="form-control"
+                                    [ngClass]="{ 'is-invalid': isDirty('companyName') && hasErrors('companyName') }"
+                                    placeholder="{{'COMPANY_EDIT.FORM.NAME.PLACEHOLDER'|translate}}" />
+                                <div class="invalid-feedback" *ngIf="isDirty('companyName') && hasErrors('companyName')">
+                                    {{'COMPANY_EDIT.FORM.NAME.ERROR'|translate}}</div>
+                            </div>
+                            <div class="form-group mb-5">
+                                <label class="form-label required">{{'COMPANY_EDIT.FORM.NETWORK.LABEL'|translate}}</label>
+                                <ng-select [clearable]="false" class="mosaico-select" [ngClass]="{ 'is-invalid': isDirty('network') && hasErrors('network') }" bindValue="name" bindLabel="name" [searchable]="false"
+                                    [items]="networks" formControlName="network" placeholder="{{'COMPANY_EDIT.FORM.NETWORK.PLACEHOLDER'|translate}}">
+                                    <ng-template ng-label-tmp let-item="item">
+                                        <span [inlineSVG]="item.logoUrl" class="svg-icon svg-icon-2"></span> {{item.name|translate}}
+                                    </ng-template>
+                                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                                        <span [inlineSVG]="item.logoUrl" class="svg-icon svg-icon-2"></span> {{item.name|translate}}
+                                    </ng-template>
+                                </ng-select>
+                                <div class="invalid-feedback" *ngIf="isDirty('network') && hasErrors('network')">{{'COMPANY_EDIT.FORM.NETWORK.ERROR'|translate}}</div>
+                            </div>
+                            <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                                <ngb-panel id="legal_entity" cardClass="mosaico-accordion-card">
+                                    <ng-template ngbPanelHeader let-opened="opened">
+                                       <button class="w-100 btn btn-white btn-toggler" ngbPanelToggle>{{'COMPANY_EDIT.FORM.LEGAL_SECTION'|translate}} 
+                                        <i *ngIf="!opened" class="fa fa-plus"></i>
+                                        <i *ngIf="opened" class="fa fa-minus"></i>
+                                        </button>
+                                    </ng-template>
+                                    <ng-template ngbPanelContent>
+                                        <div class="form-group mt-5 mb-5">
+                                            <label class="form-label">{{'COMPANY_EDIT.FORM.COUNTRY.LABEL'|translate}}</label>
+                                            <ng-select class="mosaico-select" [items]="countries" bindLabel="name" bindValue="code"
+                                                formControlName="country" [searchable]="true"
+                                                placeholder="{{'COMPANY_EDIT.FORM.COUNTRY.PLACEHOLDER'|translate}}"></ng-select>
+                                        </div>
+                                        <div class="form-group mb-5">
+                                            <label class="form-label">{{'COMPANY_EDIT.FORM.STREET.LABEL'|translate}}</label>
+                                            <input type="text" name="street" formControlName="street" class="form-control "
+                                                placeholder="{{'COMPANY_EDIT.FORM.STREET.PLACEHOLDER'|translate}}" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group mb-5">
+                                                    <label class="form-label">{{'COMPANY_EDIT.FORM.POSTAL_CODE.LABEL'|translate}}</label>
+                                                    <input type="text" name="postalCode" formControlName="postalCode" class="form-control "
+                                                        placeholder="{{'COMPANY_EDIT.FORM.POSTAL_CODE.PLACEHOLDER'|translate}}" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group mb-5">
+                                                    <label class="form-label">{{'COMPANY_EDIT.FORM.REGION.LABEL'|translate}}</label>
+                                                    <input type="text" name="street" formControlName="region" class="form-control "
+                                                        placeholder="{{'COMPANY_EDIT.FORM.REGION.PLACEHOLDER'|translate}}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-5">
+                                            <label class="form-label">{{'COMPANY_EDIT.FORM.VAT.LABEL'|translate}}</label>
+                                            <input type="text" name="vatid" formControlName="vatid" class="form-control "
+                                                placeholder="{{'COMPANY_EDIT.FORM.VAT.PLACEHOLDER'|translate}}" />
+                                        </div>
+                                        <div class="form-group mb-5">
+                                            <label class="form-label">{{'COMPANY_EDIT.FORM.SIZE.LABEL'|translate}}</label>
+                                            <ng-select  class="mosaico-select" [items]="sizeOptions" formControlName="size" bindValue="value" [searchable]="false" placeholder="{{'COMPANY_EDIT.FORM.SIZE.PLACEHOLDER'|translate}}">
+                                                <ng-template ng-label-tmp let-item="item">
+                                                    {{item.key|translate}}
+                                                </ng-template>
+                                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                    {{item.key|translate}}
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </ng-template>
+                                  </ngb-panel>
+                                  <ngb-panel id="settings_entity" cardClass="mosaico-accordion-card">
+                                    <ng-template ngbPanelHeader let-opened="opened">
+                                        <button class="w-100 btn btn-white btn-toggler" ngbPanelToggle>{{'COMPANY_EDIT.FORM.SETTINGS_SECTION'|translate}} 
+                                            <i *ngIf="!opened" class="fa fa-plus"></i>
+                                            <i *ngIf="opened" class="fa fa-minus"></i>
+                                        </button>
+                                     </ng-template>
+                                     <ng-template ngbPanelContent>
+                                        <div class="form-group mt-5 mb-5">
+                                            <label class="form-label">{{'COMPANY_EDIT.FORM.INITIAL_VOTING_DELAY.LABEL'|translate}} <i [ngbTooltip]="'COMPANY_EDIT.FORM.INITIAL_VOTING_DELAY.HINT'|translate" [placement]="'top'" class="fas fa-info-circle"></i></label>
+                                            <ng-select class="mosaico-select" [items]="votingPeriods" formControlName="initialVotingDelay" bindValue="value" [searchable]="false" placeholder="{{'COMPANY_EDIT.FORM.INITIAL_VOTING_DELAY.PLACEHOLDER'|translate}}">
+                                                <ng-template ng-label-tmp let-item="item">
+                                                    {{item.key|translate}}
+                                                </ng-template>
+                                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                    {{item.key|translate}}
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                        <div class="form-group mb-5">
+                                            <label class="form-label">{{'COMPANY_EDIT.FORM.INITIAL_VOTING_PERIOD.LABEL'|translate}} <i [ngbTooltip]="'COMPANY_EDIT.FORM.INITIAL_VOTING_PERIOD.HINT'|translate" [placement]="'top'" class="fas fa-info-circle"></i></label>
+                                            <ng-select class="mosaico-select" [items]="votingPeriods" formControlName="initialVotingPeriod" bindValue="value" [searchable]="false" placeholder="{{'COMPANY_EDIT.FORM.INITIAL_VOTING_PERIOD.PLACEHOLDER'|translate}}">
+                                                <ng-template ng-label-tmp let-item="item">
+                                                    {{item.key|translate}}
+                                                </ng-template>
+                                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                    {{item.key|translate}}
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                        <div class="form-group mt-5 mb-5">
+                                            <label class="form-label">{{'COMPANY_EDIT.FORM.QUORUM.LABEL'|translate}} <i [ngbTooltip]="'COMPANY_EDIT.FORM.QUORUM.HINT'|translate" [placement]="'top'" class="fas fa-info-circle"></i></label>
+                                            <input type="number" name="quorum" formControlName="quorum" class="form-control "
+                                                placeholder="{{'COMPANY_EDIT.FORM.QUORUM.PLACEHOLDER'|translate}}" />
+                                        </div>
+                                        <div class="form-check form-switch form-check-custom form-check-solid mt-5 mb-5">
+                                            <input class="form-check-input" type="checkbox" value="" id="votingEnabled" formControlName="isVotingEnabled"/>
+                                            <label class="form-check-label" for="votingEnabled">
+                                                {{'COMPANY_EDIT.FORM.VOTING.LABEL'|translate}}
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-switch form-check-custom form-check-solid mb-5">
+                                            <input class="form-check-input" type="checkbox" value="" id="onlyOwnerProposals" formControlName="onlyOwnerProposals"/>
+                                            <label class="form-check-label" for="onlyOwnerProposals">
+                                                {{'COMPANY_EDIT.FORM.EVERYBODY_CREATES.LABEL'|translate}}
+                                            </label>
+                                        </div>
+                                     </ng-template>
+                                  </ngb-panel>
+                            </ngb-accordion>
+                            <div class="form-group mb-5">
+                                <app-wallet-payment-control [userId]="userId" [network]="networkControl?.value" [contractName]="'dao_v1'" formControlName="wallet"></app-wallet-payment-control>
+                            </div>
+                            <div class="form-group mt-5 mb-5">
+                                <div class="form-check form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" formControlName="regulationAccepted" value="" id="acceptRegulation"/>
+                                    <label class="form-check-label" for="acceptRegulation" [innerHTML]="'COMPANY_EDIT.FORM.ACCEPT_REGULATION.LABEL'|translate"></label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex mt-5">
+                        <app-button-save class="w-100"
+                            [classes]="'btn btn-lg btn-mosaico-primary w-100'"
+                            [showSpinner]="isLoading$|async"
+                            [formInvalid]="form.invalid"
+                            [buttonText]="'COMPANY_EDIT.ACTIONS.SAVE'|translate"
+                            (clicked)="save()"
+                        ></app-button-save>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

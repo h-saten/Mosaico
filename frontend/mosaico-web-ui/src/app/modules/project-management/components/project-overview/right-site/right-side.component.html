@@ -1,0 +1,30 @@
+
+
+<div>
+  <div class="d-flex flex-column">
+    <app-blockchain-links></app-blockchain-links>
+  </div>
+  <div class="d-flex flex-column">
+    <app-blockchain-address></app-blockchain-address>
+  </div>
+
+  <div class="d-flex flex-column">
+    <app-project-document-templates-list></app-project-document-templates-list>
+  </div>
+
+  <div class="d-flex flex-column" *ngIf="canDownloadCertificate">
+    <app-investor-certificate></app-investor-certificate>
+  </div>
+
+  <div class="d-flex flex-column">
+    <app-exchange-list></app-exchange-list>
+  </div>
+
+  <div class="d-flex flex-column">
+    <app-payment-method-list></app-payment-method-list>
+  </div>
+
+  <div class="d-flex flex-column mt-5">
+    <app-payment-currencies-list></app-payment-currencies-list>
+  </div>
+</div>

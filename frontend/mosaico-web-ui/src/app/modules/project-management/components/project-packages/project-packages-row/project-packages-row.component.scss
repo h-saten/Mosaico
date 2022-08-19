@@ -1,0 +1,192 @@
+.investor-packages-card {
+  width: 270px;
+  margin-bottom: 0;
+  text-align: left;
+  margin-left: 8px;
+  margin-right: 8px;
+  display: inline-block;
+  white-space: pre-line;
+  vertical-align: top;
+  height: 100%;
+  border: 1px solid #eee;
+  &:hover {
+    color: #424242;
+    p.receive {
+      color: #424242;
+    }
+    ul {
+      color: #424242;
+      li button {
+        .small,  .icon-fa  {
+          color: #424242;
+        }
+      }
+    }
+    .div-btn-go-to-project {
+      visibility: visible;
+    }
+  }
+}
+
+.packages-small {
+  width: 230px;
+}
+
+.card {
+  border: 1px solid #f3f2f2;
+  box-shadow: none;
+
+  height: 100%;
+  border-radius: 10px;
+
+  padding: 0 12px !important;
+  max-width: 330px;
+  width: 100%;
+
+  @media (min-width: 320px) {
+    width: 248px;
+  }
+  @media (min-width: 414px) {
+    width: 280px;
+  }
+  @media (min-width: 576px) {
+    padding: 0 28px !important;
+    width: 330px;
+  }
+  @media (min-width: 768px) {
+    width: 330px;
+  }
+  @media (min-width: 992px) {
+    width: 330px;
+  }
+}
+
+.div-img-logo {
+  margin-top: 16px !important;
+  text-align: center;
+  width: 170px;
+  height: 170px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-logo {
+  max-width: 130px;
+  max-height: 130px;
+  margin: 0 auto;
+  border-radius: 50rem;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: center;
+  color: #494642;
+  margin-top: 12px;
+  margin-bottom: 26px;
+}
+
+.amount {
+  color: #00aa11;
+  font-weight: bold;
+}
+
+p.receive {
+  color: #808080;
+}
+
+ul {
+  padding-left: 22px;
+  color: #808080;
+  list-style-image: url('/assets/media/marketplace/Vector.svg');
+  margin-bottom: 0;
+}
+
+ul > li {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #858484;
+}
+
+ul > li.h6 {
+  margin-bottom: 16px;
+}
+
+ul > li.h6:last-child {
+  margin-bottom: 0;
+}
+
+ul > li > button {
+  margin-bottom: 3px;
+
+  .small {
+    color: #808080;
+  }
+
+  .icon-fa {
+    color: #808080;
+  }
+}
+
+.card-footer {
+  padding: 0;
+  border: 0;
+  margin-top: 40px;
+}
+
+.price {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #494642;
+
+  margin-bottom: 32px;
+  @media (min-width: 576px) {
+    margin-bottom: 40px;
+  }
+  @media (min-width: 992px) {
+    margin-bottom: 40px;
+  }
+}
+
+// .btn-select-plan {
+//   font-size: 16px;
+//   font-weight: 500;
+//   line-height: 16px;
+//   color: #494642;
+
+//   border: 1px solid #DADADA !important;
+//   box-sizing: border-box;
+//   border-radius: 5px;
+
+//   margin-bottom: 24px;
+//   @media (min-width: 576px) {
+//     margin-bottom: 40px;
+//   }
+//   @media (min-width: 992px) {
+//     margin-bottom: 54px;
+//   }
+
+//   &:hover {
+//     background-color: #000;
+//     color: #fff;
+//   }
+// }
+
+.btn-edit {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  top: 4px;
+  height: 33px
+}
+
+.btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
+  border: 1px solid #494642;
+  border-radius: 5px;
+}

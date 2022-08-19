@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-12">
+    <div class="table-responsive table-responsive-xs transactions-table">
+      <p-table [value]="projects" [lazy]="true" (onLazyLoad)="fetchProjects($event)" responsiveLayout="scroll"
+        [paginator]="true" [rows]="pageSize" [totalRecords]="totalRecords" [loading]="isLoading"
+        styleClass="table align-middle gs-0 gy-4">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="min-w-150px tr">Title</th>
+            <th class="min-w-150px tr">Status</th>
+            <th class="min-w-150px tr">Visibility</th>
+            <th class="min-w-150px tr">Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-project>
+          <tr>
+            <td class="text-center">
+              <div class="d-flex flex-row justify-content-center align-items-center">
+                <div class="d-flex">
+                  <div class="symbol symbol-25px me-5">
+                    <div class="symbol-label" *ngIf="project.logoUrl && project.logoUrl.length > 0"
+                      style="background-image:url({{project.logoUrl}})"></div>
+                    <div class="symbol-label fs-4 fw-bold text-dark"
+                      *ngIf="!project.logoUrl || project.logoUrl.length == 0">
+                      {{project.title|slice:0:1}}</div>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <a routerLink="/project/{{project.slug}}">{{project.title}}</a>
+                </div>
+              </div>
+            </td>
+            <td>
+              {{project.status}}
+            </td>
+            <td class="text-center">
+              <div class="d-flex justify-content-center align-items-center">
+                <label class="form-check form-switch form-check-custom form-check-solid">
+                  <input class="form-check-input w-30px h-20px" type="checkbox" value="1" [checked]="project.isVisible"
+                    name="visible" (change)="onChangeVisibility(project.id, $event)" />
+                  <span class="form-check-label text-muted fs-6">Visible</span>
+                </label>
+              </div>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-mosaico-primary btn-sm border-0 me-3" *ngIf="project.status === 'Under review'"
+                (click)="accept(project.id)">
+                Accept
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="12" class="text-center">
+              <h4>{{'PROJECT_SETTINGS.TRANSACTIONS.NO_TRANSACTIONS'|translate}}</h4>
+            </td>
+          </tr>
+          <tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

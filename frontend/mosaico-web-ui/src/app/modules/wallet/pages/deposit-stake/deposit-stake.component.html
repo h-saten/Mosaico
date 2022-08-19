@@ -1,0 +1,89 @@
+<!--begin::Alert-->
+<div class="alert bg-primary d-flex flex-column flex-sm-row p-5 mb-10">
+    <!--begin::Icon-->
+    <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0" [inlineSVG]="'/assets/media/icons/duotune/general/gen049.svg'"></span>
+    <!--end::Icon-->
+
+    <!--begin::Wrapper-->
+    <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+        <!--begin::Title-->
+        <h4 class="mb-2 text-light">Deposit crypto currency to your wallet</h4>
+        <!--end::Title-->
+
+        <!--begin::Content-->
+        <span>You can purchase cryptocurrency using our trusted payment processor. Take into account that buying crypto can lead to high fees.</span>
+        <!--end::Content-->
+    </div>
+    <!--end::Wrapper-->
+</div>
+<!--end::Alert-->
+<div class="card mb-5 mb-xl-10">
+    <!--begin::Card header-->
+    <div class="card-header card-header-stretch pb-0">
+        <!--begin::Title-->
+        <div class="card-title">
+            <h3 class="m-0">Staking</h3>
+        </div>
+        <!--end::Title-->
+        <!--begin::Toolbar-->
+        <div class="card-toolbar m-0">
+            <!--begin::Tab nav-->
+            <ul class="nav nav-stretch nav-line-tabs border-transparent" role="tablist">
+                <!--begin::Tab item-->
+                <li class="nav-item" role="presentation">
+                    <span class="nav-link fs-5 fw-bolder me-5 active" role="tab">Project Name</span>
+                </li>
+                <!--end::Tab item-->
+            </ul>
+            <!--end::Tab nav-->
+        </div>
+        <!--end::Toolbar-->
+    </div>
+    <!--end::Card header-->
+    <div class="card-body tab-content">
+        <!--begin::Tab panel-->
+        <div class="tab-pane fade show active" role="tabpanel">
+            <!--begin::Row-->
+            <div class="row">
+              <!--begin::Col-->
+              <div class="col-12">
+                <!--begin::staking-form-section-->
+                <div class="staking-form-section mb-5">
+                  <div class="flex-column">
+                    <div class="col-12">
+                      <div [formGroup]="form" class="col-12 mosaico-form">
+                        <div class="mb-10">
+                          <label for="quantity"
+                                 ngbPopover="Enter amount of tokens which will be dedicated for staking"
+                                 triggers="mouseenter:mouseleave" class="required form-label">
+                            Tokens stake quantity
+                            <i class="fas fa-question-circle"></i></label>
+                          <input type="number" class="form-control form-control-solid"
+                                 name="quantity" id="quantity" formControlName="quantity"
+                                 placeholder="Enter amount of tokens" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--end::staking-form-section-->
+
+                <div class="mb-5">
+                  <div class="flex-column current">
+                    <div class="d-flex justify-content-end mt-5 pt-5">
+                      <div class="ms-2">
+                        <!-- <button type="button" (click)="save()" class="btn btn-lg btn-mosaico-primary ms-3">
+                          Save
+                        </button> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div> <!--end::col-12-->
+            </div> <!--end::Row-->
+            <!--end::Row-->
+        </div>
+        <!--end::Tab panel-->
+    </div>
+</div>

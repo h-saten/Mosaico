@@ -1,0 +1,64 @@
+name: build-frontend
+description: build frontend
+
+inputs:
+  RUNNER_OS:
+    description: "OS type of github runner"
+    required: true
+  GITHUB_TOKEN:
+    description: "Token from github"
+    required: true
+  SONAR_FRONTEND_TOKEN:
+    description: "Sonarcloud frontend token"
+    required: true
+  WORKING_DIRECTORY:
+    description: "Working directory, where to execute step"
+    required: true
+  SONAR_PROJECT_KEY:
+    description: "SonarCloud project token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+  - name: Node 16.x
+    id: setupNode
+    uses: actions/setup-node@v1
+    with:
+      node-version: 16.x
+  - name: Cache node modules
+    id: cache
+    uses: actions/cache@v1
+    with:
+      path: ~/.npm
+      key: ${{ inputs.RUNNER_OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      restore-keys: |
+        ${{ inputs.RUNNER_OS }}-node-
+  - name: npm install
+    id: install
+    shell: bash
+    working-directory: ${{ inputs.WORKING_DIRECTORY }}
+    run: |
+      npm install --force
+  - name: rebuild nodesass
+    id: rebuild-node-sass
+    shell: bash
+    run: |
+      npm rebuild node-sass
+  - name: npm build
+    id: build
+    shell: bash
+    working-directory: ${{ inputs.WORKING_DIRECTORY }}
+    run: |
+      npm run build-prod
+  - name: SonarCloud Scan
+    uses: SonarSource/sonarcloud-github-action@master
+    with:
+      projectBaseDir: ${{ inputs.WORKING_DIRECTORY }}
+      args: >
+        -Dsonar.projectKey=${{inputs.SONAR_PROJECT_KEY}}
+        -Dsonar.organization=sapiency-io
+    env:
+      GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }} 
+      SONAR_TOKEN: ${{ inputs.SONAR_FRONTEND_TOKEN }}

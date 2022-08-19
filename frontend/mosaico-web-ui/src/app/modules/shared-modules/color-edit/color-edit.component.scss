@@ -1,0 +1,42 @@
+.btn-display-color {
+
+
+  padding: 0 !important;
+  @media (min-width: 464px) {
+    padding: calc(0.75rem + 1px) calc(1.5rem + 1px) !important;
+  }
+
+  max-width: 350px;
+  width: 50%;
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+}
+
+.span-display-color {
+
+  @media (min-width: 464px) {
+    position: absolute;
+    top: 0;
+    left: 350px;
+  }
+  @media (min-width: 992px) {
+    left: 350px;
+  }
+}
+
+ // for color picker
+
+::ng-deep .color-picker {
+  max-width: 350px;
+
+  .button-area {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+
+    button.btn-primary {
+      margin-left: 0;
+    }
+  }
+}

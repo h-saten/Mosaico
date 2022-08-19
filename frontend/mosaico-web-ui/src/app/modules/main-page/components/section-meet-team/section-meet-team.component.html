@@ -1,0 +1,28 @@
+<div class="meet-team-wrapper">
+    <div class="d-flex justify-content-center align-items-center flex-column-reverse flex-sm-row">
+        <div class="meet-team-container">
+            <p class="meet-team-title" innerHTML="{{ 'MT.title' | translate }}"></p>
+            <p class="meet-team-description">{{ 'MT.desc' | translate }}</p>
+    
+            <div class="d-block d-sm-none d-lg-block">
+                <div class="d-flex flex-column flex-sm-row">
+                    <app-meet-team-social-links [socialMediaIcons]="socialMediaIcons"></app-meet-team-social-links>
+                    <a routerLink="about" class="btn meet-team-action">
+                        <span>{{ 'MT.check_out' | translate }}</span>
+                        <img src="/assets/media/misc/chevron-down-line.png" alt="arrow-right" class="arrow-right">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <img src="/assets/media/mainpage/meet-team.png" alt="meet-team" class="meet-team-img">
+    </div>
+    <div class="d-none d-sm-block d-lg-none pt-12">
+        <div class="d-flex flex-column align-items-center text-align-center">
+            <app-meet-team-social-links [socialMediaIcons]="socialMediaIcons"></app-meet-team-social-links>
+            <a routerLink="about" class="btn meet-team-action">
+                <span>{{ 'MT.check_out' | translate }}</span>
+                <img src="/assets/media/misc/chevron-down-line.png" alt="arrow-right" class="arrow-right">
+            </a>
+        </div>
+    </div>
+</div>

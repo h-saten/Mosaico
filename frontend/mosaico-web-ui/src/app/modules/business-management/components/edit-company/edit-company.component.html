@@ -1,0 +1,114 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="flex-column">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>{{'COMPANY_SETTINGS_TABS.DETAILS'|translate}}</a>
+          <ng-template ngbNavContent>
+            <form [formGroup]="mainForm" class="form mosaico-form" novalidate="novalidate">
+              <div class="form-group mb-5 mt-5">
+                <label class="form-label">{{'COMPANY_EDIT.FORM.NAME.LABEL'|translate}}</label>
+                <input name="companyName" formControlName="companyName" class="form-control"
+                  placeholder="{{'COMPANY_EDIT.FORM.NAME.PLACEHOLDER'|translate}}" />
+              </div>
+              <div class="form-group mb-5">
+                <label class="form-label">{{'COMPANY_EDIT.FORM.COUNTRY.LABEL'|translate}}</label>
+                <ng-select class="mosaico-select" [items]="countries" bindLabel="name" bindValue="code" [searchable]="true"
+                  formControlName="country" placeholder="{{'COMPANY_EDIT.FORM.COUNTRY.PLACEHOLDER'|translate}}">
+                </ng-select>
+              </div>
+              <div class="form-group mb-5">
+                <label class="form-label">{{'COMPANY_EDIT.FORM.STREET.LABEL'|translate}}</label>
+                <input type="text" name="street" formControlName="street" class="form-control "
+                  placeholder="{{'COMPANY_EDIT.FORM.STREET.PLACEHOLDER'|translate}}" />
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <div class="form-group mb-5">
+                    <label class="form-label">{{'COMPANY_EDIT.FORM.POSTAL_CODE.LABEL'|translate}}</label>
+                    <input type="text" name="postalCode" formControlName="postalCode" class="form-control "
+                      placeholder="{{'COMPANY_EDIT.FORM.POSTAL_CODE.PLACEHOLDER'|translate}}" />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="form-group mb-5">
+                    <label class="form-label">{{'COMPANY_EDIT.FORM.REGION.LABEL'|translate}}</label>
+                    <input type="text" name="street" formControlName="region" class="form-control "
+                      placeholder="{{'COMPANY_EDIT.FORM.REGION.PLACEHOLDER'|translate}}" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mb-5">
+                <label class="form-label">{{'COMPANY_EDIT.FORM.VAT.LABEL'|translate}}</label>
+                <input type="text" name="vatid" formControlName="vatid" class="form-control "
+                  placeholder="{{'COMPANY_EDIT.FORM.VAT.PLACEHOLDER'|translate}}" />
+              </div>
+              <div class="form-group mb-5">
+                <label class="form-label">{{'COMPANY_EDIT.FORM.SIZE.LABEL'|translate}}</label>
+                <select class="form-select" formControlName="size">
+                  <option value="{{o.value}}" *ngFor="let o of sizeOptions">{{o.key | translate}}</option>
+                </select>
+              </div>
+              <div class="form-group mb-5 border-top mt-5 pt-5">
+                <span class="fs-3 contact-info-title">{{'COMPANY_EDIT.CONTACT_INFO_TITLE'|translate}}</span>
+              </div>
+              <div class="form-group mb-5">
+                <label class="form-label">{{'COMPANY_EDIT.FORM.PHONE.LABEL'|translate}}</label>
+                <input type="text" name="phoneNumber" formControlName="phoneNumber" class="form-control "
+                  placeholder="{{'COMPANY_EDIT.FORM.PHONE.PLACEHOLDER'|translate}}" />
+              </div>
+              <div class="form-group mb-5">
+                <label class="form-label">{{'COMPANY_EDIT.FORM.EMAIL.LABEL'|translate}}</label>
+                <input type="text" name="email" formControlName="email" class="form-control "
+                  placeholder="{{'COMPANY_EDIT.FORM.EMAIL.PLACEHOLDER'|translate}}" />
+              </div>
+              <div class="form-group mb-5 border-top mt-5 pt-5">
+                <span class="fs-3 contact-info-title">{{'COMPANY_DESCRIPTION.TITLE'|translate}}</span>
+              </div>
+              <div class="form-group mb-5">
+                <textarea name="companyDescription" rows="3" formControlName="companyDescription" class="form-control company-description"
+                  placeholder="{{'COMPANY_EDIT.FORM.DESCRIPTION.PLACEHOLDER'|translate}}" ></textarea>
+              </div>
+              <div class="d-flex  mt-5 pt-5">
+                <!-- TODO: replace the button -->
+                <!-- <button class="btn btn-lg btn-danger me-5" (click)="confirmLeaveCompanyDialog.open()">
+                  {{'COMPANY_EDIT.ACTIONS.LEAVE'|translate}}
+                </button> -->
+                <div *ngIf="canEdit" class="ms-2">
+                  <button type="submit" (click)="save()" class="btn btn-lg btn-mosaico-primary">
+                    {{'COMPANY_EDIT.ACTIONS.UPDATE'|translate}}
+                  </button>
+                </div>
+              </div>
+            </form>
+
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>{{'COMPANY_SETTINGS_TABS.SOCIAL'|translate}}</a>
+          <ng-template ngbNavContent>
+            <app-social-media></app-social-media>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+          <a ngbNavLink>{{'COMPANY_SETTINGS_TABS.MEMBERS'|translate}}</a>
+          <ng-template ngbNavContent>
+            <app-team-member *ngIf="currentCompanyId"></app-team-member>
+          </ng-template>
+        </li>
+        <li *ngIf="!isApproved" [ngbNavItem]="4">
+          <a ngbNavLink>{{'COMPANY_SETTINGS_TABS.KYB'|translate}}</a>
+          <ng-template ngbNavContent>
+            <app-kyb *ngIf="currentCompanyId" [canEdit]="canEdit" [companyId]="currentCompanyId"></app-kyb>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+    </div>
+  </div>
+</div>
+<!-- <lib-confirm-dialog #confirmLeaveCompanyDialog title="{{'LEAVE_COMPANY_MODAL.TITLE'|translate}}"
+  message="{{'LEAVE_COMPANY_MODAL.MESSAGE'|translate}}" [usePayload]="true" (closed)="leaveCompany()">
+</lib-confirm-dialog> -->

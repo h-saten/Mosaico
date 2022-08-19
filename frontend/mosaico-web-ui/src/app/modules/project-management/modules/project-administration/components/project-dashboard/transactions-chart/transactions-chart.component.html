@@ -1,0 +1,14 @@
+<div class="card hoverable bg-white shadow-sm">
+  <div class="card-body">
+    <div class="fw-bolder fs-1 mb-2">
+      Transactions
+    </div>
+    <div class="fw-bold fs-7">
+      <apx-chart [series]="transactionsStatistics.series" [chart]="transactionsStatistics.chart"
+                 [dataLabels]="transactionsStatistics.dataLabels"
+                 [plotOptions]="transactionsStatistics.plotOptions" [theme]="transactionsStatistics.theme"
+                 [responsive]="transactionsStatistics.responsive" [xaxis]="transactionsStatistics.xaxis"
+                 [legend]="transactionsStatistics.legend" [fill]="transactionsStatistics.fill"></apx-chart>
+    </div>
+  </div>
+</div>

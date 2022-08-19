@@ -1,0 +1,42 @@
+on: [push]
+name: AzureAcrDeploy
+env:
+  REGISTRY_FQDN: ${{ secrets.ACR_FQDN }}
+  CLUSTER_NAME: aks-mosaico-dev
+  CLUSTER_RESOURCE_GROUP: rg-mosaico-dev
+  NAMESPACE: mosaico
+
+jobs:
+
+
+  build-secure-and-push:
+    runs-on: ubuntu-latest
+    env:
+      major: ${{ secrets.MAJOR }}
+      minor: ${{ secrets.MINOR }}
+      patch: ${{ secrets.PATCH }}
+    steps:
+    - uses: actions/checkout@master
+    - uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.ACR_FQDN }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - run: docker build . --tag ${{ secrets.ACR_FQDN }}/aks-runner-mosaico:${{ env.major }}.${{ env.minor }}.${{ env.patch }}
+    - run: docker tag ${{ secrets.ACR_FQDN }}/aks-runner-mosaico:${{ env.major }}.${{ env.minor }}.${{ env.patch }} ${{ secrets.ACR_FQDN }}/aks-runner-mosaico:latest
+    - uses: Azure/container-scan@v0
+      with:
+        image-name: ${{ secrets.ACR_FQDN }}/aks-runner-mosaico:latest
+
+    - run: docker push ${{ secrets.ACR_FQDN }}/aks-runner-mosaico --all-tags
+
+    -
+      name: Update Minor version
+      uses: hmanzur/actions-set-secret@v2.0.0
+      with:
+        name: 'PATCH'
+        value: $((${{ env.patch }}+1))
+        repository: sapiency-io/michalc-github-test
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+

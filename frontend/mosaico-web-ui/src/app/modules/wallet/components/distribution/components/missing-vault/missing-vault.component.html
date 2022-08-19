@@ -1,0 +1,6 @@
+<div class="row">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <button (click)="vaultDeploymentModal.open()" class="btn btn-mosaico-primary">Deploy Vault</button>
+    </div>
+</div>
+<app-vault-deployment (closed)="onDeployed($event)" #vaultDeploymentModal [token]="token"></app-vault-deployment>

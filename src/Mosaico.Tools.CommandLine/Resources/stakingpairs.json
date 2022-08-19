@@ -1,0 +1,58 @@
+﻿[
+  {
+    "token": "TMOS",
+    "stakingToken": "MOS",
+    "network": "Polygon",
+    "address": "0x10fc3Ae0354397a3c82a766Dd87723E139553f26",
+    "estimatedRewardInUSD": 300,
+    "isEnabled": true,
+    "minimumDaysToStake": 1,
+    "canChangeStakingPeriod": true,
+    "paymentCurrencies": ["USDT"],
+    "RewardPayedOnDay": 10,
+    "Type": "Currency"
+  },
+  {
+    "token": "TRC",
+    "stakingToken": "RC",
+    "network": "Polygon",
+    "address": "0x87045315B9D17B692b0Ddb92A065404424C0bc34",
+    "estimatedRewardInUSD": 8225.2,
+    "isEnabled": true,
+    "minimumDaysToStake": 1,
+    "canChangeStakingPeriod": false,
+    "paymentCurrencies": ["USDT"],
+    "RewardPayedOnDay": 17,
+    "Type": "Token"
+  },
+  {
+    "token": "TMIC",
+    "stakingToken": "MIC",
+    "network": "Polygon",
+    "address": "0x60696c5423A6484bf9Ff1BA7e4f1aD0b037bab2a",
+    "estimatedRewardInUSD":0,
+    "isEnabled": true,
+    "minimumDaysToStake": 1,
+    "canChangeStakingPeriod": false,
+    "paymentCurrencies": ["USDC"],
+    "cron": "0 12 8 */3 *",
+    "Type": "Token",
+    "version": "milky_v1",
+    "skipApproval": true
+  },
+  {
+    "token": "TMOST",
+    "stakingToken": "MOST",
+    "network": "Polygon",
+    "address": "0x3E5129F9d3059b5B9C1b0C2B41B95Caf860a56c8",
+    "estimatedRewardInUSD":350,
+    "isEnabled": true,
+    "minimumDaysToStake": 1,
+    "canChangeStakingPeriod": false,
+    "paymentCurrencies": ["USDC"],
+    "cron": "0 12 8 */3 *",
+    "Type": "Token",
+    "version": "v1",
+    "skipApproval": true
+  }
+]

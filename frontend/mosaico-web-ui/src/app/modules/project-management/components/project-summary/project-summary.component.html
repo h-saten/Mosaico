@@ -1,0 +1,116 @@
+<ng-container *ngIf="currentProject && page">
+  <button routerLink="buy" class="btn btn-lg btn-scrolling-invest-now animate__animated animate__pulse animate__infinite" *ngIf="currentProject.status === 'In Progress' && canBuy && showScrollingButton" appBaseColors [button]="true">{{'BUTTONS.btn.invest_now' | translate}}</button>
+  <div class="card">
+    <div *ngIf="backgroundImage"
+      class="card-body d-flex justify-content-between align-items-center"
+      style="background-image:url({{backgroundImage}})">
+      <div class="d-flex flex-column project-summary">
+        <div class="d-flex">
+          <div class="div-btn-status" appBaseColors [elHeader]="true">
+            <div [ngSwitch]="currentProject.marketplaceStatus">
+              <div *ngSwitchCase="'PUBLIC_SALE'">{{('MARKETPLACE.' + currentProject.marketplaceStatus)|translate}} <img src="/assets/media/marketplace/fire.png" alt="fire" class="fire-icon"/></div>
+              <div *ngSwitchCase="'PRIVATE_SALE'">{{('MARKETPLACE.' + currentProject.marketplaceStatus)|translate}}<img src="/assets/media/marketplace/fire.png" alt="fire" class="fire-icon"/></div>
+              <div *ngSwitchCase="'PRE_SALE'">{{('MARKETPLACE.' + currentProject.marketplaceStatus)|translate}} <img src="/assets/media/marketplace/fire.png" alt="fire" class="fire-icon"/></div>
+              <div *ngSwitchCase="'UPCOMING'">{{('MARKETPLACE.' + currentProject.marketplaceStatus)|translate}}
+                <span
+                  [inlineSVG]="'/assets/media/marketplace/clock-line.svg'"
+                  class="svg-icon svg-icon-28"
+                  appBaseColors [iconSvgCover]="true"
+                  alt="clock"
+                ></span>
+              </div>
+              <div *ngSwitchDefault>
+                <ng-container *ngIf="currentProject.marketplaceStatus && currentProject.marketplaceStatus.length > 0; else defaultStatus">{{('MARKETPLACE.' + currentProject.marketplaceStatus)|translate}}</ng-container>
+                <ng-template #defaultStatus>{{('MARKETPLACE.' + statusProject)|translate}}</ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center logo-token-and-title-company mt-3">
+          <div class="symbol symbol-circle position-relative">
+            <!-- <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow position-absolute btn-project-logo-edit" *ngIf="canEdit && token"
+              data-kt-image-input-action="change" data-bs-toggle="tooltip"
+              ngbTooltip="{{'PROJECT_OVERVIEW.ACTIONS.EDIT_LOGO'|translate}}" data-bs-dismiss="click" routerLink="/wallet/token/{{token.id}}">
+              <i class="bi bi-pencil-fill fs-7"></i>
+            </label> -->
+            <div class="symbol-label"
+              *ngIf="token && token.logoUrl && token.logoUrl.length > 0"
+              style="background-image:url({{token.logoUrl}})"></div>
+            <div class="symbol-label fs-2 fw-bold text-dark"
+              *ngIf="!token || !token.logoUrl || token.logoUrl.length == 0">
+              {{currentProject.title|slice:0:1}}
+            </div>
+          </div>
+          <app-project-title class="ms-3"
+              [canEdit]="canEdit"
+          ></app-project-title>
+        </div>
+      
+        <!-- the rest of the class for mobile positioning is in the middle
+          of the component: app-project-icons-sm -->
+        <!-- <div class="d-flex d-md-none icons-list">
+          <app-project-icons-sm></app-project-icons-sm>
+        </div> -->
+
+        <app-status-follow-share class="mt-5"
+          [statusProject]="statusProject"
+          [projectId]="projectId"
+          [canEdit]="canEdit"
+          [isUserSubscribeProject]="isUserSubscribeProject"
+        ></app-status-follow-share>
+
+        <app-project-counter
+          [startDate]="startDate"
+          [endDate]="endDate"
+          [statusProject]="statusProject"
+        ></app-project-counter>
+
+        <div class="button-invest align-self-center">
+          <ng-container *ngIf="currentProject.marketplaceStatus === 'PUBLIC_SALE' || currentProject.marketplaceStatus === 'PRE_SALE' || currentProject.marketplaceStatus === 'PRIVATE_SALE'">
+            <app-button-buy-tokens [buttonActive]="canBuy"></app-button-buy-tokens>
+          </ng-container>
+        </div>
+
+        <!-- the rest of the class for mobile positioning is in the middle
+          of the component: app-project-icons-sm -->
+          <!-- <div class="d-flex d-md-none icons-list"> -->
+        <div class="mb-5">
+          <app-project-icons-sm></app-project-icons-sm>
+        </div>
+
+        <!-- <ng-container *ngIf="canEdit === true">
+          <div class="button-all d-flex justify-content-between">
+              <button (click)="openCoverEditingModal()" class="btn btn-sm btn-cover-photo-edit">
+                <span class="t-long-cover">{{(this.page.coverUrl ? 'PROJECT_OVERVIEW.ACTIONS.EDIT_COVER_PHOTO' : 'PROJECT_OVERVIEW.ACTIONS.ADD_COVER_PHOTO') | translate}} </span>
+                <span class="t-short-cover">{{(this.page.coverUrl ? 'PROJECT_OVERVIEW.ACTIONS.EDIT_COVER_PHOTO_SHORT' : 'PROJECT_OVERVIEW.ACTIONS.ADD_COVER_PHOTO_SHORT') | translate}} </span>
+                <i class="fas fa-camera ms-3"></i>
+              </button>
+              <app-token-editor></app-token-editor>
+              <button (click)="openMainColorsModal()" class="btn btn-sm btn-edit-main-colors ms-3">
+                <span class="t-long-colors">{{'PROJECT_OVERVIEW.ACTIONS.SET_COLORS'|translate}}</span>
+                <span class="t-short-colors">{{'PROJECT_OVERVIEW.ACTIONS.SET_COLORS_SHORT'|translate}}</span>
+                <i class="fas fa-palette ms-3"></i>
+              </button>
+          </div>
+        </ng-container> -->
+      </div>
+
+      <!-- <div class="d-none d-md-flex flex-column">
+        <app-project-icons-sm></app-project-icons-sm>
+      </div> -->
+    </div>
+
+    <app-project-info
+      [tokenPrice]="tokenPrice"
+      [token]="token"
+      [startDate]="startDate"
+      [endDate]="endDate"
+    ></app-project-info>
+    <div *ngIf="currentProject.marketplaceStatus === 'PUBLIC_SALE' || currentProject.marketplaceStatus === 'SECONDARY_MARKET' || currentProject.marketplaceStatus === 'CLOSED'">
+      <app-project-sales-progress-bar
+      ></app-project-sales-progress-bar>
+    </div>
+
+  </div>
+</ng-container>

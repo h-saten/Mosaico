@@ -1,0 +1,16 @@
+<div class="card card-xl-stretch mb5 mb-xl-8 mb-sm-5 shadow-sm" *ngIf="company.companyDescription">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 d-flex flex-row justify-content-center">
+                <span class="company-description-title">{{'COMPANY_DESCRIPTION.TITLE'|translate}}</span>
+            </div>
+        </div>
+        <div class="row mt-8">
+            <div class="col-12 d-flex flex-column flex-md-row justify-content-center flex-wrap">
+                <div class="d-flex">
+                    <span class="company-title text-left">{{ company?.companyDescription }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

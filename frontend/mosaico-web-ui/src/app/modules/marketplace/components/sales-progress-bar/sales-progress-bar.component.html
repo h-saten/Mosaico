@@ -1,0 +1,27 @@
+<div class="sales-progress">
+  <span class="percent-sale"> {{raisedCapitalInUSD| currency:'USD':'symbol': '1.0-0'}} ({{ raisedCapitalPercentageForDisplay.toFixed(2) }}%)</span>
+
+  <div class="progress-main-box">
+    <div class="progress"></div>
+
+    <div class="progress-bar"
+      [style.background]="colorOfProgressBar"
+      [style.width.%]="raisedCapitalPercentage"
+      role="progressbar"
+      [attr.aria-valuenow]="raisedCapitalPercentage"
+      aria-valuemin="0"
+      aria-valuemax="100"
+    ></div>
+
+    <!-- <div class="progress-number" [style.width.%]="raisedCapitalPercentage"></div> -->
+  </div>
+
+  <h5 class="number-tokens-sale mt-2 float-start">
+    {{raisedCapital| number: '1.0-0': 'en'}} {{tokenSymbol}}<br />
+    <!-- {{"ico.mosaico.progress.raised" | translate}} -->
+  </h5>
+
+  <h5 class="number-tokens-hardcap mt-2 text-end">
+    {{hardCapAmount| number: '1.0-0': 'en'}} {{tokenSymbol}}
+  </h5>
+</div>

@@ -1,0 +1,62 @@
+<div class="row mt-5" *ngIf="(isLoading$|async) === true">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="true"></app-spinner-container>
+    </div>
+</div>
+<div class="row" *ngIf="isDataLoaded && (isLoading$|async) === false">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table mosaico-table mosaico-table--primary-header mosaico-table--no-row-border">
+                <thead>
+                    <tr>
+                        <th class="col-2">Name</th>
+                        <th class="col-2">Wallet</th>
+                        <th class="col-2">Total Supply</th>
+                        <th class="col-2">Claimed</th>
+                        <th class="col-2">Status</th>
+                        <th class="col-2" *ngIf="canEdit">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let vesting of vestings; let i = index">
+                        <tr role="button" [ngClass]="{'row-selected': i === expandedRow}" (click)="toggleRow(i)">
+                            <td>{{vesting.name}}</td>
+                            <td><span role="button" (cbOnSuccess)="onCopied()" ngxClipboard
+                                [cbContent]="vesting.walletAddress">{{vesting.walletAddress|addressType}} <i
+                                    class="far fa-clipboard text-dark"></i></span></td>
+                            <td>{{vesting.tokenAmount| number: '1.0-6': 'en'}}</td>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <div>{{vesting.claimed | number: '1.0-6': 'en'}}</div>
+                                    <div class="text-muted">{{vesting.percentageCompleted | number: '1.0-6': 'en'}} %</div>
+                                </div>
+                            </td>
+                            <td>{{vesting.status}}</td>
+                            <td *ngIf="canEdit">
+                                <button class="btn btn-sm btn-mosaico-primary" (click)="$event.preventDefault();" disabled>Pause</button>
+                                <button class="btn btn-sm btn-mosaico-outline-primary" (click)="$event.preventDefault();" disabled>Cancel</button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="i === expandedRow">
+                            <td colspan="6">
+                                <div class="d-flex w-100 px-5">
+                                    <button class="btn btn-sm btn-mosaico-primary" (click)="redeploy(vesting.id)">Redeploy</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="!vestings || vestings.length === 0">
+                        <td colspan="6" class="text-center">There are no vestings</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="isDataLoaded">
+    <div class="col-12">
+        <button class="btn text-dark" [disabled]="(isLoading$|async) === true"
+            (click)="newPersonalVestingDialog.open()"><i class="fa fa-plus text-dark"></i> Create new</button>
+    </div>
+</div>
+<app-new-vesting #newPersonalVestingDialog [token]="token" (closed)="onPersonalVestingClosed($event)"></app-new-vesting>

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+        <PackageReference Include="NUnit" Version="3.13.2" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
+        <PackageReference Include="coverlet.collector" Version="3.1.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.Integration.Blockchain.Ethereum\Mosaico.Integration.Blockchain.Ethereum.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Blockchain.Moralis\Mosaico.Integration.Blockchain.Moralis.csproj" />
+        <ProjectReference Include="..\Mosaico.Tests.Base\Mosaico.Tests.Base.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Tools\ABI.txt" />
+      <Resource Include="Tools\ABI.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
+</Project>

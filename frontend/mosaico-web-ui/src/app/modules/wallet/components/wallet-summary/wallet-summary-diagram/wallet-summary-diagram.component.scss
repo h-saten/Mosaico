@@ -1,0 +1,19 @@
+apx-chart {
+    width: 230px !important;
+    max-width: 230px !important;
+}
+
+.chart-container {
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.wallet-summary-diagram-section {
+    &.section-border {
+        border-top: none;
+
+        @media (max-width: 768px) {
+            border-top: 1px solid #DFE0EB;
+        }
+    }
+}

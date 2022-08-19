@@ -1,0 +1,9 @@
+export enum COMPANY_ROLES {
+    "OWNER" = 'Owner',
+    "MEMBER" = 'Member'
+};
+export enum COMPANY_PERMISSIONS {
+    "CAN_READ" = "CAN_READ",
+    "CAN_EDIT_DETAILS" = "CAN_EDIT_DETAILS",
+    "CAN_READ_COMPANY_WALLET" = "CAN_READ_COMPANY_WALLET"
+};

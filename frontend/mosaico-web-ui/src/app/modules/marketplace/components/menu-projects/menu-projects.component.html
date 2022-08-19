@@ -1,0 +1,101 @@
+<!-- appMenuProjects (numberHeightEvent)="numberHeightEvent($event)" -->
+
+<div class="projects-menu-all">
+
+  <div class="projects-menu"
+    [class]="showDropDownMenu === false ? 'justify-content-between' : 'justify-content-start'"
+  >
+    <ng-container *ngIf="showDropDownMenu === false">
+      <ng-template *ngTemplateOutlet="projectBtnMenu; context: {class: classBtnMenuMobile, value: 'classBtnMenuMobile'}"
+      ></ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="showDropDownMenu === true">
+
+      <ng-container *ngIf="categories">
+        <div ngbDropdown class="d-inline-block">
+
+          <button class="btn-dropdown-toogle d-flex justify-content-between align-items-center"
+            id="dropdownMenuMarketplace" ngbDropdownToggle>
+            {{nameSelectedCategory}}
+            <img id="logo1" src="/assets/media/marketplace/chevron-down-line.svg"
+              class="img-svg"
+              alt="Expand the categories" />
+          </button>
+
+          <div ngbDropdownMenu aria-labelledby="dropdownMenuMarketplace">
+            <a ngbDropdownItem *ngFor="let item of categories"
+              [routerLink]="['/', 'projects', item.path]"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}"
+              (click)="selectCategory(item.path)"
+              [ngClass]="item.path === currentPath ? 'active' : ''"
+            >{{ item.title }}</a>
+          </div>
+        </div>
+
+      </ng-container>
+
+    </ng-container>
+
+    <ng-template *ngTemplateOutlet="formSearch; context: {class1: 'search-container-hide', class2: 'projects-search-mobile'}"></ng-template>
+  </div>
+
+  <ng-container *ngIf="showSearchForm2 === true">
+    <div class="projects-search2">
+      <div class="search-container">
+        <form typeform="">
+          <input #searchInput class="input-search" type="text" [placeholder]="'SEARCH' | translate" name="search" [(ngModel)]="searchText" (ngModelChange)="onSearchChange($event)" />
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<div class="projects-menu project-menu-copy">
+  <div class="me-5">
+    <ng-template [ngTemplateOutlet]="projectBtnMenu"></ng-template>
+  </div>
+
+  <ng-template [ngTemplateOutlet]="formSearch"></ng-template>
+</div>
+
+
+
+<ng-template #projectBtnMenu let-class="class" let-value="value">
+  <div class="projects-btn-menu"
+    [ngClass]="class"
+    appMenuProjects (numberHeightEvent)="numberHeightEvent($event)"
+  >
+    <ng-container *ngIf="categories">
+      <a *ngFor="let item of categories"
+        [routerLink]="['/', 'projects', item.path]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}"
+        class="btn btn-menu"
+        [ngClass]="item.path === currentPath ? 'active' : ''"
+      > {{item.title}}</a>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #formSearch let-class1="class1" let-class2="class2">
+  <div class="projects-search"
+    [ngClass]='class2'>
+
+    <div class="search-container"
+      [ngClass]='class1'
+    >
+      <form typeform="">
+        <input class="input-search" type="text" [placeholder]="'SEARCH' | translate" name="search" [(ngModel)]="searchText" (ngModelChange)="onSearchChange($event)" />
+      </form>
+    </div>
+
+    <div class="search-container-short" (click)="showSearchForm2Func()">
+      <form typeform="">
+        <input class="input-search" type="button" [placeholder]="'SEARCH' | translate" name="search" />
+      </form>
+    </div>
+
+  </div>
+</ng-template>

@@ -1,0 +1,11 @@
+
+<textarea #input
+  (focusout)="onFocusOut()"
+  (keydown.enter)='blur($event)'
+  [(ngModel)]='data'
+  class='cellInput'
+  appAutofocus
+  type='text'
+  [style.color]="textColor"
+></textarea>
+  <!-- [style.height]="height"  -->

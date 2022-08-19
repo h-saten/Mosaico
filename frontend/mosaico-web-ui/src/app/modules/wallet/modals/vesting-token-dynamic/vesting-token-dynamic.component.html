@@ -1,0 +1,20 @@
+<ng-template #content let-modal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Vesting token dynamic</h5>
+            <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="modal.dismiss(false)"
+                aria-label="Close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div #chartRef class="mixed-widget-7-chart card-rounded-bottom" [style.height]="chartHeight">
+                <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+                    [yaxis]="chartOptions.yaxis" [dataLabels]="chartOptions.dataLabels" [stroke]="chartOptions.stroke"
+                    [legend]="chartOptions.legend" [fill]="chartOptions.fill" [states]="chartOptions.states"
+                    [tooltip]="chartOptions.tooltip" [colors]="chartOptions.colors" [markers]="chartOptions.markers"
+                    [plotOptions]="chartOptions.plotOptions"></apx-chart>
+            </div>
+        </div>
+    </div>
+</ng-template>

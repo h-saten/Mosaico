@@ -1,0 +1,20 @@
+
+<app-spinner-container [showSpinner]="!confirmationRequestFinished"></app-spinner-container>
+
+<ng-container *ngIf="confirmationRequestFinished">
+  <div *ngIf="confirmationSuccess == true; else confirmationError">
+    <p>
+      <span>{{ 'auth.confirm.email.success.info' | translate }}</span>
+    </p>
+    <div class="mt-4 my-2">
+      <a href="{{redirectUrl}}" class="btn btn-block btn-primary-custom" rel="noopener">{{ 'auth.confirm.email.back' | translate }}</a>
+    </div>
+  </div>
+
+  <ng-template #confirmationError><span>{{ 'auth.confirm.email.error.info' | translate }}</span></ng-template>
+
+  <!-- test -->
+  <div class="mt-2 pt-2">
+    <a routerLink="/auth/login" rel="noopener">&nbsp; &nbsp;</a>
+  </div>
+</ng-container>

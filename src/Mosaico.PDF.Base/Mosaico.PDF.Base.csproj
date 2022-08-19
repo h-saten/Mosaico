@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.3.0" />
+        <PackageReference Include="Docnet.Core" Version="2.3.1" />
+        <PackageReference Include="PugPDF.Core" Version="1.0.9" />
+        <PackageReference Include="Stubble.Core" Version="1.9.3" />
+        <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
+        <PackageReference Include="Wkhtmltopdf.NetCore" Version="5.0.2-preview" />
+    </ItemGroup>
+
+</Project>

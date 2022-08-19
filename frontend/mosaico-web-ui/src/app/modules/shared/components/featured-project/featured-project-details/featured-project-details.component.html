@@ -1,0 +1,59 @@
+<div *ngIf="project" class="pd-container" (click)="onNavigateToProject(project.slug)" [class.project-item]="isProjectItem" style="background-image:url({{project.coverLogoUrl}})">
+    <ng-container *ngIf="!isProjectItem">
+        <div class="pd-wrapper">
+            <div class="pd-background"></div>
+            <div class="project-details" (click)="$event.stopPropagation()">
+                <div class="pd-title">
+                    <a (click)="onNavigate(project.slug)">{{ project.title }}</a>
+                </div>
+                <div class="pd-subtitle">{{ project.tokenSymbol }}</div>
+                <div class="pd-description">{{ project.shortDescription }}</div>
+                <div class="d-flex justify-content-between py-7" >
+                    <div class="d-flex align-items-center">
+                        <img src="/assets/media/marketplace/circle-group.png" alt="circle-group" class="pd-icon">
+                        <div class="d-flex flex-column">
+                            <span>Blockchain</span>
+                            <span>{{ project.network }}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img src="/assets/media/marketplace/noun-money.png" alt="circle-group" class="pd-icon">
+                        <div class="d-flex flex-column">
+                            <span>Token price</span>
+                            <span>$ {{project.activeStage.tokenPrice | number: '1.2-4': 'en'}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img src="/assets/media/marketplace/avalable.png" alt="circle-group" class="pd-icon">
+                        <div class="d-flex flex-column">
+                            <span>DAO </span>
+                            <span>Available</span>
+                        </div>
+                    </div>
+                </div>
+                <ng-container [ngSwitch]="project.status">
+                    <ng-container *ngSwitchCase="'In Progress'">
+                        <button class="btn btn-sm pd-btn" (click)="onViewDetails()">{{ 'PROJECT.ACTIONS.INVEST_NOW'|translate }}</button>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <button class="btn btn-sm pd-btn" (click)="onViewDetails()">{{ 'PROJECT.ACTIONS.VIEW_DETAILS'|translate }}</button>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="isProjectItem">
+        <div class="pd-item" [style.height.px]="wrapperHeight"></div>
+        <div class="pd-item-wrapper" #contentDiv role="button" (click)="$event.stopPropagation()" (mouseenter)="showDescription($event)" (mouseleave)="hideDescription($event)">
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <div class="pd-item-title">                    
+                    <a (click)="onNavigate(project.slug)">{{ project.title }}</a>
+                </div>
+                <div class="pd-item-subtitle">{{ project.tokenSymbol }}</div>
+            </div>
+            <div class="pd-item-description" [style.height]="isDescriptionShown ? 'auto' : '0'">{{ project.shortDescription }}</div>
+        </div>
+    </ng-container>
+    
+</div>

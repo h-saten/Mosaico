@@ -1,0 +1,48 @@
+<div class="row" *ngIf="currentStage && project">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-4 d-flex align-items-start">
+        <h3>Stage</h3>
+      </div>
+      <div class="col-4 d-flex justify-content-center">
+        <h3>Price</h3>
+      </div>
+      <div class="col-4 d-flex flex-column align-items-end">
+        <h3>Token data</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 mt-3">
+    <div class="row d-flex align-items-center">
+      <div class="col-4">{{currentStage.name}}</div>
+      <div class="col-4  d-flex justify-content-center">
+        <!-- <span>1 {{project.symbol}} = {{currentStage.tokenPrice}} USD</span> -->
+      </div>
+      <div class="col-4 d-flex flex-column align-items-end">
+        <!-- <div>{{project.tokenName}} ({{project.symbol}})</div> -->
+        <!-- <div>Supply: {{project.tokenTotalSupply}}</div> -->
+        <!-- <div>{{project.contractAddress | addressType}}</div> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-12 mt-5">
+    <div class="progress">
+      <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="saleProgress" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+  <div class="col-12 mt-5">
+    <div class="row">
+      <div class="col-6 d-flex flex-column align-items-start">
+        <div>{{soldTokens * currentStage.tokenPrice}} USD</div>
+        <div>raised</div>
+      </div>
+      <div class="col-6 d-flex flex-column align-items-end">
+        <div>{{soldTokens}} / {{currentStage.tokensSupply}}</div>
+        <div>left</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 d-flex justify-content-center mt-3">
+    <app-button-buy-tokens [buttonActive]="true"></app-button-buy-tokens>
+  </div>
+</div>

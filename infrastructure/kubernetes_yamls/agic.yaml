@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: aspnetapp
+  labels:
+    app: aspnetapp
+spec:
+  containers:
+  - image: "mcr.microsoft.com/dotnet/core/samples:aspnetapp"
+    name: aspnetapp-image
+    ports:
+    - containerPort: 80
+      protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: aspnetapp2
+  labels:
+    app: aspnetapp2
+spec:
+  containers:
+  - image: "mcr.microsoft.com/dotnet/core/samples:aspnetapp"
+    name: aspnetapp-image
+    ports:
+    - containerPort: 80
+      protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspnetapp
+spec:
+  selector:
+    app: aspnetapp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspnetapp2
+spec:
+  selector:
+    app: aspnetapp2
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aspnetapp
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/backend-path-prefix: "/"
+    kubernetes.io/ingress.allow-http: "false"
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    appgw.ingress.kubernetes.io/appgw-ssl-certificate: "ssl"  #enforce http -> https redirection
+    appgw.ingress.kubernetes.io/cookie-based-affinity: "true" #we want to keep session, when user changes to different pod
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /core
+        backend:
+          service:
+            name: aspnetapp
+            port:
+              number: 80
+        pathType: Prefix
+      
+      - path: /id
+        backend:
+          service:
+            name: aspnetapp2
+            port:
+              number: 80
+        pathType: Prefix
+        
+

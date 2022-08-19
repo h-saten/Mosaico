@@ -1,0 +1,13 @@
+<div class="card hoverable bg-white shadow-sm">
+  <div class="card-body">
+    <div class="fw-bolder fs-1 mb-2">
+      {{ 'DASHBOARD.VISITS_CHART.title' | translate }}
+    </div>
+    <div class="fw-bold fs-7" *ngIf="chartConfigurationLoaded">
+      <apx-chart [series]="visitStatistics.series" [chart]="visitStatistics.chart" [theme]="visitStatistics.theme"
+                 [xaxis]="visitStatistics.xaxis" [dataLabels]="visitStatistics.dataLabels"
+                 [grid]="visitStatistics.grid" [stroke]="visitStatistics.stroke"></apx-chart>
+    </div>
+
+  </div>
+</div>

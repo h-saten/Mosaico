@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mosaico.Integration.Email.SendGrid\Mosaico.Integration.Email.SendGridEmail.csproj" />
+    <ProjectReference Include="..\Mosaico.Tests.Base\Mosaico.Tests.Base.csproj" />
+  </ItemGroup>
+
+</Project>

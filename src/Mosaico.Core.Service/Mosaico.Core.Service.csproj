@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <UserSecretsId>52CB7BA4-2534-409E-8950-A33744964ADD</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.12" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
+        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.15.0" />
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\KangaExchange.SDK\KangaExchange.SDK.csproj" />
+        <ProjectReference Include="..\Mosaico.Analytics.Local\Mosaico.Analytics.Local.csproj" />
+        <ProjectReference Include="..\Mosaico.API.Base\Mosaico.API.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.API.v1.BusinessManagement\Mosaico.API.v1.BusinessManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.API.v1.Core\Mosaico.API.v1.Core.csproj" />
+        <ProjectReference Include="..\Mosaico.API.v1.DocumentManagement\Mosaico.API.v1.DocumentManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.API.v1.ProjectManagement\Mosaico.API.v1.ProjectManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.API.v1.Statistics\Mosaico.API.v1.Statistics.csproj" />
+        <ProjectReference Include="..\Mosaico.API.v1.Wallet\Mosaico.API.v1.Wallet.csproj" />
+        <ProjectReference Include="..\Mosaico.BackgroundJobs.Hangfire\Mosaico.BackgroundJobs.Hangfire.csproj" />
+        <ProjectReference Include="..\Mosaico.Base\Mosaico.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Core\Mosaico.Core.csproj" />
+        <ProjectReference Include="..\Mosaico.DocumentExport.CKEditor\Mosaico.DocumentExport.CKEditor.csproj" />
+        <ProjectReference Include="..\Mosaico.DocumentExport.PDF\Mosaico.DocumentExport.PDF.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Blockchain.CoinAPI\Mosaico.Integration.Blockchain.CoinAPI.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Email.Local\Mosaico.Integration.Email.Local.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Email.SendGrid\Mosaico.Integration.Email.SendGridEmail.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.SignalR\Mosaico.Integration.SignalR.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Sms.Local\Mosaico.Integration.Sms.Local.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Sms.SmsLabs\Mosaico.Integration.Sms.SmsLabs.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.UserCom\Mosaico.Integration.UserCom.csproj" />
+        <ProjectReference Include="..\Mosaico.Persistence.SqlServer\Mosaico.Persistence.SqlServer.csproj" />
+        <ProjectReference Include="..\Mosaico.SDK.Relay\Mosaico.SDK.Relay.csproj" />
+        <ProjectReference Include="..\Mosaico.Secrets.KeyVault\Mosaico.Secrets.KeyVault.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Remove="logs\**" />
+        <Content Include="devcert.pfx">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+</Project>

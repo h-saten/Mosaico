@@ -1,0 +1,42 @@
+name: "Purge CDN cache"
+description: "Purge CDN cache (all) from CDN profile on Azure"
+
+inputs:
+  AZURE_CREDENTIALS:
+    description: "Azure credentials from github secrets "
+    required: true
+  AZURE_CLIENT_ID:
+    description: "Azure CLIENT ID (same from dev.tfvars)"
+    required: true 
+  AZURE_CLIENT_SECRET:
+    description: "Azure Client Secret (same from dev.tfvars)"
+    required: true
+  AZURE_TENANT_ID:
+    description: "Azure tenant id (same from dev.tfvars)"
+    required: true
+  RESOURCE_GROUP:
+    description: "Resource group (same from dev.tfvars)"
+    required: true
+  ENDPOINT_NAME:
+    description: "Endpoint name of CDN profile which we want to Purge"
+    required: true
+  PROFILE_NAME:
+    description: "Profile name of CDN profile on Azure"
+    required: true 
+
+runs:
+  using: "composite"
+  steps:
+    # - name: login to az
+    #   shell: bash
+    #   run: az login --service-principal -u ${{ inputs.AZURE_CLIENT_ID }} -p ${{ inputs.AZURE_CLIENT_SECRET }} --tenant ${{ inputs.AZURE_TENANT_ID }}
+    - name: 'Login via Azure CLI'
+      id: loginAzure
+      uses: azure/login@v1
+      with:
+        creds: ${{ inputs.AZURE_CREDENTIALS }}
+    
+    - name: Purge CDN
+      shell: bash
+      run: az cdn endpoint purge -g ${{ inputs.RESOURCE_GROUP }} -n ${{ inputs.ENDPOINT_NAME }} --profile-name ${{ inputs.PROFILE_NAME }} --content-paths "/*"
+

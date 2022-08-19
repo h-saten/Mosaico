@@ -1,0 +1,1 @@
+export * from './kanga-wallet.service';

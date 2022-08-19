@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card company-items-card shadow-sm">
+            <div class="card-body" *ngIf="!isLoaded">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="isLoaded">
+                <ul ngbNav #nav="ngbNav" class="nav-tabs">
+<!--                            <li ngbNavItem>-->
+<!--                                <a ngbNavLink>DAO members</a>-->
+<!--                                <ng-template ngbNavContent>-->
+<!--                                  DAO members works!-->
+<!--                                </ng-template>-->
+<!--                            </li>-->
+                    <li ngbNavItem>
+                        <a ngbNavLink>Hodlers</a>
+                        <ng-template ngbNavContent>
+                          <app-company-holders-list [companyId]="companyId" [tokens]="tokens">
+                          </app-company-holders-list>
+                        </ng-template>
+                    </li>
+                </ul>
+                <div [ngbNavOutlet]="nav"></div>
+            </div>
+        </div>
+    </div>
+</div>

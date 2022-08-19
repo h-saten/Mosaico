@@ -1,0 +1,18 @@
+<ng-container *ngIf="isLoaded">
+  <div class="card vesting-items-card shadow-sm">
+    <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-lg-4 wallet-overview-section section-border">
+            <app-wallet-overview-staking></app-wallet-overview-staking>
+          </div>
+          <div class="col-12 d-none d-lg-block col-lg-4 wallet-overview-section section-border">
+            <app-wallet-overview-vesting></app-wallet-overview-vesting>
+          </div>
+          <div class="col-12 d-none d-lg-block col-lg-4 wallet-overview-section">
+            <app-wallet-overview-packages></app-wallet-overview-packages>
+          </div>
+        </div>
+    </div>
+  </div>
+</ng-container>
+<app-spinner-container [showSpinner]="!isLoaded"></app-spinner-container>

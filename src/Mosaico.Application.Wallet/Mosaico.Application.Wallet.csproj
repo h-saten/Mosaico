@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KangaExchange.SDK\KangaExchange.SDK.csproj" />
+      <ProjectReference Include="..\Mosaico.Application.ProjectManagement\Mosaico.Application.ProjectManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Blockchain.Base\Mosaico.Blockchain.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Core\Mosaico.Core.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Identity\Mosaico.Domain.Identity.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.ProjectManagement\Mosaico.Domain.ProjectManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Wallet\Mosaico.Domain.Wallet.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.BusinessManagement\Mosaico.Events.BusinessManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.ProjectManagement\Mosaico.Events.ProjectManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.Identity\Mosaico.Events.Identity.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.Wallet\Mosaico.Events.Wallet.csproj" />
+      <ProjectReference Include="..\Mosaico.Export.Base\Mosaico.Export.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Integration.Blockchain.CoinAPI\Mosaico.Integration.Blockchain.CoinAPI.csproj" />
+      <ProjectReference Include="..\Mosaico.Integration.Blockchain.Ethereum\Mosaico.Integration.Blockchain.Ethereum.csproj" />
+      <ProjectReference Include="..\Mosaico.Payments.RampNetwork\Mosaico.Payments.RampNetwork.csproj" />
+      <ProjectReference Include="..\Mosaico.SDK.Identity\Mosaico.SDK.Identity.csproj" />
+      <ProjectReference Include="..\Mosaico.SDK.ProjectManagement\Mosaico.SDK.ProjectManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Integration.Blockchain.Moralis\Mosaico.Integration.Blockchain.Moralis.csproj" />
+      <ProjectReference Include="..\Mosaico.SDK.Relay\Mosaico.SDK.Relay.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands\ExternalExchange" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Cronos" Version="0.7.1" />
+    </ItemGroup>
+
+</Project>

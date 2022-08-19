@@ -1,0 +1,84 @@
+p {
+    margin: 0;
+}
+
+.card {
+    padding: 34px 24px !important;
+
+    &.total-staking {
+        flex-direction: row;
+    
+        > div {
+            & :first-child .total-staking-title {
+                color: #0063F5;
+            }
+        
+            & :nth-child(2) .total-staking-title {
+                color: #FF9A00;
+            }
+        }
+    }
+
+    .green-triangle {
+        width: 0px;
+        height: 0px;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        border-bottom: 18px solid #41CF8F;
+    
+        + p {
+            color: #41CF8F;
+            font-weight: 500;
+            font-size: 16px;
+        }
+    }
+    
+    .red-triangle {
+        width: 0px;
+        height: 0px;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        border-top: 18px solid #F53838;
+    
+        + p {
+            color: #F53838;
+            font-weight: 500;
+            font-size: 16px;
+        }
+    }
+    
+    .total-staking-title {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 8px;
+    }
+    
+    .fa-info-circle {
+        position: relative;
+        top: -9px;
+        font-size: 16px;
+        color: #C0BEBE;
+    }
+        
+    .total-staking-amount {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 28px;
+        align-items: baseline;
+        gap: 4px;
+    }
+
+    .chart-container {
+        max-height: 260px;
+    }
+}
+
+
+@media only screen and (max-width: 1264px) and (min-width: 1199px) {
+    .card {
+        .total-staking-amount {
+            font-size: 21px;
+        }
+    }
+}

@@ -1,0 +1,96 @@
+<ng-container *ngIf="isLoading">
+    <div class="d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+    </div>
+</ng-container>
+<ng-container *ngIf="!isLoading">
+    <div class="table-responsive table-responsive-xs">
+        <table class="table align-middle gs-0 gy-4 staking-table">
+            <thead>
+                <tr>
+                    <th class="min-w-150px">{{'WALLET_STAKING.PANEL.HISTORY.TABLE.TOKEN_NAME'|translate}}</th>
+                    <th class="min-w-150px">{{'WALLET_STAKING.PANEL.HISTORY.TABLE.STATUS'|translate}}</th>
+                    <th class="min-w-150px">{{'WALLET_STAKING.PANEL.HISTORY.TABLE.STAKED'|translate}}</th>
+                    <th class="min-w-150px">{{'WALLET_STAKING.PANEL.HISTORY.TABLE.REWARDED'|translate}}</th>
+                    <th class="min-w-150px">{{'WALLET_STAKING.PANEL.HISTORY.TABLE.APR'|translate}}</th>
+                    <th class="min-w-150px">{{'WALLET_STAKING.PANEL.HISTORY.TABLE.START_DATE'|translate}}</th>
+                    <th class="min-w-150px">{{'WALLET_STAKING.PANEL.HISTORY.TABLE.END_DATE'|translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="stakings && stakings.length > 0">
+                    <tr *ngFor="let s of stakings">
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center flex-row">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="d-flex justify-content-center align-items-center me-5">
+                                        <div class="symbol symbol-25px">
+                                            <div class="symbol-label no-bg"
+                                                style="background-image:url(/assets/media/logos/mosaico_sygnet.png)"></div>
+                                        </div>
+                                        <div class="token-name ms-3">{{ s.tokenName }}</div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center staking-status">
+                                <span class="active-status" *ngIf="s.status">{{ s.status }}</span>
+                                <span class="no-status" *ngIf="!s.status">-</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <div class="d-flex staking-recipient">
+                                    {{ s.staked.mos }}
+                                </div>
+                                <div class="d-flex staking-friendlyName mt-3">
+                                    {{ s.staked.amount }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <div class="d-flex staking-recipient">
+                                    {{ s.rewarded.mos }}
+                                </div>
+                                <div class="d-flex staking-friendlyName mt-3">
+                                    {{ s.rewarded.amount }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <div class="staking-recipient">
+                                    {{ s.apr }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <div class="staking-recipient">
+                                    {{ s.startDate }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                <div class="staking-recipient">
+                                    {{ s.endDate }}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="!stakings || stakings.length === 0">
+                      <tr>
+                          <td colspan="7" class="text-center">
+                              <h4>{{'WALLET_STAKING.PANEL.HISTORY.NO_STAKINGS'|translate}}</h4>
+                          </td>
+                      </tr>
+                  </ng-container>
+            </tbody>
+        </table>
+    </div>
+</ng-container>

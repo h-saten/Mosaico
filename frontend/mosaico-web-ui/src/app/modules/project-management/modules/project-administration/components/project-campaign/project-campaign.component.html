@@ -1,0 +1,191 @@
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group mb-5">
+                        <label for="name"
+                            class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.HARDCAP.LABEL'|translate}}</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">$</span>
+                            <input type="number" name="hardCap" formControlName="hardCap"
+                                [ngClass]="{ 'is-invalid': isDirty('hardCap') && hasErrors('hardCap') }"
+                                class="form-control"
+                                placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.HARDCAP.PLACEHOLDER'|translate}}" />
+                            <div class="invalid-feedback" *ngIf="isDirty('hardCap') && hasErrors('hardCap')">
+                                {{'MODALS.CAMPAIGN_EDITOR.FORM.HARDCAP.ERROR'|translate}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label for="name"
+                            class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.SOFTCAP.LABEL'|translate}}</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">$</span>
+                            <input type="number" name="softCap" formControlName="softCap"
+                                [ngClass]="{ 'is-invalid': isDirty('softCap') && hasErrors('softCap') }"
+                                class="form-control"
+                                placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.SOFTCAP.PLACEHOLDER'|translate}}" />
+                            <div class="invalid-feedback" *ngIf="isDirty('softCap') && hasErrors('softCap')">
+                                {{'MODALS.CAMPAIGN_EDITOR.FORM.SOFTCAP.ERROR'|translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!stagesControl || !stagesControl.controls || stagesControl.controls.length === 0">
+                <div class="col-12">
+                    <p>There are no campaign stages</p>
+                </div>
+            </div>
+            <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="stage_0">
+                <ngb-panel *ngFor="let stage of getStageControls(form); let i = index" id="stage_{{i}}"
+                    cardClass="mosaico-accordion-card">
+                    <ng-template ngbPanelHeader let-opened="opened">
+                        <button ngbPanelToggle
+                            class="w-100 btn btn-white btn-toggler">{{stage.get('name')?.value}}</button>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <div class="row mt-3" [formGroup]="stage">
+                            <div class="col-12">
+                                <div class="form-group mb-5">
+                                    <label for="name"
+                                        class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.NAME.LABEL'|translate}}</label>
+                                    <input type="text" name="name" formControlName="name"
+                                        [ngClass]="{ 'is-invalid': isDirty('stages.'+i+'.name') && hasErrors('stages.'+i+'.name') }"
+                                        class="form-control"
+                                        placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.NAME.PLACEHOLDER'|translate}}" />
+                                    <div class="invalid-feedback"
+                                        *ngIf="isDirty('stages.'+i+'.name') && hasErrors('stages.'+i+'.name')">
+                                        {{'MODALS.CAMPAIGN_EDITOR.FORM.NAME.ERROR'|translate}}
+                                    </div>
+                                </div>
+                                <div class="form-group mb-5">
+                                    <label
+                                        class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.SUPPLY.LABEL'|translate}}</label>
+                                    <input type="number" name="tokensSupply" formControlName="tokensSupply"
+                                        [ngClass]="{ 'is-invalid': isDirty('stages.'+i+'.tokensSupply') && hasErrors('stages.'+i+'.tokensSupply') }"
+                                        class="form-control"
+                                        placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.SUPPLY.PLACEHOLDER'|translate}}" />
+                                    <div class="invalid-feedback"
+                                        *ngIf="isDirty('stages.'+i+'.tokensSupply') && hasErrors('stages.'+i+'.tokensSupply')">
+                                        {{'MODALS.CAMPAIGN_EDITOR.FORM.SUPPLY.ERROR'|translate}}
+                                    </div>
+                                </div>
+                                <div class="form-group mb-5">
+                                    <label class="form-label"
+                                        for="tokenPrice">{{'MODALS.CAMPAIGN_EDITOR.FORM.TOKEN_PRICE.LABEL'|translate}}</label>
+                                    <div class="input-group mb-5">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" name="tokenPrice" formControlName="tokenPrice"
+                                            [ngClass]="{ 'is-invalid': isDirty('stages.'+i+'.tokenPrice') && hasErrors('stages.'+i+'.tokenPrice') }"
+                                            class="form-control "
+                                            placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.TOKEN_PRICE.PLACEHOLDER'|translate}}" />
+                                        <div class="invalid-feedback"
+                                            *ngIf="isDirty('stages.'+i+'.tokenPrice') && hasErrors('stages.'+i+'.tokenPrice')">
+                                            {{'MODALS.CAMPAIGN_EDITOR.FORM.TOKEN_PRICE.ERROR'|translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-5">
+                                            <label
+                                                class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.MIN_PURCHASE.LABEL'|translate}}</label>
+                                            <input type="number" name="minimumPurchase"
+                                                formControlName="minimumPurchase"
+                                                [ngClass]="{ 'is-invalid': isDirty('stages.'+i+'.minimumPurchase') && hasErrors('stages.'+i+'.minimumPurchase') }"
+                                                class="form-control "
+                                                placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.MIN_PURCHASE.PLACEHOLDER'|translate}}" />
+                                            <div class="invalid-feedback"
+                                                *ngIf="isDirty('stages.'+i+'.minimumPurchase') && hasErrors('stages.'+i+'.minimumPurchase')">
+                                                {{'MODALS.CAMPAIGN_EDITOR.FORM.MIN_PURCHASE.ERROR'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group mb-5">
+                                            <label for="maximumPurchase"
+                                                class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.MAX_PURCHASE.LABEL'|translate}}</label>
+                                            <input type="number" name="maximumPurchase"
+                                                formControlName="maximumPurchase" class="form-control "
+                                                [ngClass]="{ 'is-invalid': isDirty('stages.'+i+'.maximumPurchase') && hasErrors('stages.'+i+'.maximumPurchase') }"
+                                                placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.MAX_PURCHASE.PLACEHOLDER'|translate}}" />
+                                            <div class="invalid-feedback"
+                                                *ngIf="isDirty('stages.'+i+'.maximumPurchase') && hasErrors('stages.'+i+'.maximumPurchase')">
+                                                {{'MODALS.CAMPAIGN_EDITOR.FORM.MAX_PURCHASE.ERROR'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-5">
+                                            <label
+                                                class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.START_DATE.LABEL'|translate}}</label>
+                                            <input type="datetime-local" name="startDate" formControlName="startDate"
+                                                [ngClass]="{ 'is-invalid': isDirty('stages.'+i+'.startDate') && hasErrors('stages.'+i+'.startDate') }"
+                                                class="form-control "
+                                                placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.START_DATE.PLACEHOLDER'|translate}}" />
+                                            <div class="invalid-feedback"
+                                                *ngIf="isDirty('stages.'+i+'.startDate') && hasErrors('stages.'+i+'.startDate')">
+                                                {{'MODALS.CAMPAIGN_EDITOR.FORM.START_DATE.ERROR'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group mb-5">
+                                            <label
+                                                class="form-label">{{'MODALS.CAMPAIGN_EDITOR.FORM.END_DATE.LABEL'|translate}}</label>
+                                            <input type="datetime-local" name="endDate" formControlName="endDate"
+                                                [ngClass]="{ 'is-invalid': isDirty('stages.'+i+'.endDate') && hasErrors('stages.'+i+'.endDate') }"
+                                                class="form-control "
+                                                placeholder="{{'MODALS.CAMPAIGN_EDITOR.FORM.END_DATE.PLACEHOLDER'|translate}}" />
+                                            <div class="invalid-feedback"
+                                                *ngIf="isDirty('stages.'+i+'.endDate') && hasErrors('stages.'+i+'.endDate')">
+                                                {{'MODALS.CAMPAIGN_EDITOR.FORM.END_DATE.ERROR'|translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-5">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="ms-2">
+                                            <div class="form-check form-switch form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox" value="" id="isPrivate"
+                                                    formControlName="isPrivate" />
+                                                <label class="form-check-label" for="isPrivate">
+                                                    {{'MODALS.CAMPAIGN_EDITOR.FORM.PRIVATE_SALE.LABEL'|translate}}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="ms-2">
+                                            <button class="btn btn-sm btn-bg-light btn-icon-danger btn-text-danger"
+                                                (click)="deleteStage(stage, i)"><i class="fa fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex mt-5 pt-5 align-items-center justify-content-between">
+            <div class="ms-2">
+                <button class="btn btn-sm btn-mosaico-primary-outline me-2" (click)="addStage()"
+                    [disabled]="form.disabled"><i class="fa fa-plus"></i></button>
+            </div>
+            <div class="ms-2">
+                <button type="button" [disabled]="form.disabled" (click)="save()"
+                    class="btn btn-lg btn-mosaico-primary">
+                    {{'MODALS.CAMPAIGN_EDITOR.FORM.ACTIONS.SAVE'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

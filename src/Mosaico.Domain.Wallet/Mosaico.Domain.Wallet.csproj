@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mosaico.Blockchain.Base\Mosaico.Blockchain.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Cache.Base\Mosaico.Cache.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Core.EntityFramework\Mosaico.Core.EntityFramework.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Base\Mosaico.Domain.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Identity\Mosaico.Domain.Identity.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Mongodb.Base\Mosaico.Domain.Mongodb.Base.csproj" />
+    </ItemGroup>
+
+</Project>

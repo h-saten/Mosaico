@@ -1,0 +1,170 @@
+<div *ngIf="user" class="mb-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-lg-stretch mb-xl-8 shadow-none bg-transparent">
+        <div class="card-header align-items-center border-0 mt-4 ps-0">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="fw-bolder text-dark display-6"> {{'USERPROFILE.title.details' | translate }}</span>
+          </h3>
+        </div>
+        <div class="d-flex overflow-auto h-55px mb-5">
+          <!--tabs-->
+          <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
+            <li [ngbNavItem]="1" class="nav-item">
+              <a ngbNavLink class="nav-link me-6 fs-3 pb-0 text-nowrap">
+                {{'PROJECT.menu.overview' | translate}}
+              </a>
+              <ng-template ngbNavContent>
+                <div class="menu-item mt-3 mb-10">
+                  <div class="row gy-5 gx-xl-8">
+                    <div class="col-lg-4 col-xl-4">
+                      <!-- first col -->
+                      <div class="card card-lg-stretch">
+
+                        <div class="card-body">
+
+                          <div class="row align-items-center profile-header">
+                            <div class="mb-3 text-center">
+
+                              <div class="text-end mb-n7">
+                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                                  data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                  ngbTooltip="{{'USERPROFILE.tooltip.add_change' | translate }}" data-bs-dismiss="click"
+                                  (click)="editPhotoModal()">
+                                  <i class="bi bi-pencil-fill fs-7"></i>
+                                </label>
+                              </div>
+
+                              <div class="symbol symbol-circle symbol-100px">
+                                <div *ngIf="!user.photoUrl || user.photoUrl === ''" class="symbol-label"
+                                  [style.background-image]="'url(assets/media/avatars/blank.png)'">
+                                </div>
+
+                                <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="{{'USERPROFILE.alt.photo' | translate }}"
+                                  class="symbol-label" />
+                              </div>
+
+                            </div>
+                            <div class="col-md text-center text-md-left">
+                              <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+                            </div>
+                          </div>
+                          <div class="mt-10">
+                            <p class="text-gray-800 text-center fs-3">
+                              <i class="fas fa-mobile-alt fs-2" *ngIf="user.phoneNumber"></i>
+                              {{user.phoneNumber}}
+                            </p>
+                            <p class="text-gray-800 text-center fs-3">
+                              <i class="far fa-envelope fs-2" *ngIf="user.email"></i>
+                              {{user.email}}
+                            </p>
+                          </div>
+                          <div class="mt-10 d-flex justify-content-center" *ngIf="!user.isAMLVerified">
+                            <button class="btn btn-mosaico-primary-outline" routerLink="/user/kyc">{{'USER_PROFILE.ACTIONS.VERIFY'|translate}}</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-xl-6">
+                      <!-- second col -->
+                      <div class="card card-lg-stretch">
+                        <div class="card-body">
+                          <div class="row align-items-center profile-header">
+                            <div>
+                              <ng-container *ngTemplateOutlet="oneRowUserProfile;
+                              context: {key: 'USERPROFILE.key.dob' | translate, value: user.dob | date:'dd.MM.yyyy'}"></ng-container>
+                              <ng-container *ngTemplateOutlet="oneRowUserProfile;
+                              context: {key: 'USERPROFILE.key.address1' | translate, value: address}"></ng-container>
+                              <ng-container *ngTemplateOutlet="oneRowUserProfile;
+                                context: {key: 'USERPROFILE.key.timezone' | translate, value: timezone}"></ng-container>
+                              <ng-container *ngTemplateOutlet="oneRowUserProfile;
+                              context: {key: 'DEACTIVATE_USER.lastlogin' | translate, value: user.lastLogin | date }">
+                              </ng-container>
+                              <ng-container *ngTemplateOutlet="oneRowUserProfile;
+                              context: {key: 'USERPROFILE.key.KYC' | translate, value: user.isAMLVerified? 'Verified' : 'Unverified', value2: !!user.isAMLVerified }"></ng-container>
+                              <ng-container *ngTemplateOutlet="oneRowUserProfile;
+                              context: {key: 'USERPROFILE.key.currency' | translate, value: 'USD' }"></ng-container>
+                            </div>
+
+                          </div>
+                          <button class="btn btn-sm btn-mosaico-primary fs-3 text-gray-300 w-100"
+                            routerLink="/user/profile/edit">{{'USERPROFILE.button.edit' | translate }}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="2" class="nav-item" *ngIf="canChangeEmail === true">
+              <a ngbNavLink class="nav-link me-6 fs-3 pb-0 text-nowrap">
+                {{'USERPROFILE.button.editEmail' | translate}}
+              </a>
+              <ng-template ngbNavContent>
+                <app-modal-change-email></app-modal-change-email>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="3" class="nav-item" *ngIf="canChangePassword === true">
+              <a ngbNavLink class="nav-link me-6 fs-3 pb-0 text-nowrap">
+                {{'USERPROFILE.button.editPassword' | translate }}
+              </a>
+              <ng-template ngbNavContent>
+                <app-modal-change-password></app-modal-change-password>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="4" class="nav-item">
+              <a ngbNavLink class="nav-link me-6 fs-3 pb-0 text-nowrap">
+                {{'USERPROFILE.button.delete' | translate }}
+              </a>
+              <ng-template ngbNavContent>
+                <div class="card col-xxl-8 offset-lg-2">
+                  <div class="card-header">
+                    <h5 class="card-title">{{'AUTH.GENERAL.DELETE_ACCOUNT.TITLE' | translate }}</h5>
+                  </div>
+
+                  <div class="card-body">
+                    <ng-container>
+                      <p class="alert alert-warning" role="alert">{{'AUTH.GENERAL.DELETE_ACCOUNT.MESSAGE' | translate }}</p>
+                    </ng-container>
+                  </div>
+
+                  <div class="d-block mt-5">
+                    <button type="button" class="btn btn-mosaico-primary" (click)="enterPasswordToConfirmDeleteProfile.open()">{{'AUTH.GENERAL.SUBMIT_BUTTON' | translate}}</button>
+                  </div>
+                </div>
+              </ng-template>
+            </li>
+            <li [ngbNavItem]="5" class="nav-item" *ngIf="!user.isPhoneVerified && canVerifyPhone === true">
+              <a ngbNavLink class="nav-link me-6 fs-3 pb-0 text-nowrap">
+                {{'USERPROFILE.button.verifyPhoneNumber' | translate }}
+              </a>
+              <ng-template ngbNavContent>
+                <app-verify-phone-number (verificationSucceeded)="phoneNumberVerificationSucceeded($event)"></app-verify-phone-number>
+              </ng-template>
+            </li>
+          </ul>
+          <!--tabs menu end-->
+        </div>
+        <div class="card-body pt-3">
+          <!--tab contents-->
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #oneRowUserProfile let-key="key" let-value="value" let-value2="value2">
+      <div *ngIf="key && value" class="row" [ngClass]="key === 'Updated at' ? 'mb-0': 'mb-4'">
+        <label class="col-lg-4 fw-bold text-muted">{{key}}</label>
+        <div class="col-lg-8">
+          <span class="fw-bolder fs-6 text-gray-800">{{value}}</span>
+          <i *ngIf="value2" class="ms-3 fas fa-check-circle text-success fs-4"></i>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <lib-confirm-dialog #confirmDeleteProfileDialog title="{{'AUTH.GENERAL.DELETE_ACCOUNT.TITLE' | translate }}"
+    message="{{'AUTH.GENERAL.DELETE_ACCOUNT.MESSAGE' | translate }}" [usePayload]="true"
+    (closed)="enterPasswordToConfirmDeleteProfile.open()">
+  </lib-confirm-dialog>
+  <app-password-confirm-account-delete #enterPasswordToConfirmDeleteProfile (closed)="deleteProfile($event)"></app-password-confirm-account-delete>
+</div>

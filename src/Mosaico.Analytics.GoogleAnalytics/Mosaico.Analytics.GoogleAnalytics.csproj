@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Mosaico.Statistics.GoogleAnalytics</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.Analytics.Base\Mosaico.Analytics.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Base\Mosaico.Base.csproj" />
+        <PackageReference Include="Google.Apis.AnalyticsReporting.v4" Version="1.53.0.2197" />
+        <ProjectReference Include="..\Mosaico.Secrets.KeyVault\Mosaico.Secrets.KeyVault.csproj" />
+    </ItemGroup>
+
+</Project>

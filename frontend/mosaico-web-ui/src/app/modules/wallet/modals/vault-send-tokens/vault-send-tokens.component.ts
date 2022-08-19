@@ -1,0 +1,131 @@
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorHandlingService, FormDialogBase, validateForm } from 'mosaico-base';
+import { Token, Blockchain, TokenDistributionService, DaoCreationHubService, TokenService, VaultService } from 'mosaico-wallet';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
+import { selectCurrentActiveBlockchains } from 'src/app/store/selectors';
+import { SubSink } from 'subsink';
+
+@Component({
+  selector: 'app-vault-send-tokens',
+  templateUrl: './vault-send-tokens.component.html',
+  styleUrls: ['./vault-send-tokens.component.scss']
+})
+export class VaultSendTokensComponent extends FormDialogBase implements OnInit, OnDestroy {
+
+  subs = new SubSink();
+  deploying = new BehaviorSubject<boolean>(false);
+  @Input() token: Token;
+  tokenDistributionId: string;
+  networks: Blockchain[] = [];
+  contractVersionToDeploy = 'vault_v1_send';
+
+  constructor(modalService: NgbModal, private translateService: TranslateService,  private toastr: ToastrService,
+    private errorHandler: ErrorHandlingService, private tokenService: TokenService, private vaultService: VaultService,
+    private store: Store,
+    private daoHub: DaoCreationHubService) {
+      super(modalService);
+      this.extraOptions = {
+        modalDialogClass: "mosaico-payment-modal"
+      };
+    }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.createForm();
+  }
+
+  open(distributionId: string): void {
+    this.tokenDistributionId = distributionId;
+    this.createForm();
+    this.subs.sink = this.store.select(selectCurrentActiveBlockchains).subscribe((b) => {
+      this.networks = b;
+    });
+
+    this.daoHub.startConnection();
+    this.daoHub.addVaultSendListeners();
+
+    this.subs.sink = this.daoHub.vaultSent$.subscribe((result) => {
+      if (result) {
+        this.toastr.success('Tokens were successfully sent');
+        this.deploying.next(false);
+        this.modalRef?.close(true);
+      }
+    });
+
+    this.subs.sink = this.daoHub.vaultSendFailed$.subscribe((error) => {
+      if (error && error.length > 0) {
+        this.toastr.error(error);
+        this.deploying.next(false);
+      }
+    });
+
+    this.subs.sink = this.deploying.subscribe((v) => {
+      if (v === true) {
+        this.form.disable();
+      }
+      else {
+        this.form.enable();
+      }
+    });
+    super.open();
+    this.modalRef.dismissed.subscribe(() => {
+      this.stopHubs();
+      this.subs.unsubscribe();
+    });
+    this.modalRef.closed.subscribe(() => {
+      this.stopHubs();
+      this.subs.unsubscribe();
+    });
+  }
+
+  private stopHubs(): void {
+    this.daoHub.removeListener();
+    this.daoHub.resetObjects();
+  }
+
+  createForm(): void {
+    this.form = new FormGroup({
+      amount: new FormControl(0, [Validators.required]),
+      recipient: new FormControl(null, [Validators.required]),
+      wallet: new FormControl('MOSAICO_WALLET', [Validators.required])
+    });
+  }
+
+  async save(): Promise<void> {
+    if (validateForm(this.form) && this.token && this.tokenDistributionId) {
+      const wallet = this.form.get('wallet').value;
+      if (wallet === 'METAMASK') {
+        this.translateService.get('TOKEN_MANAGEMENT.MESSAGES.UNSUPPORTED').subscribe((t) => {
+          this.toastr.error(t);
+        });
+      }
+      else if (wallet === 'MOSAICO_WALLET') {
+        this.deploying.next(true);
+        this.subs.sink = this.vaultService.sendVaultTokens(this.token.vault?.id, {
+          amount: this.form.get('amount')?.value,
+          recipient: this.form.get('recipient')?.value,
+          tokenDistributionId: this.tokenDistributionId
+        })
+          .subscribe((response) => {
+            this.translateService.get('TOKEN_MANAGEMENT.MESSAGES.TRANSACTION_INITIATED').subscribe((t) => {
+              this.toastr.success(t);
+            });
+          }, (error) => { this.deploying.next(false); this.errorHandler.handleErrorWithToastr(error); });
+      }
+    }
+    else {
+      this.subs.sink = this.translateService.get('TOKEN_MANAGEMENT.MESSAGES.INVALID_FORM').subscribe((res) => {
+        this.toastr.error(res);
+      });
+    }
+  }
+
+}

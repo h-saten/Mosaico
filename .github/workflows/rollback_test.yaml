@@ -1,0 +1,93 @@
+name: rollback_deployment_TEST
+on: 
+  workflow_dispatch:
+    inputs:
+      bacpac_version:
+        description: 'Version of SQL bacpac file to restore.'     
+        required: true
+        default: 'LATEST'
+
+jobs:
+ restore_database_CORE:
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: ${{github.workspace}}
+    continue-on-error: true
+    if: always()
+    name: 'Rollback Database'
+    env:
+     # TF_LOG: trace
+      AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+      ARM_CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientId'] }}
+      ARM_CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientSecret'] }}
+      ARM_SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['subscriptionId'] }}
+      ARM_TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['tenantId'] }}
+      RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP_TERRAFORM }}
+      AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+    runs-on: 'ubuntu-latest'
+    environment: 'test'
+    steps:
+    - uses: actions/checkout@v1
+    - name: Get Future Time
+      id: future_time
+      uses: nanzm/get-time-action@v1.1
+      with:
+        timeZone: 2
+        format: 'YYYY-MM-DDTHH:mm:ss'
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: download core blob
+      shell: pwsh
+      run: |
+        $env:sastokenCORE = "$(az storage container generate-sas --account-name ${{secrets.AZURE_STORAGE_CONTAINER_NAME}} --name backups --permissions acdlrw --expiry "${{steps.future_time.outputs.time}}Z" --connection-string ${{secrets.AZURE_STORAGE_CONNECTION_STRING}})"
+        $env:sastokenCORE = $env:sastokenCORE.Substring(1,$env:sastokenCORE.Length-2) 
+        azcopy copy "https://stmosaicodev.blob.core.windows.net/backups/*?$env:sastokenCORE" "."  --include-pattern "CORE*${{github.event.inputs.bacpac_version}}.bacpac"
+
+    - name: download identity blob
+      shell: pwsh
+      run: |                                                                                                                                                                                  # conn string to azure
+        $env:sastokenIDENTITY = "$(az storage container generate-sas --account-name ${{secrets.AZURE_STORAGE_CONTAINER_NAME}} --name backups --permissions acdlrw --expiry "${{steps.future_time.outputs.time}}Z" --connection-string ${{secrets.AZURE_STORAGE_CONNECTION_STRING}})" 
+        $env:sastokenIDENTITY = $env:sastokenIDENTITY.Substring(1,$env:sastokenIDENTITY.Length-2) 
+        azcopy copy "https://stmosaicodev.blob.core.windows.net/backups/*?$env:sastokenIDENTITY" "."  --include-pattern "IDENTITY*${{github.event.inputs.bacpac_version}}.bacpac"
+
+    - name: download sqlpackage
+      shell: pwsh
+      run: |
+        curl "https://go.microsoft.com/fwlink/?linkid=2143497" -4 -sL -o '/tmp/sqlpackage.zip'
+        unzip /tmp/sqlpackage.zip -d $HOME/sqlpackage
+        chmod +x $HOME/sqlpackage/sqlpackage
+        sudo ln -sf $HOME/sqlpackage/sqlpackage /usr/local/bin
+        sqlpackage /version
+        
+    - run: ls -l ${{github.workspace}}
+    - name: show bacpac version
+      run: echo ${{github.event.inputs.bacpac_version}}
+
+    - name: Run the action
+      uses: potatoqualitee/mssqlsuite@v1
+      with:
+        install: sqlengine, sqlpackage
+      continue-on-error: true
+
+    - name: drop core db
+      id: drop_core_db 
+      run: sqlcmd -S tcp:${{secrets.SQL_SERVER_ADDRESS_STRING}} -U ${{secrets.SQL_ADMIN_LOGIN}} -P "${{secrets.SQL_ADMIN_PASSWORD}}" -q "drop database IF EXISTS [sqldb-dev]"
+
+    - name: drop id db
+      id: drop_id_db 
+      run: sqlcmd -S tcp:${{secrets.SQL_SERVER_ADDRESS_STRING}} -U ${{secrets.SQL_ADMIN_LOGIN}} -P "${{secrets.SQL_ADMIN_PASSWORD}}" -q "drop database IF EXISTS [sqldb-identity-dev]"
+
+    - name: import bacpac CORE
+      run: |
+        $CORE = $(Get-ChildItem CORE*.bacpac -Name)
+        echo $CORE
+        sqlpackage /a:import /tcs:"Data Source=${{secrets.SQL_SERVER_ADDRESS_STRING}};Initial Catalog=sqldb-dev;User Id=${{secrets.SQL_ADMIN_LOGIN}};Password=${{secrets.SQL_ADMIN_PASSWORD}}" /sf:$CORE /p:DatabaseEdition=Standard /p:DatabaseServiceObjective="S1" /p:DatabaseMaximumSize=50 
+
+    - name: import bacpac IDENTITY
+      run: |
+        $IDENTITY = $(Get-ChildItem IDENTITY*.bacpac -Name)
+        echo $IDENTITY
+        sqlpackage /a:import /tcs:"Data Source=${{secrets.SQL_SERVER_ADDRESS_STRING}};Initial Catalog=sqldb-identity-dev;User Id=${{secrets.SQL_ADMIN_LOGIN}};Password=${{secrets.SQL_ADMIN_PASSWORD}}" /sf:$IDENTITY /p:DatabaseEdition=Standard /p:DatabaseServiceObjective="S1" /p:DatabaseMaximumSize=50
+

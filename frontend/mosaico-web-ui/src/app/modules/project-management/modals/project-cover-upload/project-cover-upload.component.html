@@ -1,0 +1,45 @@
+
+<div class="modal-content mosaico-modal">
+    <div class="modal-header">
+      <h5 class="modal-title">{{'MODALS.COVER_UPLOAD.TITLE'| translate}}</h5>
+      <div class="close-button-container">
+        <button class="btn btn-icon btn-sm btn-active-light-dark ms-2"
+            [disabled]="dataSavingRequestInProgress === true"
+            (click)="closeModal()" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+
+        <app-image-cropper-local
+          [currentImgUrl]="currentImgUrl"
+          [addPhotoText]="'MODALS.COVER_UPLOAD.ACTIONS.ADD'| translate"
+          [changePhotoText]="'MODALS.COVER_UPLOAD.ACTIONS.CHANGE'| translate"
+          [currentFormMode]="currentFormMode"
+          [aspectRatio]="1218 / 624"
+          [roundCropper]="false"
+          [blankImage]="'/assets/media/tokenpage/default_header.png'"
+          (editingIsInProgressEvent)="editingIsInProgress($event)"
+          (editingCancelEvent)="editingCancel()"
+          [imageCropperClass]="['size-scaling-photo']"
+          [preview100percent]="true"
+        ></app-image-cropper-local>
+      </div>
+    </div>
+    <div class="modal-footer" *ngIf="isEditingIsInProgress === false">
+      <app-button-save
+        [buttonId]="'btn-save-modal-profile'"
+        [classes]="'btn btn-mosaico-primary'"
+        [formInvalid]="addingStarted === false"
+        [showSpinner]="dataSavingRequestInProgress === true"
+        [buttonText]="'BUTTONS.btn.save' | translate"
+        (clicked)="savePhoto()"
+      ></app-button-save>
+      <button type="button" class="btn btn-mosaico-primary-outline"
+        [disabled]="dataSavingRequestInProgress === true"
+        (click)="activeModal.dismiss()">{{'BUTTONS.btn.cancel' | translate}}</button>
+    </div>
+  </div>
+

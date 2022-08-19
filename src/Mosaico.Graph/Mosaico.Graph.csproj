@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mosaico.Domain.BusinessManagement\Mosaico.Domain.BusinessManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.DocumentManagement\Mosaico.Domain.DocumentManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Features\Mosaico.Domain.Features.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Identity\Mosaico.Domain.Identity.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Mongodb.Base\Mosaico.Domain.Mongodb.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.ProjectManagement\Mosaico.Domain.ProjectManagement.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Wallet\Mosaico.Domain.Wallet.csproj" />
+      <ProjectReference Include="..\Mosaico.Graph.Abstractions\Mosaico.Graph.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

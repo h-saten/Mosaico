@@ -1,0 +1,117 @@
+<div class="card shadow-sm">
+
+  <div class="card-header">
+    <div class="card-title">
+      {{'COMPANY_VOTING.TITLE' | translate}}
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="isLoading$|async"></app-spinner-container>
+      </div>
+    </div>
+    <ng-container *ngIf="!(isLoading$|async)">
+      <div class="row" *ngIf="(isAuthorized$|async) === true">
+        <div class="col-12 d-flex justify-content-center justify-content-lg-end align-items-center">
+          <button class="btn btn-mosaico-primary-outline"
+            (click)="newProposalModal.open()">{{'COMPANY_VOTING.ACTIONS.CREATE'|translate}}</button>
+        </div>
+      </div>
+
+      <ng-container *ngIf="!proposals || proposals.length === 0">
+        <p class="h4 my-4 text-center fw-normal">{{'COMPANY_VOTING.NO_PROPOSALS'|translate}}</p>
+      </ng-container>
+
+      <div class="row mt-3" *ngIf="proposals && proposals.length > 0">
+        <div class="col-md-6 col-xl-4 mb-5" *ngFor="let p of proposals">
+          <div class="card card-xl-stretch mb5 border border-secodary border-2">
+            <div class="card-header d-flex justify-content-between align-items-center p-0 border-0 min-h-30px">
+              <div class="d-flex fs-4">
+                <span class="fw-bolder text-dark">No. {{p.proposalId|slice: 0:4}}</span>
+              </div>
+              <div class="d-flex fs-6" role="button">
+                <i class="far fa-user border border-gray-700 p-1 rounded-1 fs-8 text-dark me-2"></i>
+                {{'COMPANY_VOTING.CREATED_BY'|translate}}: <span (cbOnSuccess)="onCopied()" ngxClipboard
+                  [cbContent]="p.createdByAddress">{{p.createdByAddress|addressType}}</span>
+              </div>
+              <!-- <p class="card-title align-items-start flex-column m-0"></p>
+              <p class="m-0 fs-6">
+              </p> -->
+            </div>
+            <div class="card-body pt-3">
+              <div class="row mb-4">
+                <p class="fs-2 mt-4">{{p.title}}</p>
+              </div>
+              <div class="d-block mb-13 row">
+                <div class="col-12">
+                  <span class="float-start fw-bold text-success w-45px pe-0 mt-n2">{{'COMPANY_VOTING.FOR'|translate}}</span>
+                  <div class="progress h-6px float-start w-100-90 px-0">
+                    <div role="progressbar" [attr.aria-valuenow]="p.forCountPercentage" aria-valuemin="0"
+                      aria-valuemax="100" class="progress-bar bg-success" [style.width]="p.forCountPercentage + '%'"></div>
+                  </div>
+                  <span class="float-start fw-bold text-success w-45px ps-0 mt-n2 text-end">{{p.forCountPercentage|
+                    number:'1.0-2'}} %</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <span
+                    class="float-start fw-bold text-danger w-45px pe-0 mt-n2">{{'COMPANY_VOTING.AGAINST'|translate}}</span>
+                  <div class="progress h-6px float-start w-100-90 px-0">
+                    <div role="progressbar" [attr.aria-valuenow]="p.againstCountPercentage" aria-valuemin="0"
+                      aria-valuemax="100" class="progress-bar bg-danger" [style.width]="p.againstCountPercentage + '%'">
+                    </div>
+                  </div>
+                  <span class="float-start fw-bold text-danger w-45px ps-0 mt-n2 text-end">{{p.againstCountPercentage|
+                    number:
+                    '1.0-2'}} %</span>
+                </div>
+              </div>
+              <div class="row text-center mt-8">
+                <div class="col-6 float-start pe-3">
+                  <button (click)="vote('For', p.id)" class="btn btn-sm btn-success me-2 w-100"
+                    [disabled]="(isSubmitting$|async) === true || (isAuthorized$|async) === false">{{'COMPANY_VOTING.FOR'|translate}}</button>
+                </div>
+                <div class="col-6 float-start ps-3">
+                  <button (click)="vote('Against', p.id)" class="btn btn-sm btn-danger me-2 w-100"
+                    [disabled]="(isSubmitting$|async) === true || (isAuthorized$|async) === false">{{'COMPANY_VOTING.AGAINST'|translate}}</button>
+                </div>
+              </div>
+              <div class="row text-center mt-10">
+                <div class="col-12 col-md-6">
+                  <i class="fas fa-stopwatch"></i>
+                  <ng-container *ngIf="p.status === 'Pending'">
+                    {{'COMPANY_VOTING.STARTS_AT'|translate}}
+                    <p class="mt-2 mb-0 fw-bold" role="button" [ngbTooltip]="p.startsAt| amDateFormat: 'YYYY-MM-DD HH:mm'">
+                      {{p.startsAt | amFromUtc | amTimeAgo }} </p>
+                  </ng-container>
+                  <ng-container *ngIf="p.status === 'Active'">
+                    {{'COMPANY_VOTING.TIME_LEFT'|translate}}
+                    <p class="mt-2 mb-0 fw-bold" role="button" [ngbTooltip]="p.endsAt| amDateFormat: 'YYYY-MM-DD HH:mm'">
+                      {{p.endsAt | amFromUtc | amTimeAgo}} </p>
+                  </ng-container>
+                  <ng-container *ngIf="p.status === 'Closed'">
+                    {{'COMPANY_VOTING.CLOSED'|translate}}
+                    <p class="mt-2 mb-0 fw-bold" role="button" [ngbTooltip]="p.endsAt| amDateFormat: 'YYYY-MM-DD HH:mm'">
+                      {{p.endsAt | amFromUtc | amTimeAgo}} </p>
+                  </ng-container>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="text-center">
+                    <i class="fas fa-user-check"></i> {{'COMPANY_VOTING.TOTAL_VOTED'|translate}}
+                    <p class="mt-2 mb-0 fw-bold" role="button">{{p.voteCount}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <app-new-proposal #newProposalModal (closed)="onModalClosed($event)" [companyId]="company?.id" [tokens]="tokens">
+    </app-new-proposal>
+  </div>
+</div>

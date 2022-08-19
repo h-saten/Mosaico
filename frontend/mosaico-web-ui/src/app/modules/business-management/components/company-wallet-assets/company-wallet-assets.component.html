@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+    </div>
+</div>
+<ng-container *ngIf="!isLoading">
+    <div class="row">
+        <div class="col-12 d-flex flex-row justify-content-end align-items-center h-24px">
+            <button class="btn btn-icon btn-sm" (click)="loadAssets()"><i class="fas fa-sync"></i></button>
+        </div>
+    </div>
+    <div class="row" *ngIf="balance?.tokens && balance?.tokens.length > 0">
+        <div class="col-12 d-flex flex-column gap-5 flex-md-row flex-wrap p-5 align-items-center justify-content-start">
+            <app-wallet-asset *ngFor="let t of balance.tokens" [token]="t"></app-wallet-asset>
+        </div>
+    </div>
+</ng-container>
+
+<div class="row" *ngIf="!isLoading &&  (!balance?.tokens || balance?.tokens.length === 0)">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <h4>{{'COMPANY_WALLET.ASSETS.NO_ASSETS'|translate}}</h4>
+    </div>
+</div>

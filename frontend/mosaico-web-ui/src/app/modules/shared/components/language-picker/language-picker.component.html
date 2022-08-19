@@ -1,0 +1,6 @@
+<div ngbDropdown class="d-inline-block">
+    <button class="btn btn-sm btn-bg-light" ngbDropdownToggle>{{ currentDisplayLanguage }}</button>
+    <div ngbDropdownMenu>
+        <button ngbDropdownItem (click)="selectLang(lang.value)" *ngFor="let lang of languages | keyvalue"> {{lang.key}}</button>
+    </div>
+</div> 

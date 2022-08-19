@@ -1,0 +1,45 @@
+.card {
+    padding: 16px !important;
+}
+
+.chart-container-tocenomics {
+    max-width: 380px;
+    margin: 0 auto;
+
+    apx-chart {
+      display: flex;
+      justify-content: center;
+    }
+}
+
+::ng-deep .chart-container-tocenomics {
+  .apexcharts-legend.apx-legend-position-right {
+    top: 8px !important;
+    overflow: auto;
+    overflow-wrap: break-word;
+  }
+
+  .apexcharts-legend {
+    flex-direction: column;
+  }
+
+  .apexcharts-legend-series {
+    justify-content: center;
+
+    @media (min-width: 576px) {
+      // width: 100%;
+      max-width: 200px;
+    }
+
+
+  }
+
+  html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+  }
+
+  * {
+    box-sizing: content-box;
+  }
+}

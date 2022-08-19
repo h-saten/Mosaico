@@ -1,0 +1,81 @@
+<!-- <ng-template #content let-modal> -->
+  <div class="modal-content">
+    <div class="modal-header" *ngIf="currentFormMode === FormModeEnum.Add">
+
+      <div></div>
+
+      <h5 class="modal-title">
+        <ng-container *ngIf="currentFormMode === FormModeEnum.Add">
+          {{'FAQ_Add_new_faq' | translate}}
+        </ng-container>
+        <!-- <ng-container *ngIf="currentFormMode === FormModeEnum.Edit">
+          {{'FAQ_Edit_faq' | translate}}
+        </ng-container> -->
+
+        <!-- <span class="fs-2hx text-dark mb-6">
+          <div *ngIf="canEdit && !editEnabled" ngbDropdown class="d-inline-block">
+            <button class="btn btn-bg-light btn-active-color-primary btn-sm" ngbDropdownToggle>
+              {{ language?.name }}{{ " " }}
+            </button>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem *ngFor="let l of langs" (click)="selectLanguage(l.lang)"
+              [ngClass]="l.lang === currentLang ? 'active' : ''">
+                {{ l.name }}
+              </button>
+            </div>
+          </div>
+        </span> -->
+
+      </h5>
+
+      <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="activeModal.dismiss(false)"
+          aria-label="Close">
+          <i class="fas fa-times"></i>
+      </div>
+    </div>
+
+    <ng-container *ngIf="currentFormMode === FormModeEnum.Edit">
+      <div class="btn btn-icon btn-sm btn-active-light-primary ms-2 btn-close" (click)="activeModal.dismiss(false)"
+            aria-label="Close">
+      </div>
+    </ng-container>
+
+    <div class="modal-body py-0" [class.pt-8]="currentFormMode === FormModeEnum.Edit">
+      <app-faq-form
+        #componentForm
+        [currentFormMode]="currentFormMode"
+        [projectId]="projectId"
+        [pageId]="pageId"
+        [faqId]="faqId"
+        [currentLang]="currentLang"
+        (saveEvent)="saveEventFromForm($event)"
+        (cancelEvent)="cancelEventFromForm($event)"
+      ></app-faq-form>
+    </div>
+
+    <div class="modal-footer pt-0 justify-content-start">
+
+      <div>
+
+        <!-- [disabled]="isEditingIsInProgress === true || dataSavingRequestInProgress === true" -->
+
+        <app-button-save
+          [buttonId]="'btn-save-modal-profile'"
+          [formInvalid]="componentForm.isEditingIsInProgress === true"
+          [showSpinner]="componentForm.dataSavingRequestInProgress === true"
+          [buttonText]="currentFormMode === FormModeEnum.Edit ? ('BUTTONS.btn.save' | translate) : ('BUTTONS.btn.add' | translate)"
+          (clicked)="componentForm.save()"
+          [projectColor]="true"
+          [classes]="'btn-faq'"
+        ></app-button-save>
+
+        <button type="button" class="btn-faq btn-cancel ms-7" (click)="activeModal.dismiss(false)" appBaseColors [textColor]="true" [button]="true">
+          {{'BUTTONS.btn.cancel' | translate}}
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+<!-- </ng-template> -->

@@ -1,0 +1,174 @@
+<div class="row" *ngIf="isLoading">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+    </div>
+</div>
+<div class="row mb-5" *ngIf="!isLoading && token">
+    <div class="col-12 col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <div class="row mb-5">
+                    <div
+                        class="col-12 d-flex justify-content-between align-items-center flex-column flex-fill flex-lg-row">
+                        <div class="d-flex flex-column flex-md-row mb-5 flex-fill mb-lg-0">
+                            <div class="d-flex me-5 justify-content-center">
+                                <div class="symbol symbol-60px symbol-circle">
+                                    <label
+                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow position-absolute btn-project-logo-edit"
+                                        *ngIf="canEdit" data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                        ngbTooltip="Edit logo" data-bs-dismiss="click" (click)="openLogoEditingModal()">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                    </label>
+                                    <div class="symbol-label" *ngIf="token.logoUrl && token.logoUrl.length > 0"
+                                        style="background-image:url({{token.logoUrl}})"></div>
+                                    <div class="symbol-label fs-4 fw-bold text-dark"
+                                        *ngIf="!token.logoUrl || token.logoUrl.length == 0">{{token.symbol|slice:0:1}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-center flex-fill">
+                                <div class="d-flex token-name flex-md-row flex-column align-items-center justify-content-between">
+                                    <div class="d-flex">
+                                        <div class="d-flex me-3"> {{token.name}}</div>
+                                        <div class="d-flex token-symbol">{{token.symbol}}</div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="d-flex me-5 token-network">
+                                            <span *ngIf="networkLogoUrl" [inlineSVG]="networkLogoUrl"
+                                                class="svg-icon svg-icon-2 me-2"></span> {{token.network}}
+                                        </div>
+                                        <div class="d-flex token-type">
+                                            [ ERC-20 ]
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex token-symbol" *ngIf="token.address && token.address.length > 0">
+                                    <span class="token-address me-3" role="button" (cbOnSuccess)="onCopied()"
+                                        ngxClipboard [cbContent]="token.address">{{token.address | addressType }}</span>
+                                    <span role="button" class="me-3" (cbOnSuccess)="onCopied()" ngxClipboard
+                                        [cbContent]="token.address"><i class="far fa-clipboard fa-lg"></i></span>
+                                    <span role="button" *ngIf="link && link.length > 0"
+                                        (click)="navigateToEtherscan()"><i
+                                            class="fas fa-external-link-alt fa-lg"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-start align-items-center token-actions mt-3 flex-column flex-lg-row">
+                            <button class="btn btn-mosaico-secondary btn-token-action me-3 mt-2" 
+                                (click)="tokenDeployDialog.open()" *ngIf="token.status === 'Pending'">Deploy</button>
+                            <button class="btn btn-mosaico-primary me-3 btn-token-action mt-2" *ngIf="token.isMintable"
+                                (click)="tokenMintDialog.open()">Mint</button>
+                            <button class="btn btn-mosaico-primary me-3 btn-token-action mt-2" *ngIf="token.isBurnable"
+                                (click)="tokenBurnDialog.open()">Burn</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="card shadow-sm h-100 mt-5 mt-md-0 card-token-info">
+            <div class="card-body">
+                <div class="token-info-header">Token Info</div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-stripped h-100 table-border">
+                        <tbody>
+                            <tr>
+                                <td>Mintable</td>
+                                <td>
+                                    <ng-container *ngIf="token.isMintable; else disabledTmpl">
+                                        {{'TOKEN_MANAGEMENT.FEATURES.STATES.ENABLED'|translate}}</ng-container>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Burnable</td>
+                                <td>
+                                    <ng-container *ngIf="token.isBurnable; else disabledTmpl">
+                                        {{'TOKEN_MANAGEMENT.FEATURES.STATES.ENABLED'|translate}}</ng-container>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Total Supply</td>
+                                <td>{{token.totalSupply}}</td>
+                            </tr>
+                            <tr>
+                                <td>Type</td>
+                                <td>{{token.type}}</td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>{{token.status}}</td>
+                            </tr>
+                            <tr>
+                                <td>Decimals</td>
+                                <td>18</td>
+                            </tr>
+                            <tr>
+                                <td>Staking</td>
+                                <td><ng-container *ngIf="token.isStakingEnabled; else disabledTmpl">
+                                    {{'TOKEN_MANAGEMENT.FEATURES.STATES.ENABLED'|translate}}</ng-container><i *ngIf="canEdit === true" role="button" (click)="editTokenStaking.open()" class="fa fa-edit"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Vesting</td>
+                                <td><ng-container *ngIf="token.isVestingEnabled; else disabledTmpl">
+                                    {{'TOKEN_MANAGEMENT.FEATURES.STATES.ENABLED'|translate}}</ng-container><i *ngIf="canEdit === true" role="button" (click)="editTokenVesting.open()" class="fa fa-edit"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Deflation</td>
+                                <td><ng-container *ngIf="token.isDeflationary; else disabledTmpl">
+                                    {{'TOKEN_MANAGEMENT.FEATURES.STATES.ENABLED'|translate}}</ng-container><i *ngIf="canEdit === true" role="button" (click)="editTokenDeflation.open()" class="fa fa-edit"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card shadow-sm mt-5 mt-lg-0">
+            <div class="card-body">
+                <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                    <li ngbNavItem>
+                        <a ngbNavLink routerLink="dashboard" routerLinkActive="active">Dashboard</a>
+                        <ng-template ngbNavContent>
+                            <router-outlet></router-outlet>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink routerLink="staking" routerLinkActive="active">Staking</a>
+                        <ng-template ngbNavContent>
+                            <router-outlet></router-outlet>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink routerLink="vesting" routerLinkActive="active">Vesting</a>
+                        <ng-template ngbNavContent>
+                            <router-outlet></router-outlet>
+                        </ng-template>
+                    </li>
+                </ul>
+                <div [ngbNavOutlet]="nav"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #unavailableTmpl>
+    {{'TOKEN_MANAGEMENT.FEATURES.STATES.UNAVAILABLE'|translate}}
+</ng-template>
+<ng-template #disabledTmpl>
+    {{'TOKEN_MANAGEMENT.FEATURES.STATES.DISABLED'|translate}}
+</ng-template>
+
+<app-token-deploy #tokenDeployDialog [token]="token" (closed)="getToken()"></app-token-deploy>
+<app-token-mint #tokenMintDialog [token]="token" (closed)="getToken()"></app-token-mint>
+<app-token-burn #tokenBurnDialog [token]="token" (closed)="getToken()"></app-token-burn>
+<app-edit-token-staking #editTokenStaking [token]="token" (closed)="getToken()"></app-edit-token-staking>
+<app-edit-token-vesting #editTokenVesting [token]="token" (closed)="getToken()"></app-edit-token-vesting>
+<app-edit-token-deflation #editTokenDeflation [token]="token" (closed)="getToken()"></app-edit-token-deflation>

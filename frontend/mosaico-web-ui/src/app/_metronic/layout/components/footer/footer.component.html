@@ -1,0 +1,169 @@
+<!-- footer py-4 d-flex flex-lg-column-->
+
+<div>
+  <div class="footer-bg">
+    <div class="d-flex container">
+      <div class="row">
+
+        <div
+          class="d-block d-sm-none row-menu"
+          [ngClass]="expandedRow[i]"
+        >
+          <ng-template *ngTemplateOutlet="rowMenu; context: {ii: 1, title: 'FOOTER.company', dataA: menuCompany}"></ng-template>
+          <ng-template *ngTemplateOutlet="rowMenu; context: {ii: 2, title: 'FOOTER.investors', dataA: menuInvestors}"></ng-template>
+          <ng-template *ngTemplateOutlet="rowMenu; context: {ii: 3, title: 'FOOTER.partners', dataA: menuPartners}"></ng-template>
+          <ng-template *ngTemplateOutlet="rowMenu; context: {ii: 4, title: 'FOOTER.help', dataA: menuHelp}"></ng-template>
+          <ng-template *ngTemplateOutlet="rowMenu; context: {ii: 5, title: 'FOOTER.office', dataA: menuOurOffice, ourOffice: true}"></ng-template>
+        </div>
+
+        <hr class="d-block d-sm-none footer-divider">
+
+        <div class="d-none d-sm-block col-12 text-start footer-links">
+          <div class="row">
+            <div class="col-6 col-sm-3 col-lg-2-5">
+              <div class="text-col-menu d-flex flex-column">
+                <p class="text-title mt-5 mt-md-0">{{'FOOTER.company'|translate}}</p>
+                <!-- <a href="https://news.mosaico.ai/" target="_blank">{{'FOOTER.news'|translate}}</a> -->
+                <a target="_blank">{{'FOOTER.about_us'|translate}}</a>
+                <a target="_blank">{{'FOOTER.our_team'|translate}}</a>
+                <a href="https://holdingsapiency.traffit.com/career/" target="_blank">{{'FOOTER.career'|translate}}</a>
+              </div>
+            </div>
+
+            <div class="col-6 col-sm-3 col-lg-2-5">
+              <div class="text-col-menu d-flex flex-column">
+                <p class="text-title mt-5 mt-md-0">{{'FOOTER.investors'|translate}}</p>
+                <a [routerLink]="['/', 'projects']" >{{'FOOTER.marketplace'|translate}}</a>
+                <a [routerLink]="['/', 'dao']">{{'FOOTER.dao'|translate}}</a>
+                <a [routerLink]="['/', 'dex']">{{'MENU.EXCHANGE'|translate}}</a>
+              </div>
+            </div>
+            <div class="col-6 col-sm-3 col-lg-2-5">
+              <div class="text-col-menu d-flex flex-column">
+                <p class="text-title mt-5 mt-md-0">{{'FOOTER.partners'|translate}}</p>
+                <a [routerLink]="['/', 'project', 'create']">{{'MENU.NEW_PROJECT'|translate}}</a>
+                <a [routerLink]="['/', 'portfolio']">{{'MENU.MOS_FUND'|translate}}</a>
+              </div>
+            </div>
+            <div class="col-6 col-sm-3 col-lg-2-5">
+              <div class="text-col-menu d-flex flex-column">
+                <p class="text-title mt-5 mt-md-0">{{'FOOTER.help'|translate}}</p>
+                <a [href]="'FOOTER.dictionary_link' | translate" target="_blank">{{'FOOTER.dictionary'|translate}}</a>
+                <a title="">{{'FOOTER.report'|translate}}</a>
+                <a title="">{{'FOOTER.suggest'|translate}}</a>
+                <a title="">{{'FOOTER.contact_sales_team'|translate}}</a>
+              </div>
+            </div>
+            <div class="d-none d-sm-block col-sm-12 text-sm-center col-lg-2-5 text-lg-start our-office-wrapper">
+              <div class="text-col-menu row">
+                <p class="text-title text-start">{{'FOOTER.office'|translate}}</p>
+                <div class="col-12 col-sm-6 text-center text-sm-start col-lg-12 footer-company-details">
+                  <p>Sapiency Sp. z o.o. w Krakowie</p>
+                  <p>ul. Lekarska 1, 31-203 Kraków</p>
+                </div>
+                <div class="col-12 col-sm-6 text-center text-sm-start col-lg-12 footer-company-details">
+                  <p>KRS: 789717, NIP: 9452228249</p>
+                  <p>REGION: 383564042</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 text-center position-relative p-0 py-lg-20">
+          <hr class="d-none d-lg-block" />
+          <app-footer-social-icon class="footer-social-icon"></app-footer-social-icon>
+        </div>
+
+        <div class="col-12 text-center d-none d-sm-block">
+          <a
+            id="contact-logo-mosaico"
+            [routerLink]="['/']"
+            title="Mosaico.ai"
+          >
+            <img src="/assets/media/logos/mosaico_logo.png" alt="Mosaico logo" class="footer-mosaico-logo" />
+          </a>
+        </div>
+
+        <div class="col-12 text-center">
+
+          <div class="div-copyright order-2 order-sm-1 d-none d-sm-block">
+            Copyright © 2022 Sapiency Sp. z o.o.
+          </div>
+
+          <app-footer-url-documents></app-footer-url-documents>
+
+          <div class="div-copyright order-2 order-sm-1 d-block d-sm-none mt-7">
+            Copyright © 2022 Sapiency Sp. z o.o.
+          </div>
+
+        </div>
+
+      </div> <!-- row -->
+
+    </div>
+
+  </div>
+</div>
+
+<app-info-cookies></app-info-cookies>
+
+<ng-template #rowMenu let-ii="ii" let-title="title" let-dataA="dataA" let-ourOffice="ourOffice">
+
+  <div class="row-row">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3 class="title"
+        (click)="showHideDescription(ii)"
+        [ngClass]="{'title-active': showDescription[ii] === true}"
+      >{{title|translate}}</h3>
+
+      <span (click)="showHideDescription(i)">
+        <span class="icon" *ngIf="showDescription[ii] === false || showDescription[ii] === undefined">
+          <!-- <i class="fas fa-chevron-down fa-lg"></i> -->
+          <i class="fas fa-chevron-right fa-lg"></i>
+        </span>
+        <span class="icon" *ngIf="showDescription[ii] === true">
+          <i class="fas fa-chevron-left fa-lg"></i>
+        </span>
+      </span>
+    </div>
+
+    <p class="description mt-5" *ngIf="showDescription[ii] === true">
+
+      <ng-container *ngIf="ourOffice === true else NoOurOffice; ">
+        <div class="text-our-office mt-2">
+          <div class="text-center">
+            <p>Sapiency Sp. z o.o. w Krakowie</p>
+            <p>ul. Lekarska 1, 31-203 Kraków</p>
+          </div>
+          <div class="text-center text-sm-start">
+            <p>KRS: 789717, NIP: 9452228249</p>
+            <p>REGION: 383564042</p>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #NoOurOffice>
+        <ng-container *ngIf="dataA">
+          <ng-container *ngFor="let item of dataA">
+            <ng-container *ngIf="item.external === true">
+              <a 
+                [attr.href]="item.urlA" target="_blank"
+                [ngClass]="item.urlA ? 'active' : ''"
+                > {{item.titleA|translate}}</a>
+            </ng-container>
+            <ng-container *ngIf="!item.external">
+              <a 
+                [routerLink]="[item.urlA]"
+                [ngClass]="item.urlA ? 'active' : ''"
+                > {{item.titleA|translate}}</a>
+            </ng-container>
+          </ng-container>
+          
+        </ng-container>
+      </ng-template>
+
+    </p>
+  </div>
+</ng-template>
+

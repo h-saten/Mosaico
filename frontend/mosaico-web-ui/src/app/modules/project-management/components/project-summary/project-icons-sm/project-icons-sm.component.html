@@ -1,0 +1,151 @@
+<div class="social-icons-list d-flex" *ngIf="projectSocialMedia">
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.telegram">
+    <a href="{{projectSocialMedia.telegram}}"
+      title="Telegram"
+      id="contact-fa-telegram"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/Telegram.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="Telegram"
+      ></span>
+      <!-- <i class="fab fa-telegram-plane fa-lg fa-fw"></i> -->
+    </a>
+  </div>
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.facebook">
+    <a href="{{projectSocialMedia.facebook}}"
+      title="Facebook"
+      id="contact-fa-fb"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/Facebook.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="Facebook"
+      ></span>
+      <!-- <i class="fab fa-facebook-f fa-lg fa-fw"></i> -->
+    </a>
+  </div>
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.twitter">
+    <a href="{{projectSocialMedia.twitter}}"
+      title="Twitter"
+      id="contact-fa-twitter"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/Twitter.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="Twitter"
+      ></span>
+      <!-- <i class="fab fa-twitter fa-lg fa-fw"></i> -->
+    </a>
+  </div>
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.instagram">
+    <a href="{{projectSocialMedia.instagram}}"
+      title="Instagram"
+      id="contact-fa-instagram"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/Instagram.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="Instagram"
+      ></span>
+      <!-- <i class="fab fa-instagram fa-lg fa-fw"></i> -->
+    </a>
+  </div>
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.youtube">
+    <a href="{{projectSocialMedia.youtube}}"
+      title="YouTube"
+      id="contact-fa-yt"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/footer/YouTube.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="YouTube"
+      ></span>
+      <!-- <i class="fab fa-youtube fa-lg fa-fw"></i> -->
+    </a>
+  </div>
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.linkedin">
+    <a href="{{projectSocialMedia.linkedin}}"
+      title="LinkedIn"
+      id="contact-fa-linkedin"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/footer/LinkedIn.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="LinkedIn"
+      ></span>
+      <!-- <i class="fab fa-linkedin-in fa-lg fa-fw"></i> -->
+    </a>
+  </div>
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.medium">
+    <a href="{{projectSocialMedia.medium}}"
+      title="Medium"
+      id="contact-fa-medium"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/footer/Medium.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="Medium"
+      ></span>
+      <!-- <i class="fab fa-medium fa-lg fa-fw"></i> -->
+    </a>
+  </div>
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.tiktok">
+    <a href="{{projectSocialMedia.tiktok}}"
+      title="TikTok"
+      id="contact-fa-titok"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/tiktok-brands.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="TikTok"
+      ></span>
+    </a>
+  </div>
+
+  <div class="social-icon me-5" *ngIf="projectSocialMedia.pageurl">
+    <a href="{{projectSocialMedia.pageurl}}"
+      title="Project page url"
+      id="contact-fa-project-page-url"
+      class="text-info" target="_blank" rel="nofollow noopener">
+      <span
+        [inlineSVG]="'/assets/media/tokenpage/globe-grid-line.svg'"
+        class="svg-icon"
+        appBaseColors [iconSvgCover]="true"
+        alt="Project page url"
+      ></span>
+    </a>
+  </div>
+
+  <!-- <div class="me-5" *ngIf="canEdit && displayFullTextButton === false">
+    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow btn-project-logo-edit"
+      data-kt-image-input-action="change" data-bs-toggle="tooltip"
+      ngbTooltip="{{'PROJECT_OVERVIEW.ACTIONS.EDIT_SOCIAL_MEDIA'|translate}}" (click)="openEditingModal()">
+      <i class="bi bi-pencil-fill fs-7"></i>
+    </label>
+  </div>
+
+  <div class="me-5" *ngIf="canEdit && displayFullTextButton === true">
+    <label class="btn btn-active-color-primary bg-white shadow btn-project-logo-edit fs-7 rounded-pill" (click)="openEditingModal()">
+      {{'PROJECT_OVERVIEW.ACTIONS.ADD_SOCIAL_MEDIA'|translate}}
+      <i class="bi bi-pencil-fill fs-7"></i>
+    </label>
+  </div> -->
+
+</div>

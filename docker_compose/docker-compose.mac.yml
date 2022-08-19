@@ -1,0 +1,59 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  redis:
+    image: redis
+    container_name: redis_db
+    ports:
+      - "6379:6379"
+  db:
+    container_name: mssql
+    build:
+      context: .
+      dockerfile: Dockerfile.mac.SQLDatabase
+    ports:
+      - "1433:1433" 
+    environment:
+        SA_PASSWORD: "Mosaico2021!"
+        ACCEPT_EULA: "Y"
+        MSSQL_PID: "Developer"
+        MSSQL_TCP_PORT: 1433
+  ethereum:
+    image: "trufflesuite/ganache-cli"
+    container_name: ganache
+    command: --account="0x7b9b4f50d30f8eba180081741226ce1deee15c8b894af500106bd36e9123a22d, 1000000000000000000000000" --account="0x14bd56ee025501e56851571dbb4d91c886ec67d5e6bc56021e8fdd87583ac9ef,1000000000000000000000000" --account="0x78677671fe428e84866e0e80300df81ba515815a1d8aeee9f55d9c1bca5fcb7d, 2000000000000000000000" --account=\"0x0a7a50aef6a78a116071791e3ee3898e8e7a45d7fb9d499609ed10955a16a987, 1000000000000000000000\" --mnemonic "horn hammer original lemon chapter weird gun pond fortune blush cupboard dog"  --allowUnlimitedContractSize
+    ports:
+      - "8545:8545"
+  blobStorage:
+    image: "mcr.microsoft.com/azure-storage/azurite"
+    container_name: storage
+    command: azurite-blob --blobHost 0.0.0.0 --blobPort 8143
+    ports:
+      - "8143:8143"
+    volumes:
+      - /azurite:/data mcr.microsoft.com/azure-storage/azurite
+  envoygateway:
+    build: ../envoy/
+    container_name: envoy
+    ports:
+      - "9901:9901"
+      - "10000:10000"
+    volumes:
+      - "../envoy/envoy.yaml:/etc/envoy/envoy.yaml"
+      - "../envoy/https.crt:/etc/ssl/certs/https.crt"
+      - "../envoy/key.pem:/etc/ssl/certs/key.pem"
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - rabbitmq_go_net
+networks:
+  rabbitmq_go_net:
+    driver: bridge
+
+ 

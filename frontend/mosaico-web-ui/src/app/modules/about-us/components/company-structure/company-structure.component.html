@@ -1,0 +1,26 @@
+<div class="company_structure--container">
+    <div class="company_structure--header">
+        <p class="company_structure--title">{{ 'ORG_STRUCTURE.TITLE' | translate }}</p>
+        <p class="company_structure--subtitle">Mosaico Dream Team</p>
+    </div>
+    <div *ngFor="let team of teamMembersArr" class="d-none d-md-block">
+        <app-company-structure-card [teamDetails]="team"></app-company-structure-card>
+    </div>
+
+    <div class="d-block d-md-none">
+        <swiper [config]="config" #swiper>
+            <ng-template swiperSlide *ngFor="let team of teamMembersArr; let i = index">
+                <button class="btn btn-team" [class.activeBtn]="i == teamId" type="button" (click)="onChangeTeam(team.id)">
+                    <img [src]="i == teamId ? team.icon : team.icon_active">
+                    <p>{{ team.title | translate }}</p>
+                </button>
+            </ng-template>
+        </swiper>
+    
+        <ng-container *ngFor="let team of teamMembersArr; let i = index">
+            <ng-container *ngIf="i == teamId">
+                <app-company-structure-card [teamDetails]="team"></app-company-structure-card>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

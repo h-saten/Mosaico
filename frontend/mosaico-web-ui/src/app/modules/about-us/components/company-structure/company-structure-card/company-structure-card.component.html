@@ -1,0 +1,25 @@
+<div class="py-11">
+    <div class="company_structure_card--container">
+        <div class="company_structure_card--info">
+            <img [src]="teamDetails.icon" alt="team-member-icon">
+            <p>{{ teamDetails.title | translate }}</p>
+        </div>
+
+        <div class="d-flex justify-content-center w-100 flex-column flex-lg-row">
+            <div class="team-lead-card">
+                <ng-container *ngFor="let member of teamDetails.teamLeades">
+                    <div class="team_member--info">
+                        <img [src]="member.image" alt="team-member image" class="team_member--image">
+                        <p class="team_member--name">{{ member.name }}</p>
+                        <p class="team_member--position" [innerHTML]="member.position"></p>
+                    </div>  
+                </ng-container>
+            </div>
+
+            <div class="team_member--card" [ngClass]="{'card-centered': teamDetails.teamMembers.length === 2}">
+                <ng-container *ngFor="let member of teamDetails.teamMembers">
+                    <div class="team_member--info">
+                        <img [src]="member.image" alt="team-member image" class="team_member--image">
+                        <p class="team_member--name">{{ member.name }}</p>
+                        <p class="team_member--position" [innerHTML]="member.position"></p>
+                    </div>

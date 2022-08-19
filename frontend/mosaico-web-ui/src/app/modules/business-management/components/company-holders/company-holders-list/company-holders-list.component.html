@@ -1,0 +1,91 @@
+<div class="row mt-5" *ngIf="tokens && tokens.length > 0">
+  <div class="col-12 d-flex align-items-center flex-row">
+    <div class="pe-5">
+      <span>{{'HOLDERS_TAB.FILTER_BY' | translate}}</span>
+    </div>
+    <div class="project-item d-flex align-items-center pe-3" *ngFor="let t of tokens">
+      <div class="symbol symbol-35px symbol-circle" (click)="filterByToken(t.id)">
+        <div class="symbol-label fs-4 fw-bold text-dark" [ngClass]="{'active-token-filter': filterByTokenId === t.id}"
+             *ngIf="!t.logoUrl || t.logoUrl?.length == 0">T</div>
+        <div class="symbol-label" [ngClass]="{'active-token-filter': filterByTokenId === t.id}"
+             *ngIf="t.logoUrl && t.logoUrl?.length > 0"
+             style="background-image:url({{t.logoUrl}})"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5" *ngIf="isLoading">
+  <div class="col-12 d-flex justify-content-center align-items-center">
+    <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+  </div>
+</div>
+
+<ng-container *ngIf="!isLoading">
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="table-responsive table-responsive-xs">
+                <table class="table align-middle gs-0 gy-4 transaction-table">
+                    <thead>
+                        <tr>
+                            <th class="min-w-150px">{{'HOLDERS_TAB.WALLET_ADDRESS' | translate}}</th>
+                            <th class="min-w-150px">{{'HOLDERS_TAB.BALANCE' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="holderItems && holderItems.length > 0">
+                            <tr *ngFor="let t of holderItems">
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-row">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <div class="d-flex justify-content-center align-items-center me-5">
+                                                <div class="symbol symbol-35px symbol-circle">
+                                                    <div class="symbol-label fs-4 fw-bold text-dark"
+                                                        *ngIf="!t.logoUrl || t.logoUrl?.length == 0">T</div>
+                                                    <div class="symbol-label"
+                                                        *ngIf="t.logoUrl && t.logoUrl?.length > 0"
+                                                        style="background-image:url({{t.logoUrl}})"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-items-center flex-column">
+                                            <div class="d-flex flex-row">
+                                                <div>{{t.walletAddress}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                        <div class="d-flex">
+                                            {{t.tokenAmount | number: '1.0-6': 'en'}} {{t.tokenSymbol}}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!holderItems || holderItems.length === 0">
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <h4>{{'HOLDERS_TAB.NO_HODLERS' | translate}}</h4>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="!isLoading && holderItems && holderItems.length > 0 && totalCount > holderItems.length">
+        <div class="row mt-5" *ngIf="isLoadingMore">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <app-spinner-container [showSpinner]="isLoadingMore"></app-spinner-container>
+            </div>
+        </div>
+        <div class="row mt-5" *ngIf="!isLoadingMore">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <button class="btn btn-lg btn-mosaico-primary-outline" (click)="loadMore()">{{'COMPANY_WALLET.TRANSACTIONS.ACTIONS.LOAD_MORE'|translate}}</button>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>

@@ -1,0 +1,124 @@
+
+<div class="row py-1" *ngIf="showLoginError()">
+  <div class="col-md-12">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <span *ngIf="invalidLoginData">{{ 'auth.login.invalid.data' | translate }}</span>
+      <span *ngIf="deactivatedLogin">{{ 'auth.login.deactivated.data' | translate }}</span>
+      <span *ngIf="lockedAccount">{{ 'auth.login.locked-out.text' | translate }}</span>
+      <span *ngIf="loginError">{{ 'auth.login.login.error' | translate }}</span>
+      <span *ngIf="captchaError">{{ 'auth.login.captcha.error' | translate }}</span>
+      <span *ngIf="deviceAuthorizationFailureReason">
+        {{ 'auth.login.device_authorization.' + deviceAuthorizationFailureReason | translate }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<form id="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+
+  <div class="input-group">
+    <label for="email" class="float-left text-dark">{{ 'auth.login.placeholder_email' | translate }}</label>
+
+    <div class="input-group">
+      <input type="email" name="email" id="email" formControlName="email"
+      class="form-control text-left"
+      placeholder="{{ 'auth.login.placeholder_email' | translate }}"
+      tabindex="1"
+      [ngClass]="{ 'is-invalid' : hasError('email') }">
+
+      <div class="invalid-feedback text-left" *ngIf="hasError('email')">
+
+        <div *ngIf="email.hasError('required')">
+          {{ 'auth.register.field.required' | translate }}
+        </div>
+
+        <div *ngIf="(hasError('email') && !email.hasError('required'))">
+          {{ 'auth.register.invalid.value' | translate }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label for="password" class="float-left text-dark">
+      {{ 'auth.login.placeholder_password' | translate }}
+    </label>
+
+    <div class="input-group">
+      <input type="password" name="password" id="password" formControlName="password"
+      class="password-field form-control"
+      placeholder="{{ 'auth.login.placeholder_password' | translate }}"
+      tabindex="2"
+      [ngClass]="{ 'is-invalid' : hasError('password') }">
+      <div id="password-toggler" class="inner-icon password-toggle-icon" [ngClass]="{ 'is-invalid' : hasError('password') }" (click)="show_hide_password($event)">
+        <i class="fas fa-eye-slash"></i>
+      </div>
+
+      <div class="invalid-feedback text-left" *ngIf="hasError('password')">
+        {{ 'field.required' | translate }}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 text-left">
+      <a [routerLink]="['/auth/forgot']" class="text-left forgot-password-text font-weight-normal" rel="noopener">
+        {{ 'auth.login.remind.password' | translate }}
+      </a>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <button id="loginButton" type="submit" tabindex="3" class="btn-primary-custom btn btn-md btn-block font-weight-bold"
+              [disabled]="!loginForm.valid || dataSavingRequestInProgress || !canInitiateLoginAction">
+          <span>{{ 'auth.login.btn' | translate }}</span>
+          <span [hidden]="!dataSavingRequestInProgress" class="pl-2">
+            <i class="fa fa-spinner fa-spin"></i>
+          </span>
+      </button>
+
+        <div class="py-3">
+          <p class="line-text">
+            <span>{{ 'auth.login.or' | translate }}</span>
+          </p>
+        </div>
+
+        <button type="button" tabindex="4" class="btn-facebook btn btn-md btn-block"
+                *ngIf="facebookEnabled"
+                (click)="FacebookLogin()" >
+          <i class="fab fa-facebook-square social-login-icon"></i>
+          <span class="fb-text pl-2">{{ 'auth.login.facebook_login' | translate }}</span>
+        </button>
+
+        <button type="button" tabindex="4" class="btn-google btn btn-md btn-block  d-flex align-items-center justify-content-center"
+                *ngIf="googleEnabled"
+                (click)="GoogleLogin()">
+          <img src="assets/icon/search.svg" class="social-login-icon google-icon" alt="google logo">
+          <span class="fb-text pl-2">{{ 'auth.login.google_login' | translate }}</span>
+        </button>
+
+      <button type="button" tabindex="4" class="btn-google btn btn-md btn-block  d-flex align-items-center justify-content-center"
+              *ngIf="kangaEnabled"
+              (click)="KangaLogin()">
+        <img src="assets/icon/kanga_signet.svg" width="20" height="20" class="social-login-icon kanga-icon" alt="kanga.exchange logo">
+        <span class="pl-2">{{ 'auth.login.kanga_login' | translate }}</span>
+      </button>
+
+    </div>
+
+    <div class="col-12 mt-4">
+      <span class="font-size-20">
+        {{ 'auth.login.question.create.account' | translate }}
+        <a [routerLink]="['/auth/registration/']" class="register-text font-weight-bold" rel="noopener">
+          {{ 'auth.login.create.account' | translate }}
+        </a>
+      </span>
+    </div>
+    
+    <app-device-authorization #deviceAuthorizationModal (authorizationCode)="logInWithDeviceAuthorizationCode($event)"></app-device-authorization>
+
+  </div>
+
+</form>

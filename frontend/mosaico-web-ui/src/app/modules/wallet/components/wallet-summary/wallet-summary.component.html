@@ -1,0 +1,25 @@
+<ng-container>
+  <div class="row wallet-summary">
+    <div class="col-12 col-lg-6 d-lg-flex justify-content-start">
+      <div class="card shadow-sm rounded wallet-summary-expand-width">
+        <div class="card-body">
+          <app-wallet-summary-details></app-wallet-summary-details>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-none d-lg-flex col-lg-3 justify-content-center">
+      <div class="card chart-card shadow-sm rounded p-0 w-100">
+        <div class="card-body p-0">
+          <app-wallet-summary-diagram></app-wallet-summary-diagram>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-none d-lg-flex col-lg-3 justify-content-center">
+      <div class="card chart-card shadow-sm rounded p-0 w-100">
+        <div class="card-body p-0">
+          <app-wallet-summary-chart></app-wallet-summary-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

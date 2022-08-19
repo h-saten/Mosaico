@@ -1,0 +1,67 @@
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-distribution">
+                <thead>
+                    <tr>
+                        <th class="col-2">Token Price</th>
+                        <th class="col-2">Processor Fee</th>
+                        <th class="col-2">Mosaico Fee</th>
+                        <th class="col-2">Currency exchange rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="transaction">
+                        <td>
+                            ${{transaction.tokenPrice|number: '1.0-6'}}
+                        </td>
+                        <td>
+                            {{transaction.fee|number: '1.0-4'}} {{transaction.currency}}
+                            (${{transaction.feeInUSD|number: '1.0-4'}})
+                        </td>
+                        <td>
+                            {{transaction.mosaicoFee|number: '1.0-4'}} {{transaction.currency}}
+                            (${{transaction.mosaicoFeeInUSD|number: '1.0-4'}})
+                        </td>
+                        <td>
+                            {{transaction.exchangeRate|number: '1.0-6'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="d-flex w-100 mb-3">
+            <div class="form-group w-100">
+                <label for="feePercentage">Current fee (%):</label>
+                <input type="number" class="form-control" name="feePercentage" [(ngModel)]="currentFee" />
+            </div>
+        </div>
+        <div class="d-flex me-3 align-items-center">
+            <button class="btn btn-sm btn-mosaico-primary" (click)="updateFee()">Update fee</button>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 d-flex flex-column">
+        <div class="d-flex w-100  mb-3">
+            <div class="form-group w-100">
+                <label for="salesAgent">Current agent:</label>
+                <ng-select class="mosaico-select" [clearable]="true" bindValue="id" bindLabel="name"
+                    [items]="salesAgents" name="salesAgent" [(ngModel)]="currentSalesAgentId"
+                    placeholder="Select salesman">
+                    <ng-template ng-label-tmp let-item="item">
+                        {{item.name}} <small class="text-muted">{{item.company}}</small>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        {{item.name}} <small class="text-muted">{{item.company}}</small>
+                    </ng-template>
+                </ng-select>
+            </div>
+        </div>
+        <div class="d-flex me-3 align-items-center">
+            <button class="btn btn-sm btn-mosaico-primary" (click)="updateSalesAgent()">Update agent</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="card settings-card shadow-sm">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header align-items-center">
+                    <div class="card-title">{{ "EDIT_PROJECT.TITLE" | translate }}</div>
+                    <div class="card-toolbar" *ngIf="canEdit">
+                        <button type="button" class="btn btn-sm btn-mosaico-primary-outline"
+                            (click)="addNewProjectMemberDialog.open()">
+                            Add new member
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row" *ngIf="!members || members.length === 0">
+                        <div class="col-12">
+                            No members
+                        </div>
+                    </div>
+                    <table class="w-100 mt-5" *ngIf="members && members.length > 0">
+                        <tr class="w-100 header-row">
+                            <td class="w-auto mx-5 pb-5">
+                                Email
+                            </td>
+                            <td class="w-auto mx-5 pb-5 text-center">
+                                {{ "EDIT_PROJECT.COLUMNS.STATUS" | translate }}
+                            </td>
+                            <td class="w-auto mx-5 pb-5 text-center">
+                                {{ "EDIT_PROJECT.COLUMNS.ROLE" | translate }}
+                            </td>
+                            <td class="w-auto mx-5 pb-5 text-center">
+                                {{ "EDIT_PROJECT.COLUMNS.ACTIONS" | translate }}
+                            </td>
+                        </tr>
+                        <tr class="w-100 my-5" *ngFor="let member of members; let i = index">
+                            <td class="my-5 mx-5 align-items-center">
+                                {{member.email}}
+                            </td>
+                            <td class="my-5 px-5 text-center">
+                                <div *ngIf="member.isAccepted === true;then acceptedTemplate; else notAccepted"></div>
+                            </td>
+                            <td class="my-5 mx-5 align-items-center">
+                                <ng-select *ngIf="canEdit" class="mosaico-select w-100" [clearable]="false"
+                                    bindValue="key" bindLabel="value" [items]="projectRoles | keyvalue"
+                                    [(ngModel)]="member.role.key" [searchable]="false" placeholder="Choose role"
+                                    (change)="confirmRoleChangeDialog.open(member.id)">
+                                    <ng-template ng-label-tmp>
+                                        {{ "EDIT_PROJECT.ROLE." + member.role.key  | translate }}
+                                    </ng-template>
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{ "EDIT_PROJECT.ROLE." + item.key | translate }}
+                                    </ng-template>
+                                </ng-select>
+                                <label *ngIf="!canEdit">{{member.role.title}}</label>
+                            </td>
+                            <td class="d-flex my-5 mx-5 justify-content-center align-items-center justify-content-end">
+                                <button *ngIf="canEdit" class="btn btn-mosaico-primary-outline btn-sm me-3"
+                                    (click)="confirmDeleteDialog.open(member.id)">{{ "EDIT_PROJECT.ACTIONS.REMOVE" | translate }}</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <lib-confirm-dialog #confirmDeleteDialog [title]="'EDIT_PROJECT.REMOVE_FORM.TITLE' | translate"
+                    [message]="'EDIT_PROJECT.REMOVE_FORM.DESCRIPTION' | translate" [usePayload]="true"
+                    [submitButtonText]="'EDIT_PROJECT.REMOVE_FORM.ACTIONS.SUBMIT' | translate"
+                    [cancelButtonText]="'EDIT_PROJECT.REMOVE_FORM.ACTIONS.CANCEL' | translate"
+                    (closed)="delete($event)"></lib-confirm-dialog>
+                <lib-confirm-dialog #confirmRoleChangeDialog title="Confirm the action"
+                    message="Are you sure you want to change users role?" [usePayload]="true"
+                    (closed)="changeUserRole($event)" (dismissed)="cancelUserRole()"></lib-confirm-dialog>
+                <app-new-project-member #addNewProjectMemberDialog (closed)="addNewMember($event)">
+                </app-new-project-member>
+
+                <ng-template #acceptedTemplate>
+                    <span class="text-success">{{ "EDIT_PROJECT.STATUS.ACCEPTED" | translate }}</span>
+                </ng-template>
+
+                <ng-template #notAccepted>
+                    <span class="text-muted">{{ "EDIT_PROJECT.STATUS.WAITING" | translate }}</span>
+                </ng-template>
+
+                <ng-template #ownerTemplate>
+                    <h4><span class="badge badge-primary">{{ "EDIT_PROJECT.ROLE.OWNER" | translate }}</span></h4>
+                </ng-template>
+                <ng-template #memberTemplate>
+                    <h4><span class="badge badge-success">{{ "EDIT_PROJECT.ROLE.MEMBER" | translate }}</span></h4>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

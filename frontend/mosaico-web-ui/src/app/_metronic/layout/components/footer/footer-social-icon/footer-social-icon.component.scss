@@ -1,0 +1,37 @@
+.div-icons-sm {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.social-icon {
+  transition: all 0.3s ease 0s;
+
+  margin-right: 8px;
+  @media (min-width: 350px) {
+    margin-right: 16px;
+  }
+
+  // margin-bottom: 16px;
+  display: inline-block;
+
+  &:hover {
+    // transform : translateY(-3px);
+    transform: scale(1.4);
+
+    a {
+      // color: #262268;
+
+    }
+  }
+}
+
+.social-icon-end {
+  margin-right: 0;
+}
+
+::ng-deep .svg-icon {
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}

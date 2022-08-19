@@ -1,0 +1,525 @@
+{
+  "contractName": "MosaicoStructs",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Library.sol\":\"MosaicoStructs\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Library.sol\":{\"keccak256\":\"0x19aea291c0a514055b21504cf9a10693e571a9e396665b2f28d973eec34a57bd\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3eb32e43dffca5a797d08f7077ffcceb6b787e0d5d5f7e114df4d4edf2fec63e\",\"dweb:/ipfs/QmcNXv5asc56kcaWUBCC2uzMLdbpp1gBAPMjsCdBF9nrMb\"]}},\"version\":1}",
+  "bytecode": "0x60566050600b82828239805160001a6073146043577f4e487b7100000000000000000000000000000000000000000000000000000000600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220e7d708f93978f717b2a01d236cfc57b5100bc9e02e7aeb7618862f96e68642f164736f6c63430008090033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220e7d708f93978f717b2a01d236cfc57b5100bc9e02e7aeb7618862f96e68642f164736f6c63430008090033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "119:252:5:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "119:252:5:-:0;;;;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\n// OpenZeppelin Contracts v4.3.2 (utils/MosaicoERC20.sol)\r\npragma solidity ^0.8.9;\r\n\r\nlibrary MosaicoStructs {\r\n    struct ERC20Settings {\r\n        bool isMintable;\r\n        bool isBurnable;\r\n        string name;\r\n        string symbol;\r\n        uint256 initialSupply;\r\n        address walletAddress;\r\n        bool isGovernance;\r\n    }\r\n}",
+  "sourcePath": "D:\\repositories\\mosaico-reference\\smart_contracts\\contracts\\Library.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/Library.sol",
+    "exportedSymbols": {
+      "MosaicoStructs": [
+        3434
+      ]
+    },
+    "id": 3435,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3418,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".9"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "92:23:5"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "MosaicoStructs",
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "id": 3434,
+        "linearizedBaseContracts": [
+          3434
+        ],
+        "name": "MosaicoStructs",
+        "nameLocation": "127:14:5",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "MosaicoStructs.ERC20Settings",
+            "id": 3433,
+            "members": [
+              {
+                "constant": false,
+                "id": 3420,
+                "mutability": "mutable",
+                "name": "isMintable",
+                "nameLocation": "186:10:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "181:15:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 3419,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "181:4:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3422,
+                "mutability": "mutable",
+                "name": "isBurnable",
+                "nameLocation": "212:10:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "207:15:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 3421,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "207:4:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3424,
+                "mutability": "mutable",
+                "name": "name",
+                "nameLocation": "240:4:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "233:11:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 3423,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "233:6:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3426,
+                "mutability": "mutable",
+                "name": "symbol",
+                "nameLocation": "262:6:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "255:13:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 3425,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "255:6:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3428,
+                "mutability": "mutable",
+                "name": "initialSupply",
+                "nameLocation": "287:13:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "279:21:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3427,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "279:7:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3430,
+                "mutability": "mutable",
+                "name": "walletAddress",
+                "nameLocation": "319:13:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "311:21:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 3429,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "311:7:5",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3432,
+                "mutability": "mutable",
+                "name": "isGovernance",
+                "nameLocation": "348:12:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "343:17:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 3431,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "343:4:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "ERC20Settings",
+            "nameLocation": "156:13:5",
+            "nodeType": "StructDefinition",
+            "scope": 3434,
+            "src": "149:219:5",
+            "visibility": "public"
+          }
+        ],
+        "scope": 3435,
+        "src": "119:252:5",
+        "usedErrors": []
+      }
+    ],
+    "src": "92:279:5"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/Library.sol",
+    "exportedSymbols": {
+      "MosaicoStructs": [
+        3434
+      ]
+    },
+    "id": 3435,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3418,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".9"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "92:23:5"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "MosaicoStructs",
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "id": 3434,
+        "linearizedBaseContracts": [
+          3434
+        ],
+        "name": "MosaicoStructs",
+        "nameLocation": "127:14:5",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "MosaicoStructs.ERC20Settings",
+            "id": 3433,
+            "members": [
+              {
+                "constant": false,
+                "id": 3420,
+                "mutability": "mutable",
+                "name": "isMintable",
+                "nameLocation": "186:10:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "181:15:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 3419,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "181:4:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3422,
+                "mutability": "mutable",
+                "name": "isBurnable",
+                "nameLocation": "212:10:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "207:15:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 3421,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "207:4:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3424,
+                "mutability": "mutable",
+                "name": "name",
+                "nameLocation": "240:4:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "233:11:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 3423,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "233:6:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3426,
+                "mutability": "mutable",
+                "name": "symbol",
+                "nameLocation": "262:6:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "255:13:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 3425,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "255:6:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3428,
+                "mutability": "mutable",
+                "name": "initialSupply",
+                "nameLocation": "287:13:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "279:21:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 3427,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "279:7:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3430,
+                "mutability": "mutable",
+                "name": "walletAddress",
+                "nameLocation": "319:13:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "311:21:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 3429,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "311:7:5",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 3432,
+                "mutability": "mutable",
+                "name": "isGovernance",
+                "nameLocation": "348:12:5",
+                "nodeType": "VariableDeclaration",
+                "scope": 3433,
+                "src": "343:17:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 3431,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "343:4:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "ERC20Settings",
+            "nameLocation": "156:13:5",
+            "nodeType": "StructDefinition",
+            "scope": 3434,
+            "src": "149:219:5",
+            "visibility": "public"
+          }
+        ],
+        "scope": 3435,
+        "src": "119:252:5",
+        "usedErrors": []
+      }
+    ],
+    "src": "92:279:5"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2022-04-01T04:17:56.598Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

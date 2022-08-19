@@ -1,0 +1,19 @@
+.card {
+    padding: 32px !important;
+
+    .card-header {
+        justify-content: center;
+    }
+
+    .card-title {
+        margin-bottom: 22px;
+    }
+
+    .btn-selected {
+        background-image: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+        border: 2px solid transparent !important;
+        background-origin: border-box;
+        box-sizing: border-box;
+        color: #FFFFFF;
+    }
+}

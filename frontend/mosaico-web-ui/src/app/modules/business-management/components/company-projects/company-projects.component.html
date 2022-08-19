@@ -1,0 +1,38 @@
+<app-company-description></app-company-description>
+<div class="card card-xl-stretch mb5 mb-xl-8 shadow-sm">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 d-flex flex-row justify-content-center">
+                <span class="project-title">{{'COMPANY_PROJECTS.TITLE'|translate}}</span>
+            </div>
+        </div>
+        <div class="row mt-6">
+            <div class="col-12 d-flex flex-column flex-md-row justify-content-center flex-wrap">
+                <div class="card project-card shadow-sm me-5 mt-5" *ngFor="let p of projects">
+                    <div class="symbol symbol-150px" *ngIf="p.coverLogoUrl && p.coverLogoUrl.length > 0">
+                        <div class="symbol-label" style="background-image:url({{p.coverLogoUrl}})"></div>
+                    </div>
+                    <div class="symbol symbol-150px" *ngIf="!p.coverLogoUrl || p.coverLogoUrl.length === 0">
+                        <div class="symbol-label fs-2 fw-bold text-dark" style="background-image:url(/assets/media/tokenpage/default_header.png)"></div>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-around">
+                        <div class="mt-5"><h5 class="card-title m-0"><a routerLink="/project/{{p.slug}}">{{p.title}}</a></h5></div>
+                        <div class="mt-4"><span class="badge--status">{{p.status}}</span></div>
+                        <div class="mt-6 d-flex justify-content-center">
+                            <button routerLink="/project/{{p.slug}}" class="btn btn-mosaico-primary-outline btn-sm w-100">{{'COMPANY_PROJECTS.ACTIONS.DETAILS'|translate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <span *ngIf="!projects || projects.length === 0">{{'COMPANY_OVERVIEW.NO_PROJECTS'|translate}}</span>
+            </div>
+        </div>
+        <div class="row mt-6" *ngIf="canEdit">
+            <div class="col-12 d-flex flex-row justify-content-center">
+                <button [routerLink]="['/project/create']" [queryParams]="{companyId: company.id}" class="btn btn-mosaico-primary-outline">{{'COMPANY_PROJECTS.ACTIONS.CREATE'|translate}} <i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer p-6 mt-6">
+        <app-company-details-card></app-company-details-card>
+    </div>
+</div>

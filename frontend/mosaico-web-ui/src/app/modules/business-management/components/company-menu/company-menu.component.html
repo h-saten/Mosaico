@@ -1,0 +1,42 @@
+<div class="company-menu">
+  <div class="company-btn-menu">
+    <a class="btn btn-menu"
+      [routerLink]="['/', 'dao', slug, 'overview']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      id="start"
+    > {{'COMPANY_PAGE_MENU.OVERVIEW' | translate }} </a>
+
+    <a class="btn btn-menu"
+      [routerLink]="['/','dao', slug, 'voting']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      id="voting"
+      > {{'COMPANY_PAGE_MENU.VOTING' | translate }} </a>
+
+    <a class="btn btn-menu"
+      [routerLink]="['/','dao', slug, 'holders']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      id="holders"
+      > {{'COMPANY_PAGE_MENU.HOLDERS' | translate }} </a>
+
+    <a class="btn btn-menu"
+      [routerLink]="['/','dao', slug, 'wallet']"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}"
+      *ngIf="canEdit"
+      id="wallet"
+    > {{'COMPANY_PAGE_MENU.WALLET' | translate }} </a>
+
+    <a class="btn btn-menu"
+      [routerLink]="['/','dao', slug, 'settings']"
+      routerLinkActive="active"
+      *ngIf="canEdit"
+      [routerLinkActiveOptions]="{exact: false}"
+      id="settings"
+      > {{'COMPANY_PAGE_MENU.SETTINGS' | translate }} </a>
+
+  </div>
+
+</div>

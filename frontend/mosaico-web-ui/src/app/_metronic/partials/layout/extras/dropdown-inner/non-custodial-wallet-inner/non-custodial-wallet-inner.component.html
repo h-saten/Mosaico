@@ -1,0 +1,52 @@
+<div class="d-flex flex-column bgi-no-repeat rounded-top bg-mosaico-secondary">
+  <h3 class="text-white fw-bold px-9 mt-10 mb-6">{{'WALLETS.web3.wallets.title'|translate}}</h3>
+</div>
+
+<div class="row g-0">
+  <div class="col-6">
+    <span (click)="loginWithMetamask()" *ngIf="isMetamaskAuthorized === false" class="
+        d-flex
+        flex-column flex-center
+        h-100
+        p-6
+        bg-hover-light
+        border-end border-bottom
+        cursor-pointer
+      ">
+      <img src="/assets/media/icons/metamask.svg" class="mb-2" alt="Metamask">
+      <span class="fs-5 fw-bold text-gray-800 mb-0">MetaMask</span>
+    </span>
+    <ng-container *ngIf="isMetamaskAuthorized === true">
+      <!-- TODO: to the modal "confirm-wallet-disconnect" -->
+      <span (click)="logout()" class="
+          d-flex
+          flex-column flex-center
+          h-100
+          p-6
+          bg-hover-light
+          border-end border-bottom
+          cursor-pointer
+        ">
+        <img src="/assets/media/icons/metamask.svg" class="mb-2" alt="Metamask">
+        <span class="fs-5 fw-bold text-gray-800 mb-0">MetaMask</span>
+        <span class="fs-7 text-success">{{'WALLETS.connected'|translate}}</span>
+      </span>
+    </ng-container>
+  </div>
+
+  <div class="col-6">
+    <a class="
+        d-flex
+        flex-column flex-center
+        h-100
+        p-6
+        bg-light
+        border-bottom
+        cursor-pointer
+      ">
+      <img src="/assets/media/icons/walletconnect.png" class="mb-2" alt="WalletConnect">
+      <span class="fs-5 fw-bold text-gray-800 mb-0">WalletConnect</span>
+      <span class="fs-7 text-gray-400 text-weight-bold">{{'WALLETS.coming-soon'|translate}}</span>
+    </a>
+  </div>
+</div>

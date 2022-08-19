@@ -1,0 +1,29 @@
+<ng-template #content let-modal>
+	<div class="modal-content mosaico-modal">
+		<div class="modal-header">
+			<h5 class="modal-title">{{title|translate}}</h5>
+
+			<!--begin::Close-->
+			<div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+			<!--end::Close-->
+		</div>
+
+		<div class="modal-body">
+			<ng-container *ngIf="displayMode === 'message'">
+				<p>{{message|translate}}</p>
+			</ng-container>
+			<ng-container *ngIf="displayMode === 'content'">
+				<ng-container *ngTemplateOutlet="modalContent"></ng-container>
+			</ng-container>
+		</div>
+
+		<div class="modal-footer">
+      		<button type="button" class="btn btn-mosaico-primary" (click)="submit()">{{submitButtonText}}</button>
+			<button type="button" class="btn btn-mosaico-primary-outline ms-7" (click)="modal.dismiss(false)">{{cancelButtonText}}</button>
+		</div>
+	</div>
+</ng-template>

@@ -1,0 +1,39 @@
+<div class="card hoverable bg-white shadow-sm">
+  <div class="card-body">
+    <div class="fw-bolder fs-1 mb-2">
+      {{ 'DASHBOARD.DAILY_CAPITAL.title' | translate }}
+    </div>
+
+    <div class="row my-4">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-4 d-flex justify-content-start" (click)="movePreviousMonth()">
+            <span class="cursor-pointer"><i class="fas fa-angle-left"></i> {{ 'DASHBOARD.DAILY_CAPITAL.prev_month' | translate }}</span>
+          </div>
+          <div class="col-4 d-flex justify-content-center">
+            <span class="font-weight-bold">{{ currentDate }}</span>
+          </div>
+          <div class="col-4 d-flex justify-content-end"
+               *ngIf="monthAgo !== 0"
+               (click)="moveNextMonth()">
+            <span class="cursor-pointer">{{ 'DASHBOARD.DAILY_CAPITAL.next_month' | translate }} <i class="fas fa-angle-right"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fw-bold fs-7" *ngIf="dailyTransactions">
+      <apx-chart #chart
+                 [series]="dailyTransactions.series"
+                 [chart]="dailyTransactions.chart"
+                 [dataLabels]="dailyTransactions.dataLabels"
+                 [markers]="dailyTransactions.markers"
+                 [fill]="dailyTransactions.fill"
+                 [yaxis]="dailyTransactions.yaxis"
+                 [theme]="dailyTransactions.theme"
+                 [xaxis]="dailyTransactions.xaxis"
+                 [tooltip]="dailyTransactions.tooltip">
+      </apx-chart>
+    </div>
+  </div>
+</div>

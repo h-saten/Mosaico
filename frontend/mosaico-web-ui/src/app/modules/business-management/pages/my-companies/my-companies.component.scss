@@ -1,0 +1,71 @@
+.list-companies {
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    justify-content: space-between;
+
+    @media (max-width: 850px) {
+        justify-content: center;
+    }
+
+}
+
+.title-companies {
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 64px;
+    color: #494642;
+    letter-spacing: -2%;
+}
+
+$card-max-width: 360px;
+$card-xs-width: 100%;
+$card-img-max-height: 150px;
+$primary-text-color: #494642;
+$border-color: #DFE0EB;
+
+.card {
+    border: 1px solid $border-color;
+}
+.company-card {
+    width: $card-xs-width;
+    @media (min-width: 768px) {
+        width: $card-max-width;
+    }
+    
+    border: 1px solid $border-color;
+    box-sizing: content-box;
+    padding: 0 !important;
+    // .symbol {
+    //     border-bottom-left-radius: 0;
+    //     border-bottom-right-radius: 0;
+    //     max-height: $card-img-max-height;
+    //     .symbol-label {
+    //         border-bottom-left-radius: 0;
+    //         border-bottom-right-radius: 0;
+    //         width: $card-xs-width;
+    //         @media (min-width: 768px) {
+    //             width: $card-max-width;
+    //         }
+    //         max-height: $card-img-max-height;
+    //     }
+    // }
+    .card-body {
+        padding: 16px !important;
+        .card-title {
+            color: $primary-text-color;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 28px;
+            a {
+                color: $primary-text-color;
+            }
+        }
+        .badge--status {
+            border-radius: 5px;
+            background-color: transparent;
+            color: #979797;
+            font-size: 16px;
+            line-height: 24px;
+        }
+    }
+}

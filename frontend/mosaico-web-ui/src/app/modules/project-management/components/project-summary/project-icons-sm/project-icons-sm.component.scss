@@ -1,0 +1,40 @@
+::ng-deep .text-info {
+  .svg-icon {
+    svg {
+      width: 24px;
+      height: 24px;
+
+      [fill]:not(.permanent):not(g) {
+        fill: #979797;
+      }
+      path {
+        fill: #979797;
+      }
+    }
+  }
+}
+
+.social-icons-list {
+  // margin-top: 24px;
+  max-width: 406px;
+  text-align: center;
+}
+
+.social-icon {
+  transition: all 0.3s ease 0s;
+
+  margin-bottom: 0;
+  // @media (min-width: 768px) {
+  //   margin-bottom: 16px;
+  // }
+
+  &:hover {
+    // transform : translateY(-3px);
+    transform: scale(1.4);
+
+    a {
+      color: #262268;
+
+    }
+  }
+}

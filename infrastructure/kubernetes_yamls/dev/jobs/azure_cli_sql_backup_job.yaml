@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sql-backup-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: azure-cli
+        image: mcr.microsoft.com/azure-cli:latest
+        command: ["printenv"]
+        env:
+        - name: DEMO
+          value: "Hello from Mosaico"
+      restartPolicy: Never
+  backoffLimit: 4

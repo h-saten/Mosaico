@@ -1,0 +1,128 @@
+#manifests in pipeline are used only to debug specific parts from the whole CI/CD pipeline, there we just want to test terraform deployment (btw code here is not used on proper enviroment)
+name: cd-frontend-backend 
+on:
+  push:
+    paths:
+      - 'src/**' #backend/identity
+      - 'frontend/mosaico-web-ui/**' #frontend
+      - 'frontend/mosaico-id-ui/**' #identity frontend
+      - '.github/**'
+      - 'infrastructure/**'
+    branches: [ 'main', 'mc/*' ]
+jobs:  
+  terraform:
+    continue-on-error: true
+    needs: [ detect_changes, increment_version, backend, frontend, backup-upload-core-id-sql ]
+    if: always()
+    name: 'Terraform'
+    env:
+      TERRAFORM_DIRECTORY: ${{github.workspace}}/infrastructure/terraform
+     # TF_LOG: trace
+      AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+      ARM_CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientId'] }}
+      ARM_CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientSecret'] }}
+      ARM_SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['subscriptionId'] }}
+      ARM_TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['tenantId'] }}
+      RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP_TERRAFORM }}
+      CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+      STORAGE_ACCOUNT: "stmosaicoterraform"
+      CONTAINER_NAME: "v2-mosaico-dev"
+    runs-on: 'self-hosted'
+    environment: dev
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.11
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Download from blob  
+      uses: ulaval/azure-blob-copy-action@v1
+      with:
+        action: download
+        connection_string: ${{ secrets.TERRAFORM_STORAGE_CONNECTION_STRING }}
+        container_name: "v2-mosaico-dev"
+        local_directory: ${{github.workspace}}/infrastructure/terraform
+    - run: tree
+      shell: bash
+    - run: ls -l
+    - name: Login via Az module
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        allow-no-subscriptions: true
+    - name: Terraform Init
+      id: init
+      working-directory: ${{github.workspace}}/infrastructure/terraform
+      run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP"
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -check
+      working-directory: ${{github.workspace}}/infrastructure/terraform
+      continue-on-error: true
+    - name: Terraform Validate
+      id: validate
+      working-directory: ${{github.workspace}}/infrastructure/terraform
+      run: terraform validate -no-color     
+    - name: Terraform Plan
+      id: plan_terraform
+      env:
+        # TF_LOG: trace
+        AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+        ARM_CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientId'] }}
+        ARM_CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientSecret'] }}
+        ARM_SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['subscriptionId'] }}
+        ARM_TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['tenantId'] }}
+        RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP_TERRAFORM }}
+        TERRAFORM_DIRECTORY: /home/github/_work/mosaico-reference/mosaico-reference/infrastructure/terraform
+        connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+        STORAGE_ACCOUNT: "stmosaicoterraform"
+        CONTAINER_NAME: "v2-mosaico-dev"
+      if: github.event_name == 'push'
+      run: terraform plan -no-color --var-file="./dev.tfvars" --out tfplan
+      working-directory: ${{github.workspace}}/infrastructure/terraform
+    - name: add-plan-comment
+      id: comment
+      uses: actions/github-script@v3
+      if: github.event_name == 'pull_request'
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+          <details><summary>Show Plan</summary>
+          
+          \`\`\`${process.env.PLAN}\`\`\`
+          
+          </details>
+          
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      id: apply_terraform
+      working-directory: ${{github.workspace}}/infrastructure/terraform
+      run: terraform apply -auto-approve tfplan
+
+    # - name: Post to a Slack channel
+    #   id: slack_terraform_plan_apply
+    #   uses: slackapi/slack-github-action@v1.18.0
+    #   with:
+    #     channel-id: 'C0333TDS71D'
+    #     slack-message: "Status of plan [TERRAFORM]: ${{steps.plan_terraform.conclusion}} !\nStatus of apply [TERRAFORM]: ${{steps.terraform_apply.conclusion}} !"
+    #   env:
+    #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

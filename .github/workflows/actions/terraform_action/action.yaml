@@ -1,0 +1,149 @@
+  # terraform:  
+  #   needs: [ detect_changes ]
+  #   runs-on: self-hosted
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: ./.github/workflows/actions/terraform_action
+  #     id: terraform
+  #     with:
+  #       terraform_directory: /home/github/_work/mosaico-reference/mosaico-reference/infrastructure/terraform
+  #       CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+  #       CONNECTION_STRING_TERRAFORM: ${{ secrets.TERRAFORM_STORAGE_CONNECTION_STRING }}
+  #       # TF_LOG: trace
+  #       AZURE_CREDENTIALS: ${{secrets.AZURE_CREDENTIALS}}
+  #       ARM_CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientId'] }}
+  #       ARM_CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['clientSecret'] }}
+  #       ARM_SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['subscriptionId'] }}
+  #       ARM_TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS)['tenantId'] }}
+  #       RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP_TERRAFORM }}
+  #       STORAGE_ACCOUNT: "stmosaicoterraform"
+  #       CONTAINER_NAME: "v2-mosaico-dev"
+
+  #^paste that in release part of pipeline, currently not using composite due to some errors with passing secrets as inputs
+
+name: "init format plan apply terraform"
+description: "init format plan apply terraform"
+
+inputs:
+  TERRAFORM_DIRECTORY:
+    required: true
+    description: "Azure credentials" 
+  AZURE_CREDENTIALS:
+    required: true
+    description: "Azure credentials"
+  ARM_CLIENT_ID:
+    required: true
+    description: "Azure credentials"
+  ARM_CLIENT_SECRET:
+    required: true
+    description: "Azure credentials"
+  ARM_SUBSCRIPTION_ID:
+    required: true
+    description: "Azure credentials"
+  ARM_TENANT_ID:
+    required: true
+    description: "Azure credentials"
+  RESOURCE_GROUP:
+    required: true
+    description: "Azure credentials"
+  CONNECTION_STRING:
+    required: true
+    description: "connection string to main storage account"
+  CONNECTION_STRING_TERRAFORM:
+    required: true
+    description: "terraform storage connection string"
+  STORAGE_ACCOUNT:
+    required: true
+    description: "Azure credentials"
+  container_name:
+    required: true
+    description: "Azure credentials"
+
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.11
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Download from blob  
+      uses: ulaval/azure-blob-copy-action@v1
+      with:
+        action: download
+        connection_string: ${{inputs.CONNECTION_STRING_TERRAFORM}}
+        container_name: "v2-mosaico-dev"
+        local_directory: ${{ inputs.TERRAFORM_DIRECTORY }}
+    - run: tree
+      shell: bash
+    - name: Login via Az module
+      uses: azure/login@v1
+      with:
+        creds: ${{ inputs.AZURE_CREDENTIALS }}
+        allow-no-subscriptions: true
+
+    - name: Terraform Init
+      id: init
+      shell: bash
+      working-directory: "/home/github/_work/mosaico-reference/mosaico-reference/infrastructure/terraform"
+      run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP"
+
+    - name: Terraform fmt
+      id: fmt
+      shell: bash
+      run: terraform fmt -check
+
+    - name: Terraform Validate
+      id: validate
+      shell: bash
+      working-directory: "/home/github/_work/mosaico-reference/mosaico-reference/infrastructure/terraform"
+      run: terraform validate -no-color
+        
+    - name: Terraform Plan
+      id: plan
+      shell: bash
+      working-directory: "/home/github/_work/mosaico-reference/mosaico-reference/infrastructure/terraform"
+      if: github.event_name == 'push'
+      run: terraform plan -no-color --var-file="./dev.tfvars"
+
+    # - name: Truncate Plan
+    #   id: truncate-plan
+    #   run: echo "::set-output name=plan::${${{ format('{0}{1}', steps.plan.outputs.stdout, steps.plan.outputs.stderr) }}:0:65536}"
+
+    - name: add-plan-comment
+      id: comment
+      uses: actions/github-script@v3
+      if: github.event_name == 'pull_request'
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+      with:
+        github-token: ${{ inputs.GITHUB_TOKEN }}
+        script: |
+          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+      
+          <details><summary>Show Plan</summary>
+          
+          \`\`\`${process.env.PLAN}\`\`\`
+          
+          </details>
+          
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      shell: bash
+      run: terraform apply -auto-approve

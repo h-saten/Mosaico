@@ -1,0 +1,130 @@
+<div class="card">
+  <div class="card-header align-items-center border-0 ps-0">
+    <h3 class="card-title align-items-start flex-column mb-10">
+      <span class="fw-bolder text-dark display-6">{{'USERPROFILE.button.edit' | translate }}</span>
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="flex-column">
+      <form [formGroup]="form" class="form mosaico-form" novalidate="novalidate">
+
+        <div class="form-group mb-5 col-lg-12">
+          <div class="row">
+            <div class="col-lg-6">
+              <label class="form-label">{{'USERPROFILE.key.firstname' | translate}}</label>
+              <input type="text" name="firstName" formControlName="firstName"
+                [ngClass]="{ 'is-invalid': isDirty('firstName') && hasErrors('firstName') }"
+                class="form-control " placeholder="{{'USERPROFILE.key.firstname' | translate}}" />
+              <div class="invalid-feedback" *ngIf="isDirty('firstName') && hasErrors('firstName')">
+                {{'EDIT_PROFILE.invalid.firstname' | translate}}
+              </div>
+
+              <label class="form-label mt-5">{{'USERPROFILE.key.lastname' | translate}}</label>
+              <input type="text" name="lastName" formControlName="lastName"
+                [ngClass]="{ 'is-invalid': isDirty('lastName') && hasErrors('lastName') }"
+                class="form-control " placeholder="{{'USERPROFILE.key.lastname' | translate}}" />
+              <div class="invalid-feedback" *ngIf="isDirty('lastName') && hasErrors('lastName')">
+                {{'EDIT_PROFILE.invalid.lastname' | translate}}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="fv-row">
+                <label class="form-label mt-5 mt-lg-0">
+                  <span class="required">{{'USERPROFILE.key.email' | translate}}</span>
+                </label>
+                <div class="position-relative">
+                  <input formControlName="email" type="text" class="form-control " readonly />
+                  <div class="position-absolute translate-middle-y top-50 end-0 me-3">
+                    <button (click)="openEmailDialog()" class="btn pe-0" *ngIf="canChangeEmail">
+                      <i class="bi bi-pencil-square fs-1"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fv-row">
+                <label class="form-label mt-5">
+                  <span>{{'USERPROFILE.key.phoneNumber' | translate}}</span>
+                </label>
+                <div class="position-relative">
+                  <input formControlName="phoneNumber" type="text" class="form-control " readonly />
+                  <div class="position-absolute translate-middle-y top-50 end-0 me-3">
+                    <button (click)="openChangePhoneDialog()" class="btn pe-0">
+                      <i class="bi bi-pencil-square fs-1"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-20" />
+          <div class="row">
+            <div class="col-lg-6">
+              <!--date of birth-->
+              <label class="form-label">{{'USERPROFILE.key.dob' | translate}}</label>
+              <input type="date" name="dob" formControlName="dob" class="form-control " />
+
+              <!--time zone-->
+              <label class="form-label mt-5">{{'USERPROFILE.key.timezone' | translate}}</label>
+              <div class="fv-row">
+                <ng-select class="mosaico-select" [items]="timezones" [searchable]="true" bindLabel="name" bindValue="code" formControlName="timezone" placeholder="{{'USERPROFILE.key.timezone.placeholder' | translate}}"></ng-select>
+              </div>
+
+              <!--currency-->
+              <label class="form-label mt-5">{{'USERPROFILE.key.currency' | translate}}
+              </label>
+              <div class="fv-row">
+                <select
+                  class="form-select form-select-lg" name="currency" fotmControlName="currency" [disabled]="true">
+                  <option value="USDT" selected>USDT - USA Dollar</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="fv-row">
+                <div class="row">
+                  <div class="col-lg-8 fv-row">
+                    <label class="form-label mt-5 mt-lg-0">
+                      <span>{{'USERPROFILE.key.country' | translate}}</span>
+                    </label>
+                    <ng-select class="mosaico-select" [items]="countries" [searchable]="true" bindLabel="name" bindValue="code" formControlName="country" placeholder="{{'USERPROFILE.key.country.placeholder' | translate}}"></ng-select>
+                  </div>
+                  <div class="col-lg-4 fv-row">
+                    <label class="form-label mt-5 mt-lg-0">
+                      <span>{{'USERPROFILE.key.postalcode' | translate}}</span>
+                    </label>
+                    <input type="text" class="form-control" formControlName="postalCode" placeholder="{{'USERPROFILE.key.postalcode.placeholder' | translate}}" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="fv-row">
+                <label class="form-label mt-5">{{'USERPROFILE.key.city' | translate}}</label>
+                  <input type="text" class="form-control" formControlName="city" placeholder="{{'USERPROFILE.key.city.placeholder' | translate}}" />
+              </div>
+              <div class="fv-row">
+                <label class="form-label mt-5">{{'USERPROFILE.key.street' | translate}}</label>
+                  <input type="text" class="form-control" formControlName="street" placeholder="{{'USERPROFILE.key.street.placeholder' | translate}}" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-start mt-5 pt-5">
+          <div>
+            <button type="button" [disabled]="form.disabled" (click)="save()" class="btn btn-lg btn-mosaico-primary">
+              {{'BUTTONS.btn.submit' | translate}}
+            </button>
+          </div>
+          <div class="ms-2">
+            <button type="button" [disabled]="form.disabled" (click)="cancel()"
+              class="btn btn-lg btn-mosaico-primary-outline ms-3">
+              {{'BUTTONS.btn.cancel' | translate}}
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>

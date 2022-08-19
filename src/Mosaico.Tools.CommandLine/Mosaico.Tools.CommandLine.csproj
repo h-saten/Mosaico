@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.API.v1.Wallet\Mosaico.API.v1.Wallet.csproj" />
+        <ProjectReference Include="..\Mosaico.Application.BusinessManagement\Mosaico.Application.BusinessManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Application.ProjectManagement\Mosaico.Application.ProjectManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.CommandLine.Base\Mosaico.CommandLine.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Base\Mosaico.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.ProjectManagement\Mosaico.Domain.ProjectManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Blockchain.Ethereum\Mosaico.Integration.Blockchain.Ethereum.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Email.SendGrid\Mosaico.Integration.Email.SendGridEmail.csproj" />
+        <ProjectReference Include="..\Mosaico.Payments.Binance\Mosaico.Payments.Binance.csproj" />
+        <ProjectReference Include="..\Mosaico.Persistence.SqlServer\Mosaico.Persistence.SqlServer.csproj" />
+        <ProjectReference Include="..\Mosaico.Secrets.KeyVault\Mosaico.Secrets.KeyVault.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="appsettings.Development.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="appsettings.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="Resources\funds.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Resources\tokens.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Resources\currencies.json" />
+        <Content Include="Resources\currencies.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Resources\Tokenomies of projects - Functions.csv" />
+        <Content Include="Resources\stakingpairs.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Resources\Tokenomies of projects - Functions.csv">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Resources\Tokenomies of projects - Token Distribution.csv" />
+        <Content Include="Resources\Tokenomies of projects - Token Distribution.csv">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Bogus" Version="33.1.1" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mosaico.CQRS.Base\Mosaico.CQRS.Base.csproj" />
+    <ProjectReference Include="..\Mosaico.DocumentExport.Base\Mosaico.DocumentExport.Base.csproj" />
+    <ProjectReference Include="..\Mosaico.Domain.DocumentManagement\Mosaico.Domain.DocumentManagement.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.Base\Mosaico.Events.Base.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.BusinessManagement\Mosaico.Events.BusinessManagement.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.DocumentManagement\Mosaico.Events.DocumentManagement.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.Identity\Mosaico.Events.Identity.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.ProjectManagement\Mosaico.Events.ProjectManagement.csproj" />
+    <ProjectReference Include="..\Mosaico.Events.Wallet\Mosaico.Events.Wallet.csproj" />
+    <ProjectReference Include="..\Mosaico.SDK.Identity\Mosaico.SDK.Identity.csproj" />
+    <ProjectReference Include="..\Mosaico.SDK.BusinessManagement\Mosaico.SDK.BusinessManagement.csproj" />
+    <ProjectReference Include="..\Mosaico.SDK.ProjectManagement\Mosaico.SDK.ProjectManagement.csproj" />
+    <ProjectReference Include="..\Mosaico.Storage.Base\Mosaico.Storage.Base.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\DAO" />
+    <Folder Include="Commands\Token" />
+    <Folder Include="Commands\TokenPage" />
+    <Folder Include="Commands\User" />
+  </ItemGroup>
+
+</Project>

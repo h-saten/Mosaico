@@ -1,0 +1,59 @@
+<div class="modal-content mosaico-modal">
+  <div class="modal-header">
+    <h5 class="modal-title">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_EDIT_COLORS'| translate}}</h5>
+    <div class="close-button-container">
+      <button class="btn btn-icon btn-sm btn-active-light-dark ms-2"
+          [disabled]="isEditingIsInProgress === true || dataSavingRequestInProgress === true"
+          (click)="activeModal.dismiss()" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <h4>{{'PROJECT_OVERVIEW.ACTIONS.TITLE_1_EDIT_COLORS'|translate}}</h4>
+        <p class="mb-5">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_1_DESC_EDIT_COLORS'|translate}}</p>
+        <app-color-edit
+          [displayColor]="displayColor1"
+          (pickerOpenedEvent)="pickerOpenedEvent($event)"
+          (selectedColorEvent)="selectedColor1Event($event)"
+        ></app-color-edit>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h4 class="mt-10">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_2_EDIT_COLORS'|translate}}</h4>
+        <p class="mb-5">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_2_DESC_EDIT_COLORS'|translate}}</p>
+        <app-color-edit
+          [displayColor]="displayColor2"
+          (pickerOpenedEvent)="pickerOpenedEvent($event)"
+          (selectedColorEvent)="selectedColor2Event($event)"
+        ></app-color-edit>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h4 class="mt-10">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_3_EDIT_COLORS'|translate}}</h4>
+        <p class="mb-5">{{'PROJECT_OVERVIEW.ACTIONS.TITLE_3_DESC_EDIT_COLORS'|translate}}</p>
+        <app-color-edit
+          [displayColor]="displayColor3"
+          (pickerOpenedEvent)="pickerOpenedEvent($event)"
+          (selectedColorEvent)="selectedColor3Event($event)"
+        ></app-color-edit>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <app-button-save
+      [classes]="'btn btn-mosaico-primary'"
+      [buttonId]="'btn-save-modal-profile'"
+      [formInvalid]="isEditingIsInProgress === true"
+      [showSpinner]="dataSavingRequestInProgress === true"
+      [buttonText]="'BUTTONS.btn.save' | translate"
+      (clicked)="saveColors()"></app-button-save>
+    <button type="button" class="btn btn-mosaico-primary-outline"
+      [disabled]="isEditingIsInProgress === true || dataSavingRequestInProgress === true"
+      (click)="activeModal.dismiss()">{{'BUTTONS.btn.cancel' | translate}}</button>
+  </div>
+</div>

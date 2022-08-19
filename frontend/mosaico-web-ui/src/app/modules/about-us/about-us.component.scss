@@ -1,0 +1,27 @@
+.about-us-wrapper {
+    background: #FFFFFF;
+
+    .bg-1 {
+        background-image: url('/assets/media/about-us/sliced-background-triangles.png');
+        background-size: auto;
+        background-repeat: no-repeat;
+        background-position: 50% -36%;
+
+        @media (max-width: 991px) {
+            background-position: 42% -22%;
+        }
+
+        @media (max-width: 768px) {
+            background-image: none;
+        }
+    }
+    
+    .bg-2 {
+        position: relative;
+
+        img {
+            position: absolute;
+            right: 0;
+        }
+    }
+}

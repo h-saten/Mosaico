@@ -1,0 +1,1 @@
+export type VotingStatus = 'Pending' | 'Active' | 'Closed';

@@ -1,0 +1,18 @@
+#logo1 {
+  display: block;
+}
+
+#logo2 {
+  display: none;
+}
+
+@media(max-width: 500px) {
+
+  #logo1 {
+    display: none;
+  }
+
+  #logo2 {
+    display: block;
+  }
+}

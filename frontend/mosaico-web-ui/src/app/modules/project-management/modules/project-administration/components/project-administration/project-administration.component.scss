@@ -1,0 +1,54 @@
+.company-menu {
+    margin-bottom: 18px;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.projects-btn-menu {
+    padding-bottom: 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.btn-menu {
+    color: #494642;
+    background-color: transparent;
+    border-color: #F3F2F2;
+    padding: 8px 16px !important;
+    margin-right: 8px;
+    margin-bottom: 8px;
+
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 500;
+}
+
+.btn-menu:hover {
+    color: #fff;
+    background-image: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+}
+
+.btn-menu:focus {
+    color: #000;
+    background-color: #979797;
+    border-color: #25cff2;
+    box-shadow: 0 0 0 0.25rem rgba(11, 172, 204, 0.5);
+}
+
+.btn-menu:active,
+.btn-menu.active {
+    color: #fff;
+    background-image: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+}
+
+.btn-menu:active:focus,
+.btn-menu.active:focus {
+    box-shadow: 0 0 0 0.25rem rgba(11, 172, 204, 0.5);
+}
+
+.btn-menu:disabled,
+.btn-menu.disabled {
+    color: #000;
+    background-color: #F3F2F2;
+    border-color: #F3F2F2;
+}

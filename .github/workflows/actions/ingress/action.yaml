@@ -1,0 +1,46 @@
+name: "Deploy ingress"
+description: "Deploy ingress"
+
+inputs:
+  NAMESPACE: 
+    required: true
+    description: "k8s namespace to operatate within"
+  CLUSTER_NAME:
+    required: true
+    description: "Name of the k8s cluster"
+  CLUSTER_RESOURCE_GROUP:
+    required: true
+    description: "Name of the resource group where k8s cluster is deployed"
+  AZURE_CREDENTIALS:
+    required: true
+    description: "Azure Credentials to connect to"
+  APP_YAML:
+    required: true
+    description: "Path to the yaml file with k8s configuration of the app"
+
+runs:
+  using: "composite"
+  steps:
+
+  - name: Install Kubectl
+    uses: azure/setup-kubectl@v2.0
+    id: install_kubectl
+
+  - uses: azure/aks-set-context@v1
+    name: Authorize in Kubernetes
+    id: authorize_aks
+    with:
+      creds: '${{ inputs.AZURE_CREDENTIALS }}'
+      cluster-name: ${{ inputs.CLUSTER_NAME }}
+      resource-group: ${{ inputs.CLUSTER_RESOURCE_GROUP }}
+  #because of issues from terraform, recreating ingress fixes it
+  - name: delete ingress from aks
+    shell: bash
+    run: |
+      kubectl delete -f ${{inputs.APP_YAML}} -n ${{inputs.NAMESPACE}} --ignore-not-found
+
+  - name: apply ingress to aks
+    shell: bash
+    run: |
+      kubectl apply -f ${{inputs.APP_YAML}} -n ${{inputs.NAMESPACE}}
+

@@ -1,0 +1,82 @@
+name: "run_mosaico_cli"
+description: "Run Mosaico CLI on AKS Cluster"
+
+inputs:
+  COMMAND: 
+    required: true
+    description: "Specify the command name"
+  APP_SETTINGS_FOLDER_PATH:
+    required: true
+    description: "Location of appsettings file for CLI"
+  KEY_VAULT_CLIENT_SECRET:
+    required: true
+    description: "Service Principal client secret to access key vault"
+  APP_VERSION:
+    required: true
+    description: "Current version of the application which is getting deployed"
+  NAMESPACE: 
+    required: true
+    description: "k8s namespace to operatate within"
+  CLUSTER_NAME:
+    required: true
+    description: "Name of the k8s cluster"
+  CLUSTER_RESOURCE_GROUP:
+    required: true
+    description: "Name of the resource group where k8s cluster is deployed"
+  APP_SETTINGS_CONFIG_NAME:
+    required: true
+    description: "ConfigMap name which will have appsettings from APP_SETTINGS_FOLDER_PATH"
+  AZURE_CREDENTIALS:
+    required: true
+    description: "Azure credentials"
+  JOB_MANIFEST_YAML:
+    required: true
+    description: "describes which job manifest to run on CLI"
+  environment:
+    required: true
+    description: "Specified Environment: dev/test/prod"
+
+runs:
+
+  using: "composite"
+  steps:
+  - name: Install Kubectl
+    uses: azure/setup-kubectl@v2.0
+    id: install_kubectl
+
+  - name: Update Key Vault Secret
+    uses: bluwy/substitute-string-action@v1
+    id: update_key_vault_secret
+    with:
+      _input-file: "${{inputs.APP_SETTINGS_FOLDER_PATH}}/appsettings.json"
+      _format-key: '{{key}}'
+      KEY_VAULT_CLIENT_SECRET: ${{inputs.KEY_VAULT_CLIENT_SECRET}}
+      _output-file: "${{inputs.APP_SETTINGS_FOLDER_PATH}}/appsettings.json"
+  
+  - uses: azure/aks-set-context@v1
+    name: Authorize in Kubernetes
+    id: authorize_aks
+    with:
+      creds: '${{ inputs.AZURE_CREDENTIALS }}'
+      cluster-name: ${{ inputs.CLUSTER_NAME }}
+      resource-group: ${{ inputs.CLUSTER_RESOURCE_GROUP }}
+
+  - name: Create Or Update Namespace
+    id: create_update_namespace
+    shell: bash
+    run: |
+      kubectl create namespace ${{ inputs.NAMESPACE }} --dry-run=client -o json | kubectl apply -f -
+
+  - name: Create Or Update ConfigMap
+    id: create_update_configmap
+    shell: bash
+    run: |
+      kubectl create configmap ${{inputs.APP_SETTINGS_CONFIG_NAME}} -n ${{inputs.NAMESPACE}} --from-file=${{inputs.APP_SETTINGS_FOLDER_PATH}} --dry-run=client -o yaml | kubectl apply -n ${{inputs.NAMESPACE}} -f -
+  - name: Migrate database
+    id: apply_migrate
+    if: ${{inputs.COMMAND == 'migrate'}}
+    shell: bash
+    run: |
+        kubectl delete -f infrastructure/kubernetes_yamls/${{inputs.ENVIRONMENT}}/jobs/${{inputs.JOB_MANIFEST_YAML}} -n ${{inputs.NAMESPACE}} --ignore-not-found
+        kubectl apply -f infrastructure/kubernetes_yamls/${{inputs.ENVIRONMENT}}/jobs/${{inputs.JOB_MANIFEST_YAML}} -n ${{inputs.NAMESPACE}}
+        

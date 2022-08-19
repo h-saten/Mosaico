@@ -1,0 +1,21 @@
+
+<app-spinner-container [showSpinner]="!logoutRequestFinished"></app-spinner-container>
+
+<!-- pokazywac kiedy jest tylko błąd bo jest zaraz przekierowanie na głowną -->
+<ng-container *ngIf="logoutRequestFinished === true && logoutSuccess === false">
+  <p class="h6">
+    <span *ngIf="!logoutSuccess">{{ 'auth.logout.text_process' | translate }}</span>
+    <span *ngIf="logoutSuccess">{{ 'auth.logout.text_success' | translate }}</span>
+    <span *ngIf="!logoutSuccess && logoutError">{{ 'auth.logout.text_error' | translate }}</span>
+  </p>
+
+  <div class="row m-t-30">
+    <div class="col-md-12">
+
+      <a href="{{urlReturn}}" tabindex="1" class="btn btn-primary-custom btn-md btn-block mb-2" rel="noopener">
+        {{ 'auth.logout.login_return_main_page' | translate }}
+      </a>
+
+    </div>
+  </div>
+</ng-container>

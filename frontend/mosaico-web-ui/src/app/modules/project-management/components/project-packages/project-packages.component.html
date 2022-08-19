@@ -1,0 +1,138 @@
+<div class="card shadow-sm mt-3 project-packages-container">
+
+  <div class="card-header"
+    [ngClass]="{'card-header-editor' : canEdit}"
+  >
+    <div class="card-title">
+      {{'PROJECT.packages.title' | translate}}
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row mb-5" *ngIf="canEdit === true">
+      <div class="col-12 d-flex justify-content-center justify-content-md-end">
+        <button class="btn btn-sm btn-mosaico-primary-outline"
+          (click)="openModalAdd()">
+          {{'PACKAGES_Add_new_package' | translate}}
+        </button>
+      </div>
+    </div>
+
+    <app-spinner-container [showSpinner]="(listRequestFinished$|async) === false"></app-spinner-container>
+    <ng-container *ngIf="(listRequestFinished$|async) === true">
+      <ng-container *ngIf="!projectPackagesList || projectPackagesList.length === 0">
+        <p class="h4 my-4 text-center fw-normal">
+          {{'PACKAGE_no_list' | translate}}
+        </p>
+      </ng-container>
+
+      <ng-container *ngIf="projectPackagesList && projectPackagesList.length > 0;">
+
+        <div class="d-none d-lg-block">
+          <swiper [config]="config">
+            <ng-container *ngFor="let row of projectPackagesList; let i = index">
+              <ng-template swiperSlide>
+                <app-project-packages-row
+                  class="mb-4"
+                  [i] = "i"
+                  [row] = "row"
+                  [canEdit]="canEdit"
+                  [projectId]="projectId"
+                  [pageId]="pageId"
+                  (onDeleted)="delete($event)"
+                  (onOpenModalEdit)="openModalEdit($event)"
+                ></app-project-packages-row>
+              </ng-template>
+            </ng-container>
+          </swiper>
+        </div>
+        <div class="investor-packages-mobile d-block d-lg-none">
+
+          <ng-container *ngIf="projectPackagesList.length > 1; else onePackage;">
+
+            <swiper
+              [freeMode]="true"
+              [centeredSlides]="true"
+              [slidesOffsetBefore]="0"
+              [slidesOffsetAfter]="0"
+              [breakpoints]="{
+                '200': {
+                  slidesPerView: 'auto',
+                  spaceBetween: 10
+                },
+                '650': {
+                  slidesPerView: 'auto',
+                  spaceBetween: 20
+                }
+              }"
+              [loop]="true"
+              class="mySwiper-project"
+
+              [effect]="'coverflow'"
+              [grabCursor]="true"
+              [coverflowEffect]="{
+                rotate: 0,
+                stretch: 10,
+                depth: 10,
+                modifier: 0,
+                slideShadows: false
+              }"
+              [lazy]="true"
+              [navigation]="{ prevEl: prevEl, nextEl: nextEl }"
+            >
+              <ng-container *ngFor="let row of projectPackagesList; let i = index; let even = even; let odd = odd">
+                <ng-template swiperSlide>
+                  <app-project-packages-row
+                    class="mb-4"
+                    [i] = "i"
+                    [row] = "row"
+                    [canEdit]="canEdit"
+                    [projectId]="projectId"
+                    [pageId]="pageId"
+                    (onDeleted)="delete($event)"
+                    (onOpenModalEdit)="openModalEdit($event)"
+                  ></app-project-packages-row>
+                </ng-template>
+              </ng-container>
+            </swiper>
+
+            <div class="text-center mx-auto">
+              <button type="button" #prevEl class="swiper-navigation-prev  btn btn-left">
+                <img
+                alt="left"
+                class=""
+                src="/assets/media/tokenpage/arrow-back-line.svg"
+                />
+              </button>
+              <button type="button" #nextEl class="swiper-navigation-next btn btn-right ms-3">
+                <img
+                alt="right"
+                class=""
+                src="/assets/media/tokenpage/arrow-next-line.svg"
+                />
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-template #onePackage>
+
+            <app-project-packages-row
+              class="mb-4"
+              [i] = "0"
+              [row] = "projectPackagesList[0]"
+              [canEdit]="canEdit"
+              [projectId]="projectId"
+              [pageId]="pageId"
+              (onDeleted)="delete($event)"
+              (onOpenModalEdit)="openModalEdit($event)"
+            ></app-project-packages-row>
+
+          </ng-template>
+
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </div>
+
+</div>

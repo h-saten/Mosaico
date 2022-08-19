@@ -1,0 +1,103 @@
+.table.table-distribution {
+    &.is-invalid {
+        tbody, thead {
+            tr {
+                td, th {
+                    border: 1px solid red !important;
+                    color: red !important;
+                    .text-muted {
+                        color: red !important;
+                    }
+                    input {
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+    border-bottom: 1px solid #DFE0EB;
+    thead {
+        tr {
+            th {
+                font-weight: bold;
+                font-size: 16px;
+                text-align: center;
+                vertical-align: middle;
+                color: #494642;
+                background: #F6F8FB;
+                border: 1px solid #DFE0EB;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+            }
+        }
+    }
+    tbody {
+        border-top: 0;
+        tr {
+            &.add-row-title {
+                background-color: #FFFFFF;
+                font-weight: bold;
+                font-size: 16px;
+                color: #494642;
+                td {
+                    text-align: left;
+                    padding-left: 16px;
+                }
+            }
+            &.project-title {
+                background-color: #F6F8FB;
+                font-weight: bold;
+                font-size: 16px;
+                color: #494642;
+                td {
+                    text-align: left;
+                    padding-left: 16px;
+                }
+            }
+            &.totalSupply {
+                background-color: #F6F8FB;
+                td {
+                    text-align: left;
+                    font-weight: 500;
+                    line-height: 1.5;
+                    color: #181C32;
+                    font-size: 16px;
+                    padding: 20px;
+                    &.percentage {
+                        text-align: center;
+                    }
+                }
+            }
+            &.reserve {
+                td {
+                    text-align: left;
+                    font-weight: 500;
+                    line-height: 1.5;
+                    font-size: 16px;
+                    padding: 20px;
+                    &.percentage {
+                        text-align: center;
+                    }
+                }
+            }
+            td {
+                border: 1px solid #DFE0EB;
+                text-align: center;
+                vertical-align: middle;
+                input {
+                    border: none;
+                    font-size: 16px;
+                    &:disabled {
+                        background: none;
+                        color: #A1A5B7 !important;
+                    }
+                }
+                &.is-invalid {
+                    border: 1px solid red !important;
+                    input {
+                        color: red !important;
+                    }
+                }
+            }
+        }
+    }
+}

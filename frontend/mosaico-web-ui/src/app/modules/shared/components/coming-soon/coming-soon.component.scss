@@ -1,0 +1,33 @@
+
+.div-main {
+  margin: 144px 0 24px;
+  height: 60vH;
+  background: url('/assets/media/page/coming-soon-background.png') no-repeat center;
+
+  @media screen and (max-width: 767px) {
+    margin-top: 24px;
+  }
+}
+
+h3 {
+  font-weight: normal;
+  font-size: clamp(100%, 1rem + 3vw, 48px);
+  text-align: center;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  font-weight: 800;
+  line-height: 48px;
+  color: #434343;
+}
+
+h5 {
+  font-weight: normal;
+  font-size: clamp(100%, 1rem + 1vw, 20px);
+  font-weight: 400;
+  line-height: 20px;
+  color: #434343;
+}
+
+.img-fluid {
+  max-width: 80%;
+}

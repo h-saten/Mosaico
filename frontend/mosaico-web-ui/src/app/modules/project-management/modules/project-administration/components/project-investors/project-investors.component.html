@@ -1,0 +1,107 @@
+<div class="card settings-card shadow-sm">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive table-responsive-xs investor-table">
+                    <p-table [value]="investors" [lazy]="true" (onLazyLoad)="fetchInvestors($event)"
+                        responsiveLayout="scroll" [paginator]="investors.length ? true : false" [rows]="pageSize"
+                        [totalRecords]="totalRecords" [loading]="isLoading" styleClass="table align-middle gs-0 gy-4">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="min-w-150px tr">
+                                    {{'PROJECT_SETTINGS.INVESTORS.TABLE.COLUMNS.USER_NAME'|translate}}</th>
+                                <th class="min-w-150px tr">
+                                    {{'PROJECT_SETTINGS.INVESTORS.TABLE.COLUMNS.PHONE_NUMBER'|translate}}</th>
+                                <th class="min-w-150px tr">
+                                    {{'PROJECT_SETTINGS.INVESTORS.TABLE.COLUMNS.WALLET_ADDRESS'|translate}}</th>
+                                <th class="min-w-150px tr">
+                                    {{'PROJECT_SETTINGS.INVESTORS.TABLE.COLUMNS.TOTAL_INVESTMENT'|translate}}</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-investors>
+                            <tr role="button" (click)="toggleRow(rowIndex)"
+                                [ngClass]="{'investor-row-selected': rowIndex === expandedRow}">
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                        <ng-container *ngIf="investors.user?.fullName?.length > 0">
+                                            {{investors.user.fullName}}
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="!investors.user?.fullName || investors.user?.fullName?.length === 0">
+                                            {{investors.user.email}}
+                                        </ng-container>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                        {{investors.user.phoneNumber}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column">
+                                        <div class="d-flex t-hash" ngxClipboard [cbContent]="investors.address"
+                                            [ngbTooltip]="'PROJECT_SETTINGS.INVESTORS.COPY_HINT'|translate"
+                                            [placement]="'top'">
+                                            {{investors.address | addressType}}
+                                            <i class="far fa-clipboard"></i>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center flex-column fw-bold">
+                                        {{investors.totalInvestment | currency:'USD':'symbol': '1.2-2'}}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="rowIndex === expandedRow">
+                                <td colspan="4">
+                                    <div class="d-flex flex-column p-5">
+                                        <div class="d-flex flex-row mb-3">
+                                            <div class="d-flex px-3">
+                                                USDT:
+                                            </div>
+                                            <div class="d-flex">
+                                                {{getBalance(investors, 'USDT') | number : '1.2-2'}}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row mb-3">
+                                            <div class="d-flex px-3">
+                                                USDC:
+                                            </div>
+                                            <div class="d-flex">
+                                                {{getBalance(investors, 'USDC') | number : '1.2-2'}}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row mb-3">
+                                            <div class="d-flex px-3">
+                                                MATIC:
+                                            </div>
+                                            <div class="d-flex">
+                                                {{getBalance(investors, 'MATIC') | number : '1.2-2'}}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row mb-3">
+                                            <div class="d-flex px-3">
+                                                Bank Transfer:
+                                            </div>
+                                            <div class="d-flex">
+                                                {{getBalance(investors, 'USD') | currency:'USD':'symbol': '1.2-2'}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <h4>{{'PROJECT_SETTINGS.INVESTORS.NO_INVESTORS'|translate}}</h4>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

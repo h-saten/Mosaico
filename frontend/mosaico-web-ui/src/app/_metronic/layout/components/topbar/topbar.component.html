@@ -1,0 +1,57 @@
+<ng-container *ngIf="headerLeft === 'menu'">
+  <div class="d-flex align-items-center d-lg-none ms-2 ms-n3 me-5" title="Show header menu">
+    <div (click)="toggleButton();"  class="
+        btn btn-icon btn-active-light-primary
+        w-30px
+        h-30px
+        w-md-40px
+        h-md-40px
+      " id="kt_header_menu_mobile_toggle">
+      <!-- <span [inlineSVG]="'/assets/media/icons/duotune/text/txt001.svg'" class="svg-icon svg-icon-1"></span> -->
+      <span [ngClass]="[isCollapse ? 'mobile-open' : 'mobile-close']"></span>
+    </div>
+  </div>
+</ng-container>
+
+<div class="d-flex align-items-center me-7"
+  [ngClass]="isCollapse === true ? 'd-none' : 'd-block'"
+>
+  <div class="btn btn-icon btn-sm btn-wallet" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" data-kt-menu-flip="bottom">
+    <span [inlineSVG]="'/assets/media/svg/topbar/wallet.svg'" class="svg-icon svg-icon-2x p-1 mosaico-fill-secondary"></span>
+  </div>
+  <app-wallet-inner class="shadow-sm" (redirected)="hideMenu()"></app-wallet-inner>
+</div>
+
+<div class="d-flex align-items-center me-7"
+  [ngClass]="isCollapse === true ? 'd-none' : 'd-block'"
+>
+  <app-language-switch></app-language-switch>
+</div>
+
+<div class="d-flex align-items-center me-7"
+  [ngClass]="isCollapse === true ? 'd-none' : 'd-block'"
+  id="kt_header_user_menu_toggle"
+  *ngIf="(isAuthorized$ | async)">
+  <div class="cursor-pointer symbol symbol-25px" data-kt-menu-trigger="click"
+    data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" data-kt-menu-flip="bottom">
+    <div class="symbol-label" *ngIf="!userPhotoUrl || userPhotoUrl.length === 0" style="background-image:url(/assets/media/svg/topbar/user.svg)"></div>
+    <div class="symbol-label" *ngIf="userPhotoUrl && userPhotoUrl.length > 0" style="background-image:url({{userPhotoUrl}})"></div>
+  </div>
+  <app-user-inner></app-user-inner>
+</div>
+
+<div class="d-flex align-items-center me-2"
+  [ngClass]="isCollapse === true ? 'd-none' : 'd-block'"
+  *ngIf="(isAuthorized$ | async) === false"
+>
+  <button class="btn btn-icon-light btn-mosaico-primary-outline me-3 btn-sm" (click)="loginWithRedirect()">{{'AUTH.LOGIN.BUTTON'|translate}}</button>
+</div>
+
+<div class="d-flex align-items-center"
+  [ngClass]="isCollapse === true ? 'd-none' : 'd-block'"
+>
+  <button class="btn btn-icon btn-sm btn-beamer symbol symbol-25px" [ngbTooltip]="'WHATS_NEW'|translate" (click)="beamer.render()">
+    <img src="/assets/media/misc/whats_new.png"/>
+  </button>
+  <app-beamer #beamer></app-beamer>
+</div>

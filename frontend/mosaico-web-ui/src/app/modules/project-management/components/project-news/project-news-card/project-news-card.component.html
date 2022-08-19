@@ -1,0 +1,54 @@
+<div class="project-news-card__container">
+    <div class="position-relative">
+        <img [src]="article.coverPicture" alt="cover-picture-icon" class="cover-picture" [class.img-hidden]="isHide">
+        <div class="hidden-content" *ngIf="isHide">
+            <div inlineSVG="/assets/media/icons/hide-icon.svg" class="hide-icon"></div>
+            <p>Hiden</p>
+        </div>
+    </div>
+    <div class="w-100">
+        <div class="d-flex justify-content-sm-between justify-content-start">
+            <div class="d-flex align-items-center gap-3">
+                <div [inlineSVG]="'/assets/media/footer/YouTube.svg'" appBaseColors [isSvg]="true" [class.hide]="isHide"></div>
+                <p class="project-news-card__date">{{ article.date | date: 'longDate' }}</p>
+            </div>
+            <app-edit-details class="d-none d-sm-block" [isHide]="article.hidden" (confirmDelete)="confirmDeleteDialog.open(article.id)" (isHidden)="onHide($event)" (openModal)="openEditForm($event)"></app-edit-details>
+            <div class="d-block d-sm-none ps-6">
+                <ng-container *ngTemplateOutlet="likesCount"></ng-container>
+            </div>
+        </div>
+        <p class="project-news-card__title">{{ article.visibleText }}</p>
+        <a class="project-news-card__link" [href]="article.link" target="_blank">{{ article.link }}</a>
+
+        <div class="d-none d-sm-block">
+            <ng-container *ngTemplateOutlet="likesCount"></ng-container>
+        </div>
+        <app-edit-details class="d-block d-sm-none" [isHide]="article.hidden" (isHidden)="onHide($event)" (openModal)="openEditForm($event)"></app-edit-details>
+
+    </div>
+</div>
+
+<ng-template #likesCount>
+    <div class="d-flex gap-6">
+        <div class="d-flex align-items-center gap-3">
+            <div [inlineSVG]="'/assets/media/icons/like.svg'" appBaseColors [isSvg]="true" [class.hide]="isHide"></div>
+            <p class="project-news-card__count">78</p>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <div [inlineSVG]="'/assets/media/icons/eye-line.svg'" appBaseColors [isSvg]="true" [class.hide]="isHide" class="mt-1"></div>
+            <p class="project-news-card__count">234</p>
+        </div>
+    </div>
+</ng-template>
+
+<app-confirm-modal
+  #confirmDeleteDialog
+  title="{{'PRESS_ROOM.DELETE_TITLE' | translate }}"
+  message="{{'PRESS_ROOM.DELETE_DESCRIPTION' | translate }}"
+  submitButtonText="Delete"
+  submitBtnClass="btn-faq"
+  cancelBtnClass="btn-faq btn-cancel ms-8"
+  [projectMainColor]="true"
+  [usePayload]="true"
+  (closed)="delete($event)">
+</app-confirm-modal>

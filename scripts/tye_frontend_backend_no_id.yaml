@@ -1,0 +1,27 @@
+name: mosaico
+services:
+- name: core
+  build: true
+  project: ../src/Mosaico.Core.Service/Mosaico.Core.Service.csproj
+  bindings:
+  - port: 5001
+    protocol: https
+  buildProperties:
+  - name: Configuration
+    value: Debug
+- name: core-frontend
+  executable: 'cmd'
+  workingDirectory: '../frontend/mosaico-web-ui'
+  args: '/c npm start'
+  bindings:
+  - port: 4200
+    protocol: http
+    host: localhost
+- name: id-frontend
+  executable: 'cmd'
+  workingDirectory: '../frontend/mosaico-id-ui'
+  args: '/c npm start'
+  bindings:
+  - port: 4201
+    protocol: http
+    host: localhost

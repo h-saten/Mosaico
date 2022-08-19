@@ -1,0 +1,65 @@
+<div class="row py-1" *ngIf="forgetPasswordError">
+  <div class="col-md-12">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <span *ngIf="forgetPasswordError">{{errorMessage}}</span>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="!formSubmitted">
+
+  <form [formGroup]="forgotForm" (submit)="submitForm()">
+
+    <div class="input-group">
+      <label for="email" class="float-left text-dark">
+        {{ 'auth.forgot.email_label' | translate }}
+      </label>
+
+      <div class="input-group">
+        <input type="email" name="email" id="email" formControlName="email"
+                class="form-control"
+                placeholder="{{ 'auth.forgot.email_placeholder' | translate }}"
+                tabindex="1"
+               [ngClass]="{ 'is-invalid' : hasError() }">
+
+        <div class="invalid-feedback text-left" *ngIf="hasError()">
+
+          <div *ngIf="email.hasError('required')">
+            {{ 'auth.register.field.required' | translate }}
+          </div>
+
+          <div *ngIf="(hasError() && !email.hasError('required'))">
+            {{ 'auth.register.invalid.value' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group">
+        <button type="submit" class="btn btn-primary-custom btn-md btn-block"
+                [disabled]="forgotForm.invalid || !forgotPasswordFinished">
+          {{ 'auth.forgot.reset' | translate }}
+            <span [hidden]="forgotPasswordFinished">
+              <i class="fa fa-spinner fa-spin"></i>
+            </span>
+        </button>
+    </div>
+  </form>
+
+  <p class="text-inverse text-left py-2">
+    <a [routerLink]="['/auth/login']" rel="noopener"> << {{ 'auth.forgot.back_login' | translate }}</a>
+  </p>
+
+</ng-container>
+
+<ng-container *ngIf="formSubmitted">
+  <p class="h6">
+    <span *ngIf="formSuccess">{{ 'auth.forgot.form_submit_success' | translate }}</span>
+    <span *ngIf="formError">{{ 'auth.forgot.form_submit_error' | translate }}</span>
+  </p>
+
+  <p class="text-inverse b-b-default text-left p-b-5 p-t-15"></p>
+
+  <app-back-to-login></app-back-to-login>
+
+</ng-container>

@@ -1,0 +1,69 @@
+<div class="card shadow-sm mt-3">
+
+  <div class="search" inlineSVG="/assets/media/search/search-line.svg"></div>
+  <div class="card-header"
+    [ngClass]="{'card-header-editor' : canEdit}"
+  >
+    <div class="card-title">
+      {{ isMobile ? 'FAQ' : 'PROJECT.faq.title' | translate}}
+    </div>
+
+    <div class="card-toolbar" *ngIf="canEdit === true">
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <app-spinner-container [showSpinner]="(listRequestFinished$|async) === false"></app-spinner-container>
+
+    <ng-container *ngIf="(listRequestFinished$|async) === true">
+
+      <ng-container *ngIf="itemList && itemList.length > 0 else noList;">
+
+        <div>
+          <div class="row">
+
+            <div class="col-12">
+              <ng-container *ngFor="let row of itemList; let i = index">
+                <ng-container>
+                  <div class="border-bottom-line py-3 mr-0 mr-xl-1">
+                    <app-faq-row
+                      [row]="row"
+                      [i]="i"
+                      [canEdit]="canEdit"
+                      [projectId]="projectId"
+                      [pageId]="pageId"
+                      (onDeleted)="delete($event)"
+                      (onOpenModalEdit)="openModalEdit($event)"
+                    ></app-faq-row>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+
+        </div>
+
+      </ng-container>
+
+      <ng-template #noList>
+        <p class="h4 my-4 text-center fw-normal">
+          {{'FAQ_no_list' | translate}}
+        </p>
+      </ng-template>
+
+      <div class="row pt-3 pb-lg-12 pb-sm-6 pb-7" *ngIf="canEdit === true">
+        <div class="col-12">
+          <button class="btn btn-sm d-flex align-items-center gap-2"
+            (click)="openModalAdd()">
+            <div [inlineSVG]="'/assets/media/marketplace/plus-line.svg'"></div>
+            <span>{{'FAQ_Add_new_faq' | translate}}</span>
+          </button>
+        </div>
+      </div>
+
+    </ng-container>
+
+  </div>
+
+</div>

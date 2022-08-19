@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-runner-mosaico
+  namespace: mosaico
+  labels:
+    app: github-runner-mosaico
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: github-runner-mosaico
+  template:
+    metadata:
+      labels:
+        app: github-runner-mosaico
+    spec:
+      containers:
+      - name: github-runner-mosaico
+        image: acrmosaico.azurecr.io/aks-runner-mosaico:latest  #use our own from acr
+        env:
+        - name: GITHUB_OWNER
+          value: sapiency-io
+        - name: GITHUB_REPOSITORY
+          value: mosaico-reference
+        - name: GITHUB_PAT # stored separately in a Kubernetes Secret
+          valueFrom:
+            secretKeyRef:
+              name: controller-manager
+              key: pat
+      imagePullSecrets:
+        - name: acr-secret
+
+        

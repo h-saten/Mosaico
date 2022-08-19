@@ -1,0 +1,49 @@
+<div class="card settings-card shadow-sm">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <ng-container *ngIf="projectId">
+          <app-statistics-tiles [project]="project"></app-statistics-tiles>
+          <div class="row">
+            <div class="col-12 col-lg-8  mb-xl-8">
+              <app-sale-statistics-chart [projectId]="projectId"></app-sale-statistics-chart>
+            </div>
+            <div class="col-12 col-lg-4 mb-xl-8">
+              <app-top-investors [projectId]="projectId"></app-top-investors>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 mb-xl-8">
+              <app-visits-chart [projectId]="projectId"></app-visits-chart>
+            </div>
+          </div>
+
+          <div class="row mb-5">
+            <div class="col-12">
+              <app-fees [projectId]="projectId"></app-fees>
+            </div>
+          </div>
+
+          <!--
+  <div class="row">
+      <div class="col-12  mb-xl-8">
+        <app-transactions-chart></app-transactions-chart>
+      </div>
+  </div>
+-->
+          <div class="row">
+            <div class="col-12  mb-xl-8">
+              <app-raised-capital-daily-chart [projectId]="projectId"></app-raised-capital-daily-chart>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 mb-xl-8">
+              <app-newsletter-subscribers [projectId]="projectId"></app-newsletter-subscribers>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

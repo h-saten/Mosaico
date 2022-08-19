@@ -1,0 +1,179 @@
+$primary-text-color: #434343;
+$primary-blue-color: #0063F5;
+$primary-white-color: #FFFFFF;
+$secondary-border-color: #F0F0F0;
+$secondary-text-color: #979797;
+
+p {
+    margin: 0;
+}
+
+.section-platform-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 217px 0 263px;
+    display: flex;
+    justify-content: center;
+    gap: 155px;
+
+    .platform-img {
+        z-index: 1;
+    }
+    
+    .section-platform-wrapper {
+        padding: 41px 0;
+        max-width: 641px;
+    
+        .section-platform-title {
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 56px;
+            color: $primary-text-color;
+        }
+        
+        .platform-details {
+            &.platform-border-bottom {
+                padding-bottom: 47px;
+                border-bottom: 1px solid $secondary-border-color;
+            }
+        
+            .platform-title {
+                margin: 31px 0 8px;
+                font-weight: 700;
+                font-size: 24px;
+                line-height: 40px;
+                color: $primary-text-color;
+            }
+        
+            .platform-description {
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 24px;
+                color: $secondary-text-color;
+                margin-right: 65px;
+            }
+        
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+                min-width: 235px;
+                height: 48px;
+                border: 2px solid $primary-blue-color;
+                color: $primary-blue-color;
+                border-radius: 5px;
+                background: $primary-white-color;
+                gap: 2px;
+        
+                span {
+                    font-weight: 600;
+                    font-size: 13px;
+                    line-height: 24px;
+                }
+        
+                img {
+                    transform: rotate(-90deg)
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1380px) {
+    .section-platform-container {
+        gap: 25px;
+
+        .platform-img {
+            height: 492px;
+        }
+    }
+}
+
+@media screen and (max-width: 1091px) {
+    .section-platform-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 60px;
+        padding: 100px 0;
+
+        .section-platform-wrapper {
+
+            p {
+                text-align: center;
+            }
+
+            .platform-details {
+                button {
+                    min-width: auto;
+                    padding: 15px;
+                    align-self: center;
+                }
+
+                &.platform-border-bottom {
+                    padding-bottom: 40px;
+                }
+
+                .platform-title {
+                    margin: 40px 0 16px;
+                }
+
+                .platform-description {
+                    margin: 0 0 16px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 991px) and (min-width: 576px) {
+    .section-platform-container {
+        background: #F9F9F9;
+
+        .section-platform-wrapper {
+            padding: 40px 73px 0;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .section-platform-container {
+        padding: 64px 24px;
+        gap: 0;
+
+        .platform-img {
+            height: 251px;
+            width: 243px;
+        }
+
+        .section-platform-wrapper {
+            padding-bottom: 0;
+            
+            .section-platform-title {
+                font-size: 24px;
+                line-height: 30px;
+            }
+            
+            .platform-details {
+                padding-top: 40px;
+
+                &.platform-border-bottom {
+                    border-bottom: none;
+                    padding-bottom: 0;
+                }
+                
+                .platform-title {
+                    font-size: 16px;
+                    line-height: 16px;
+                    margin: 0;
+                }
+
+                .platform-description {
+                    font-size: 13px;
+                    line-height: 20px;
+                    margin: 10px 0 30px;
+                }
+            }
+        }
+    }
+}

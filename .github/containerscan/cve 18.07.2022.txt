@@ -1,0 +1,749 @@
+╔══════════════════════╤═════════════════╤═════════════════╤════════════════════════════════════════════════════╤══════════════════════╗
+║ VULNERABILITY ID     │ PACKAGE NAME    │ SEVERITY        │ DESCRIPTION                                        │ TARGET               ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ CVE-2021-32840       │ SharpZipLib     │ HIGH            │ SharpZipLib (or #ziplib) is a Zip, GZip, Tar and   │ usr/mosaico/Mosaico. ║
+║                      │                 │                 │ BZip2 library. Prior to version 1.3.3, a TAR file  │ Tools.CommandLine.   ║
+║                      │                 │                 │ entry `../evil.txt` may be extracted in the parent │ deps.json            ║
+║                      │                 │                 │ directory of `destFolder`. This leads to arbitrary │                      ║
+║                      │                 │                 │ file write that may lead to code execution. The    │                      ║
+║                      │                 │                 │ vulnerability was patched in version 1.3.3.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/         ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ DotnetTools/dotnet-  ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │ user-secrets/5.0.17- ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │ servicing.22215.7/   ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │ tools/net5.0/any/    ║
+║                      │                 │                 │                                                    │ dotnet-user-secrets. ║
+║                      │                 │                 │ The serialization and deserialization path have    │ deps.json            ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/         ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ DotnetTools/dotnet-  ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │ watch/5.0.408-       ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │ servicing.22219.17/  ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │ tools/net5.0/any/    ║
+║                      │                 │                 │                                                    │ dotnet-watch.deps.   ║
+║                      │                 │                 │ The serialization and deserialization path have    │ json                 ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ CVE-2018-8292        │ System.Net.Http │ HIGH            │ An information disclosure vulnerability exists in  │ usr/share/dotnet/    ║
+║                      │                 │                 │ .NET Core when authentication information is       │ sdk/5.0.408/FSharp/  ║
+║                      │                 │                 │ inadvertently exposed in a redirect, aka ".NET     │ fsc.deps.json        ║
+║                      │                 │                 │ Core Information Disclosure Vulnerability." This   │                      ║
+║                      │                 │                 │ affects .NET Core 2.1, .NET Core 1.0, .NET Core    │                      ║
+║                      │                 │                 │ 1.1, PowerShell Core 6.0.                          │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ CVE-2018-8292        │ System.Net.Http │ HIGH            │ An information disclosure vulnerability exists in  │ usr/share/dotnet/    ║
+║                      │                 │                 │ .NET Core when authentication information is       │ sdk/5.0.408/FSharp/  ║
+║                      │                 │                 │ inadvertently exposed in a redirect, aka ".NET     │ fsi.deps.json        ║
+║                      │                 │                 │ Core Information Disclosure Vulnerability." This   │                      ║
+║                      │                 │                 │ affects .NET Core 2.1, .NET Core 1.0, .NET Core    │                      ║
+║                      │                 │                 │ 1.1, PowerShell Core 6.0.                          │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/MSBuild. ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ deps.json            ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │                      ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │                      ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ The serialization and deserialization path have    │                      ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ CVE-2018-8292        │ System.Net.Http │ HIGH            │ An information disclosure vulnerability exists in  │ usr/share/dotnet/    ║
+║                      │                 │                 │ .NET Core when authentication information is       │ sdk/5.0.408/MSBuild. ║
+║                      │                 │                 │ inadvertently exposed in a redirect, aka ".NET     │ deps.json            ║
+║                      │                 │                 │ Core Information Disclosure Vulnerability." This   │                      ║
+║                      │                 │                 │ affects .NET Core 2.1, .NET Core 1.0, .NET Core    │                      ║
+║                      │                 │                 │ 1.1, PowerShell Core 6.0.                          │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/NuGet.   ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ CommandLine.XPlat.   ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │ deps.json            ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │                      ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ The serialization and deserialization path have    │                      ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ CVE-2018-8292        │ System.Net.Http │ HIGH            │ An information disclosure vulnerability exists in  │ usr/share/dotnet/    ║
+║                      │                 │                 │ .NET Core when authentication information is       │ sdk/5.0.408/NuGet.   ║
+║                      │                 │                 │ inadvertently exposed in a redirect, aka ".NET     │ CommandLine.XPlat.   ║
+║                      │                 │                 │ Core Information Disclosure Vulnerability." This   │ deps.json            ║
+║                      │                 │                 │ affects .NET Core 2.1, .NET Core 1.0, .NET Core    │                      ║
+║                      │                 │                 │ 1.1, PowerShell Core 6.0.                          │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/Sdks/    ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ Microsoft.NET.Sdk.   ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │ Razor/tools/rzc.     ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │ deps.json            ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ The serialization and deserialization path have    │                      ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/         ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ datacollector.deps.  ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │ json                 ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │                      ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ The serialization and deserialization path have    │                      ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/dotnet-  ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ watch.deps.json      ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │                      ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │                      ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ The serialization and deserialization path have    │                      ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/dotnet.  ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ deps.json            ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │                      ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │                      ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ The serialization and deserialization path have    │                      ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ CVE-2018-8292        │ System.Net.Http │ HIGH            │ An information disclosure vulnerability exists in  │ usr/share/dotnet/    ║
+║                      │                 │                 │ .NET Core when authentication information is       │ sdk/5.0.408/dotnet.  ║
+║                      │                 │                 │ inadvertently exposed in a redirect, aka ".NET     │ deps.json            ║
+║                      │                 │                 │ Core Information Disclosure Vulnerability." This   │                      ║
+║                      │                 │                 │ affects .NET Core 2.1, .NET Core 1.0, .NET Core    │                      ║
+║                      │                 │                 │ 1.1, PowerShell Core 6.0.                          │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/package. ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ deps.json            ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │                      ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │                      ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ The serialization and deserialization path have    │                      ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/dotnet/    ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ sdk/5.0.408/vstest.  ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ console.deps.json    ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │                      ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │                      ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ The serialization and deserialization path have    │                      ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╟──────────────────────┼─────────────────┼─────────────────┼────────────────────────────────────────────────────┼──────────────────────╢
+║ GHSA-5crp-9r3c-p9vr  │ Newtonsoft.Json │ HIGH            │ Newtonsoft.Json prior to version 13.0.1 is         │ usr/share/           ║
+║                      │                 │                 │ vulnerable to Insecure Defaults due to improper    │ powershell/.store/   ║
+║                      │                 │                 │ handling of expressions with high nesting level    │ powershell.linux.    ║
+║                      │                 │                 │ that lead to StackOverFlow exception or high CPU   │ x64/7.1.7/           ║
+║                      │                 │                 │ and RAM usage. Exploiting this vulnerability       │ powershell.linux.    ║
+║                      │                 │                 │ results in Denial Of Service (DoS).                │ x64/7.1.7/tools/     ║
+║                      │                 │                 │                                                    │ net5.0/any/pwsh.     ║
+║                      │                 │                 │ The serialization and deserialization path have    │ deps.json            ║
+║                      │                 │                 │ different properties regarding the issue.          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Deserializing methods (like                        │                      ║
+║                      │                 │                 │ `JsonConvert.DeserializeObject`) will process the  │                      ║
+║                      │                 │                 │ input that results in burning the CPU, allocating  │                      ║
+║                      │                 │                 │ memory, and consuming a thread of execution. Quite │                      ║
+║                      │                 │                 │ high nesting level (>10kk, or 9.5MB of             │                      ║
+║                      │                 │                 │ `***a:***a:***...` input) is needed to achieve the       │                      ║
+║                      │                 │                 │ latency over 10 seconds, depending on the          │                      ║
+║                      │                 │                 │ hardware.                                          │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Serializing methods (like `JsonConvert.Serialize`  │                      ║
+║                      │                 │                 │ or `JObject.ToString`) will throw StackOverFlow    │                      ║
+║                      │                 │                 │ exception with the nesting level of around 20k.    │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ To mitigate the issue one either need to update    │                      ║
+║                      │                 │                 │ Newtonsoft.Json to 13.0.1 or set `MaxDepth`        │                      ║
+║                      │                 │                 │ parameter in the `JsonSerializerSettings`. This    │                      ║
+║                      │                 │                 │ can be done globally with the following statement. │                      ║
+║                      │                 │                 │ After that the parsing of the nested input will    │                      ║
+║                      │                 │                 │ fail fast with                                     │                      ║
+║                      │                 │                 │ `Newtonsoft.Json.JsonReaderException`:             │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ JsonConvert.DefaultSettings = () => new            │                      ║
+║                      │                 │                 │ JsonSerializerSettings *** MaxDepth = 128 ***;         │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ Repro code:                                        │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │ //Create a string representation of an highly      │                      ║
+║                      │                 │                 │ nested object (JSON serialized)                    │                      ║
+║                      │                 │                 │ int nRep = 25000;                                  │                      ║
+║                      │                 │                 │ string json =                                      │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***a:", nRep)) +    │                      ║
+║                      │                 │                 │ "1" +                                              │                      ║
+║                      │                 │                 │ string.Concat(Enumerable.Repeat("***", nRep));       │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ //Parse this object (leads to high CPU/RAM         │                      ║
+║                      │                 │                 │ consumption)                                       │                      ║
+║                      │                 │                 │ var parsedJson =                                   │                      ║
+║                      │                 │                 │ JsonConvert.DeserializeObject(json);               │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ // Methods below all throw stack overflow with     │                      ║
+║                      │                 │                 │ nRep around 20k and higher                         │                      ║
+║                      │                 │                 │ // string a = parsedJson.ToString();               │                      ║
+║                      │                 │                 │ // string b =                                      │                      ║
+║                      │                 │                 │ JsonConvert.SerializeObject(parsedJson);           │                      ║
+║                      │                 │                 │ ```                                                │                      ║
+║                      │                 │                 │                                                    │                      ║
+║                      │                 │                 │ **Note the original statement about the problem    │                      ║
+║                      │                 │                 │ only affecting IIS applications is misleading.**   │                      ║
+║                      │                 │                 │ Any application is affected, however the IIS has a │                      ║
+║                      │                 │                 │ behavior that stops restarting the instance after  │                      ║
+║                      │                 │                 │ some time resulting in a harder-to-fix DoS.        │                      ║
+╚══════════════════════╧═════════════════╧═════════════════╧════════════════════════════════════════════════════╧══════════════════════╝

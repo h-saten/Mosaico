@@ -1,0 +1,31 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Invitations</h3>
+    </div>
+    <div class="card-body">
+        <table class="table gs-7 gy-7 gx-7">
+            <thead>
+                <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
+                    <th>Project</th>
+                    <th>Token name</th>
+                    <th>Token amount</th>
+                    <th>Vesting duration</th>
+                    <th>Expires</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let v of invitations">
+                    <td class="align-middle"><a routerLink="/project/{{v.projectId}}">{{v.projectTitle}}</a></td>
+                    <td class="align-middle">{{v.tokenName}}</td>
+                    <td class="align-middle">{{v.distributionPerPerson}}</td>
+                    <td class="align-middle">{{v.days}} days</td>
+                    <td class="align-middle">{{v.expiresAt| amDateFormat:'LL'}}</td>
+                    <td class="align-middle">
+                        <button class="btn btn-success btn-sm me-3" *ngIf="!v.isAccepted" (click)="accept(v.id)">Accept</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

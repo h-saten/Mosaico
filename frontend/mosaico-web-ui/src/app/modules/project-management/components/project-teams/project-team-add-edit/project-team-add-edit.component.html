@@ -1,0 +1,132 @@
+<div class="modal-content mosaico-modal">
+    <div class="modal-header">
+        <h5 class="modal-title">{{'PROJECT_TEAM.TITLE' | translate}}</h5>
+
+        <!--begin::Close-->
+        <div class="close-button-container">
+            <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="activeModal.dismiss(false)"
+                aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <!--end::Close-->
+    </div>
+    <div class="modal-body">
+        <form class="form mosaico-form" [formGroup]="form">
+            <div class="row mt-10">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>{{"FORM.lbl.name" | translate}}: </label>
+                        <input class="form-control" type="text" name="name" formControlName="name"
+                            [ngClass]="{ 'is-invalid': isDirty('name') && hasErrors('name') }"
+                            placeholder="{{'FORM.lbl.name' | translate}}">
+                        <div class="invalid-feedback" *ngIf="isDirty('name') && hasErrors('name')">{{'PROJECT_TEAM.INVALID_NAME' | translate}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{"FORM.lbl.role" | translate}}: </label>
+                        <input class="form-control" type="text" name="position" formControlName="position"
+                            [ngClass]="{ 'is-invalid': isDirty('position') && hasErrors('position') }"
+                            placeholder="{{'FORM.lbl.role' | translate}}">
+                        <div class="invalid-feedback" *ngIf="isDirty('position') && hasErrors('position')">{{'PROJECT_TEAM.INVALID_ROLE' | translate}}</div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>{{"FORM.lbl.facebook" | translate}}: </label>
+                        <input class="form-control" formControlName="facebook"
+                            placeholder="{{'FORM.lbl.facebook' | translate}}">
+                        <div class="text-danger" *ngIf="m.facebook.errors?.pattern">{{'FORM.url.invalid' | translate}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{"FORM.lbl.twitter" | translate}}: </label>
+                        <input class="form-control" formControlName="twitter"
+                            placeholder="{{'FORM.lbl.twitter' | translate}}">
+                        <div class="text-danger" *ngIf="m.twitter.errors?.pattern">{{'FORM.url.invalid' | translate}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{"FORM.lbl.linkedin" | translate}}: </label>
+                        <input class="form-control" formControlName="linkedIn"
+                            placeholder="{{'FORM.lbl.linkedin' | translate}}">
+                        <div class="text-danger" *ngIf="m.linkedIn.errors?.pattern">{{'FORM.url.invalid' | translate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-sm-12 mt-10 text-center">
+                <image-cropper *ngIf="cropImage && imageChangedEvent" [maintainAspectRatio]="true"
+                    [imageChangedEvent]="imageChangedEvent" [aspectRatio]="1/1" format="png" [roundCropper]="true"
+                    (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)"
+                    (cropperReady)="cropperReady()"></image-cropper>
+                <!--begin::Image input-->
+                <div class="image-input image-input image-input-circle" id="memberImagePicker" *ngIf="!cropImage"
+                    data-kt-image-input="true">
+                    <!--begin::Image preview wrapper-->
+                    <div class="image-input-wrapper w-150px h-150px">
+                        <div class="symbol symbol-150px symbol-circle">
+                            <img [src]="croppedImage" *ngIf="croppedImage;">
+                            <img [src]="memberImage" *ngIf="memberImage && !croppedImage">
+                            <img src="assets/media/avatars/blank.png"
+                                *ngIf="!croppedImage && !memberImage && memberProfile == ''">
+                            <img [src]="memberProfile" *ngIf="!croppedImage && !memberImage && memberProfile != ''">
+                        </div>
+                    </div>
+                    <!--end::Image preview wrapper-->
+
+                    <!--begin::Edit button-->
+                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                        ngbTooltip="{{'FORM.CHANGE_AVATAR' | translate}}" data-bs-dismiss="click">
+                        <i class="bi bi-pencil-fill fs-7"></i>
+
+                        <!--begin::Inputs-->
+                        <input type="file" name="avatar" accept=".png, .jpg, .jpeg"
+                            (change)="fileChangeEvent($event)" />
+                        <input type="hidden" name="avatar_remove" />
+                        <!--end::Inputs-->
+                    </label>
+                    <!--end::Edit button-->
+
+                    <!--begin::Cancel button-->
+                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                        data-kt-image-input-action="cancel" data-bs-dismiss="click"
+                        ngbTooltip="{{'FORM.CANCEL_AVATAR' | translate}}">
+                        <i class="bi bi-x fs-2"></i>
+                    </span>
+                    <!--end::Cancel button-->
+
+                    <!--begin::Remove button-->
+                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+                        data-kt-image-input-action="remove" data-bs-dismiss="click" (click)="removeImage()"
+                        ngbTooltip="{{'FORM.REMOVE_AVATAR' | translate}}">
+                        <i class="bi bi-x fs-2"></i>
+                    </span>
+                    <!--end::Remove button-->
+                </div>
+                <!--end::Image input-->
+            </div>
+            <div class="col-sm-12 text-center">
+                <div class="text-muted my-5">{{'FORM.allowed_file' | translate}}</div>
+
+                <button class="btn btn-primary rounded-pill" *ngIf="imageChangedEvent" (click)="toggleCropper()">
+                    {{(cropImage? 'CROPPER.BUTTONS.btn.save' : 'CROPPER.BUTTONS.btn.change_crop') | translate}}
+                </button>
+                <button class="btn btn-light rounded-pill" *ngIf="cropImage" (click)="cancelCrop()">
+                    {{"CROPPER.BUTTONS.btn.cancel" | translate}}
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-mosaico-primary w-100" (click)="saveMember()">
+            {{"PROJECT_TEAM.BTN_SAVE" | translate}}
+        </button>
+    </div>
+</div>

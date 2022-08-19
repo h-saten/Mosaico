@@ -1,0 +1,287 @@
+// body {
+//   margin: 0;
+//   padding: 0;
+//   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+//     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+//     sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   overflow-y: scroll;
+// }
+
+// code {
+//   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+//     monospace;
+// }
+
+// .next-steps .fa-link {
+//   margin-right: 5px;
+// }
+
+// /* Fix for use only flexbox in content area */
+// .next-steps .row {
+//   margin-bottom: 0;
+// }
+
+// .next-steps .col-md-5 {
+//   margin-bottom: 3rem;
+// }
+
+// @media (max-width: 768px) {
+//   .next-steps .col-md-5 {
+//     margin-bottom: 0;
+//   }
+// }
+
+// .spinner {
+//   position: absolute;
+//   display: flex;
+//   justify-content: center;
+//   height: 100vh;
+//   width: 100vw;
+//   background-color: white;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+// }
+
+// .result-block-container .result-block {
+//   opacity: 1;
+// }
+
+// .loading {
+//   display: flex;
+//   min-height: 500px;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// .userImg {
+//   border-radius: 100px;
+//   display: block;
+//   height: 100px;
+//   margin: 0 auto;
+//   width: 100px;
+// }
+
+// .hero .app-logo {
+//   max-width: 10.5rem;
+// }
+
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/sass/style";
+
+/*import primng*/
+@import '../node_modules/primeng/resources/primeng.min.css';
+@import '../node_modules/primeng/resources/themes/saga-blue/theme.css';
+@import '../node_modules/primeicons/primeicons.css';
+
+// Replace above style with this SCSS file to enable dark mode styles
+//@import "./assets/sass/style.dark";
+
+// temporary solution
+@import '~swiper/scss';
+@import '~swiper/scss/navigation';
+@import '~swiper/scss/pagination';
+@import "~swiper/scss/effect-coverflow";
+
+.swiper-slide {
+  // background-position: center;
+  // background-size: cover;
+  flex-shrink: 1;
+}
+
+// .swiper-slide img {
+//   display: block;
+//   width: 100%;
+// }
+
+
+.cursor-disabled {
+  cursor: not-allowed !important;
+  opacity: 0.65;
+}
+
+// button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+//   cursor: not-allowed;
+// }
+@import '~ngx-toastr/toastr';
+
+body {
+  background-color: #F9F9F9; // F9F9F9 - tokenpage, FCFCFC - strona głowna
+  color: #494642;
+}
+
+.container {
+  // padding-left: 30px;
+  // padding-right: 30px;
+  max-width: 1280px !important;
+
+}
+
+.col-center {
+  max-width: 554px;
+  // position: relative; // jak to jest to przewijanie nie działa
+  width: 100%;
+  padding-right: 16px;
+  padding-left: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  background: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 0;
+  padding: 16px !important;
+
+  @media (min-width: 576px) {
+    padding: 24px !important;
+    border-radius: 010px;
+  }
+
+  @media (min-width: 992px) {
+    padding: 32px !important;
+  }
+
+  .border-card {
+    border: 0;
+    box-shadow: none;
+
+    @media (min-width: 992px) {
+      border: 1px solid #DFE0EB;
+    }
+
+  }
+}
+
+.card .card-header {
+  padding: 0 !important;
+  position: relative;
+  border: 0;
+  align-items: center;
+  min-height: auto;
+  flex-wrap: nowrap; // so that when the low-resolution edit button is displayed - the title card is arranged in two lines
+  margin: 0 !important;
+
+  justify-content: center;
+  @media (min-width: 576px) {
+  }
+
+  @media (min-width: 992px) {
+    justify-content: space-between;
+  }
+}
+
+.card .card-header .card-title {
+
+  color: #494642;
+  margin: 0 0 8px 0;
+
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+
+  @media (min-width: 576px) {
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  @media (min-width: 992px) {
+    text-align: left;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+.card .card-header .card-toolbar {
+  margin: 0;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.div-add-form {
+  border: 1px solid #DFE0EB;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px 16px;
+}
+
+.title-add-form {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin-top: 48px;
+  margin-bottom: 40px;
+}
+
+.div-form {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+figure {
+  margin: 0;
+}
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+.btn-primary {
+  border: 2px solid transparent !important;
+
+  min-width: 100px;
+  @media (min-width: 576px) {
+    min-width: 146px;
+  }
+
+  @media (min-width: 992px) {
+  }
+}
+
+.btn-outline-primary {
+  color: #494642 !important;
+  // border-color: #494642;
+  border: 2px solid #494642 !important;
+
+  min-width: 100px;
+  @media (min-width: 576px) {
+    min-width: 146px;
+  }
+
+  @media (min-width: 992px) {
+  }
+}
+
+.btn-outline-primary:hover {
+  color: #fff !important;
+  background-color: #494642 !important;
+  border-color: #494642 !important;
+}
+
+// .modalDialogClass {
+// }
+
+.modal-footer-panel-buttons {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  top: 12px;
+}
+
+@import "./mosaico-styles.scss";
+

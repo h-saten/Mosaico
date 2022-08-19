@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@opengsn/contracts": "^2.2.6",
+    "@openzeppelin/truffle-upgrades": "^1.15.0",
+    "@truffle/hdwallet-provider": "^2.0.8",
+    "sol-merger": "^4.1.1"
+  }
+}

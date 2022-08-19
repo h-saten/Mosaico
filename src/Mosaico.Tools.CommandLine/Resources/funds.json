@@ -1,0 +1,105 @@
+﻿[
+  {
+    "name": "MOS",
+    "isEnabled": true,
+    "lastUpdatedAt": "2022-06-21T12:00:00",
+    "tokens": [
+      {
+        "symbol": "CAN1",
+        "name": "Satilec",
+        "amount": 150,
+        "logo": "https://files.mosaico.ai/public/957f0bfe-0605-4278-9b42-bf1cf7de84f1/theme/4be18d33-dbd7-4810-80b5-5dfc40a55e95.jpeg",
+        "isStakingEnabled": true,
+        "latestPrice": 17.5
+      },
+      {
+        "symbol": "COP3",
+        "name": "Copernic3",
+        "amount": 10000,
+        "logo": "https://files.mosaico.ai/public/1bf06fb9-5a8a-46b9-9606-351a6ae7de3f/theme/ab153cae-c688-4e0a-b31a-6d6f0dbf1e0a.jpeg",
+        "isStakingEnabled": true,
+        "latestPrice": 1.05
+      },
+      {
+        "symbol": "LAS",
+        "name": "Lasy Tlenowe",
+        "amount": 70,
+        "logo": "https://files.mosaico.ai/public/13013679-9601-433a-bb73-d4033b107b13/theme/ce3f7445-0bb7-47ee-85a0-5f7216227197.jpeg",
+        "isStakingEnabled": false,
+        "latestPrice": 80
+      },
+      {
+        "symbol": "VT1",
+        "name": "VI Yachts",
+        "amount": 5000,
+        "logo": "https://files.mosaico.ai/public/4e97947a-ec03-4efc-9de5-ff65513366cd/theme/2200d4e6-b2a0-4360-b450-2618694ecdef.jpeg",
+        "isStakingEnabled": false,
+        "latestPrice": 0.752
+      },
+      {
+        "symbol": "HUB1",
+        "name": "Hub One",
+        "amount": 44400,
+        "logo": "https://files.mosaico.ai/public/a6a12ff9-4063-4227-80a2-6f6b3978db57/theme/5435ed84-c55e-4e61-96b9-12eda8a64c57.jpeg",
+        "isStakingEnabled": false,
+        "latestPrice": 0.35
+      },
+      {
+        "symbol": "JT1",
+        "name": "Browar jastrzębie",
+        "amount": 600,
+        "logo": "https://files.mosaico.ai/public/1f63d315-3ee6-473a-9418-4c7071f182fe/theme/b695b06e-e816-432f-b55c-d169403651e4.jpeg",
+        "isStakingEnabled": true,
+        "latestPrice": 17
+      },
+      {
+        "symbol": "APIS",
+        "name": "Pasieka Jurajska",
+        "amount": 50000,
+        "logo": "https://files.mosaico.ai/public/d5ea1e95-10fa-4ea0-a217-9294ed5844ef/theme/c9986649-e50c-43b8-a949-0c58294e9581.jpeg",
+        "isStakingEnabled": true,
+        "latestPrice": 0.085
+      },
+      {
+        "symbol": "SCB",
+        "name": "Beczki św Mikołaja",
+        "amount": 430,
+        "logo": "https://files.mosaico.ai/public/58a6864c-6812-4963-ab57-fcbf1594b0c5/theme/20303ba9-0d58-4800-8dbf-5112b5e935f7.jpeg",
+        "isStakingEnabled": false,
+        "latestPrice": 29.25
+      },
+      {
+        "symbol": "VT1",
+        "name": "VoltMaxCharger",
+        "amount": 510,
+        "logo": "https://files.mosaico.ai/public/cd313f33-a8fb-4d63-ad45-32e0102628c2/theme/a578e32e-daf0-4449-997d-70b22f7de4f7.jpeg",
+        "isStakingEnabled": false,
+        "latestPrice": 13
+      },
+      {
+        "symbol": "MJC",
+        "name": "Metajar",
+        "amount": 210000,
+        "logo": "https://files.mosaico.ai/public/f935b9cd-5464-4748-9e9d-67aa821dd74d/theme/a0fa8e12-1c0d-4257-b1c6-8ddc6d9b0db4.jpeg",
+        "isStakingEnabled": false,
+        "latestPrice": 0.0125
+      },
+      {
+        "symbol": "JPW22",
+        "name": "Beczki Palikota",
+        "amount": 500,
+        "logo": "https://files.mosaico.ai/public/8eac9e6f-e7a2-4179-8b98-9bf86c4076d4/theme/e49fe176-7ff0-4b33-98e7-ea3209e984b5.jpeg",
+        "isStakingEnabled": false,
+        "latestPrice": 30
+      },
+      {
+        "symbol": "MIC",
+        "name": "MilkyCoin",
+        "amount": 100000,
+        "logo": "https://files.mosaico.ai/public/955f146b-5290-4f92-bf98-8ec170c70276/theme/e5ac965e-e983-412c-be05-f3c286650079.jpeg",
+        "isStakingEnabled": false,
+        "latestPrice": 1.23
+      }
+    ]
+  }
+]

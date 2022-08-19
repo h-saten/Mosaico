@@ -1,0 +1,106 @@
+name: build-backend
+description: build backend
+inputs:
+  PROJECT_CORE:
+    required: true
+    description: "Core csproj location"
+  PROJECT_IDENTITY:
+    required: true
+    description: "Identity csproj location"
+  RUNNER_OS:
+    required: true
+    description: "OS type of github runner"
+  GITHUB_TOKEN:
+    required: true
+    description: "Github token from github"
+  SONAR_BACKEND_SECRET:
+    required: true
+    description: "Secret from Sonar - backend"
+  SONAR_PROJECT_KEY:
+    description: "Sonar project key"
+    required: true
+  PROJECT_CLI:
+    description: "Cli location"
+    required: true
+#build cli
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+  - name: Set up JDK 11
+    id: setJava
+    uses: actions/setup-java@v1
+    with:
+      java-version: 1.11
+  - name: Setup .NET
+    id: setNET
+    uses: actions/setup-dotnet@v1
+    with:
+      dotnet-version: 5.0.x
+  - name: Cache SonarCloud packages
+    id: cacheSCpackages
+    uses: actions/cache@v1
+    with:
+      path: ~\sonar\cache
+      key: ${{ inputs.RUNNER_OS }}-sonar
+      restore-keys: ${{ inputs.RUNNER_OS }}-sonar
+  - name: Cache SonarCloud scanner
+    id: cacheSCscanner
+    uses: actions/cache@v1
+    with:
+      path: ./.sonar/scanner
+      key: ${{ inputs.RUNNER_OS }}-sonar-scanner
+      restore-keys: ${{ inputs.RUNNER_OS }}-sonar-scanner
+  - name: Install SonarCloud scanner
+    id: installSC
+    if: steps.cacheSCscanner.outputs.cache-hit != 'true'
+    shell: pwsh
+    run: |
+      New-Item -Path ./.sonar/scanner -ItemType Directory
+      dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
+  - name: Start scanning
+    id: startScanning
+    env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ inputs.SONAR_BACKEND_SECRET }}
+    shell: pwsh
+    run: |
+      ./.sonar/scanner/dotnet-sonarscanner begin /k:"${{ inputs.SONAR_PROJECT_KEY }}" /o:"sapiency-io" /d:sonar.login="${{ inputs.SONAR_BACKEND_SECRET }}" /d:sonar.host.url="https://sonarcloud.io"
+  #--------------CORE-------------------
+  - name: Restore dependencies for CORE
+    id: restoreNugetsCore
+    shell: pwsh
+    run: dotnet restore ${{ inputs.PROJECT_CORE }}
+  - name: Build for CORE
+    id: buildProjectCore
+    shell: pwsh
+    run: dotnet build ${{ inputs.PROJECT_CORE }} --no-restore #same for cli, but different proj for cli
+  #-------------IDENTITY------------------
+  - name: Restore dependencies for IDENTITY
+    id: restoreNugetsIdentity
+    shell: pwsh
+    run: dotnet restore ${{ inputs.PROJECT_IDENTITY }}
+  - name: Build for IDENTITY
+    id: buildProjectIDentity
+    shell: pwsh
+    run: dotnet build ${{ inputs.PROJECT_IDENTITY }} --no-restore
+  #---------------CLI---------------------------
+  - name: Restore dependencies for CLI
+    id: restoreNugetsCli
+    shell: pwsh
+    run: dotnet restore ${{ inputs.PROJECT_CLI }}
+  - name: Build for CLI
+    id: buildProjectCli
+    shell: pwsh
+    run: dotnet build ${{ inputs.PROJECT_CLI }} --no-restore
+  # - name: Test
+  #   run: dotnet test --no-build --verbosity normal
+  - name: Finish scanning
+    id: finishScanning
+    if: always() && steps.startScanning.outcome == 'success'
+    env:
+       GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+       SONAR_TOKEN: ${{ inputs.SONAR_BACKEND_SECRET }}
+    shell: pwsh
+    run: |
+      ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ inputs.SONAR_BACKEND_SECRET }}"

@@ -1,0 +1,179 @@
+{
+  "field.required": "Required field",
+
+  "auth": {
+    "password.info": "The password must contain at least 6 characters and consist of alphanumeric characters, and at least one upper case letter and special character.",
+    "login": {
+      "title": "Sign in",
+      "label_email":"Your email address",
+      "label_password":"Choose password",
+      "placeholder_email": "E-mail",
+      "placeholder_password": "Password",
+      "remember_me": "Remember me",
+      "btn": "Login",
+      "question.create.account" : "Don't have an account?",
+      "create.account" : "Create account",
+      "question.forgot.password" : "Can't log in?",
+      "remind.password" : "Forgot my password",
+      "field.error": "Log in error",
+      "login.error": "Login error.",
+      "captcha.error": "Human verification failed. Please try again.",
+      "invalid.data": "Invalid data",
+      "deactivated.data": "Your account is deactivated!",
+      "locked-out.text": "This account has been locked out, please try again later.",
+      "or": "Or",
+      "facebook_login": "Login with Facebook",
+      "google_login": "Login with Google",
+      "kanga_login": "Login via Kanga.Exchange",
+      "external": {
+        "error": "An error occurred while logging in",
+        "error_with_provider": "An error occurred while logging in with",
+        "error_email_required": "Logging in requires an access to email address"
+      },
+      "device_authorization.title" : "Unknown device confirmation",
+      "device_authorization.unknown_device" : "We do not recognize the device you are using.",
+      "device_authorization.sms_confirmation" : "The code has been delivered in SMS message.",
+      "device_authorization.email_confirmation" : "The code has been sent to your e-mail address.",
+      "device_authorization.code_validity" : "The code is valid up to",
+      "device_authorization.btn" : "Confirm",
+      "device_authorization.code_placeholder" : "Authorization code",
+      "device_authorization.INVALID_CODE" : "Invalid code.",
+      "device_authorization.EXCEEDED_MAX_ATTEMPTS_AMOUNT" : "Exceeded max. amount of confirmation attempts.",
+      "device_authorization.VALID_ALREADY_GENERATED_CODE" : "Previously generated code is still valid. Please wait for its delivery."
+    },
+    "register": {
+      "title": "Sign up",
+      "label_first_name":"First name",
+      "placeholder_first_name": "First name",
+      "label_last_name":"Last name",
+      "placeholder_last_name": "Last name",
+      "label_email":"Your Email Address",
+      "next_step":"Create account",
+      "label_confirm_email":"Confirm Email",
+      "label_password":"Choose Password",
+      "label_confirm_password":"Confirm Password",
+      "placeholder_email": "E-mail",
+      "placeholder_confirm_email": "E-mail",
+      "placeholder_password": "Password",
+      "placeholder_confirm_password": "Repeat password",
+      "sign_up": "Sign up now",
+      "select_all": "Select all",
+      "read_and_accept": "I read and accept",
+      "and": "and",
+      "privacy.policy": "Privacy policy",
+      "field.required": "Required field",
+      "regulations": "Regulations",
+      "invalid.value": "Invalid value",
+      "invalid.minLength": "The password should be at least 6 characters long",
+      "invalid.confirm": "The password is not the same again",
+      "invalid.requirements" : "The password should contain at least one {{capital_letter}} and {{digit}}",
+      "terms_1": "I have read and accept the Regulations",
+      "terms_2": "and Privacy Policy",
+      "terms.download": "download",
+      "notCitizenship": "I am neither citizen nor resident of country whose law limits or forbids to participate in Initial Coin Offerings, Security Token Offering or token sales.",
+      "newsletter.terms": "I agree for my personal data to be processed for the purpose of receiving a newsletter.",
+      "footer.info": "Your email address (which is also your login) is necessary for us to provide you our services. If you do not enter this data, you will not be able to use the platform. The controller of your personal data is Sapiency Sp. z o.o. seated in Kraków, 1 Lekarska Street, Tax Number: 9452228249. Remember that you can always access, correct or demand to delete your personal data or file a complaint to a supervisory authority. Before creating your account, please read ICO Terms & Conditions and Privacy Policy.",
+      "footer.info_title": "Your data is administered by Sapiency Sp.z o.o.",
+      "footer.info_title_more": "More about your data protection.",
+      "error": {
+        "emailExistMessage": "This address is already linked to an existing account.",
+        "emailExistMessageLogIn": "Log in",
+        "deniedMailServer": "Please use an email address in a domain other than wp.pl. More about data protection.",
+        "phoneNumberExistMessage": "This phone number is already linked to an existing account."
+      },
+      "success": {
+        "title": "Confirm registration"
+      },
+      "facebook_login": "Create account with Facebook",
+      "have_account": "Already have an account?",
+      "log_in": "Log in"
+    },
+    "reset.password": {
+      "title": "Set a new password",
+      "back": "Back to",
+      "back_login": "log in",
+      "reset": "Save",
+      "email.label": "E-mail",
+      "email.placeholder": "E-mail",
+      "password.label": "Password",
+      "password.placeholder": "Password",
+      "confirm.password.label": "Confirm password",
+      "confirm.password.placeholder": "Confirm password",
+      "form_error": "Reset password error",
+      "success_text": "Password has been changed.",
+      "error_text": "An error occured. Password has not been changed."
+    },
+    "registration.success": {
+      "info": "Further instructions were sent to the provided e-mail address."
+    },
+    "confirm.email": {
+      "success.info": "Your account has been confirmed.",
+      "error.info": "An error occurred while confirming the account.",
+      "back": "Log in"
+    },
+    "forgot": {
+      "title": "Recover your password",
+      "email.placeholder": "E-mail",
+      "reset": "Reset",
+      "back_login": "Back to homepage",
+      "email_label": "E-mail address",
+      "email_placeholder": "E-mail",
+      "form_submit_success": "Check your mailbox for further instructions.",
+      "form_submit_error": "Password recovery failed."
+    },
+    "logout": {
+      "title": "Logout",
+      "text_process": "Logging out",
+      "text_success": "You have been successfully logged out.",
+      "text_error": "Error logging out.",
+      "login_return": "Return to homepage",
+      "login_return_main_page": "Return to main page Mosaico"
+    },
+    "locked_out": {
+      "title": "Account locked",
+      "description": "To unlock access to your account, reset your password.",
+      "reset_password": "Reset password"
+    },
+    "confirm_email": {
+      "title": "Email confirmation"
+    },
+    "reset_password": {
+      "title": "Reset password",
+      "usedForm1": "The password reset form has already been used",
+      "usedForm2": "Generate a new password reminder"
+    },
+    "change_email": {
+      "title": "Change Email",
+      "submit":"Submit",
+      "email.error":"Invalid email address",
+      "usedForm1": "The email change form has already been used",
+      "usedForm2": "Back to login",
+      "success_text": "Email has been changed.",
+      "error_text": "An error occured. Email has not been changed.",
+      "form_error": "Change email error",
+      "form_info": "Email change in progress.",
+      "waiting":"Please wait..."
+    },
+    "report_account_stolen": {
+      "title": "Report account stolen",
+      "checking.info": "Checking your account information. Please wait...",
+      "frozen":"Your account is now deactivated.",
+      "contact" : "Please contact at support@mosaico.ai for further assistance."
+    },
+    "change_password": {
+      "title": "Change Email",
+      "submit":"Submit",
+      "email.error":"Invalid email address",
+      "usedForm1": "The email change form has already been used",
+      "usedForm2": "Back to login",
+      "success_text": "Email has been changed.",
+      "error_text": "An error occured. Email has not been changed.",
+      "form_error": "Change email error",
+      "form_info": "Enter your password again to change your account email address securely",
+      "waiting":"Please wait..."
+    }
+  }
+}
+
+
+

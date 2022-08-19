@@ -1,0 +1,100 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ganache
+  labels:
+    name: ganache
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eth-deployment
+  labels:
+    app: eth
+  namespace: ganache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eth
+  template:
+    metadata:
+      labels:
+        app: eth
+    spec:
+      containers:
+      - name: ganache
+        image: trufflesuite/ganache-cli:v6.12.1
+        args: [
+          "--verbose",
+          "--chainId=1338",
+          "--account=\"0x7b9b4f50d30f8eba180081741226ce1deee15c8b894af500106bd36e9123a22d, 100000000000000000000\"",
+          "--account=\"0x14bd56ee025501e56851571dbb4d91c886ec67d5e6bc56021e8fdd87583ac9ef,100000000000000000000\"", 
+          "--account=\"0x78677671fe428e84866e0e80300df81ba515815a1d8aeee9f55d9c1bca5fcb7d, 200000000000000000\"",
+          "--account=\"0x0a7a50aef6a78a116071791e3ee3898e8e7a45d7fb9d499609ed10955a16a987, 1000000000000000000000\"",
+          "--mnemonic=\"horn hammer original lemon chapter weird gun pond fortune blush cupboard dog\""]
+        ports:
+        - containerPort: 8545
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eth-service
+  namespace: ganache
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  selector:
+    app: eth
+  ports:
+    - port: 8545
+      targetPort: 8545
+  type: LoadBalancer
+  loadBalancerIP: 172.17.15.252
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polygon-deployment
+  labels:
+    app: polygon
+  namespace: ganache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: polygon
+  template:
+    metadata:
+      labels:
+        app: polygon
+    spec:
+      containers:
+      - name: ganache
+        image: trufflesuite/ganache-cli:v6.12.1
+        args: [
+          "--verbose",
+          "--chainId=1339",
+          "--account=\"0x7b9b4f50d30f8eba180081741226ce1deee15c8b894af500106bd36e9123a22d, 100000000000000000000\"",
+          "--account=\"0x14bd56ee025501e56851571dbb4d91c886ec67d5e6bc56021e8fdd87583ac9ef,100000000000000000000\"", 
+          "--account=\"0x78677671fe428e84866e0e80300df81ba515815a1d8aeee9f55d9c1bca5fcb7d, 200000000000000000\"",
+          "--account=\"0x0a7a50aef6a78a116071791e3ee3898e8e7a45d7fb9d499609ed10955a16a987, 1000000000000000000000\"",
+          "--mnemonic=\"brisk wire parade distance monkey crisp calm ignore loan exercise keen upset rain margin cry\""]
+        ports:
+        - containerPort: 8545
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: polygon-service
+  namespace: ganache
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  selector:
+    app: polygon
+  ports:
+    - port: 8545
+      targetPort: 8545
+  type: LoadBalancer
+  loadBalancerIP: 172.17.15.251

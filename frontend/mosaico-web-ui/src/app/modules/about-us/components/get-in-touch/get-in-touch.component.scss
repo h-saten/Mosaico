@@ -1,0 +1,55 @@
+.get_in-touch {
+  padding: 40px 50px;
+  margin: 0 auto;
+  width: 100%;
+
+  @media (min-width: 992px) {
+    width: 50%;
+  }
+}
+  
+button.btn-touch {
+  background: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+  box-shadow: 5px 5px 20px rgb(0 99 245 / 25%);
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 15px 40px !important;
+}
+
+.section-title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: left;
+  margin-bottom: 48px;
+
+  @media (min-width: 576px) {
+    text-align: center;
+    font-size: 35px;
+    line-height: 30px;
+  }
+  @media (min-width: 992px) {
+    text-align: left;
+    font-size: 40px;
+    line-height: 34px;
+  }
+}
+
+.icon-title-list {
+  margin-bottom: 32px;
+}
+
+.col-icons-in {
+  max-width: 500px;
+  margin: 0 auto;
+
+  @media (min-width: 992px) {
+    max-width: none;
+  }
+}

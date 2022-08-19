@@ -1,0 +1,56 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{'MANUAL_DEPOSIT.TITLE'|translate}}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)"
+                    aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div class="row mb-3">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <img src="https://stakehound.com/wp-content/uploads/2021/04/Polygon-logo.png" class="img-fluid" style="max-width: 150px;"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p [innerHTML]="'MANUAL_DEPOSIT.INFO'|translate"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="col-12">
+                        <div class="input-group address">
+                            <input type="text" class="form-control" disabled value="{{walletAddress}}"
+                                aria-describedby="basic-addon2" />
+                            <span class="input-group-text" role="button" id="basic-addon2" (cbOnSuccess)="onCopied()" ngxClipboard
+                                [cbContent]="walletAddress"> <i [ngbTooltip]="'MANUAL_DEPOSIT.ACTIONS.COPY_HINT'|translate"
+                                    [placement]="'top'" class="far fa-clipboard"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="qrImage && qrImage.length > 0">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <img class="img-fluid" [attr.src]="qrImage" alt="QR"/>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row w-100">
+                <div class="col-12 w-100">
+                    <button class="btn btn-primary btn-mosaico-primary w-100" (click)="save()">
+                        {{'MANUAL_DEPOSIT.ACTIONS.DONE' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

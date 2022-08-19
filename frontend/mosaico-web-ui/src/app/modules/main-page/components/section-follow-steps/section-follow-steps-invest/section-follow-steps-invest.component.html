@@ -1,0 +1,48 @@
+<div class="follow-steps-invest-container">
+    <div class="pt-20 pb-15 d-none d-lg-block">
+        <div class="follow-steps-progress">
+            <div class="steps">
+                <div class="step">1</div>
+                <div class="step">2</div>
+                <div class="step">3</div>
+                <div class="step">4</div>
+            </div>
+        </div>
+    </div>
+    <div class="follow-steps-items-wrapper d-none d-sm-block">
+        <ng-container *ngFor="let item of investDetails">
+            <ng-container *ngTemplateOutlet="investCard; context: { $implicit: item }"></ng-container>
+        </ng-container>
+    </div>
+
+    <div class="follow-steps-items-wrapper d-block d-sm-none">
+        <div>
+            <swiper [config]="config">
+              <ng-template swiperSlide *ngFor="let item of investDetails">
+                <ng-container *ngTemplateOutlet="investCard; context: { $implicit: item }"></ng-container>
+              </ng-template>
+            </swiper>
+        </div>
+    </div>
+</div>
+
+<ng-template #investCard let-item>
+    <div class="shadow-sm invets-card">
+        <img [src]="item.icon" alt="invest icon" class="invest-icon">
+        <div>
+            <p class="invets-card-title">{{ item.title | translate }}</p>
+            <p class="invets-card-description">{{ item.description | translate }}</p>
+            <div class="d-flex">
+                <a class="d-flex cursor-pointer" (click)="onNavigate(item)">
+                    <p class="invets-card-action">{{ item.action | translate }}</p>
+                    <img src="/assets/media/misc/chevron-down-line.png" alt="arrow-right" class="arrow-right">
+                </a>
+                <a *ngIf="item.action_2" class="d-flex cursor-pointer ps-0 ps-sm-12" [routerLink]="[item.link_2]">
+                    <p class="invets-card-action">{{ item.action_2 | translate }}</p>
+                    <img src="/assets/media/misc/chevron-down-line.png" alt="arrow-right" class="arrow-right">
+                </a>
+            </div>
+        </div>
+    </div>
+</ng-template>
+

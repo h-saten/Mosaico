@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.BackgroundJobs.Hangfire\Mosaico.BackgroundJobs.Hangfire.csproj" />
+        <ProjectReference Include="..\Mosaico.Base\Mosaico.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Core.ResourceManager\Mosaico.Core.ResourceManager.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.Identity\Mosaico.Domain.Identity.csproj" />
+        <ProjectReference Include="..\Mosaico.CQRS.Base\Mosaico.CQRS.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Events.Base\Mosaico.Events.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Events.DocumentManagement\Mosaico.Events.DocumentManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Events.Identity\Mosaico.Events.Identity.csproj" />
+        <ProjectReference Include="..\Mosaico.EventSourcing.Base\Mosaico.EventSourcing.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Email.Abstraction\Mosaico.Integration.Email.Abstraction.csproj" />
+        <ProjectReference Include="..\Mosaico.Integration.Sms.Abstraction\Mosaico.Integration.Sms.Abstraction.csproj" />
+        <ProjectReference Include="..\Mosaico.KYC.Passbase\Mosaico.KYC.Passbase.csproj" />
+        <ProjectReference Include="..\Mosaico.SDK.BusinessManagement\Mosaico.SDK.BusinessManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.SDK.ProjectManagement\Mosaico.SDK.ProjectManagement.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    </ItemGroup>
+
+</Project>

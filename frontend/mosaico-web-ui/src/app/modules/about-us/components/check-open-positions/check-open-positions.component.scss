@@ -1,0 +1,122 @@
+p {
+    margin: 0;
+}
+
+.check_open_positions {
+    &--wrapper {
+        max-width: 1287px;
+        margin: 0 auto;
+        padding: 91px 20px 133px;
+
+        .open-positions-btn {
+            padding: 12px 16px;
+            background: #0063F5;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 24px;
+            color: #FFFFFF;
+            min-width: 256px;
+        }
+    }
+
+    &--iframe-container {
+        position: relative;
+        padding: 111px 0 135px;
+
+        iframe {
+            width: 100%;
+            height: 661px;
+            border-radius: 6px;
+        }
+    }
+
+    &--container {
+        display: flex;
+        align-items: center;
+    }
+
+    &--title {
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 58px;
+        color: #434343;
+    }
+
+    &--description {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 24px;
+        color: #979797;
+        margin: 40px 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .check_open_positions {
+        &--wrapper {
+            padding: 79px 40px 102px;
+        }
+
+        &--iframe-container {
+            padding: 0 0 100px;
+
+            iframe {
+                height: 330px;
+            }
+        }
+
+        &--img {
+            height: 281px;
+        }
+
+        &--title {
+            font-size: 24px;
+            line-height: 30px;
+        }
+
+        &--description {
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .check_open_positions {
+        &--wrapper {
+            padding: 64px 25px 40px 23px;
+        }
+
+        &--iframe-container {
+            padding-bottom: 88px;
+        }
+        
+        &--container {
+            flex-direction: column-reverse;
+        }
+
+        &--title {
+            text-align: center;
+        }
+
+        &--text {
+            text-align: center;
+        }
+
+        &--description {
+            font-size: 13px;
+            line-height: 20px;
+            margin: 24px 0;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .check_open_positions {
+        &--iframe-container {
+            iframe {
+                height: 164px;
+            }
+        }
+    }
+}

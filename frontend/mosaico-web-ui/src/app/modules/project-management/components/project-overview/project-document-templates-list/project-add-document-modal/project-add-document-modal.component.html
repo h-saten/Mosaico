@@ -1,0 +1,55 @@
+<div class="modal-content">
+  <div class="modal-header">
+
+    <div></div>
+
+    <h5 class="modal-title">Add new file</h5>
+
+    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" (click)="activeModal.dismiss(false)"
+        aria-label="Close">
+        <i class="fas fa-times"></i>
+    </div>
+  </div>
+
+  <div class="modal-body py-0">
+    <form class="mosaico-form" [formGroup]="form" novalidate="novalidate" #componentForm>
+
+      <div class="form-group mb-7">
+        <label class="form-label fw-normal">Displayed title</label>
+        <input type="text" name="title" formControlName="title"
+          [ngClass]="{ 'is-invalid': isDirty('title') && hasErrors('title') }"
+          class="form-control"
+          placeholder="Add title here">
+        <div class="invalid-feedback" *ngIf="isDirty('title') && hasErrors('title')">Invalid title</div>
+      </div>
+
+      <div class="form-group mb-7">
+        <ng-container *ngIf="!file">
+          <label class="form-label fw-normal">Upload Pdf file</label>
+          <div class="upload-container">
+            <div inlineSVG="/assets/media/icons/cloud-upload.svg"></div>
+            <span class="drag-file">Drag your file here <br>or</span>
+            <input (input)="saveDocument($event)" style="display:none" type="file" accept=".pdf" #documentFile>
+            <button class="upload-btn" (click)="documentFile.click()">Upload</button>
+            <span class="update-tc">to update T&C</span>  
+          </div>
+        </ng-container>
+        <div *ngIf="file" class="upload-button">{{ fileName | titlecase }} <i class="far fa-file-alt"></i></div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer pt-0 justify-content-start">
+    <app-button-save
+      [buttonId]="'btn-save-modal-profile'"
+      [buttonText]="'BUTTONS.btn.save' | translate"
+      (clicked)="onSubmit()"
+      [projectColor]="true"
+      [classes]="'btn-faq'"
+    ></app-button-save>
+
+    <button type="button" class="btn-faq btn-cancel ms-7" (click)="activeModal.dismiss(false)" appBaseColors [textColor]="true" [button]="true">
+      {{'BUTTONS.btn.cancel' | translate}}
+    </button>
+  </div>
+</div>

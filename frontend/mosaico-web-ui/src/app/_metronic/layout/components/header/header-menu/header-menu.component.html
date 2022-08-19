@@ -1,0 +1,57 @@
+<div [id]="isMobile ? 'kt_header_menu_mobile_toggle' : null" (click)="onMenuClick()" class="header-menu-container">
+  <div class="menu-item">
+      <a class="menu-link text-mosaico-secondary" routerLink="/projects">
+        <span>{{'MENU.INVEST'|translate}}</span>
+        <i class="fa fa-angle-right"></i>
+      </a>
+  </div>
+  <div class="menu-item sep"></div>
+  <div class="menu-item">
+    <a class="menu-link" routerLinkActive="active" routerLink="/dex">
+      <span class="menu-title text-mosaico-secondary">{{'MENU.EXCHANGE'|translate}}</span>
+    </a>
+  </div>
+  <div class="menu-item sep"></div>
+  <div class="menu-item">
+    <a class="menu-link text-mosaico-secondary" routerLink="/dao">
+      <span>{{'MENU.DAO'|translate}}</span>
+      <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+  <div class="menu-item sep"></div>
+  <div class="menu-item">
+    <a class="menu-link" routerLinkActive="active" routerLink="/portfolio">
+      <span class="menu-title text-mosaico-secondary">{{'MENU.FUND'|translate}}</span>
+    </a>
+  </div>
+  <div ngbDropdown class="menu-item" restricted-area [only]="'ADMIN'">
+    <ng-template>
+      <div class="sep"></div>
+      <a class="menu-link text-mosaico-secondary" id="dropdownBasic1" ngbDropdownToggle>
+        {{'MENU.ADMIN'|translate}}
+      </a>
+      <!-- <div class="menu-item "> -->
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="">
+          <a class="menu-link" routerLinkActive="active" routerLink="/admin/projects">
+            <span class="menu-title">{{'HEADER.projects' | translate}}</span>
+          </a>
+          <a class="menu-link" routerLinkActive="active" routerLink="/admin/companies">
+            <span class="menu-title">{{'HEADER.companies' | translate}}</span>
+          </a>
+          <a class="menu-link" routerLinkActive="active" routerLink="/admin/users">
+            <span class="menu-title">{{'HEADER.users' | translate}}</span>
+          </a>
+          <a class="menu-link" routerLinkActive="active" routerLink="/admin/deletionrequests">
+            <span class="menu-title">{{'HEADER.deletion' | translate}}</span>
+          </a>
+        </div>
+      <!-- </div> -->
+    </ng-template>
+  </div>
+  <div class="menu-item sep"></div>
+  <div class="menu-item">
+    <a class="menu-link" routerLinkActive="active" routerLink="/about">
+      <span class="menu-title text-mosaico-secondary">{{'MENU.ABOUT_US'|translate}}</span>
+    </a>
+  </div>
+</div>

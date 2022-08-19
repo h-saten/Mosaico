@@ -1,0 +1,50 @@
+<div class="card p-lg-17 mb-5 shadow-sm">
+  <div class="card-body">
+    <div class="mb-18">
+      <div class="mb-11">
+        <div class="mb-18">
+          <h4 class="fs-2hx text-dark mb-6 text-center">{{'PROJECT_OVERVIEW.FORM.ABOUT.LABEL'|translate}} <button
+              *ngIf="canEdit && !editEnabled" class="btn btn-icon btn-link text-hover-primary"
+              (click)="enableEditing()"><i class="fa fa-pen fs-4"></i></button>
+            <div *ngIf="canEdit && !editEnabled" ngbDropdown class="d-inline-block">
+              <button class="btn btn-bg-light btn-active-color-primary btn-sm" ngbDropdownToggle>{{ language.name }}{{ ""}}</button>
+              <div ngbDropdownMenu>
+                <button ngbDropdownItem *ngFor="let l of langs" (click)="selectLanguage(l.lang)"
+                  [ngClass]="l.lang === language.lang ? 'active' : ''">{{ l.name }}</button>
+              </div>
+            </div>
+          </h4>
+          <div>
+            <ng-container *ngIf="canEdit && editEnabled; else content">
+              <div #editorWrapper class="row mb-3">
+                <div class="col-12">
+                  <div class="document-editor project-about">
+                    <div #toolbar class="document-editor__toolbar"></div>
+                    <div class="document-editor__editable-container">
+                      <div #editor class="document-editor__editable">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button class="btn btn-mosaico-primary-outline me-2" (click)="disableEditing()"
+                    [disabled]="isLoading">{{'PROJECT_OVERVIEW.FORM.ABOUT.ACTIONS.CANCEL'|translate}}</button>
+                  <button class="btn btn-mosaico-primary me-2" (click)="save()"
+                    [disabled]="isLoading">{{'PROJECT_OVERVIEW.FORM.ABOUT.ACTIONS.SAVE'|translate}}</button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <ng-template #content>
+          <div class="ck-content ck" [innerHTML]="htmlContent"></div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<app-project-teams [projectId]="projectId"></app-project-teams>
+<app-project-partners [projectId]="projectId"></app-project-partners>

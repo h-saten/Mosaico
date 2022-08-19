@@ -1,0 +1,305 @@
+
+<div class="row py-1" *ngIf="registrationServerError">
+  <div class="col-md-12">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <span *ngIf="registrationServerError">{{errorMessage}}</span>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="regForm" class="md-float-material" (ngSubmit)="register()">
+
+  <div class="mt-2">
+
+    <div class="form-group">
+
+      <label for="firstName" class="float-left text-dark">{{ 'auth.register.label_first_name' | translate }}</label>
+
+      <div class="input-group">
+        <input class="form-control" placeholder="{{ 'auth.register.placeholder_first_name' | translate }}"
+               name="firstName" id="firstName" formControlName="firstName"
+               type="text" tabindex="1"
+               [ngClass]="{ 'is-invalid' : hasError('firstName') }">
+
+        <div class="invalid-feedback text-left" *ngIf="hasError('firstName')">
+
+          <div *ngIf="firstName.hasError('required')">
+            {{ 'auth.register.field.required' | translate }}
+          </div>
+
+          <div *ngIf="hasError('firstName') && !firstName.hasError('required')">
+            {{ 'auth.register.invalid.value' | translate }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label for="lastName" class="float-left text-dark">{{ 'auth.register.label_last_name' | translate }}</label>
+
+      <div class="input-group">
+        <input class="form-control" placeholder="{{ 'auth.register.placeholder_last_name' | translate }}"
+               name="lastName" id="lastName" formControlName="lastName"
+               type="text" tabindex="1"
+               [ngClass]="{ 'is-invalid' : hasError('lastName') }">
+
+        <div class="invalid-feedback text-left" *ngIf="hasError('lastName')">
+
+          <div *ngIf="lastName.hasError('required')">
+            {{ 'auth.register.field.required' | translate }}
+          </div>
+
+          <div *ngIf="hasError('lastName') && !lastName.hasError('required')">
+            {{ 'auth.register.invalid.value' | translate }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label for="email" class="float-left text-dark">{{ 'auth.register.label_email' | translate }}</label>
+
+      <div class="input-group">
+        <input class="form-control" placeholder="{{ 'auth.register.placeholder_email' | translate }}"
+          name="email" id="email" formControlName="email"
+          type="email" tabindex="1"
+          [ngClass]="{ 'is-invalid' : hasError('email') }">
+
+        <div class="invalid-feedback text-left" *ngIf="hasError('email')">
+
+          <div *ngIf="email.hasError('required')">
+            {{ 'auth.register.field.required' | translate }}
+          </div>
+
+          <div *ngIf="(hasError('email') && !email.hasError('required') && !email.hasError('emailExists'))">
+            {{ 'auth.register.invalid.value' | translate }}
+          </div>
+        </div>
+
+        <div class="invalid-feedback text-left" *ngIf="email.hasError('emailExists')">
+          <svg class="exclamation-mark-icon mr-1">
+            <use xlink:href="#exclamation_mark_svg" />
+          </svg>
+          {{ 'auth.register.error.emailExistMessage' | translate }}
+          <a [routerLink]="['/', 'auth', 'login']" class="invalid-feedback-color text-decoration"
+            rel="noopener"
+          >
+            <u>{{ 'auth.register.error.emailExistMessageLogIn' | translate }}</u>
+          </a>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" display="none">
+          <g id="exclamation_mark_svg" data-name="Group 1410" transform="translate(-12270 -11691.403)">
+            <path stroke="none" id="Path_1457" data-name="Path 1457" d="M6.888-62.178v3.011a9.179,9.179,0,0,1-.047.94q-.047.461-.121.977H5.835q-.074-.516-.121-.977a9.179,9.179,0,0,1-.047-.94v-3.011Zm-1.427,6.9a.81.81,0,0,1,.061-.311.742.742,0,0,1,.168-.253.829.829,0,0,1,.255-.168.793.793,0,0,1,.316-.063.78.78,0,0,1,.311.063.829.829,0,0,1,.255.168A.775.775,0,0,1,7-55.592a.78.78,0,0,1,.063.311A.775.775,0,0,1,7-54.969a.782.782,0,0,1-.171.25.792.792,0,0,1-.255.166.81.81,0,0,1-.311.061.823.823,0,0,1-.316-.061.792.792,0,0,1-.255-.166.748.748,0,0,1-.168-.25A.8.8,0,0,1,5.461-55.282Z" transform="translate(12270.905 11756.908)"/>
+            <g id="Ellipse_32" data-name="Ellipse 32" transform="translate(12270 11691.403)" fill="none" stroke-width="1">
+              <circle cx="7" cy="7" r="7"/>
+              <circle cx="7" cy="7" r="6.5"/>
+            </g>
+          </g>
+        </svg>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <div class="input-group mb-0">
+        <label for="password" class="float-left text-dark">
+          {{ 'auth.login.placeholder_password' | translate }}
+        </label>
+
+        <div class="input-group">
+          <input type="password" name="password" id="password" formControlName="password"
+                 class="password-field form-control"
+                 placeholder="{{ 'auth.login.placeholder_password' | translate }}"
+                 tabindex="3"
+                 [ngClass]="{ 'is-invalid' : hasError('password') }">
+          <div id="password-toggler" class="inner-icon password-toggler password-toggle-icon"
+               [ngClass]="{ 'is-invalid' : hasError('password') }" (click)="togglePasswordFieldValueVisibility($event)">
+            <i class="fas fa-eye-slash password-toggler-icon"></i>
+          </div>
+
+          <div class="invalid-feedback text-left" *ngIf="hasError('password')">
+
+            <div *ngIf="password.hasError('required')">
+              {{ 'auth.register.field.required' | translate }}
+            </div>
+
+            <div *ngIf="password.hasError('minlength')">
+              {{ 'auth.register.invalid.minLength' | translate }}
+            </div>
+
+            <div *ngIf="hasError('password') && !password.hasError('required')">
+
+              <span *ngIf="!isEngLang(); else engRequirements"
+                    [innerHTML]="'auth.register.invalid.requirements' | translate :{ 'capital_letter': '<b>dużą literę</b>', 'digit': '<b>cyfrę</b>' }">
+              </span>
+              <ng-template #engRequirements>
+                <span [innerHTML]="'auth.register.invalid.requirements' | translate :{ 'capital_letter': '<b>capital letter</b>', 'digit': '<b>digit</b>' }"></span>
+              </ng-template>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    <div>
+      <label for="confirmPassword" class="float-left text-dark">{{ 'auth.register.label_confirm_password' | translate }}</label>
+      <div class="input-group">
+        <input class="password-field form-control"
+        placeholder="{{ 'auth.register.placeholder_confirm_password' | translate }}"
+        id="confirmPassword" formControlName="confirmPassword"
+        type="password" tabindex="4"
+        [ngClass]="{ 'is-invalid' : hasError('confirmPassword') || !checkPasswordsValid() }">
+
+        <div class="inner-icon confirm-password-toggler password-toggler password-toggle-icon"
+             [ngClass]="{ 'is-invalid' : hasError('password') }" (click)="togglePasswordFieldValueVisibility($event)">
+          <i class="fas fa-eye-slash password-toggler-icon"></i>
+        </div>
+
+        <div class="invalid-feedback text-left" *ngIf="hasError('confirmPassword') || !checkPasswordsValid()">
+
+          <div *ngIf="confirmPassword.hasError('required')">
+            {{ 'auth.register.field.required' | translate }}
+          </div>
+
+          <div *ngIf="!checkPasswordsValid()">
+            {{ 'auth.register.invalid.confirm' | translate }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row m-t-5 text-left">
+      <div class="col-md-12">
+
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox"
+            id="checkAll"
+            name="checkAll"
+            formControlName="checkAll"
+            class="custom-control-input"
+            tabindex="5"
+            (click)="checkAllCheck()"
+          >
+          <label class="custom-control-label" for="checkAll">
+            {{ 'auth.register.select_all' | translate }}
+          </label>
+        </div>
+
+      </div>
+
+      <div class="col-md-12">
+
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox"
+            id="terms"
+            (change)="changeConditions()"
+            formControlName="terms"
+            class="custom-control-input"
+            tabindex="6"
+            [ngClass]="{ 'is-invalid' : hasError('terms') }"
+          >
+
+          <label class="custom-control-label" for="terms">
+            <span>{{ 'auth.register.read_and_accept' | translate }}</span>
+            <a href="https://mosaico.ai/assets/pdf/Regulamin_platformy_MOSAICO_11_2019.pdf" target="_blank" class="cursor-pointer font-weight-bold"
+              rel="noopener"
+            >
+              {{ 'auth.register.regulations' | translate }}
+            </a>
+            <span> {{ 'auth.register.and' | translate }} </span>
+            <a href="https://mosaico.ai/assets/pdf/Polityka_prywatnosci_09_2020.pdf" target="_blank" class="cursor-pointer font-weight-bold"
+              rel="noopener"
+            >
+              {{ 'auth.register.privacy.policy' | translate }}.
+            </a>
+          </label>
+
+          <div class="text-danger text-left" *ngIf="hasError('terms')">
+            {{ 'auth.register.field.required' | translate }}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-12">
+
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox"
+            id="notForbiddenCitizenship"
+            (change)="changeConditions()"
+            formControlName="notForbiddenCitizenship"
+            class="custom-control-input"
+            tabindex="7"
+            [ngClass]="{ 'is-invalid' : hasError('notForbiddenCitizenship') }"
+          >
+          <label class="custom-control-label" for="notForbiddenCitizenship">{{ 'auth.register.notCitizenship' | translate }}</label>
+          <div class="text-danger text-left" *ngIf="hasError('notForbiddenCitizenship')">
+            {{ 'auth.register.field.required' | translate }}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-12">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox"
+            id="newsletterPersonalDataProcessing"
+            (change)="changeConditions()"
+            formControlName="newsletterPersonalDataProcessing"
+            class="custom-control-input"
+            tabindex="7"
+            [ngClass]="{ 'is-invalid' : hasError('newsletterPersonalDataProcessing') }">
+          <label class="custom-control-label" for="newsletterPersonalDataProcessing">{{ 'auth.register.newsletter.terms' | translate }}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <button type="submit" tabindex="8"
+                [disabled]="!regForm.valid || dataSavingRequestInProgress || !checkPasswordsValid()"
+                class="btn btn-primary-custom btn-md btn-block text-center mb-2">
+          {{ 'auth.register.next_step' | translate }}
+          <span [hidden]="!inProgress">
+              <i class="fa fa-spinner fa-spin"></i>
+          </span>
+        </button>
+
+        <div class="py-3">
+          <p class="line-text">
+            <span>{{ 'auth.login.or' | translate }}</span>
+          </p>
+        </div>
+
+        <button (click)="FacebookLogin()" type="button" tabindex="4" class="btn-facebook btn btn-md btn-block">
+          <i class="fab fa-facebook-square social-login-icon"></i>
+          <span class="fb-text pl-2">{{ 'auth.register.facebook_login' | translate }}</span>
+        </button>
+
+      </div>
+
+      <div class="col-12 mt-4">
+        <p class="font-size-20">
+          {{ 'auth.register.have_account' | translate }}
+          <a [routerLink]="['/auth/login']" class="register-text font-size-20 font-weight-bold"
+            rel="noopener">
+            {{ 'auth.register.log_in' | translate }}
+          </a>
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+
+</form>

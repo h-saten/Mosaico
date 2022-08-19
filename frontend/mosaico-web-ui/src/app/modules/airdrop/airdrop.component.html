@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card mb-5">
+            <div class="card-body">
+                <div id="kt_create_account_stepper" class="
+                  stepper stepper-pills stepper-column
+                  d-flex
+                  flex-column flex-xl-row flex-row-fluid">
+                    <div class="
+                    d-flex
+                    justify-content-center
+                    bg-white
+                    rounded
+                    justify-content-xl-start
+                    flex-row-auto
+                    w-100">
+                        <div class="px-6 px-lg-10 px-xxl-15 py-5 w-100">
+                            <ng-container *ngIf="claimed">
+                                <div class="row mb-5">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <img class="img-fluid" style="max-width: 250px"
+                                            src="/assets/media/animations/success-payment.gif" />
+                                    </div>
+                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-12">
+                                        <span class="fs-3">{{'AIRDROP.SUCCESS'|translate}}</span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                           
+                            <ng-container *ngIf="!claimed && airdrop">
+                                <div class="row mb-5">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <span class="fs-3" *ngIf="isAuth === true"
+                                            [innerHTML]="'AIRDROP.RECEIVE'|translate: {tokenAmount: airdrop.tokensPerParticipant, tokenSymbol: airdrop.tokenSymbol}">
+                                        </span>
+                                        <span class="fs-3" *ngIf="isAuth === false"
+                                            [innerHTML]="'AIRDROP.RECEIVE_UNAUTHORIZED'|translate: {tokenAmount: airdrop.tokensPerParticipant, tokenSymbol: airdrop.tokenSymbol}">
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-12 d-flex justify-content-center flex-md-row flex-column">
+                                        <div class="row me-3">
+                                            <div class="col-12">
+                                                <button class="btn btn-mosaico-primary" (click)="claim()"
+                                                    [disabled]="isClaiming$|async">{{'AIRDROP.CLAIM'|translate}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

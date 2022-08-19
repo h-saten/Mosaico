@@ -1,0 +1,78 @@
+<div class="card-body p-0">
+  <!-- begin::Header -->
+  <div class="px-9 pt-7 card-rounded h-275px w-100" [ngClass]="'bg-' + color">
+    <!-- begin::Heading -->
+    <div class="d-flex flex-stack">
+      <h3 class="m-0 text-white fw-bolder fs-3">Wallet Balance</h3>
+      <div class="ms-1">
+        <!-- begin::Menu -->
+        <button type="button" class="
+            btn btn-sm btn-icon btn-color-white btn-active-white
+            border-0
+            me-n3
+          " [ngClass]="'btn-active-color-' + color" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
+          data-kt-menu-flip="top-end">
+          <span [inlineSVG]="'/assets/media/icons/duotune/general/gen024.svg'" class="svg-icon svg-icon-2"></span>
+        </button>
+        <app-dropdown-menu></app-dropdown-menu>
+        <!-- end::Menu -->
+      </div>
+    </div>
+    <!-- end::Heading -->
+    <!-- begin::Balance -->
+    <div class="d-flex text-center flex-column text-white pt-2 mb-9">
+      <span class="fw-bold fs-2x">Ethereum</span>
+      <span class="fw-bolder fs-2x pt-1">{{nativeBalance}} ETH</span>
+      <span class="fw-bolder pt-1">{{adr}}</span>
+    </div>
+    <!-- end::Balance -->
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Items -->
+  <div class="
+      shadow-xs
+      card-rounded
+      mx-9
+      mb-9
+      px-6
+      py-9
+      position-relative
+      z-index-1
+      bg-white
+    " [style.margin-top]="'-70px'">
+    <!-- begin::Item -->
+    <div class="d-flex align-items-center mb-6" *ngFor="let token of balance">
+      <!-- begin::Symbol -->
+      <div class="symbol symbol-45px w-40px me-5">
+        <span class="symbol-label bg-lighten">
+          <span [inlineSVG]="'/assets/media/icons/duotune/general/gen024.svg'" class="svg-icon svg-icon-1"></span>
+        </span>
+      </div>
+      <!-- end::Symbol -->
+      <!-- begin::Description -->
+      <div class="d-flex align-items-center flex-wrap w-100">
+        <!-- begin::Title -->
+        <div class="mb-1 pe-3 flex-grow-1">
+          <span class="fs-5 text-gray-800 text-hover-primary fw-bolder">
+            {{token.symbol}}
+          </span>
+          <!-- <div class="text-gray-400 fw-bold fs-7">Quarter 2/3</div>-->
+        </div>
+        <!-- end::Title -->
+        <!-- begin::Label -->
+        <div class="d-flex align-items-center">
+          <div class="fw-bolder fs-5 text-gray-800 pe-1"> {{token.balance}}</div>
+
+          <div class="fw-bolder fs-5 text-gray-800 pe-1"><a routerLink="./stake/{{token.id}}" class="btn btn-primary mx-2">Stake</a></div>
+
+          <span [inlineSVG]="'/assets/media/icons/duotune/general/gen024.svg'"
+            class="svg-icon svg-icon-5 svg-icon-danger ms-1"></span>
+        </div>
+        <!-- end::Label -->
+      </div>
+      <!-- end::Description -->
+    </div>
+    <!-- end::Item -->
+  </div>
+  <!-- end::Items -->
+</div>

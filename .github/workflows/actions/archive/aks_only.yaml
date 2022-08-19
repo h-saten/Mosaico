@@ -1,0 +1,101 @@
+#used to tests only to deploy to AKS (not going through whole pipeline) can make it as a workflow dispatch so we can bring up cluster manually?
+name: aks_only
+on:
+  push:
+    paths:
+      - 'src/**' #backend/identity
+      - 'frontend/mosaico-web-ui/**' #frontend
+      - 'frontend/mosaico-id-ui/**' #identity frontend
+      - '.github/**'
+    branches: [ 'main', "mc/*" ]
+    
+jobs:
+  # JOB to run change detection
+  deploy-id-dev:
+    if: always()
+    runs-on: 'self-hosted'
+    environment: 'dev'
+    steps:
+      - uses: actions/checkout@v2
+      # --------------- DEV: MIGRATE SQL DATABASE IDENTITY ---------------------------
+      - name: Migrate Database
+        id: migrateDatabase
+        uses: ./.github/workflows/actions/run_mosaico_cli
+        with:
+          NAMESPACE: mosaico
+          CLUSTER_NAME: aks-mosaico-dev
+          CLUSTER_RESOURCE_GROUP: rg-mosaico-dev
+          APP_SETTINGS_FOLDER_PATH: infrastructure/configurations/dev/cli
+          APP_VERSION: ${{ secrets.APP_VERSION }}
+          APP_SETTINGS_CONFIG_NAME: appsettings-cli
+          KEY_VAULT_CLIENT_SECRET: ${{secrets.KEY_VAULT_CLIENT_SECRET}}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+          COMMAND: 'migrate'
+          JOB_MANIFEST_YAML: cli_migrate_database_identity.yaml
+       #----------------------------DEPLOY IDENTITY TO AKS--------------------------------
+      - name: Deploy ID Service to AKS
+        id: deploy_id
+        uses: ./.github/workflows/actions/aks_deployment
+        with:
+          NAMESPACE: mosaico
+          CLUSTER_NAME: aks-mosaico-dev
+          CLUSTER_RESOURCE_GROUP: rg-mosaico-dev
+          APP_SETTINGS_FOLDER_PATH: infrastructure/configurations/dev/id
+          APP_VERSION: ${{ secrets.APP_VERSION }}
+          APP_SETTINGS_CONFIG_NAME: appsettings-id
+          APP_YAML: infrastructure/kubernetes_yamls/dev/id/backend.yaml
+          KEY_VAULT_CLIENT_SECRET: ${{secrets.KEY_VAULT_CLIENT_SECRET}}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+          IMAGE_NAME: acrmosaico.azurecr.io/mosaico-v2-identity
+          DEPLOYMENT_NAME: deployment/identity-backend
+
+  #deploy CoreFrontend to blob $web and purge CDN
+
+  deploy-core-dev:
+
+    if: always()
+    runs-on: 'self-hosted'
+    environment: 'dev'
+    steps:
+      - uses: actions/checkout@v2
+      # --------------- DEV: MIGRATE SQL DATABASE CORE ---------------------------
+      - name: Migrate Database
+        id: migrateDatabase
+        uses: ./.github/workflows/actions/run_mosaico_cli
+        with:
+          NAMESPACE: mosaico
+          CLUSTER_NAME: aks-mosaico-dev
+          CLUSTER_RESOURCE_GROUP: rg-mosaico-dev
+          APP_SETTINGS_FOLDER_PATH: infrastructure/configurations/dev/cli
+          APP_VERSION: ${{ secrets.APP_VERSION }}
+          APP_SETTINGS_CONFIG_NAME: appsettings-cli
+          KEY_VAULT_CLIENT_SECRET: ${{secrets.KEY_VAULT_CLIENT_SECRET}}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+          COMMAND: 'migrate'
+          JOB_MANIFEST_YAML: cli_migrate_database_core.yaml
+
+      #----------------------------DEPLOY CORE TO AKS--------------------------------
+      - name: Deploy Core Service to AKS
+        id: deploy_core
+        uses: ./.github/workflows/actions/aks_deployment
+        with:
+          NAMESPACE: mosaico
+          CLUSTER_NAME: aks-mosaico-dev
+          CLUSTER_RESOURCE_GROUP: rg-mosaico-dev
+          APP_SETTINGS_FOLDER_PATH: infrastructure/configurations/dev/core
+          APP_VERSION: ${{ secrets.APP_VERSION }}
+          APP_SETTINGS_CONFIG_NAME: appsettings
+          APP_YAML: infrastructure/kubernetes_yamls/dev/core/backend.yaml
+          KEY_VAULT_CLIENT_SECRET: ${{secrets.KEY_VAULT_CLIENT_SECRET}}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+          IMAGE_NAME: acrmosaico.azurecr.io/mosaico-v2-api
+          DEPLOYMENT_NAME: deployment/core-backend
+      # - name: Post to a Slack channel
+      #   id: slack_migrate_deploy_core
+      #   uses: slackapi/slack-github-action@v1.18.0
+      #   with:
+      #     channel-id: 'C0333TDS71D'
+      #     slack-message: "Migration status [CORE]: ${{steps.migrateDatabase.outcome}} !\nDeploy status of [CORE]: ${{steps.deploy_core.outcome}} !"
+      #   env:
+      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          

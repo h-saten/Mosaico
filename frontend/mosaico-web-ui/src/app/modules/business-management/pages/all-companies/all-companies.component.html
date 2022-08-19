@@ -1,0 +1,128 @@
+<div class="row col-12 m-0">
+
+  <div class="card card-xl-stretch mb5 border-0 bg-transparent shadow-none dao-top-bg pb-xs-1">
+    <div class="card-body">
+      <h2 class="display-4" [innerHTML]="'PUBLIC_COMPANIES.HEADER_TITLE' | translate"></h2>
+      <div class="row">
+        <p class="w-sm-100 w-md-50 mt-6 mb-12 fs-6">
+          {{'PUBLIC_COMPANIES.HEADER_DESC' | translate}}
+        </p>
+      </div>
+      <a routerLink="/dao/create" class="btn btn-icon-light">
+        {{'PUBLIC_COMPANIES.BTN.BUILD_DAO' | translate}}
+      </a>
+    </div>
+  </div>
+
+  <div class="card card-xl-stretch mb5 border0- bg-transparent shadow-none">
+    <form [formGroup]="form" class="form mosaico-form w-100" novalidate="novalidate">
+
+      <div class="card-header justify-content-between align-items-center p-0">
+        <div class="title-search align-items-start flex-column m-0">
+          {{'PUBLIC_COMPANIES.TRUESTED_COMPANIES' | translate}}
+        </div>
+
+        <div class="card-toolbar">
+          <div class="dao-search dao-search-mobile">
+            <div class="search-container search-container-md-hide">
+              <input (keyup)="search($event)" formControlName="search" class="input-search bg-transparent" type="text" placeholder="{{'PUBLIC_COMPANIES.SEARCH' | translate}}" name="search" />
+            </div>
+            <div class="search-container-short" (click)="showSearchFormMobileFunc()">
+              <input class="input-search" type="button" placeholder="Search" name="search" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="showSearchFormMobile === true">
+        <div class="dao-search2">
+          <div class="search-container">
+            <input #searchInput (keyup)="search($event)" formControlName="search" class="input-search" type="text" placeholder="{{'PUBLIC_COMPANIES.SEARCH' | translate}}" name="search" />
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="card-body pt-3">
+
+        <div class="card card-xl-stretch mb5 border0- bg-transparent shadow-none" *ngIf="!companies || companies.length == 0">
+          <div class="card-body pt-3">
+            <div class="row">
+              <div class="col-12 d-flex justify-content-center align-items-center">
+                <p class="fw-bold fs-3">{{'PUBLIC_COMPANIES.NO_COMPANIES'|translate}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="companies && companies.length > 0">
+          <div class="card card-xl-stretch mb5 border-0 my-3" *ngFor="let c of companies">
+            <div class="row">
+              <div class="col-lg-4 col-md-6 border-min-sm-end border-2">
+                <div class="symbol symbol-100px symbol-circle">
+                  <div class="symbol-label" *ngIf="c.logoUrl && c.logoUrl.length > 0"
+                    style="background-image:url({{c.logoUrl}})"></div>
+                  <div class="symbol-label fs-4 fw-bold text-dark"
+                    *ngIf="!c.logoUrl || c.logoUrl.length == 0">DAO</div>
+                </div>
+                <h2 class="display-6 my-5">{{c.companyName}} <span
+                    class="badge badge-primary position-absolute ms-2 fs-7 mt-1 bg-transparent text-gray-600 border border-2 border-radius-15 border-gray-500">
+                    DAO</span></h2>
+                <div class="row text-center">
+                  <div class="col-6 float-start pe-3 text-nowrap w-auto">
+                    <a routerLink="/dao/{{c.slug}}" class="btn btn-sm btn-mosaico-primary px-7 w-100">
+                      {{'PUBLIC_COMPANIES.VIEW_DAO' | translate}}
+                    </a>
+                  </div>
+                  <!-- <div class="col-6 float-start ps-3">
+                    <a routerLink="/dao/{{c.slug}}" class="btn btn-sm btn-mosaico-outline-secondary px-3 w-100">
+                      <span *ngIf="!c.isSubscribed">{{'PUBLIC_COMPANIES.FOLLOW' | translate}}</span>
+                      <span *ngIf="c.isSubscribed">{{'PUBLIC_COMPANIES.UNFOLLOW' | translate}}</span>
+                    </a>
+                  </div> -->
+                </div>
+              </div>
+              <div class="col-lg-8 col-md-6">
+                <div class="row border-bottom pb-2 pt-xs-3">
+                  <div class="col-lg-8 col-md-6 col-sm-6 col-xs-6 float-start">
+                    <nav class="nav nav-pills flex-column flex-sm-row">
+                      <a class="text-sm-start nav-link px-0 pb-0"  routerLink="/project/{{p.slug}}" *ngFor="let p of c.projects">
+                        <div class="symbol symbol-35px symbol-circle" routerLink="/projects/{{p.slug}}" [ngbTooltip]="p.title" placement="top">
+                          <div class="symbol-label" *ngIf="p.logoUrl && p.logoUrl.length > 0" style="background-image:url({{p.logoUrl}})"></div>
+                          <div class="symbol-label" *ngIf="!p.logoUrl || p.logoUrl.length == 0">{{p.title | titlecase | slice: 0:1}}</div>
+                        </div>
+                      </a>
+                    </nav>
+                  </div>
+                  <div class="d-none d-md-block col-lg-4 col-md-6 col-sm-6 col-xs-6 float-start text-end">
+                    <img class="me-6 mb-n5" src="/assets/media/dao/bar.png" alt="">
+                    <span>
+                      <span class="text-success">{{'PUBLIC_COMPANIES.OPEN_POLLS' | translate}}: {{c.openProposals}}</span><br>
+                      <span class="text-muted">{{'PUBLIC_COMPANIES.TOTAL_POLLS' | translate}}: {{c.totalProposals}}</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="row" *ngIf="c.companyDescription && c.companyDescription.length > 0">
+                  <div class="col-12">
+                    <!-- <h3 class="pt-6 pb-4 m-0">{{'PUBLIC_COMPANIES.COMPANY_DESC' | translate}}</h3> -->
+                    <p class="mb-0 p-3">
+                      {{c.companyDescription}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+
+      <div class="row text-center" *ngIf="!hideLoadMoreButton">
+        <div class="mt-5">
+          <button (click)="loadMore()" class="btn btn-mosaico-primary-outline" [disabled]="loading">
+            <span *ngIf="!loading">{{'PUBLIC_COMPANIES.VIEW_MORE' | translate}}</span>
+          <span *ngIf="loading">{{'PUBLIC_COMPANIES.LOADING' | translate}}</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

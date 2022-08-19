@@ -1,0 +1,44 @@
+<ng-container [formGroup]="form">
+    <label class="form-label required">{{'WALLET_PAYMENT.LABEL_DAO'|translate}}</label>
+    <ng-select class="mosaico-select mb-5" [clearable]="false"
+        [ngClass]="{ 'is-invalid': isDirty('wallet') && hasErrors('wallet') }" bindValue="key" bindLabel="name"
+        [items]="systemWallets" formControlName="wallet" placeholder="{{'WALLET_PAYMENT.PLACEHOLDER'|translate}}">
+        <ng-template ng-label-tmp let-item="item">
+            <img [attr.src]="item.logoUrl" class="img-fluid" style="width: 20px;" /> {{item.name|translate}}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+            <img [attr.src]="item.logoUrl" class="img-fluid" style="width: 20px;" /> {{item.name|translate}}
+        </ng-template>
+    </ng-select>
+    <div class="invalid-feedback" *ngIf="isDirty('wallet') && hasErrors('wallet')">
+        {{'WALLET_PAYMENT.ERROR'|translate}}
+    </div>
+    <div class="form-group mb-5" *ngIf="estimate && !(isLoading$|async)">
+        <div class="row">
+            <div class="col-6 fw-bold text-mosaico-secondary">
+                {{'WALLET_PAYMENT.CURRENT_BALANCE'|translate}}
+            </div>
+            <div class="col-6 fw-bold text-mosaico-secondary">
+                <p class="text-end">{{currentBalance.balance| number: '1.0-6': 'en'}} {{currentBalance.paymentCurrencyTicker}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 fw-bold text-mosaico-secondary">
+                {{'WALLET_PAYMENT.DEPLOY.PRICE'|translate}}:
+            </div>
+            <div class="col-6">
+                <div class="d-flex w-100 flex-column align-items-end">
+                    <div class="d-flex">
+                        <p class="text-end fw-bold text-mosaico-secondary">{{estimate.nativeCurrencyAmount| number: '1.0-6': 'en'}} {{estimate.nativeCurrencyTicker}} </p>
+                    </div>
+                    <div class="d-flex">
+                        <small class="text-muted">({{estimate.price | number: '1.0-6': 'en'}} {{estimate.currency}})</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mb-5" *ngIf="isLoading$|async">
+        <app-spinner-container [showSpinner]="isLoading$|async"></app-spinner-container>
+    </div>
+</ng-container>

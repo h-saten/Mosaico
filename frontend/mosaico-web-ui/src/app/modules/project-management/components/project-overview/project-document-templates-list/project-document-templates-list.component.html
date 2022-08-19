@@ -1,0 +1,101 @@
+<div class="d-flex flex-row flex-wrap flex-md-column cards">
+
+  <ng-container *ngIf="!canEdit">
+    <div class="div-card" *ngFor="let dt of documents">
+      <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="d-flex flex-row align-items-center justify-content-center justify-content-md-between" (click)="openFile(dt)">
+              <ng-template *ngTemplateOutlet="templDocument; context: {dt: dt, fa: 'arrow'}"></ng-template>
+            </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="canEdit">
+
+    <div ngbDropdown class="div-card" *ngFor="let dt of documents; let last = last">
+      <div class="card shadow-sm">
+        <div class="card-body white-space-normal" ngbDropdownToggle>
+            <div class="d-flex flex-row align-items-center justify-content-center justify-content-md-between">
+              <ng-template *ngTemplateOutlet="templDocument; context: {dt: dt, fa: 'plus'}"></ng-template>
+            </div>
+        </div>
+      </div>
+
+      <div ngbDropdownMenu class="document-edit-menu shadow-sm">
+        <div class="d-flex flex-column align-items-center justify-content-center">
+          <div class="d-flex title">{{'PROJECT_OVERVIEW.FILES.SELECT_DOCUMENT_LANGUAGE'|translate}}</div>
+          <div class="d-flex w-100 mt-3">
+            <ng-select class="mosaico-select w-100" (change)="changeLan($event,dt)" [(ngModel)]="dt.language" [clearable]="false" [searchable]="false" [items]="languages" bindLabel="name" bindValue="lang" placeholder="Select"></ng-select>
+          </div>
+          <input (input)="saveDocument($event,dt.id)" style="display:none" type="file" accept=".pdf" #documentFile>
+          <div class="d-flex w-100 mt-3">
+            <button (click)="openFile(dt)" *ngIf="dt?.url?.length > 0 && dt?.language === selectedLanguage" class="btn btn-active-light w-100 upload-button">{{'PROJECT_OVERVIEW.FILES.DOWNLOAD'|translate}} <i class="far fa-file-alt"></i></button>
+            <button (click)="openFile(selectedDocument)" *ngIf="selectedDocument?.url?.length > 0 && dt?.language != selectedLanguage" class="btn btn-active-light w-100 upload-button">{{'PROJECT_OVERVIEW.FILES.DOWNLOAD'|translate}} <i class="far fa-file-alt"></i></button>
+          </div>
+          <div class="d-flex w-100 mt-3">
+            <button (click)="documentFile.click()" class="btn btn-active-light w-100 upload-button">{{'PROJECT_OVERVIEW.FILES.ADD_DOCUMENT'|translate}} <i class="fas fa-arrow-up"></i></button>
+          </div>
+          <!-- <div class="dropdown-divider mt-3"></div>
+          <div class="d-flex w-100 mt-3">
+            <button (click)="openDocumentTemplate(dt)" class="btn btn-active-light w-100 upload-button">
+              <ng-container *ngIf="!dt.id || dt.id.length === 0">{{'PROJECT_OVERVIEW.FILES.CREATE_DOCUMENT'|translate}}</ng-container>
+              <ng-container *ngIf="dt.id && dt.id.length > 0">{{'PROJECT_OVERVIEW.FILES.EDIT_DOCUMENT'|translate}}</ng-container>
+              <i class="fas fa-edit"></i>
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="files && files.length > 0">
+      <ng-container *ngFor="let file of files">
+        <div class="div-card">
+          <div class="card shadow-sm">
+            <div class="card-body white-space-normal">
+              <div class="d-flex flex-row align-items-center justify-content-center justify-content-md-between" (click)="openAddModal()">
+                <ng-template *ngTemplateOutlet="templDocument; context: {dt: '', fa: 'plus', name: file}"></ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div class="div-card">
+      <div class="card shadow-sm">
+        <div class="card-body white-space-normal">
+          <div class="d-flex flex-row align-items-center justify-content-center justify-content-md-between" (click)="openAddModal()">
+            <ng-template *ngTemplateOutlet="templDocument; context: {dt: '', fa: 'plus', name: 'Add new file'}"></ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #templDocument let-dt="dt" let-fa="fa" let-name="name">
+    <div class="d-flex flex-column flex-md-row align-items-center">
+      <div class="card-icon d-flex align-items-center justify-content-center me-md-5">
+        <i *ngIf="dt" class="far fa-file-alt" appBaseColors [iconAwesome]="true"></i>
+        <div *ngIf="!dt">
+          <div [inlineSVG]="'/assets/media/icons/file.svg'" appBaseColors [isSvg]="true"></div>
+        </div>
+      </div>
+      <div class="card-icon-title text-center text-md-start" *ngIf="dt">{{dt.type?.title}}</div>
+      <div class="card-icon-title text-center text-md-start" *ngIf="!dt">{{name}}</div>
+    </div>
+    <div class="d-none d-md-flex flex-row ms-2">
+      <div class="card-icon-action">
+        <ng-container *ngIf="fa === 'arrow'">
+          <i class="fas fa-arrow-down"></i>
+        </ng-container>
+        <ng-container *ngIf="fa === 'plus'">
+          <div [inlineSVG]="'/assets/media/marketplace/plus-line.svg'" appBaseColors [isSvg]="true"></div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
+

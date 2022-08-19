@@ -1,0 +1,121 @@
+.card-header {
+  justify-content: center;
+
+  .card-title {
+    margin-bottom: 24px;
+    @media (min-width: 576px) {
+      margin-bottom: 32px;
+    }
+    @media (min-width: 992px) {
+      margin-top: 24px;
+      margin-bottom: 40px;
+    }
+  }
+  .card-toolbar {
+    margin-bottom: 22px;
+    @media (min-width: 576px) {
+      margin-bottom: 28px;
+    }
+    @media (min-width: 992px) {
+      margin-bottom: 16px;
+    }
+  }
+}
+// .card-header-editor {
+//   justify-content: space-between;
+// }
+
+// @import "~swiper/css";
+// @import "~swiper/css/effect-coverflow";
+// @import "~swiper/css/pagination";
+
+// @import '~swiper/scss';
+// @import '~swiper/scss/navigation';
+// @import '~swiper/scss/pagination';
+
+.swiper {
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 32px;
+}
+
+.btn-right {
+  color: #fff;
+  background-color: #494642;
+  border-color: #494642;
+  border-radius: 3px;
+  width: 40px;
+  padding: 9px !important;
+}
+.btn-right:hover {
+  color: #fff;
+  background-color: #494642;
+  border-color: #494642;
+}
+.btn-check:focus + .btn-right, .btn-right:focus {
+  color: #fff;
+  background-color: #494642;
+  border-color: #494642;
+  box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+}
+.btn-check:checked + .btn-right, .btn-check:active + .btn-right, .btn-right:active, .btn-right.active, .show > .btn-right.dropdown-toggle {
+  color: #fff;
+  background-color: #494642;
+  border-color: #494642;
+}
+.btn-check:checked + .btn-right:focus, .btn-check:active + .btn-right:focus, .btn-right:active:focus, .btn-right.active:focus, .show > .btn-right.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+}
+.btn-right:disabled, .btn-right.disabled {
+  color: #fff;
+  background-color: #494642;
+  border-color: #494642;
+}
+
+.btn-left {
+  color: #fff;
+  background-color: #F3F2F2;
+  border-color: #F3F2F2;
+  border-radius: 3px;
+  width: 40px;
+  padding: 9px !important;
+}
+.btn-left:hover {
+  color: #fff;
+  background-color: #F3F2F2;
+  border-color: #F3F2F2;
+}
+.btn-check:focus + .btn-left, .btn-left:focus {
+  color: #fff;
+  background-color: #F3F2F2;
+  border-color: #F3F2F2;
+  box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+}
+.btn-check:checked + .btn-left, .btn-check:active + .btn-left, .btn-left:active, .btn-left.active, .show > .btn-left.dropdown-toggle {
+  color: #fff;
+  background-color: #F3F2F2;
+  border-color: #F3F2F2;
+}
+.btn-check:checked + .btn-left:focus, .btn-check:active + .btn-left:focus, .btn-left:active:focus, .btn-left.active:focus, .show > .btn-left.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+}
+.btn-left:disabled, .btn-left.disabled {
+  color: #fff;
+  background-color: #F3F2F2;
+  border-color: #F3F2F2;
+}
+.project-packages-container {
+  ::ng-deep {
+    .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+      bottom: -5px;
+    }
+
+    .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+      margin: 0 12px;
+    }
+
+    .swiper-slide {
+      height: auto;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+<div class="counter-all" appBaseColors [elHeader]="true">
+  <div class="counter-only d-flex justify-content-between align-center">
+
+    <ng-container *ngIf="statusProject === 'New' || statusProject === 'Approved' || statusProject === 'Pending'">
+      <ng-container *ngIf="(daysToDday + hoursToDday + minutesToDday + secondsToDday) > 0; else NoActiveCoiunter">
+        <div>
+          <span id="days">
+            <ng-container *ngIf="daysToDday > 0">{{daysToDday}}</ng-container>
+          </span>
+          <span class="counter-name">{{'PROJECT.counter.days' | translate}}</span>
+        </div>
+        <span class="colon">:</span>
+        <div>
+          <span id="hours">
+            <ng-container *ngIf="(daysToDday > 0 && hoursToDday >= 0) || hoursToDday > 0">{{hoursToDday}}
+            </ng-container>
+          </span>
+          <span class="counter-name">{{'PROJECT.counter.hours' | translate}}</span>
+        </div>
+        <span class="colon">:</span>
+        <div>
+          <span id="minutes">
+            <ng-container *ngIf="(daysToDday > 0 && minutesToDday >= 0) || minutesToDday > 0">{{minutesToDday}}
+            </ng-container>
+          </span>
+          <span class="counter-name">{{'PROJECT.counter.minutes' | translate}}</span>
+        </div>
+        <span class="colon">:</span>
+        <div>
+          <!-- <ng-container *ngIf="daysToDday <= 0 && secondsToDday > 0"><span id="seconds"> {{secondsToDday}} </span> </ng-container> -->
+          <span id="seconds">
+            <ng-container *ngIf="(minutesToDday >= 0 && secondsToDday >= 0) || secondsToDday > 0">
+              {{secondsToDday}}</ng-container>
+          </span>
+          <span class="counter-name">{{'PROJECT.counter.seconds' | translate}}</span>
+        </div>
+      </ng-container>
+
+      <ng-template #NoActiveCoiunter>
+        <div>
+          <span id="days">
+            -
+          </span>
+          <span class="counter-name">{{'PROJECT.counter.days' | translate}}</span>
+        </div>
+        <span class="colon">:</span>
+        <div>
+          <span id="hours">
+            -
+          </span>
+          <span class="counter-name">{{'PROJECT.counter.hours' | translate}}</span>
+        </div>
+        <span class="colon">:</span>
+        <div>
+          <span id="minutes">
+            -
+          </span>
+          <span class="counter-name">{{'PROJECT.counter.minutes' | translate}}</span>
+        </div>
+        <span class="colon">:</span>
+        <div>
+          <!-- <ng-container *ngIf="daysToDday <= 0 && secondsToDday > 0"><span id="seconds"> {{secondsToDday}} </span> </ng-container> -->
+          <span id="seconds">
+            -
+          </span>
+          <span class="counter-name">{{'PROJECT.counter.seconds' | translate}}</span>
+        </div>
+      </ng-template>
+    </ng-container>
+
+  </div>
+</div>

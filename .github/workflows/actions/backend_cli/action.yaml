@@ -1,0 +1,108 @@
+name: "Build and push Backend"
+description: "Build core and push docker image"
+
+inputs:
+  PROJECT: 
+    required: true
+    description: "Specify Project Name"
+  IMAGE_NAME:
+    required: true
+    description: "Specify Image Name"
+  ACTIONS_ALLOW_UNSECURE_COMMANDS:
+    required: true
+    description: "allow unsecure"
+  DOCKER_FILE:
+    required: true
+    description: "Specify Docker File path"
+  OUTPUT_FOLDER:
+    required: true
+    description: "Specify Output Folder path"
+  APP_VERSION:
+    required: true
+    description: "Application Version"
+  AZURE_CREDENTIALS:
+    required: true
+    description: "Azure Credentials to connect to"
+  REGISTRY_LOGIN_SERVER:
+    required: true
+    description: "ACR FQDN "
+  REGISTRY_USERNAME:
+    required: true
+    description: "Azure username"
+  REGISTRY_PASSWORD:
+    required: true
+    description: "Azure registry password"
+  SONAR_BACKEND_SECRET:
+    required: true
+    description: "Specify Project Name"
+  SONAR_PROJECT_KEY:
+    required: true
+    description: "SonarCloud Project Key"
+  GITHUB_TOKEN:
+    required: true
+    description: "GitHub token to apply"
+
+runs:
+  
+  using: "composite"
+  steps:
+  - name: Set up JDK 11
+    id: setJava
+    uses: actions/setup-java@v1
+    with:
+      java-version: 1.11
+  - name: 'Login via Azure CLI'
+    id: loginAzure
+    uses: azure/login@v1
+    with:
+      creds: ${{ inputs.AZURE_CREDENTIALS }}
+  - name: Setup .NET
+    id: setNET
+    uses: actions/setup-dotnet@v1
+    with:
+      dotnet-version: 5.0.x
+  - name: Restore dependencies
+    id: restoreNugets
+    shell: bash
+    run: dotnet restore ${{ inputs.PROJECT }}
+  - name: Build
+    id: buildProject
+    shell: bash
+    run: dotnet build -c Release --no-restore ${{ inputs.PROJECT }}
+  # - name: Test
+  #   run: dotnet test --no-build --verbosity normal
+  - name: Publish
+    id: publishProject
+    shell: bash
+    run: dotnet publish -c Release --no-build -o ${{inputs.OUTPUT_FOLDER}} ${{ inputs.PROJECT }}
+  # https://docs.microsoft.com/en-us/azure/container-instances/container-instances-github-action
+  - name: Build Docker Image
+    id: buildDockerImage
+    shell: bash
+    run: docker build ${{inputs.OUTPUT_FOLDER}}/ --file ${{inputs.DOCKER_FILE}} --tag ${{ inputs.REGISTRY_LOGIN_SERVER }}/${{inputs.IMAGE_NAME}}:${{ inputs.APP_VERSION }}
+  - name: Tag Docker Image
+    id: tagDockerImage
+    shell: bash 
+    run: docker tag ${{ inputs.REGISTRY_LOGIN_SERVER }}/${{inputs.IMAGE_NAME}}:${{ inputs.APP_VERSION }} ${{ inputs.REGISTRY_LOGIN_SERVER }}/${{inputs.IMAGE_NAME}}:latest
+ 
+  - name: Scan docker image
+    uses: azure/container-scan@v0 
+    id: scanDockerImage
+    if: always()
+    with:
+      image-name: ${{ inputs.REGISTRY_LOGIN_SERVER }}/${{inputs.IMAGE_NAME}}:latest
+      severity-threshold: "HIGH"
+
+  - name: 'Docker Login'
+    id: loginDocker
+    uses: azure/docker-login@v1
+    if: always()
+    with:
+      login-server: ${{ inputs.REGISTRY_LOGIN_SERVER }}
+      username: ${{ inputs.REGISTRY_USERNAME }}
+      password: ${{ inputs.REGISTRY_PASSWORD }}
+  - name: Publish Docker Image
+    id: publishDockerImage
+    shell: bash
+    if: always()
+    run: docker push ${{ inputs.REGISTRY_LOGIN_SERVER }}/${{inputs.IMAGE_NAME}} --all-tags

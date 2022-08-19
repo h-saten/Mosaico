@@ -1,0 +1,12 @@
+<button
+  [id]="buttonId"
+  [ngClass]="classes"
+  type="submit"
+  (click)="onClick()"
+  [disabled]="formInvalid === true || showSpinner === true"
+  appSpinnerMini [showSpinnerMini]="showSpinner"
+  appBaseColors [button]="projectColor" [menu]="projectColor"
+>
+  <img class="img-fluid button-img" *ngIf="imgUrl && imgUrl.length > 0" [attr.src]="imgUrl"/>
+  {{ buttonText }}
+</button>

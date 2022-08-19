@@ -1,0 +1,34 @@
+<div class="div-title-project-and-symbol position-relative d-flex justify-content-start" appBaseColors [elHeader]="true">
+  <div class="div-title-project">
+    <ng-container>
+      <span class="title-project" appProjectTitle>
+        {{currentProject.title}}
+      </span>
+
+      <!-- <button class="btn btn-icon btn-link"
+        *ngIf="canEdit"
+        (click)="editTitle()">
+          <i class="fa fa-pen fs-4"></i>
+      </button> -->
+    </ng-container>
+
+    <!-- <ng-template #EditingTitle>
+      <app-inline-edit
+        [ngClass]="editingTitle === true ? 'title-project-can-edit' : 'title-project'"
+        (focusOut)="saveNewTitle($event)"
+        [textColor]="'#FFFFFF'"
+        [data]="currentProject.title"
+      ></app-inline-edit>
+    </ng-template> -->
+
+    <div class="symbol-token-and-bell extra-top"
+      [style.left.px]="leftSymbolToken"
+    >
+        <app-project-subscription-to-newsletter
+          [projectId]="projectId"
+          [isUserSubscribeProject]="isUserSubscribeProject"
+        ></app-project-subscription-to-newsletter>
+    </div>
+  </div>
+
+</div>

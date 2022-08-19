@@ -1,0 +1,96 @@
+<div class="modal-content mosaico-modal">
+  <div class="modal-header">
+      <h5 class="modal-title">{{'MODALS.SUBSCRIPTION_TO_NEWSLETTER.TITLE'|translate}}</h5>
+      <div class="close-button-container">
+          <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" [disabled]="isLoading" (click)="activeModal.dismiss(false)" aria-label="Close">
+              <i class="fas fa-times"></i>
+          </button>
+      </div>
+  </div>
+
+  <!-- userSubscribeProject -->
+  <ng-container *ngIf="showConfirmationSubscribing === false && showConfirmationUnsubscribing === false">
+
+    <ng-container *ngIf="isUserSubscribeDao === false else userWantsToUnsubscribe;">
+      <div class="modal-body">
+        <div class="div-body">
+
+          <p class="h3 text-center mb-15">
+            {{'MODALS.SUBSCRIPTION_TO_NEWSLETTER.MESSAGES.INFO'|translate}}
+          </p>
+
+        </div>
+      </div>
+
+      <div class="modal-footer mx-auto">
+        <div class="modal-footer-panel-buttons">
+          <ng-container *ngIf="(isAuthorized$ | async) === true">
+            <button type="button" class="btn btn-mosaico-primary" [disabled]="form.disabled" (click)="subscribe()">
+              {{'MODALS.SUBSCRIPTION_TO_NEWSLETTER.ACTIONS.SAVE'|translate}}
+            </button>
+          </ng-container>
+          <button type="button" class="btn btn-mosaico-primary-outline ms-7" (click)="activeModal.dismiss(false)" [disabled]="form.disabled">
+            {{'MODALS.SUBSCRIPTION_TO_NEWSLETTER.ACTIONS.CANCEL'|translate}}
+          </button>
+        </div>
+      </div>
+
+    </ng-container>
+
+    <ng-template #userWantsToUnsubscribe>
+
+      <div class="modal-body">
+        <div class="div-body">
+          <p class="h3 text-center mb-15">
+            {{'MODALS.SUBSCRIPTION_TO_NEWSLETTER.MESSAGES.INFO_CONFIRM_UNSUBSCRIBED'|translate}}
+            </p>
+        </div>
+      </div>
+
+      <div class="modal-footer mx-auto">
+        <div class="modal-footer-panel-buttons">
+          <ng-container *ngIf="(isAuthorized$ | async) === true">
+            <button type="button" class="btn btn-mosaico-primary" (click)="unsubscribe()">
+              {{'MODALS.SUBSCRIPTION_TO_NEWSLETTER.ACTIONS.SIGN_ME_OUT'|translate}}
+            </button>
+            <button type="button" class="btn btn-mosaico-primary-outline ms-7" (click)="activeModal.dismiss(false)">
+              {{'MODALS.SUBSCRIPTION_TO_NEWSLETTER.ACTIONS.CANCEL'|translate}}
+            </button>
+          </ng-container>
+        </div>
+      </div>
+
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="showConfirmationSubscribing === true || showConfirmationUnsubscribing === true">
+
+    <div class="modal-body">
+      <div class="div-body">
+        <p class="h3 text-center mb-15">
+
+          <ng-container *ngIf="showConfirmationSubscribing === true">
+            {{((isAuthorized$ | async) === true ? 'MODALS.SUBSCRIPTION_TO_NEWSLETTER.MESSAGES.INFO_SUBSCRIBED_TO_NEWSLETTER_LOGGED_IN' : 'MODALS.SUBSCRIPTION_TO_NEWSLETTER.MESSAGES.INFO_SUBSCRIBED_TO_NEWSLETTER_NOT_LOGGED_IN') |translate}}
+
+            <div class="mt-5 text-danger" *ngIf="(isAuthorized$ | async) === false">it doesn't work yet</div>
+
+          </ng-container>
+
+          <ng-container *ngIf="showConfirmationUnsubscribing === true">
+            {{'MODALS.SUBSCRIPTION_TO_NEWSLETTER.MESSAGES.INFO_UNSUBSCRIBED_TO_NEWSLETTER'|translate}}
+          </ng-container>
+
+        </p>
+      </div>
+    </div>
+
+    <div class="modal-footer mx-auto">
+      <button type="button" class="btn btn-mosaico-primary" (click)="closeModal()">
+        OK
+      </button>
+    </div>
+
+  </ng-container>
+
+</div>
+

@@ -1,0 +1,32 @@
+<ng-template #content let-modal>
+    <div class="modal-content mosaico-modal">
+        <div class="modal-header">
+            <h5 class="modal-title">{{'CREDIT_CARD_PAYMENT.EXPLAINER.TITLE'|translate}}</h5>
+
+            <!--begin::Close-->
+            <div class="close-button-container">
+                <button class="btn btn-icon btn-sm btn-active-light-dark ms-2" (click)="modal.dismiss(false)" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!--end::Close-->
+        </div>
+
+        <div class="modal-body">
+            <div [innerHTML]="'CREDIT_CARD_PAYMENT.EXPLAINER.CONTENT'|translate"></div>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center flex-column flex-lg-row justify-content-lg-start">
+                    <div class="d-flex me-0 me-lg-3 mb-3 mb-lg-0 w-100 w-lg-auto">
+                        <button type="button" class="btn btn-mosaico-primary w-100" (click)="submit(false)">{{'CREDIT_CARD_PAYMENT.EXPLAINER.ACTIONS.ACCEPT'|translate}}</button>
+                    </div>
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-mosaico-primary-outline" (click)="submit(true)">{{'CREDIT_CARD_PAYMENT.EXPLAINER.ACTIONS.ACCEPT_NO_SHOW'|translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

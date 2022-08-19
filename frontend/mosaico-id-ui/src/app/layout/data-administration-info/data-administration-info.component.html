@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="card-block card-block auth-body mx-auto signup-card col-12">
+      <p class="pt-4 mb-0">{{ 'auth.register.footer.info_title' | translate}}</p>
+      <span (click)="toggleAdministrationInfo()" class="font-weight-bold">
+        <span class="pr-2">{{ 'auth.register.footer.info_title_more' | translate}}</span>
+        <span [hidden]="toggleVisible"><i class="fas fa-angle-down"></i></span>
+        <span [hidden]="!toggleVisible"><i class="fas fa-angle-up" ></i></span>
+      </span>
+    <p class="data-administration-info text-left" [@toggle]="toggleVisibleDesc">{{ 'auth.register.footer.info' | translate }}</p>
+  </div>
+</div>

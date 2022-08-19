@@ -1,0 +1,180 @@
+p {
+    margin: 0;
+}
+
+.card {
+    padding: 16px 24px !important;
+
+    .stake-wrapper {
+        border-bottom: 1px solid #F3F2F2;
+        padding-bottom: 14px;
+
+        .select-container {
+            position: relative;
+        }
+        
+        ::ng-deep.ng-select {
+    
+            &.mosaico-select .ng-select-container {
+                width: 118px;
+
+                @media screen and (max-width: 461px) {
+                    width: 110px;
+                }
+            }
+
+            &.mosaico-select.assetsTypes .ng-select-container {
+                width: 96px;
+
+                @media screen and (max-width: 461px) {
+                    width: 91px;
+                }
+
+            }
+
+            .ng-select-container {
+                min-height: 32px !important;
+            }
+
+            .ng-value {
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+            }
+
+            &.ng-select-disabled {
+                .ng-select-container {
+                    background: #EFF2F5;
+                }
+            }
+        }
+    }
+
+    input[type=datetime-local] {
+        height: 32px;
+        width: 90px;    
+
+        &::-webkit-datetime-edit {
+            display: none;
+        }
+    }
+
+    input[type=number] {
+        text-align: right;
+        width: 88px;
+
+        @media screen and (max-width: 461px) {
+            width: 86px;
+        }
+
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+
+    .balance {
+        width: 88px;
+        height: 48px !important;
+    }
+
+    .stake-subtitle {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+        padding: 13px 0 13px;
+    }
+
+    .stake-description {
+        font-size: 12px;
+        line-height: 14px;
+        color: #979797;
+        margin-top: 5px;
+    }
+
+    .stake-title {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+    }
+    
+    .fa-info-circle.info-icon {
+        position: relative;
+        top: -9px;
+        font-size: 16px;
+        color: #C0BEBE;
+    }
+    
+    .staking-assets-warning {
+        margin-left: 9px;
+        color: #494642;
+        font-size: 12px;
+        line-height: 16px;
+    }
+    
+    .btn-stake {
+        color: #fff;
+        background-image: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+        padding: 6px 33px !important;
+    }
+
+    .empty-space {
+        height: 18px;
+    }
+    
+    .estimated-stake-wrapper div {
+        p {
+            font-weight: 500;
+            line-height: 18px;
+
+            &:first-child {
+                font-size: 12px;
+                color: #979797;
+                position: relative;
+                margin-bottom: 9px;
+            }
+    
+            &:nth-child(2) {
+                font-size: 14px;
+                color: #0063F5;
+            }
+        }
+    }
+
+    .fa-exclamation-triangle {
+        height: 19px;
+    }
+}
+
+.stake-exchange-arrow-icon {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #0063F5 0%, #00A1FF 100%);
+    text-align: center;
+    i {
+        position: relative;
+        top: 9px;
+        color: white;
+        font-size: 18px;
+    }
+}
+.btn-link {
+    color: #0063F5;
+    i {
+        color: #0063F5
+    }
+}
+.latest-row {
+    border-bottom: 1px solid #F3F2F2;
+}
+.staking-disclaimer {
+    background: #F3F2F2;
+    border-radius: 10px;
+    color:  #494642;
+    i {
+        color: #0063F5;
+    }
+}

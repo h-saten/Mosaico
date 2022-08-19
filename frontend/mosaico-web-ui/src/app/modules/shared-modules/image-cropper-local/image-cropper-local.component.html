@@ -1,0 +1,85 @@
+<div class="col-12 mx-auto mt-10 text-center">
+
+  <div class="div-image-cropper">
+    <input hidden type="file" (change)="fileChangeEvent($event)" #photoFile  id="photoFile" multiple="false" />
+    <image-cropper *ngIf="cropImage === true && imageChangedEvent"
+      [imageChangedEvent]="imageChangedEvent"
+        [aspectRatio]="aspectRatio"
+      [maintainAspectRatio]="true"
+      [containWithinAspectRatio]="true"
+        [resizeToWidth]="resizeToWidth"
+      [onlyScaleDown]="true"
+      [alignImage]="'center'"
+        [roundCropper]="roundCropper"
+        [ngClass]="imageCropperClass"
+      format="jpeg"
+      backgroundColor="#ffffff"
+      [imageQuality]="100"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded($event)"
+      (cropperReady)="cropperReady($event)"
+      (loadImageFailed)="loadImageFailed($event)"
+      (startCropImage)="startCropImage($event)"
+      [transform]="transform"
+      [cropper]="cropper"
+      [autoCrop]=false
+    ></image-cropper>
+    <div class="image-input image-input image-input-circle" id="imagePicker" *ngIf="cropImage === false" data-kt-image-input="true">
+      <div class="symbol" [ngClass] = "{ 'symbol-circle': roundCropper === true, 'symbol-100' : preview100percent === true }">
+        <img [src]="croppedImage" *ngIf="croppedImage">
+        <img [src]="currentImgUrl" *ngIf="currentImgUrl && !croppedImage">
+        <img [src]="blankImage" *ngIf="!croppedImage && !currentImgUrl"
+          [ngClass] = "{ 'img-article' : imageCropperClass[0] === 'img-article' }"
+        >
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!croppedImage && cropImage === false">
+    <div class="mx-auto text-center div-button mt-5">
+
+      <div class="d-flex justify-content-center">
+        <ng-container *ngIf="currentFormMode === FormModeEnum.Edit && isRemovable && (croppedImage || currentImgUrl)">
+          <button type="button" class="btn btn-mosaico-primary-outline btn-sm  me-5" (click)="removeImage()">
+            {{'CROPPER.BUTTONS.btn.remove'  | translate}}
+          </button>
+        </ng-container>
+        <button type="button" class="btn btn-mosaico-primary btn-sm" (click)="photoFile.click()">
+          <ng-container *ngIf="currentFormMode === FormModeEnum.Add">
+            {{addPhotoText}}
+          </ng-container>
+          <ng-container *ngIf="currentFormMode === FormModeEnum.Edit">
+            {{changePhotoText}}
+          </ng-container>
+        </button>
+      </div>
+
+      <div *ngIf="showAllowedFormats"
+        class="text-muted mt-5">
+        {{'CROPPER.allowedFileFormat' | translate}}JPEG, JPG, PNG, GIF
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-container *ngIf="isLoadImageFailed === true">
+  <p class="h3">
+    {{'CROPPER.loadImageFailed' | translate}}
+  </p>
+</ng-container>
+
+<div class="mx-auto text-center div-button mt-5" *ngIf="isLoadImageFailed === false && (cropImage || imageChangedEvent)">
+  <ng-container *ngIf="cropImage === true">
+    <button class="btn btn-mosaico-primary btn-sm me-5" (click)="saveCrop()">{{'CROPPER.BUTTONS.btn.save'  | translate}}</button>
+    <button class="btn btn-mosaico-primary-outline btn-sm" (click)="cancelCrop()">{{'CROPPER.BUTTONS.btn.cancel'  | translate}}</button>
+  </ng-container>
+
+  <ng-container *ngIf="cropImage === false">
+    <button class="btn btn-mosaico-primary btn-sm" *ngIf="imageChangedEvent" (click)="changeCrop()">{{'CROPPER.BUTTONS.btn.change_crop'  | translate}}</button>
+  </ng-container>
+
+</div>
+
+
+<!-- Zdjęcie jest zbyt szerokie lub zbyt wysokie
+Twoje zdjęcie jest zbyt szerokie lub zbyt wysokie. Wybierz zdjęcie, którego wymiary zbliżone do kwadratu. -->

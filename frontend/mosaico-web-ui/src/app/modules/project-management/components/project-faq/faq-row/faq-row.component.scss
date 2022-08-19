@@ -1,0 +1,66 @@
+.row-faq {
+  cursor: pointer;
+  color: #808080;
+  padding: 8px;
+
+  border: 1px solid #DFE0EB;
+  border-radius: 3px;
+  
+  @media (min-width: 576px) {
+    padding: 14px 16px;
+  }
+  @media (min-width: 992px) {
+    padding: 23px 16px;
+  }
+
+  &.hide {
+    border: 1px solid #C0BEBE !important;
+    background: #F9F9F9 !important;
+  }
+
+  .hide-icon {
+    color: #C0BEBE !important;
+  }
+}
+
+.row-faq.expanded {
+  color: #424242;
+}
+
+.title {
+  font-family: Poppins;
+  font-style: normal;
+  margin-bottom: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #494642;
+  
+  @media (min-width: 576px) {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  @media (min-width: 992px) {
+  }
+}
+
+.icon {
+  padding-left: 10px;
+  padding-right: 5px;
+}
+
+.description {
+  margin: 16px 0;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #494642;
+  
+  @media (min-width: 576px) {
+    font-size: 16px;
+  }
+  @media (min-width: 992px) {
+  }
+}

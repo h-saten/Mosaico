@@ -1,0 +1,17 @@
+<div class="section-platform-container">
+    <img src="/assets/media/mainpage/platform.png" alt="platform" class="platform-img">
+    <div class="section-platform-wrapper">
+        <p class="section-platform-title" innerHTML="{{ 'PF.main_title' | translate }}"></p>
+        <ng-container *ngFor="let platform of platformDetails; first as first">
+            <div class="platform-details" [class.platform-border-bottom]="first">
+                <p class="platform-title">{{ platform.title | translate }}</p>
+                <div class="d-flex justify-content-between flex-column flex-lg-row">
+                    <p class="platform-description">{{ platform.description | translate }}</p>
+                    <button type="button" class="btn" (click)="onNavigate(platform.action)">
+                        <span>{{ platform.btnText | translate }}</span> 
+                        <img src="/assets/media/misc/chevron-down-line.png" alt="arrow-right"></button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

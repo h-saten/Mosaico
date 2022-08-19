@@ -1,0 +1,13 @@
+<div class="check_out_whitepaper--wrapper">
+    <img src="/assets/media/about-us/whitepaper.png" alt="whitepaper image" class="check_out_whitepaper--img">
+    <div class="d-flex justify-content-between align-items-center align-items-md-start flex-column flex-lg-row w-100">
+        <div class="check_out_whitepaper--text">
+            <p class="check_out_whitepaper--title" [innerHTML]="'CHECK_OUT_WHITEPAPER.TITLE' | translate "></p>
+            <p class="check_out_whitepaper--descriprion">{{ 'CHECK_OUT_WHITEPAPER.DESCRIPTION' | translate }}</p>
+        </div>
+        <a [href]="navigateToWhitePaper" target="_blank" class="btn check_out_whitepaper--btn">
+            <span>{{ 'CHECK_OUT_WHITEPAPER.ACTION' | translate }}</span>
+            <img src="/assets/media/about-us/download.svg" alt="download icon">
+        </a>
+    </div>
+</div>

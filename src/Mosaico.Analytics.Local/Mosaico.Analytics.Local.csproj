@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Mosaico.Statistics.Local</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.Analytics.Base\Mosaico.Analytics.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Base\Mosaico.Base.csproj" />
+    </ItemGroup>
+
+</Project>

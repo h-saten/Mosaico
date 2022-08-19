@@ -1,0 +1,167 @@
+.follow-steps-invest-container {
+    padding: 115px 0 251px;
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+
+    p {
+        margin: 0;
+    }
+
+    .follow-steps-progress {
+        background: linear-gradient(#FF9A00, #FFE100, #00A0FF, #0063F5);
+        min-width: 20px;
+        width: 20px;
+        border-radius: 10px;
+        height: 100%;
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            padding: 35px 0;
+
+            .step {
+                background: #FFFFFF;
+                width: 40px;
+                height: 40px;
+                position: relative;
+                margin-left: -10px;
+                border-radius: 50%;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 40px;
+                text-align: center;
+            }
+        }
+
+    }
+
+    .follow-steps-items-wrapper {
+        max-width: 857px;
+        
+        .invets-card {
+            padding: 40px !important;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            position: relative;
+            background: #FFFFFF;
+    
+            &::before {
+                content: "";
+                position: absolute;
+                left: -55px;
+                top: calc(50% - 18px);
+                border-top: 18px solid transparent;
+                border-bottom: 18px solid transparent;
+                border-left: 30px solid transparent;
+                border-right: 30px solid #FFFFFF;
+              }
+    
+            &:last-child {
+                margin-bottom: 0;
+            }
+            
+            .invest-icon {
+                height: 100px;
+                width: 100px;
+                margin-right: 40px;
+            }
+    
+            .invets-card-title {
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 24px;
+                color: #434343;
+            }
+    
+            .invets-card-description {
+                font-weight: 400;
+                font-size: 13px;
+                line-height: 20px;
+                color: rgba(73, 70, 66, 0.7);
+                margin: 16px 0;
+            }
+    
+            .invets-card-action {
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 24px;
+                color: #0063F5;
+            }
+    
+            .arrow-right {
+                transform: rotate(-90deg);
+                margin-left: 5px;
+                height: 24px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 991px){
+    .follow-steps-invest-container {
+        padding: 56px 0 0;
+
+        .follow-steps-items-wrapper {
+
+            .invets-card {
+                padding: 40px 24px !important;
+                margin-bottom: 18px;
+
+                &::before {
+                    content: none;
+                }
+
+                .invets-card-description {
+                    margin: 12px 0;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .follow-steps-invest-container {
+        display: block;
+
+        .follow-steps-items-wrapper {
+            max-width: none;
+            position: relative;
+            
+            .invets-card {
+                min-height: 444px;
+                max-width: 309px;
+                padding: 20px 40px 20px 20px !important;
+                flex-direction: column;
+                margin-bottom: 64px !important;
+                justify-content: start;
+    
+                .invets-card-title {
+                    margin-top: 27px;
+                }
+    
+                .invets-card-description {
+                    margin: 12px 0;
+                }
+            }
+
+            ::ng-deep .swiper-slide {
+                min-width: 309px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 391px) {
+    .follow-steps-items-wrapper {
+            
+        .invets-card{
+            padding-right: 20px;
+        } 
+    }
+}

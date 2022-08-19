@@ -1,0 +1,30 @@
+.div-button {
+  background-color:#fcfcfc;
+  padding         : 15px 10px;
+  border-color    : #d1d1d1;
+  border-style    : dashed;
+  border-width    : 1px;
+}
+
+.size-scaling-photo {
+  height :65vh;
+}
+
+.size-scaling-photo-ip {
+  height: 43vh;
+}
+
+.symbol > img {
+  width: 150px;
+  height: 150px;
+}
+
+.symbol-100 > img {
+  width: 100%;
+  height: auto;
+}
+
+.symbol-article > img, .img-article {
+  width: 150px;
+  height: auto;
+}

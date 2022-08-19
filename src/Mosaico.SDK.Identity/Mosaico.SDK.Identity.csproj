@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KangaExchange.SDK\KangaExchange.SDK.csproj" />
+      <ProjectReference Include="..\Mosaico.Authorization.Base\Mosaico.Authorization.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Base\Mosaico.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Domain.Identity\Mosaico.Domain.Identity.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.Base\Mosaico.Events.Base.csproj" />
+      <ProjectReference Include="..\Mosaico.Events.Identity\Mosaico.Events.Identity.csproj" />
+      <ProjectReference Include="..\Mosaico.SDK.Base\Mosaico.SDK.Base.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\5.0.12\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

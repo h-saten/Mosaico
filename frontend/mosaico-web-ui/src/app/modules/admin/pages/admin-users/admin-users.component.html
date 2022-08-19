@@ -1,0 +1,101 @@
+<div class="card mb-5 mb-xl-8">
+  <div class="card-header border-0 pt-0 ps-0 pb-5">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="card-label fw-bolder fs-1 mb-1">{{'DEACTIVATE_USER.userlist'|translate}}</span>
+    </h3>
+  </div>
+  <p-table [value]="allUser" [lazy]="true" (onLazyLoad)="allUsers($event)" responsiveLayout="scroll" [paginator]="true"
+    [rows]="10" [totalRecords]="totalRecords" [loading]="loading" styleClass="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+    [globalFilterFields]="['firstName','email', 'lastLogin', 'status']">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="firstName" class="px-3 fs-3">{{'DEACTIVATE_USER.fullname'|translate}} </th>
+        <th pSortableColumn="email" class="fs-3">{{'DEACTIVATE_USER.email'|translate}} </th>
+        <th pSortableColumn="lastLogin" class="fs-3">{{'DEACTIVATE_USER.lastlogin'|translate}} </th>
+        <th pSortableColumn="status" class="fs-3">{{'DEACTIVATE_USER.status'|translate}} </th>
+        <th pSortableColumn="action" class="fs-3">{{'DEACTIVATE_USER.action'|translate}} </th>
+      </tr>
+      <tr>
+        <th class="px-3">
+          <p-columnFilter type="text" field="name"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="email"></p-columnFilter>
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-allUser>
+      <tr>
+        <td>
+          <div class="d-flex align-items-center px-3">
+            <div class="symbol symbol-45px me-5">
+              <img src="/assets/media/avatars/blank.png" alt="" />
+            </div>
+            <div class="d-flex justify-content-start flex-column">
+              <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">
+                {{allUser.firstName +" "+allUser.lastName}}
+              </a>
+              <span class="text-success fw-bold text-muted d-block fs-7" *ngIf="allUser.isAdmin">
+                {{'DEACTIVATE_USER.admin' | translate}}
+              </span>
+              <span class="text-muted fw-bold text-muted d-block fs-7" *ngIf="!allUser.isAdmin">
+                {{'DEACTIVATE_USER.user' | translate}}
+              </span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <a href="mailto:{{allUser.email}}" class="text-dark fw-bolder text-hover-primary d-block fs-6">
+            {{allUser.email}} / {{allUser.phoneNumber}}
+          </a>
+          <span class="text-success fw-bold d-block fs-7" *ngIf="allUser.isEmailVerified">
+            Email {{'DEACTIVATE_USER.verified' | translate}}
+          </span>
+          <span class="text-danger fw-bold d-block fs-7" *ngIf="!allUser.isEmailVerified">
+            Email {{'DEACTIVATE_USER.unverified' | translate}}
+          </span>
+          <span class="text-success fw-bold d-block fs-7" *ngIf="allUser.isAMLVerified">
+            KYC {{'DEACTIVATE_USER.verified' | translate}}
+          </span>
+          <span class="text-danger fw-bold d-block fs-7" *ngIf="!allUser.isAMLVerified">
+            KYC {{'DEACTIVATE_USER.unverified' | translate}}
+          </span>
+        </td>
+        <td>
+          <a class="text-dark fw-bolder text-hover-primary d-block fs-6">
+            {{allUser.lastLogin | date}} <br />
+          </a>
+          <span class="text-muted fw-bold d-block fs-7">
+            {{allUser.lastLogin | date:'hh:mm:ss a'}}
+          </span>
+        </td>
+        <td class="text-end">
+          <div class="d-flex flex-column w-100 me-2">
+            <div class="d-flex flex-stack mb-2">
+              <span class="badge badge-light-success" *ngIf="!allUser.isDeactivated">{{'DEACTIVATE_USER.activated' |
+                translate}}</span>
+              <span class="badge badge-light-warning" *ngIf="allUser.isDeactivated">{{'DEACTIVATE_USER.deactivated' |
+                translate}}</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="d-flex justify-content-center flex-shrink-0">
+
+            <a (click)="deactivateuser(allUser.id, !allUser.isDeactivated)">
+              <span class="btn btn-sm btn-warning cursor-pointer"
+                *ngIf="!allUser.isDeactivated">{{'DEACTIVATE_USER.deactivate' | translate}}</span>
+              <span class="btn btn-sm btn-primary cursor-pointer"
+                *ngIf="allUser.isDeactivated">{{'DEACTIVATE_USER.activate' | translate}}</span>
+            </a>
+
+          </div>
+        </td>
+
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

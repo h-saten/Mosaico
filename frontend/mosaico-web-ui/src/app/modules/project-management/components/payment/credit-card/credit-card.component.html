@@ -1,0 +1,137 @@
+<div class="row">
+  <div class="col-12">
+    <div [formGroup]="form"
+      class="shadow-sm d-flex justify-content-center bg-white rounded justify-content-xl-start flex-row-auto w-100">
+      <div class="px-6 px-lg-10 px-xxl-15 py-5 w-100">
+        <div class="stepper-nav">
+          <div class="d-flex align-items-top py-5">
+            <div class="symbol symbol-45px me-5"><img [attr.src]="token?.logoUrl" alt=""></div>
+            <div class="d-flex justify-content-start flex-column">
+              <h3 [routerLink]="['.']" class="text-dark fw-bolder text-hover-primary fs-1">{{ token?.name }} &middot; {{
+                token?.symbol }}
+              </h3>
+
+              <p class="text-muted fw-bold text-muted d-block fs-4"> 1 {{ token?.symbol }} = {{ tokenPrice| number:
+                '1.0-6': 'en' }} {{
+                selectedCurrency }} </p>
+              <p class="mb-1">
+                {{(minimumPurchase * tokenPrice) | number: '1.0-6': 'en' }} {{ selectedCurrency }}
+                {{'CHECKOUT.minimum.purchase' | translate}}
+              </p>
+              <p>
+                {{ minimumPurchase }} {{ token?.symbol }} {{'CHECKOUT.minimum.token' | translate}}
+              </p>
+            </div>
+          </div>
+          <div class="separator"></div>
+          <div class="row" *ngIf="(isLoading$|async) === true">
+            <div class="col-12">
+              <app-spinner-container [showSpinner]="true"></app-spinner-container>
+            </div>
+          </div>
+          <ng-container *ngIf="(isLoading$|async) === false">
+            <div novalidate="novalidate" class="form py-7">
+              <div class="form-group mb-0">
+                <input type="number" name="tokenAmount" formControlName="tokenAmount"
+                  class="form-control form-control-solid" placeholder="{{'CHECKOUT.token.amount' | translate}}"
+                  [ngClass]="{ 'is-invalid' : form.controls.tokenAmount.invalid }" />
+
+                <div class="invalid-feedback" *ngIf="hasErrors('tokenAmount', 'min')">
+                  {{'CHECKOUT.MIN_TOKENS'|translate}} {{ tokensPurchaseMinLimit }} {{'CHECKOUT.TOKENS'|translate}}.
+                </div>
+                <div class="invalid-feedback" *ngIf="hasErrors('tokenAmount', 'max')">
+                  {{'CHECKOUT.MAX_TOKENS'|translate}} {{ tokensPurchaseMaxLimit }} {{'CHECKOUT.TOKENS'|translate}}.
+                </div>
+                <div class="invalid-feedback" *ngIf="isTouched('tokenAmount') && !form.controls.tokenAmount.value">
+                  {{'CHECKOUT.REQUIRED_FIELD'|translate}}
+                </div>
+              </div>
+            </div>
+            <div class="btn-group1 pb-8">
+              <span *ngFor="let paymentCurrency of paymentCurrencies" class="me-2">
+                <input type="radio" class="btn-check" name="options" id="{{paymentCurrency}}" autocomplete="off"
+                  [checked]="selectedCurrency === paymentCurrency" (change)="currencyChanged(paymentCurrency)" />
+                <label class="btn btn-secondary px-3 py-2" for="{{paymentCurrency}}">
+                  {{ paymentCurrency }}
+                </label>
+              </span>
+            </div>
+            <div class="d-flex align-items-center mb-8">
+              <div class="form-check form-check-custom form-check-solid form-check-sm">
+                <input class="form-check-input" type="checkbox" value="" id="allCheckbox" formControlName="acceptAll" />
+                <label class="form-check-label" for="allCheckbox">
+                  {{'CHECKOUT.select.all' | translate}}
+                </label>
+              </div>
+            </div>
+            <div class="d-flex align-items-center mb-8">
+              <div class="form-check form-check-custom form-check-solid form-check-sm">
+                <input class="form-check-input" type="checkbox" value="" id="regulationsCheckbox"
+                  formControlName="regulationsAccepted" />
+                <label class="form-check-label" for="regulationsCheckbox"
+                  [innerHTML]="'CHECKOUT.accept.regulations' | translate: {projectName, regulationUrl, policyUrl }">
+                </label>
+              </div>
+            </div>
+            <div class="d-flex align-items-center mb-8">
+              <div class="form-check form-check-custom form-check-solid form-check-sm">
+                <input class="form-check-input" type="checkbox" value="" id="marketingCheckbox"
+                  formControlName="marketingAccepted" />
+                <label class="form-check-label" for="marketingCheckbox"
+                  [innerHTML]="'CHECKOUT.accept.marketing' | translate: {companyName }">
+                </label>
+              </div>
+            </div>
+            <div class="d-flex mb-3">
+              <button class="btn btn-link text-muted" (click)="showRefCode = !showRefCode">{{'CHECKOUT.PARTNER.BUTTON'|translate}}</button>
+            </div>
+            <div class="d-flex mb-3" *ngIf="showRefCode === true">
+              <div class="form-group mb-0 w-100">
+                <input type="text" name="refCode" formControlName="refCode" class="form-control form-control-solid"
+                  placeholder="Enter referral code" [ngClass]="{ 'is-invalid' : form.controls.refCode.invalid }" />
+              </div>
+            </div>
+            <div class="align-items-sm-center mb-7">
+              <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                <div class="flex-grow-1 me-2">
+                  <h3 class="text-gray-800 text-hover-primary fs-3 fw-bolder"> {{'CHECKOUT.total' | translate}}:
+                  </h3>
+                </div>
+                <span class="badge text-muted fw-bolder my-2 fs-3">
+                  {{ currentPaymentAmount | number: '1.0-6': 'en' }} {{selectedCurrency }}
+                </span>
+              </div>
+            </div>
+          </ng-container>
+          <div class="row mb-3">
+            <div class="col-12 d-flex flex-column">
+              <app-button-save [imgUrl]="'/assets/media/logos/ramp.png'"
+                [classes]="'btn btn-mosaico-primary cursor-pointer w-100'"
+                [formInvalid]="form.invalid || selectedCurrency === 'PLN'" [showSpinner]="(isDeploying$|async) === true"
+                [buttonText]="'PROJECT_PURCHASE.RAMP'|translate"
+                (clicked)="initTransaction(rampExplainerDialog.open.bind(rampExplainerDialog))"></app-button-save>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex flex-column">
+              <app-button-save [imgUrl]="'/assets/media/logos/transak.png'"
+                [classes]="'btn btn-mosaico-primary-outline cursor-pointer w-100'"
+                [formInvalid]="form.invalid || selectedCurrency === 'USD'" [showSpinner]="(isDeploying$|async) === true"
+                [buttonText]="'PROJECT_PURCHASE.TRANSAK'|translate"
+                (clicked)="initTransaction(transakExplainerDialog.open.bind(transakExplainerDialog))"></app-button-save>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-payment-processor-explainer #transakExplainerDialog (closed)="transakModal.open()">
+</app-payment-processor-explainer>
+<app-payment-processor-explainer #rampExplainerDialog (closed)="rampModal.open()"></app-payment-processor-explainer>
+<lib-transak-modal [fiatCurrency]="selectedCurrency" (closed)="widgetClosed($event)" #transakModal
+  [fiatAmount]="currentPaymentAmount + 1" (transactionConfirmed)="transakTransactionConfirmed($event)"
+  [user]="transakUserKyc" [walletAddress]="walletAddress" [network]="selectedNetwork"></lib-transak-modal>
+<lib-ramp-modal #rampModal (closed)="widgetClosed($event)" [fiatCurrency]="selectedCurrency"
+  (transactionConfirmed)="rampTransactionConfirmed($event)" [user]="rampUserKyc" [fiatAmount]="currentPaymentAmount"
+  [walletAddress]="walletAddress" [network]="selectedNetwork"></lib-ramp-modal>

@@ -1,0 +1,29 @@
+.card-header {
+  justify-content: center;
+
+  .card-title {
+    margin-bottom: 24px;
+    @media (min-width: 576px) {
+      margin-bottom: 32px;
+    }
+    @media (min-width: 992px) {
+      // margin-top: 24px;
+      margin-bottom: 40px;
+    }
+  }
+  .card-toolbar {
+    margin-bottom: 22px;
+    @media (min-width: 576px) {
+      margin-bottom: 28px;
+    }
+    @media (min-width: 992px) {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.w-100-90{
+  width: calc(100% - 90px);
+}
+
+

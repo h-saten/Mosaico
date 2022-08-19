@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Mosaico.Authorization.Base\Mosaico.Authorization.Base.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.BusinessManagement\Mosaico.Domain.BusinessManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.DocumentManagement\Mosaico.Domain.DocumentManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.Features\Mosaico.Domain.Features.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.Identity\Mosaico.Domain.Identity.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.ProjectManagement\Mosaico.Domain.ProjectManagement.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.Statistics\Mosaico.Domain.Statistics.csproj" />
+        <ProjectReference Include="..\Mosaico.Domain.Wallet\Mosaico.Domain.Wallet.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dapper" Version="2.0.123" />
+        <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="5.2.4" />
+        <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="5.2.4" />
+        <PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="5.2.4" />
+        <PackageReference Include="IdentityModel" Version="5.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.12" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.12">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.12" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
+        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.15.0" />
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="appsettings.json" />
+        <Content Include="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations\Document" />
+      <Folder Include="Migrations\Project" />
+      <Folder Include="Migrations\Wallet" />
+    </ItemGroup>
+
+</Project>

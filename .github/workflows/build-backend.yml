@@ -1,0 +1,22 @@
+name: build-backend
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+    branches: [ 'main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/workflows/actions/build_backend
+      id: buildBackend
+      with:
+        PROJECT_CORE: ./src/Mosaico.Core.Service/Mosaico.Core.Service.csproj
+        PROJECT_IDENTITY: ./src/Mosaico.Identity/Mosaico.Identity.csproj
+        PROJECT_CLI: ./src/Mosaico.Tools.CommandLine/Mosaico.Tools.CommandLine.csproj
+        RUNNER_OS: ${{ runner.os }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_BACKEND_SECRET: ${{ secrets.SONAR_BACKEND_SECRET }}
+        SONAR_PROJECT_KEY: 'sapiency-io_mosaicov2-backend'

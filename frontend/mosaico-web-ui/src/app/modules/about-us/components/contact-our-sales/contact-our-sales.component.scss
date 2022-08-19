@@ -1,0 +1,166 @@
+.section-width-full {
+  background-color: #FFFFFF;
+}
+
+.section-cos {
+
+  max-width: 1320px;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+
+  padding-top: 64px;
+  padding-bottom: 120px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  @media (min-width: 576px) {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 992px) {
+    padding-top: 80px;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+}
+
+.section-title {
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+
+  font-size: 24px;
+  line-height: 24px;
+
+  text-align: left;
+  margin-bottom: 48px;
+
+  @media (min-width: 576px) {
+    text-align: center;
+
+    font-size: 35px;
+    line-height: 30px;
+  }
+  @media (min-width: 992px) {
+    text-align: left;
+    font-size: 40px;
+    line-height: 34px;
+  }
+}
+
+
+
+.img-and-name-position {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // margin-top: 16px;
+}
+
+.img-and-name-position-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+
+  // @media (min-width: 576px) {
+  //   flex-direction: column;
+  // }
+  // @media (min-width: 768px) {
+  //   max-width: 200px;
+  //   justify-content: space-between;
+  // }
+}
+
+.img-team {
+  width: 30%;
+
+  // width: 35%;
+  // @media (min-width: 576px) {
+  //   width: 75%;
+  // }
+}
+
+.name-position {
+
+  margin-left: 8px;
+  width: 230px;
+
+  // @media (min-width: 576px) {
+  // margin-left: 20px;
+  // width: 180px;
+
+  @media (min-width: 576px) {
+    width: 255px;
+    margin-left: 22px;
+    margin-top: 16px;
+    // text-align: center;
+  }
+}
+
+.name {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+
+  margin-bottom: 8px;
+
+  @media (min-width: 576px) {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+  }
+}
+
+.position {
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 15px;
+
+  margin-bottom: 22px;
+}
+
+.phone {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 15px;
+
+  margin-bottom: 13px;
+
+  i {
+    color: #494642;
+    margin-right: 8px;
+  }
+
+  @media (min-width: 576px) {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
+
+.email {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+
+  i {
+    color: #494642;
+    margin-right: 8px;
+  }
+
+  a {
+    color: #494642;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+  }
+
+  @media (min-width: 576px) {
+  }
+}
+

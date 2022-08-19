@@ -1,0 +1,136 @@
+$primary-white-color: #FFFFFF;
+$primary-btn-color: #0063F5;
+
+.pd-container {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top right;
+    color: $primary-white-color;
+
+    background-image: url('/assets/media/mainpage/platform.png');
+
+    .pd-wrapper {
+        position: relative;
+        
+        .pd-background {
+            background: rgba(27, 24, 19, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 448px; 
+            height: 327px;
+        }
+    
+        .project-details {
+            padding: 24px 24px 16px 24px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            max-width: 448px;
+            max-height: 327px;
+    
+            .pd-title {
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 28px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                a {
+                    color: #FFFFFF;
+                }
+            }
+    
+            .pd-subtitle {
+                font-weight: 400;
+                font-size: 24px;
+                line-height: 28px;
+                margin: 8px 0;
+            }
+    
+            .pd-description {
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 19px;
+                text-overflow:ellipsis;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+            }
+    
+            .pd-icon {
+                height: 24px;
+                margin-right: 8px;
+            }
+    
+            .pd-btn {
+                background: $primary-btn-color;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 18px;
+                width: 100%;
+                height: 40px;
+                color: $primary-white-color;
+            }
+        }
+    }
+
+
+
+    &.project-item {
+        height: 248px;
+        display: flex;
+        flex-direction: column-reverse;
+
+        @media (max-width: 575px) {
+            height: 200px;
+        }
+    }
+    .pd-item {
+        background: rgba(73, 70, 66, 0.2);
+        backdrop-filter: blur(10px);
+        position: relative;
+        transition: height 0.25s ease-in;
+    }
+
+    .pd-item-wrapper {
+        position: absolute;
+        width: 100%;
+        max-width: 382px;
+        padding: 8px 24px;
+
+        .pd-item-title {
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 24px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            a {
+                color: #FFFFFF;
+            }
+        }
+        
+        .pd-item-subtitle {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 24px;
+            margin: 4px 0;
+        }
+        
+        .pd-item-description {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            text-overflow:ellipsis;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            transition: height 0.25s ease-in;
+        }
+    }
+}

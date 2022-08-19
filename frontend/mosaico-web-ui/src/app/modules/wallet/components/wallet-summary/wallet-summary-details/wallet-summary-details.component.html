@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <app-spinner-container [showSpinner]="isLoading"></app-spinner-container>
+    </div>
+</div>
+<ng-container *ngIf="!isLoading && summary">
+    <div class="row wallet-address-container justify-content-between mb-5">
+        <!-- <div class="col-12 col-md-6 col-lg-4 mb-3 mb-md-0">
+            <div class="d-flex select-item justify-content-start align-items-center">
+                <ng-select [clearable]="false" class="mosaico-custom-select w-100" bindValue="name" bindLabel="name"
+                    [searchable]="false" [items]="networks" [(ngModel)]="selectedNetwork"
+                    placeholder="{{'USER_WALLET.SUMMARY.NETWORK.PLACEHOLDER'|translate}}"
+                    (change)="onNetworkChanged($event?.name)">
+                    <ng-template ng-label-tmp let-item="item">
+                        <span [inlineSVG]="item.logoUrl" class="svg-icon svg-icon-2"></span> {{item.name|translate}}
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <span [inlineSVG]="item.logoUrl" class="svg-icon svg-icon-2"></span> {{item.name|translate}}
+                    </ng-template>
+                </ng-select>
+            </div>
+        </div> -->
+        
+    </div>
+    <div class="row wallet-summary">
+        <div class="col-12 d-flex flex-row justify-content-between justify-content-md-start align-items-center">
+            <div class="d-flex justify-content-center align-items-center me-5">
+                <div class="symbol symbol-75px symbol-circle">
+                    <div class="symbol-label" style="background-image:url(/assets/media/icons/mosaico-wallet.svg)"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <div class="d-flex">
+                    <div class="total-assets-title">{{'USER_WALLET.SUMMARY.TOTAL'|translate}}</div>
+                </div>
+                <div class="d-flex">
+                    <div class="total-assets d-flex flex-row align-items-center flex-wrap">
+                        <div class="me-5">{{summary.currency}}</div>
+                        <div class="me-5">{{(summary.totalWalletValue + kangaTotalAssetValue) | number : '1.2-2'}}</div>
+                        <div class="d-flex align-items-center justify-content-center"
+                            *ngIf="summary.deltaDirection !== 'NONE' && summary.delta > 0">
+                            <ng-container
+                                *ngIf="summary.deltaDirection === 'HIGHER'; then higherDeltaTmpl; else lowerDeltaTmpl">
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row wallet-actions">
+        <div class="col-12 d-flex align-items-center flex-column flex-md-row">
+            <div class="d-flex">
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-sm btn-mosaico-primary mt-2 mt-lg-0 me-6" ngbDropdownToggle><i
+                            class="fas fa-plus"></i> {{'USER_WALLET.SUMMARY.ACTIONS.DEPOSIT'|translate}}</button>
+                    <div ngbDropdownMenu>
+                        <button ngbDropdownItem (click)="manualDeposit.open()">{{'USER_WALLET.SUMMARY.ACTIONS.MANUAL_DEPOSIT'|translate}}</button>
+                        <button ngbDropdownItem (click)="transakModal.open()">Transak</button>
+                        <button ngbDropdownItem (click)="rampModal.open()">Ramp.Network</button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-sm btn-mosaico-primary mt-2 mt-lg-0 me-6"
+                    (click)="sendModal.open(summary?.address, selectedNetwork)"><i class="fas fa-arrow-right"></i>
+                    {{'USER_WALLET.SUMMARY.ACTIONS.SEND'|translate}}</button>
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-sm btn-mosaico-primary-outline mt-2 mt-lg-0 me-6" disabled><i
+                        class="fas fa-arrow-up"></i>
+                    {{'USER_WALLET.SUMMARY.ACTIONS.WITHDRAW'|translate}}</button>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-template #higherDeltaTmpl>
+    <span class="delta delta-higher"><i class="fas fa-caret-up"></i> {{summary.delta | number : '1.0-6': 'en'}} %</span>
+</ng-template>
+<ng-template #lowerDeltaTmpl>
+    <span class="delta delta-lower"><i class="fas fa-caret-down"></i> {{summary.delta | number : '1.0-6': 'en'}} %</span>
+</ng-template>
+
+<app-user-wallet-send #sendModal></app-user-wallet-send>
+<lib-transak-modal #transakModal [user]="transakUserKyc" [fiatCurrency]="'EUR'" [walletAddress]="summary?.address" [network]="selectedNetwork">
+</lib-transak-modal>
+<lib-ramp-modal #rampModal [user]="rampUserKyc" [walletAddress]="summary?.address" [network]="selectedNetwork">
+</lib-ramp-modal>
+<app-manual-deposit #manualDeposit [walletAddress]="summary?.address" [network]="selectedNetwork"></app-manual-deposit>

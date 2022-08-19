@@ -1,0 +1,156 @@
+<app-coming-soon></app-coming-soon>
+<!-- <div class="card exchange-wrapper">
+    <ng-container *ngIf="startToExchange">
+        <div class="exchange-item exchange-action-arrow">
+            <div class="select-wrapper select-mos">
+                <ng-select class="mosaico-select mb-5" [clearable]="false" [searchable]="false"
+                    bindValue="key" bindLabel="name"
+                    [items]="mos" formControlName="mos" placeholder="Select token">
+                    <ng-template ng-label-tmp let-item="item">
+                        <img [attr.src]="item.logoUrl" class="img-fluid" style="width: 20px;" /> {{item.name}}
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <img [attr.src]="item.logoUrl" class="img-fluid" style="width: 20px;" /> {{item.name}}
+                    </ng-template>
+                </ng-select>
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-6">
+                <p class="exchange-description">0.00</p>
+                <p class="exchange-balance">{{ 'EXCHANGE.SUBTITLES.BALANCE' | translate }}: 3899,76</p>
+            </div>
+        </div>
+        <div class="exchange-item mt-3">
+            <div class="select-wrapper">
+                <ng-select class="mosaico-select mb-5" [clearable]="false" [searchable]="false"
+                    bindValue="key" bindLabel="name"
+                    [items]="token" formControlName="mos" placeholder="Select token">
+                    <ng-template ng-label-tmp let-item="item">
+                        <img [attr.src]="item.logoUrl" class="img-fluid" style="width: 20px;" /> {{item.name}}
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <img [attr.src]="item.logoUrl" class="img-fluid" style="width: 20px;" /> {{item.name}}
+                    </ng-template>
+                </ng-select>
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-6">
+                <p class="exchange-description">0.00</p>
+                <p class="exchange-balance">{{ "EXCHANGE.SUBTITLES.BALANCE" | translate }}: 3899,76</p>
+            </div>
+        </div> -->
+        <!-- <ng-container *ngIf="!isExchanged">
+            <button class="exchange-btn py-5 mt-12" (click)="onExchange()">Exchange</button>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="isApproved">
+        <div class="exchange-item">
+            <p class="exchange-description">{{ "EXCHANGE.TITLES.CONFIRM_EXCHANGE" | translate }}</p>
+            <div class="d-flex justify-content-between py-8">
+                <div class="w-100 d-flex justify-content-between align-items-center">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex align-items-center">
+                            <img src="/assets/media/logos/mos-token.png" alt="mosaico_sygnet logo" class="confirm-img">
+                            <p class="confirm-currency exchange-details ms-3">MOS</p>
+                        </div>
+                        <div class="d-flex align-items-center mt-6">
+                            <img src="/assets/media/icons/currencies/usdt.png" alt="mosaico_sygnet logo" class="confirm-img">
+                            <p class="confirm-currency exchange-details ms-3">USDT</p>
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <img src="/assets/media/misc/arrow-exchange.png" alt="arrow-down logo">
+                    </div>
+                    <div class="exchange-details">
+                        <p>1000</p>
+                        <p class="mt-6">160</p>
+                    </div>
+                </div>
+            </div>
+            <p class="confirm-description">{{ "EXCHANGE.EXPLANATION.OUTPUT_IS_ESTIMATED" | translate }}</p>
+        </div>
+    </ng-container>
+    
+    <ng-container *ngIf="isExchanged || isApproved">
+
+        <div class="exchange-item mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="exchange-details-title">{{ "EXCHANGE.SUBTITLES.PRICE" | translate }}</p>
+                <p class="exchange-details">1 USDT = 0,16 MOS</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <p class="exchange-details-title">{{ "EXCHANGE.SUBTITLES.MINIMUM_RECEIVED" | translate }}</p>
+                <p class="exchange-details">157.87 USDT</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <p class="exchange-details-title">{{ "EXCHANGE.SUBTITLES.PRICE_IMPACT" | translate }}</p>
+                <p class="exchange-details">0.23 %</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <p class="exchange-details-title">{{ "EXCHANGE.SUBTITLES.LIQUIDITY_PROVIDER_FEE" | translate }}</p>
+                <p class="exchange-details">11,72 MOS</p>
+            </div>
+        </div>
+
+        <ng-container *ngIf="isExchanged">
+            <button class="exchange-btn py-5 mt-12" (click)="onApprove()">{{ "EXCHANGE.ACTIONS.APPROVE" | translate }}</button>
+            <button class="exchange-btn cancel-btn py-5 mt-4" (click)="onCancelExchange()">{{ "EXCHANGE.ACTIONS.CANCEL" | translate }}</button>
+        </ng-container>
+
+
+        <ng-container *ngIf="isApproved">
+            <button class="exchange-btn py-5 mt-12" (click)="onConfirm()">{{ "EXCHANGE.ACTIONS.CONFIRM" | translate }}</button>
+            <button class="exchange-btn cancel-btn py-5 mt-4" (click)="onCancelConfirm()">{{ "EXCHANGE.ACTIONS.CANCEL" | translate }}</button>
+        </ng-container>
+    
+    </ng-container>
+
+    <ng-container *ngIf="isConfirmed">
+        <div>
+            <p class="exchange-description">{{ "EXCHANGE.TITLES.AUTHENTICATION_CODE" | translate }}</p>
+            <div class="d-flex justify-content-between py-8">
+                <input type="text" class="auth-code">                
+                <input type="text" class="auth-code">                
+                <input type="text" class="auth-code">                
+                <input type="text" class="auth-code">                
+            </div>
+        </div>
+        <button class="exchange-btn py-5 mt-12" (click)="onContinueConfirm()">{{ "EXCHANGE.ACTIONS.CONTIUNE" | translate }}</button>
+        <button class="exchange-btn cancel-btn py-5 mt-4">{{ "EXCHANGE.ACTIONS.DIDNT_RECIEVE_CODE" | translate }}</button>
+    </ng-container>
+
+    <ng-container *ngIf="isInProcess">
+        <div class="d-flex flex-column align-items-center">
+            <img src="/assets/media/animations/certificate-loader.gif" alt="certificate-loader gif" class="confirm-process">
+            <p class="exchange-description mt-17">{{ "EXCHANGE.TITLES.PROCESSING_EXCHANGE" | translate }}</p>
+            <p class="exchange-details mt-4 mb-12">1000.00 MOS for 160.00 USDT</p>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="isFailed">
+        <div class="close-button-container text-end">
+            <button class="btn btn-icon btn-sm btn-active-light-dark ms-2">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <img src="/assets/media/misc/warning.png" alt="warning icon" class="warning-icon">
+            <p class="exchange-description mt-17">{{ "EXCHANGE.TITLES.EXCHANGE_FAILED" | translate }}</p>
+            <p class="exchange-details mt-4">{{ "EXCHANGE.EXPLANATION.REASON" | translate }}</p>
+        </div>
+        <button class="exchange-btn py-5 mt-12">{{ "EXCHANGE.ACTIONS.TRY_AGAIN" | translate }}</button>
+    </ng-container>
+
+    <ng-container *ngIf="isSuccessed">
+        <div class="close-button-container text-end">
+            <button class="btn btn-icon btn-sm btn-active-light-dark ms-2">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            <img src="/assets/media/misc/checkmark-success.png" alt="checkmark icon" class="checkmark-icon">
+            <p class="exchange-description mt-17">{{ "EXCHANGE.TITLES.EXCHANGE_SUBMITTED" | translate }}</p>
+            <p class="exchange-details mt-4 mb-12">{{ "EXCHANGE.EXPLANATION.CHECK_YOUR_EMAIL" | translate }}</p>
+        </div>
+    </ng-container>
+       
+</div> -->

@@ -1,0 +1,68 @@
+name: "Build and push Frontend"
+description: "Build frontend and push docker image"
+
+inputs:
+  ACTIONS_ALLOW_UNSECURE_COMMANDS:
+    required: true
+    description: "Are unsecure commands allowed"
+  OUTPUT_FOLDER:
+    required: true
+    description: "Specify output folder."
+  ANGULAR_VERSION:
+    required: true
+    description: "Specify Angular Version"
+  ARTIFACT_NAME:
+    required: true
+    description: "Specify Artifact Name"
+  WORKDIR:
+    required: true
+    description: "Specify WorkDir"
+  APP_VERSION:
+    required: true
+    description: "Application Version"
+  SONAR_PROJECT_KEY:
+    description: "SonarCloud project token"
+    required: true
+  GITHUB_TOKEN:
+    description: "Github token from github"
+    required: true
+  SONAR_FRONTEND_TOKEN:
+    description: "Sonarcloud frontend token"
+    required: true
+  ENVIRONMENT:
+    description: "Configuration ENVIRONMENT: dev/test/prod"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - name: Node 16.x
+    id: setupNode
+    uses: actions/setup-node@v1
+    with:
+      node-version: 16.x
+  - name: npm install
+    working-directory: ${{inputs.WORKDIR}}
+    id: installNPMPackages
+    shell: bash
+    run: |
+      npm install --force
+  - name: Install Angular CLI
+    working-directory: ${{inputs.WORKDIR}}
+    id: installNGCLI
+    shell: bash
+    run: |
+      npm install -g @angular/cli@${{inputs.ANGULAR_VERSION}}
+  - name: npm build
+    working-directory: ${{inputs.WORKDIR}}
+    id: buildFrontend
+    shell: bash # change config production down below
+    run: |
+      npm run build -- --configuration ${{inputs.ENVIRONMENT}} --output-path ./${{inputs.OUTPUT_FOLDER}}
+  # - uses: actions/upload-artifact@v2
+  #   name: Publish Artifact
+  #   id: publishArtifact
+  #   with:
+  #     name: ${{inputs.ARTIFACT_NAME}}@${{ inputs.APP_VERSION }}
+  #     path: ${{inputs.WORKDIR}}/${{inputs.OUTPUT_FOLDER}}/
+  #     if-no-files-found: error
